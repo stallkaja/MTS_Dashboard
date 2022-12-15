@@ -1,0 +1,10 @@
+CREATE SCHEMA `dos_db` ;
+
+
+use dos_db;
+select * from materiallisttable;
+SHOW CREATE TABLe materiallisttable;
+'materiallisttable', 'CREATE TABLE `materiallisttable` (\n  `MaterialName` text,\n  `Category` text,\n  `AdditionalNotes` text,\n  `Quantity` int DEFAULT NULL,\n  `NVL` text,\n  `BEN` text,\n  `PercentComplete` text,\n  `Fixture` int DEFAULT NULL,\n  `AssetNumber` text,\n  `BEN4LPR` text,\n  `CurrentState` text,\n  `IndividuallyAssigned` int DEFAULT NULL,\n  `LamPartNumber` text,\n  `LaptopAssignedBEDShift` text,\n  `LaptopAssignedBENShift` text,\n  `LaptopAssignedFEDShift` text,\n  `LaptopAssignedFENShift` text,\n  `LaptopAssignedMF` text,\n  `LaptopDepartment` text,\n  `RecordIDNumber` int DEFAULT NULL,\n  `SerialNumber` text,\n  `materialPK` int DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
+
+select * from toolhistorytable
+-- INSERT INTO toolhistorytable (NVL, employeeID, newLoc) VALUES ('test', 'test', 'test');
