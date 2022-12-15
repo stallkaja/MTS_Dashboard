@@ -1,0 +1,10 @@
+#ignore all .log files
+*.log
+
+#ignore all files in any directory names temp
+temp/
+
+#ignore all files in node modules?
+BE/node_modules
+FE/node_modules
+Archive/
