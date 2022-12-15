@@ -1,0 +1,36 @@
+import React from 'react';
+import ItemRow from '../components/ItemRow.js'
+import TableHeader from '../components/TableHeader.js'
+
+function ItemTable({headers, items, onEdit, onDelete}){
+	/*for (var i = 0; i < headers.length; i++) {
+		var header = headers[i];
+		console.log(header.COLUMN_NAME.materialPK);
+	}*/
+	//console.log(items[1]);
+	return(
+		<table className="table" border="1px solid">
+			<caption>Items</caption>
+			<thead>
+				<tr>
+				{headers.map((header, i) => <TableHeader header={header} key={i}/> )}
+                <th> </th>
+                <th> </th>
+				</tr>
+			</thead>
+			<tbody>
+                {items.map((item, j) => <ItemRow item={item} onEdit={onEdit} onDelete={onDelete} key={j}/> )}
+			</tbody>
+		</table>
+	);
+}
+export default	ItemTable
+/*
+                <th> Name </th>
+                <th> Reps </th>
+                <th> Weight </th>
+                <th> Unit </th>
+                <th> Date </th>
+                <th> </th>
+                <th> </th>
+				*/
