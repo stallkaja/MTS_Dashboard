@@ -35,7 +35,7 @@ app.post('/newMaterial', (req, res) => {
         
     ]]
     console.log(args);
-    const stmt = "INSERT INTO testdata (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber) VALUES ? "
+    const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber) VALUES ? "
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
@@ -48,7 +48,20 @@ app.post('/newMaterial', (req, res) => {
 // Create a new scan using a post request
 app.post('/newScan', (req, res) => {
 
-    connsole.log(req);
+    const args = [[
+        req.body.nvl,
+        req.body.employeeID,
+        req.body.newLoc,
+    ]]
+    console.log(args);
+    const stmt = "INSERT INTO testdata (nvl, employeeID, newLoc) VALUES ? "
+    //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+    })
   
   });
 
@@ -68,7 +81,7 @@ app.get('/headers', (_, res) => {
 
   // read exercises using a get request
 app.get('/items', (_, res) => {
-  connection.query('select * from testData', (err, rows, fields) => {
+  connection.query('select * from materiallisttable', (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
