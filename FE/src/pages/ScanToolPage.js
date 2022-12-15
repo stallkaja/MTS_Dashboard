@@ -28,21 +28,29 @@ const ScanToolPage = () => {
 	const newScan = async () => {
 	  // Create new object with the variables set in the form
 	  const newScan = {nvl, employeeID, newLoc};
+    console.log("new scan")
 	  const response = await fetch('/newScan', {
 		method: 'POST',
 		body: JSON.stringify(newScan),
 		headers: {
 		  'Content-Type': 'application/json'
 		}
-	  });
-  
+	  }).then(response=>{
+      if (response.status === 201) {
+        alert("Scan has been added!");
+        } else {
+        alert(`Failed to add scan, status code = ${response.status}`);
+        }
+    });
+
 	  if (response.status === 201) {
 		alert("Scan has been added!");
 	  } else {
 		alert(`Failed to add scan, status code = ${response.status}`);
 	  }
 	  // Return to home page
-	  history.push('/ScanTool');
+    console.log("trying to reload the page")
+	  window.location.reload(true)
 	}
     
 const handleSubmitClicked = () => {

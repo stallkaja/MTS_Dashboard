@@ -8,7 +8,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'root',
-  database: 'holocron'
+  database: 'dos_db'
 })
 
 
@@ -54,7 +54,7 @@ app.post('/newScan', (req, res) => {
         req.body.newLoc,
     ]]
     console.log(args);
-    const stmt = "INSERT INTO testdata (nvl, employeeID, newLoc) VALUES ? "
+    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc) VALUES ? "
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
@@ -67,7 +67,7 @@ app.post('/newScan', (req, res) => {
 
 // read headers using a get request
 app.get('/headers', (_, res) => {
-  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='testData'", (err, rows, fields) => {
+  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='materiallisttable'", (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
