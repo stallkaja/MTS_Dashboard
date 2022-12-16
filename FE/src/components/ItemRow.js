@@ -9,10 +9,15 @@ function ItemRow({item, onDelete, onEdit}){
 		for (var prop in item) {
 			if (Object.prototype.hasOwnProperty.call(item, prop)) {
 				itemArray.push(item[prop])
+				console.log(item[prop])
 			}
 		}
 		setItemArray(itemArray);
-	});
+		console.log("Printing array")
+		for(let i = 0;i<itemArray.length;i++){
+			console.log(itemArray[i]);
+		}
+	},[]);
 
 	
 	return(

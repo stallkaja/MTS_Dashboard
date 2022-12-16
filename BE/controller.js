@@ -98,7 +98,7 @@ app.get('/toolhistory', (_, res) => {
             throw err
             connection.end();
         }
-        // console.log(rows)
+        console.log(rows)
         res.json(rows)
     })
 })

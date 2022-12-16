@@ -3,7 +3,7 @@ import ScanToolStyles from './ScanTool.module.css'
 import ItemTable from '../components/ItemTable';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-
+import SearchBar from '../components/SearchBar';
 
 
 const ScanToolPage = ({ setItemToEdit }) => {
@@ -14,25 +14,37 @@ const ScanToolPage = ({ setItemToEdit }) => {
     const [toolHistory, setToolHistory] = useState([]);
     const history = useNavigate();
     const [headers, setHeaders] = useState([]);
-    
+    const [keyword, setKeyword] = useState('');
+    const [filtered, setFiltered] = useState([]);
     
     
     
     const loadHeaders = async () => {
-    const response = await fetch('/ToolHistoryHeaders');
-    const headersData = await response.json();
+      const response = await fetch('/ToolHistoryHeaders');
+      const headersData = await response.json();
 
-    setHeaders(headersData);
+      setHeaders(headersData);
     }
         
     const loadToolHistory = async () => {
+      try{
             const response = await fetch('/toolhistory');
             const data = await response.json();
-            console.log(data)
-            setToolHistory(data);
+            for(let i=0;i<data.length;i++){
+              toolHistory[i] = data[i]
+            }
+      } catch (err) {
+        alert(err.message);
+      }
     }
-    useEffect(() => loadHeaders(),[]);    
-    useEffect(() =>  loadToolHistory(), []);
+
+    useEffect(() => {
+      loadHeaders();
+    }, []);  
+    useEffect(() => {
+      console.log("in useeffect loading tool history")
+      loadToolHistory();
+    }, []);
 
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
@@ -84,6 +96,34 @@ const ScanToolPage = ({ setItemToEdit }) => {
     setItemToEdit(item);
     history.push('/edit');
   };
+
+  const updateKeyword = (keyword) => {
+    const filter = toolHistory.filter(tool => {
+      //console.log(tool)
+      console.log(tool.NVL)
+      console.log(`${tool.NVL.toLowerCase()}`.includes(keyword.toLowerCase()))
+     return `${tool.NVL.toLowerCase()}`.includes(keyword.toLowerCase());
+    })
+
+
+    for(let i=0;i<filter.length;i++){
+      filtered[i]=filter[i];
+    }
+
+    console.log('filter is')
+    console.log(filter)
+    console.log('filtered')
+    console.log(filtered)
+    setFiltered(filtered)
+    setKeyword(keyword)
+    console.log('filter again is')
+    console.log(filter)
+    console.log('filtered again')
+    console.log(filtered)
+    
+
+ }
+
   return (
     <div>
         <h1>Tool Scan Page</h1>
@@ -120,8 +160,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
                       value={searchnvl}
                       onInput={e => setSearchNvl(e.target.value)}
                       placeholder="Search an NVL"
-                  /> <br/>
-                  <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/>
+                  />
+                  <SearchBar keyword={keyword} onChange={updateKeyword}/> 
+                  <br/>
+                  <ItemTable headers ={headers} items={filtered} onEdit={onEdit} onDelete={onDelete}/>
 
             </div>
         </div>
