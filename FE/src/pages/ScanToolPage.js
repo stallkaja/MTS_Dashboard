@@ -1,6 +1,6 @@
 import React from 'react';
 import ScanToolStyles from './ScanTool.module.css' 
-import ToolHistoryTable from '../components/ToolHistoryTable';
+import ItemTable from '../components/ItemTable';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -101,7 +101,7 @@ const handleSubmitClicked = () => {
                       onInput={e => setSearchNvl(e.target.value)}
                       placeholder="Search an NVL"
                   /> <br/>
-                  <ToolHistoryTable items={ToolHistory} /> 
+                  <ItemTable items={ToolHistory} /> 
 
             </div>
         </div>

@@ -1,11 +1,26 @@
-import React from 'react';
 import { MdDeleteForever, MdModeEdit } from 'react-icons/md'
+import ItemCell from '../components/ItemCell.js'
+import React, { useState, useEffect } from 'react';
 
 function ItemRow({item, onDelete, onEdit}){
 	//console.log(onDelete)
+	const [itemArray, setItemArray]=useState([]);
+	useEffect(()=>{
+		for (var prop in item) {
+			if (Object.prototype.hasOwnProperty.call(item, prop)) {
+				itemArray.push(item[prop])
+			}
+		}
+		setItemArray(itemArray);
+	});
+
+	
 	return(
+
+
 		<tr>
-			<td>{item.MaterialName}</td>
+			{itemArray.map((item, i) => <ItemCell item={item} key={i}/> )}
+			{/* <td>{item.MaterialName}</td>
       		<td>{item.Category}</td>
       		<td>{item.AdditionalNotes}</td>
       		<td>{item.Quantity}</td>
@@ -26,7 +41,7 @@ function ItemRow({item, onDelete, onEdit}){
       		<td>{item.LaptopDepartment}</td>
       		<td>{item.RecordISNumber}</td>
 			<td>{item.SerialNumber}</td>
-			<td>{item.materialPK}</td>
+			<td>{item.materialPK}</td> */}
       		<td><MdModeEdit className="icon" onClick={ () => onEdit(item) }/></td>
       		<td><MdDeleteForever className="icon" onClick={ () => onDelete(item.materialPK) }/></td>
 		</tr>
