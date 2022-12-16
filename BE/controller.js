@@ -78,9 +78,22 @@ app.get('/headers', (_, res) => {
   //connection.end()
 });
 
+// read tool history headers using a get request
+app.get('/ToolHistoryHeaders', (_, res) => {
+  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='toolHistorytable'", (err, rows, fields) => {
+    if (err) {
+      throw err
+      connection.end();
+    }
+    //console.log(rows)
+    res.json(rows)
+  })
+  //connection.end()
+});
+
 // select * from toolhistorytable where nvl=given nvl
 app.get('/toolhistory', (_, res) => {
-    connection.query("SELECT * FROM toolhistorytable WHERE NVL = ", (err, rows, fields) => {
+    connection.query("SELECT * FROM toolhistorytable", (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();

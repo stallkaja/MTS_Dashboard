@@ -14,16 +14,16 @@ import { useState } from 'react';
 
 
 function App() {  
-const [exerciseToEdit, setExerciseToEdit] = useState();
+const [ItemToEdit, setItemToEdit] = useState();
 return (
     <div className="App">
 		<Router>
       		<Navbar />
       		<Routes>
         		<Route path='/' element={<LandingPage/>} />
-        		<Route path='/MaterialListPage' exact element={<MaterialListPage/>}  setExerciseToEdit={setExerciseToEdit} />
+        		<Route path='/MaterialListPage' exact element={<MaterialListPage/>}  setItemToEdit={setItemToEdit} />
         		<Route path='/Map' element={<MapPage/>} />
-        		<Route path='/ScanTool' element={<ScanToolPage/>} />
+        		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
         		<Route path='/placeholder2' element={<ToolHistoryPage/>} />
         		<Route path='/create' element={<CreateMaterialPage/>} />

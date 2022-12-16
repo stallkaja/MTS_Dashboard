@@ -6,23 +6,33 @@ import { useNavigate, Link } from 'react-router-dom';
 
 
 
-const ScanToolPage = () => {
+const ScanToolPage = ({ setItemToEdit }) => {
     const [newLoc, setLoc] = useState('');
     const [nvl, setNvl] = useState('');
     const [employeeID, setEmployeeID] = useState('');
     const [searchnvl, setSearchNvl] = useState('');
+    const [toolHistory, setToolHistory] = useState([]);
     const history = useNavigate();
-    const [toolhistory, setToolHistory] = useState('')
-    /*     const history = useNavigate();
-        const [ToolHistory, setToolHistory] = useState([]);
+    const [headers, setHeaders] = useState([]);
+    
+    
+    
+    
+    const loadHeaders = async () => {
+    const response = await fetch('/ToolHistoryHeaders');
+    const headersData = await response.json();
+
+    setHeaders(headersData);
+    }
         
-        const loadToolHistory = async () => {
-            const response = await fetch('/ToolHistory');
+    const loadToolHistory = async () => {
+            const response = await fetch('/toolhistory');
             const data = await response.json();
+            console.log(data)
             setToolHistory(data);
-          }
-        
-        useEffect(() =>  loadToolHistory(), []); */
+    }
+    useEffect(() => loadHeaders(),[]);    
+    useEffect(() =>  loadToolHistory(), []);
 
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
@@ -54,16 +64,26 @@ const ScanToolPage = () => {
         console.log("trying to reload the page")
         window.location.reload(true)
     }
-    const loadToolHistory = async () => {
-        const response = await fetch('/toolhistory');
-        const data = await response.json();
-        setToolHistory(data);
-    }
-const handleSubmitClicked = () => {
-       var elem = document.getElementById("NVL");
-       console.log(elem)
-    }
-    var ToolHistory={};
+
+    //WIP, this does not currently work because it is my old code from class and it tries to delete by ID, we dont necessairly
+    //have IDs on all the cables so this will probably fail. 
+    const onDelete = async PK => {
+      // Make a DELETE request
+      //console.log(PK)
+      const response = await fetch(`/exercises/${PK}`, {method: 'DELETE'});
+      if (response.status === 204) {
+        setToolHistory(toolHistory.filter(e => e.PK !== PK));
+        document.location.reload ();
+      } else {
+        console.error(`Failed to delete exercise with _id ${PK} with status \
+          code = ${response.status}`)
+      }
+  };
+  
+  const onEdit = item => {
+    setItemToEdit(item);
+    history.push('/edit');
+  };
   return (
     <div>
         <h1>Tool Scan Page</h1>
@@ -101,7 +121,7 @@ const handleSubmitClicked = () => {
                       onInput={e => setSearchNvl(e.target.value)}
                       placeholder="Search an NVL"
                   /> <br/>
-                  <ItemTable items={ToolHistory} /> 
+                  <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/>
 
             </div>
         </div>

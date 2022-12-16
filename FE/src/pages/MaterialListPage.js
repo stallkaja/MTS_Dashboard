@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ItemTable from '../components/ItemTable';
 
-const HomePage = ({ setExerciseToEdit }) =>{
+const HomePage = ({ setItemToEdit }) =>{
 const history = useNavigate();
 const [items, setItems] = useState([]);
 
@@ -37,8 +37,10 @@ const onDelete = async PK => {
     }
 };
 
-const onEdit = exercise => {
-    setExerciseToEdit(exercise);
+
+//WIP this does not work either because it uses this setExerciseToEdit which is 
+const onEdit = item => {
+    setItemToEdit(item);
     history.push('/edit');
   };
 
