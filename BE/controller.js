@@ -76,12 +76,22 @@ app.get('/headers', (_, res) => {
     res.json(rows)
   })
   //connection.end()
-  });
+});
 
-
+// select * from toolhistorytable where nvl=given nvl
+app.get('/toolhistory', (_, res) => {
+    connection.query("SELECT * FROM toolhistorytable WHERE NVL = ", (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        // console.log(rows)
+        res.json(rows)
+    })
+})
   // read exercises using a get request
 app.get('/items', (_, res) => {
-  connection.query('select * from materiallisttable', (err, rows, fields) => {
+  connection.query('Select * from materiallisttable', (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();

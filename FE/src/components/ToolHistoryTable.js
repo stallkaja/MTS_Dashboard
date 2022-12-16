@@ -1,5 +1,5 @@
 import React from 'react';
-import ItemRow from '../components/ItemRow.js'
+import ToolRow from '../components/ToolHistoryRow.js'
 import TableHeader from '../components/TableHeader.js'
 
 function ItemTable({headers, items, onEdit, onDelete}){
@@ -22,7 +22,7 @@ function ItemTable({headers, items, onEdit, onDelete}){
 				</tr>
 			</thead>
 			<tbody>
-                {/*{items.map((item, j) => <ItemRow item={item} onEdit={onEdit} onDelete={onDelete} key={j}/> )}*/}
+   {/*             {items.map((item, j) => <ToolRow item={item} onEdit={onEdit} onDelete={onDelete} key={j}/> )}*/}
 			</tbody>
 		</table>
 	);
