@@ -80,7 +80,7 @@ app.get('/headers', (_, res) => {
 
 // select * from toolhistorytable where nvl=given nvl
 app.get('/toolhistory', (_, res) => {
-    connection.query("SELECT * FROM toolhistorytable WHERE NVL = ", (err, rows, fields) => {
+    connection.query("SELECT * FROM toolhistorytable WHERE NVL = ?", req.body.searchnvl, (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();

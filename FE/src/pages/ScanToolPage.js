@@ -101,7 +101,7 @@ const handleSubmitClicked = () => {
                       onInput={e => setSearchNvl(e.target.value)}
                       placeholder="Search an NVL"
                   /> <br/>
-                  <ItemTable items={ToolHistory} /> 
+                  <ItemTable items={toolhistory} /> 
 
             </div>
         </div>
