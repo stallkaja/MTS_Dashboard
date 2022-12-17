@@ -21,7 +21,7 @@ return (
       		<Navbar />
       		<Routes>
         		<Route path='/' element={<LandingPage/>} />
-        		<Route path='/MaterialListPage' exact element={<MaterialListPage/>}  setItemToEdit={setItemToEdit} />
+        		<Route path='/MaterialListPage' exact element={<MaterialListPage/>}  ItemToEdit={setItemToEdit} />
         		<Route path='/Map' element={<MapPage/>} />
         		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
