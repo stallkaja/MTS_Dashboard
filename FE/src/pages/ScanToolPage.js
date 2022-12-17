@@ -29,7 +29,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
     const loadToolHistory = async () => {
       try{
             const response = await fetch('/toolhistory');
-            const data = await response.json();
+          const data = await response.json();
+          console.log(toolHistory)
+          console.log(data)
             for(let i=0;i<data.length;i++){
               toolHistory[i] = data[i]
             }
