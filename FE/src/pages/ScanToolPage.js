@@ -11,13 +11,21 @@ const ScanToolPage = ({ setItemToEdit }) => {
     const [nvl, setNvl] = useState('');
     const [employeeID, setEmployeeID] = useState('');
     const [searchnvl, setSearchNvl] = useState('');
-    const [toolHistory, setToolHistory] = useState([]);
     const history = useNavigate();
     const [headers, setHeaders] = useState([]);
-    const [keyword, setKeyword] = useState('');
-    const [filtered, setFiltered] = useState([]);
     
+    const [toolHistory, setToolHistory] = useState([]);
+    const [foundNVLs, setFoundNVLs] = useState([]);
+
+    const loadToolHistory = async () => {
+        const response = await fetch('/toolhistory');
+        const data = await response.json();
+        setToolHistory(data);
+        console.log(toolHistory)
+      }
     
+    useEffect(() =>  loadToolHistory(), []);
+
     
     const loadHeaders = async () => {
       const response = await fetch('/ToolHistoryHeaders');
@@ -26,35 +34,22 @@ const ScanToolPage = ({ setItemToEdit }) => {
       setHeaders(headersData);
     }
         
-    const loadToolHistory = async () => {
-      try{
-            const response = await fetch('/toolhistory');
-          const data = await response.json();
-          console.log(toolHistory)
-          console.log(data)
-            for(let i=0;i<data.length;i++){
-              toolHistory[i] = data[i]
-            }
-      } catch (err) {
-        alert(err.message);
-      }
+    useEffect(()=> loadHeaders(),[]);
+    //----------------------------------------------------------------------------
+    // Make a GET request to request records related to a specific NVL
+    //----------------------------------------------------------------------------
+    const searchNVL = async () => {
+      const response = await fetch('/searchNVL');
+      const data = await response.json();
+      setFoundNVLs(data)
+      console.log(foundNVLs);
     }
-
-    useEffect(() => {
-      loadHeaders();
-    }, []);  
-    useEffect(() => {
-      console.log("in useeffect loading tool history")
-      loadToolHistory();
-    }, []);
-
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
     //----------------------------------------------------------------------------
     const newScan = async () => {
         // Create new object with the variables set in the form
         const newScan = { nvl, employeeID, newLoc };
-        console.log("new scan")
         const response = await fetch('/newScan', {
             method: 'POST',
             body: JSON.stringify(newScan),
@@ -79,6 +74,8 @@ const ScanToolPage = ({ setItemToEdit }) => {
         window.location.reload(true)
     }
 
+
+
     //WIP, this does not currently work because it is my old code from class and it tries to delete by ID, we dont necessairly
     //have IDs on all the cables so this will probably fail. 
     const onDelete = async PK => {
@@ -99,32 +96,6 @@ const ScanToolPage = ({ setItemToEdit }) => {
     history.push('/edit');
   };
 
-  const updateKeyword = (keyword) => {
-    const filter = toolHistory.filter(tool => {
-      //console.log(tool)
-      console.log(tool.NVL)
-      console.log(`${tool.NVL.toLowerCase()}`.includes(keyword.toLowerCase()))
-     return `${tool.NVL.toLowerCase()}`.includes(keyword.toLowerCase());
-    })
-
-
-    for(let i=0;i<filter.length;i++){
-      filtered[i]=filter[i];
-    }
-
-    console.log('filter is')
-    console.log(filter)
-    console.log('filtered')
-    console.log(filtered)
-    setFiltered(filtered)
-    setKeyword(keyword)
-    console.log('filter again is')
-    console.log(filter)
-    console.log('filtered again')
-    console.log(filtered)
-    
-
- }
 
   return (
     <div>
@@ -163,9 +134,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
                       onInput={e => setSearchNvl(e.target.value)}
                       placeholder="Search an NVL"
                   />
-                  <SearchBar keyword={keyword} onChange={updateKeyword}/> 
+                  <button onClick={searchNVL}> Submit </button>
                   <br/>
-                  <ItemTable headers ={headers} items={filtered} onEdit={onEdit} onDelete={onDelete}/>
+                  <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/>
 
             </div>
         </div>

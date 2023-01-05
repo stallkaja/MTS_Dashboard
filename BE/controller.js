@@ -67,7 +67,7 @@ app.post('/newScan', (req, res) => {
 
 // read headers using a get request
 app.get('/headers', (_, res) => {
-  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='materiallisttable'", (err, rows, fields) => {
+  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='materiallisttable' order by ordinal_position", (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
@@ -80,7 +80,7 @@ app.get('/headers', (_, res) => {
 
 // read tool history headers using a get request
 app.get('/ToolHistoryHeaders', (_, res) => {
-  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='toolHistorytable'", (err, rows, fields) => {
+  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='toolHistorytable' order by ordinal_position", (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
@@ -92,15 +92,34 @@ app.get('/ToolHistoryHeaders', (_, res) => {
 });
 
 // select * from toolhistorytable where nvl=given nvl
+app.get('/searchNVL', (req, res) => {
+  console.log(req)
+  const args = [[
+    req.body.nvl,
+  ]]
+  console.log(args)
+  const stmt = "SELECT * FROM toolhistorytable WHERE ?"
+  connection.query(stmt, [args], (err, rows, fields) => {
+    if (err) {
+        throw err
+        connection.end();
+    }
+    console.log(rows)
+    res.json(rows)
+  })
+
+})
+
+// select * from toolhistorytable, reads all of toolHistoryTable
 app.get('/toolhistory', (_, res) => {
-    connection.query("SELECT * FROM toolhistorytable", (err, rows, fields) => {
-        if (err) {
-            throw err
-            connection.end();
-        }
-        console.log(rows)
-        res.json(rows)
-    })
+  connection.query("SELECT * FROM toolhistorytable", (err, rows, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+      }
+      console.log(rows)
+      res.json(rows)
+  })
 })
   // read exercises using a get request
 app.get('/items', (_, res) => {

@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import ItemTable from '../components/ItemTable';
 
 const HomePage = ({ setItemToEdit }) =>{
-const history = useNavigate();
+const navigate = useNavigate();
 const [items, setItems] = useState([]);
 
 const loadItems = async () => {
@@ -24,6 +24,8 @@ const loadHeaders = async () => {
 }
 useEffect(()=> loadHeaders(),[]);
 
+
+//WIP this does not work because it is code from my old project that was deleting by an ID number, our database does not have an ID number so the delete fails
 const onDelete = async PK => {
     // Make a DELETE request
     //console.log(PK)
@@ -40,8 +42,10 @@ const onDelete = async PK => {
 
 //WIP this does not work either because it uses this setExerciseToEdit which is 
 const onEdit = item => {
+    console.log(item)
+    console.log(setItemToEdit)
     setItemToEdit(item);
-    history.push('/edit');
+    navigate('/edit');
   };
 
   return (
