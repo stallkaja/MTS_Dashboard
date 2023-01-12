@@ -1,5 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+	BrowserRouter as Router,
+	Switch,
+	Route,
+	Link
+  } from "react-router-dom";
 
 
 //handleChange: function e() {
@@ -32,24 +38,22 @@ export default function CreateMaterialPage() {
 	const addMaterial = async () => {
 	  // Create new object with the variables set in the form
 	  const newMaterial = {name, qty, stat, cat, asset, part, serial, note, loc, date, nvl};
-		console.log("here")
-		console.log(stat)
 	  const response = await fetch('/newMaterial', {
 		method: 'POST',
 		body: JSON.stringify(newMaterial),
 		headers: {
 		  'Content-Type': 'application/json'
 		}
+	  }).then(response =>{
+		if (response.status === 200) {
+			alert("Material has been added!");
+			history.push("/MaterialListPage");
+		} else {
+			alert(`Failed to add material, status code = ${response.status}`);
+		}
 	  });
-  
-	  if (response.status === 201) {
-		alert("Material has been added!");
-	  } else {
-		alert(`Failed to add material, status code = ${response.status}`);
-	  }
-	  // Return to home page
-	  history.push('/');
-	}
+	  this.props.history.push('</MaterialListPage>')
+}
 
 
 
@@ -159,6 +163,7 @@ export default function CreateMaterialPage() {
 				onChange={e => setNvl(e.target.value)}
 			/> <br/>
   
+			
 			<button onClick={addMaterial}> Create </button>
   
 		  </fieldset>

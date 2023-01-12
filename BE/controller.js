@@ -42,6 +42,9 @@ app.post('/newMaterial', (req, res) => {
             throw err
             connection.end();
         }
+        else{
+            res.status(200).json({ Error: 'Success' })
+        }
     })
 });
 
@@ -60,6 +63,9 @@ app.post('/newScan', (req, res) => {
         if (err) {
             throw err
             connection.end();
+        }
+        else{
+          res.status(200).json({ Error: 'Success' })
         }
     })
   

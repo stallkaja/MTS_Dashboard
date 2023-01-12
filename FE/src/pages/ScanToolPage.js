@@ -56,21 +56,15 @@ const ScanToolPage = ({ setItemToEdit }) => {
             headers: {
                 'Content-Type': 'application/json'
             }
-        }).then(response => {
-            if (response.status === 201) {
-                alert("Scan has been added!");
-            } else {
-                alert(`Failed to add scan, status code = ${response.status}`);
-            }
+        }).then(response =>{
+          if (response.status === 200) {
+              alert("Scan has been added!");
+          } else {
+              alert(`Failed to add scan, status code = ${response.status}`);
+          }
         });
 
-        if (response.status === 201) {
-            alert("Scan has been added!");
-        } else {
-            alert(`Failed to add scan, status code = ${response.status}`);
-        }
         // Return to home page
-        console.log("trying to reload the page")
         window.location.reload(true)
     }
 
