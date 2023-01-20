@@ -39,11 +39,21 @@ const ScanToolPage = ({ setItemToEdit }) => {
     // Make a GET request to request records related to a specific NVL
     //----------------------------------------------------------------------------
     const searchNVL = async () => {
-      const response = await fetch('/searchNVL');
+        const lookNvl = { searchnvl }
+        const response = await fetch('/searchNVL', {
+            method: 'POST',
+            body: JSON.stringify(lookNvl),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        });
       const data = await response.json();
-      setFoundNVLs(data)
-      console.log(foundNVLs);
+      setToolHistory(data)
+      console.log(toolHistory);
     }
+
+    useEffect(() => searchNVL(), []);
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
     //----------------------------------------------------------------------------

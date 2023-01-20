@@ -98,13 +98,13 @@ app.get('/ToolHistoryHeaders', (_, res) => {
 });
 
 // select * from toolhistorytable where nvl=given nvl
-app.get('/searchNVL', (req, res) => {
-  console.log(req)
+app.post('/searchNVL', (req, res) => {
+  console.log(req.body)
   const args = [[
-    req.body.nvl,
+    req.body.searchnvl,
   ]]
   console.log(args)
-  const stmt = "SELECT * FROM toolhistorytable WHERE ?"
+  const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ?"
   connection.query(stmt, [args], (err, rows, fields) => {
     if (err) {
         throw err
