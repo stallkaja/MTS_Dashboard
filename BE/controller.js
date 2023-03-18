@@ -138,59 +138,6 @@ app.get('/items', (_, res) => {
   })
   //connection.end()
   });
-
-//replace an exercsise using a put request
-app.put('/exercises/:id', (req, res) => {
-    const args = {
-      _id: req.params.id,
-      name: req.body.name,
-      reps: req.body.reps,
-      weight: req.body.weight,
-      unit: req.body.unit,
-      date: req.body.date
-    }
-    //the rest of this route handler needs to be updated to use MySQL not mongo DB
-    exercises.replaceExercise(args)
-      .then(nModified => {
-        if (nModified === 1){
-          res.json(args) 
-        } else {
-          res.status(404).json({ Error: 'Resource not found' })
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        res.status(400).json({ Error: 'Request failed' })
-      });
-  });
-
-
-//delete an exercise
-app.delete('/items/:id', (req, res) => {
-  console.log(req.params.id)
-  
-  connection.query('DELETE FROM testData WHERE materialPK='+req.params.id, (err, rows, fields) => {
-    if (err) {
-      throw err
-      connection.end();
-    }
-    res.status(204).send()
-  })
-  /*
-    exercises.deleteExercise(req.params.id)
-      .then(deletedCount => {
-        if (deletedCount === 1) {
-          res.status(204).send()
-        } else {
-          res.status(404).json({ Error: 'Resource not found' })
-        }
-      })
-      .catch(error => {
-        console.error(error)
-        res.status(400).json({ Error: 'Request failed' })
-      });
-  */
-  });
   
   
 app.listen(PORT, () => {

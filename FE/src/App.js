@@ -3,6 +3,7 @@ import React from 'react';
 import './App.css';
 import ScanToolPage from './pages/ScanToolPage.js'
 import ToolHistoryPage from './pages/ToolHistoryPage.js'
+import ToolRequestPage from './pages/ToolRequestPage.js'
 import LandingPage from './pages/LandingPage.js'
 import MaterialListPage from './pages/MaterialListPage.js'
 import MapPage from './pages/MapPage.tsx'
@@ -25,7 +26,7 @@ return (
         		<Route path='/Map' element={<MapPage/>} />
         		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
-        		<Route path='/placeholder2' element={<ToolHistoryPage/>} />
+        		<Route path='/toolRequest' element={<ToolRequestPage/>} />
         		<Route path='/create' element={<CreateMaterialPage/>} />
 				<Route path='/edit' element={<EditExercisePage/>} itemToEdit={ItemToEdit}/>
       		</Routes>

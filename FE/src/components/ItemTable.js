@@ -3,6 +3,8 @@ import ItemRow from '../components/ItemRow.js'
 import TableHeader from '../components/TableHeader.js'
 
 function ItemTable({headers, items, onEdit, onDelete}){
+	console.log('items recived in table');
+	console.log(items)
 	return(
 		<table className="table" border="1px solid">
 			<caption>Items</caption>

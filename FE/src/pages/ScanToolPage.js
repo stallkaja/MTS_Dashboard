@@ -4,6 +4,7 @@ import ItemTable from '../components/ItemTable';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import {Table} from 'antd'
 
 
 const ScanToolPage = ({ setItemToEdit }) => {
@@ -14,8 +15,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
     const history = useNavigate();
     const [headers, setHeaders] = useState([]);
     
-    const [toolHistory, setToolHistory] = useState([]);
-    const [foundNVLs, setFoundNVLs] = useState([]);
+    const [toolHistory, setToolHistory] = useState([
+      {NVL: '',
+    tool: 'ad'}
+    ]);
 
     const loadToolHistory = async () => {
         const response = await fetch('/toolhistory');
@@ -24,7 +27,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
         console.log(toolHistory)
       }
     
-    useEffect(() =>  loadToolHistory(), []);
+    //useEffect(() =>  loadToolHistory(), []);
 
     
     const loadHeaders = async () => {
@@ -37,7 +40,27 @@ const ScanToolPage = ({ setItemToEdit }) => {
     useEffect(()=> loadHeaders(),[]);
     //----------------------------------------------------------------------------
     // Make a GET request to request records related to a specific NVL
-    //----------------------------------------------------------------------------
+    //---------------------------------------------------------------------------
+    //adams garbage:
+    const columns = [
+      {
+        title: 'NVL',
+        dataIndex: 'NVL',
+        key: 'NVL',
+      },
+      {
+        title: 'Current Location',
+        dataIndex: 'curentLoction',
+        key: 'curentLoction',
+      },
+      {
+      title: 'New Location',
+      dataIndex: 'newLocation',
+      key: 'newLocation'
+      
+      }
+    ]
+
     const searchNVL = async () => {
         const lookNvl = { searchnvl }
         const response = await fetch('/searchNVL', {
@@ -47,13 +70,22 @@ const ScanToolPage = ({ setItemToEdit }) => {
                 'Content-Type': 'application/json'
             }
 
+        }).then((response) => {
+          if (response.ok) {
+            response.json().then((responseData) => {
+              setToolHistory(responseData)
+            })
+          }
         });
-      const data = await response.json();
-      setToolHistory(data)
-      console.log(toolHistory);
+      // const data = await response.json();
+      // console.log("data recieved on FE");
+      // console.log(data);
+      // // setToolHistory(data)
+      // console.log("Tool history after setting")
     }
 
-    useEffect(() => searchNVL(), []);
+      console.log('front door', toolHistory);
+    //useEffect(() => searchNVL(), []);
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
     //----------------------------------------------------------------------------
@@ -143,6 +175,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
                   <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/>
 
             </div>
+            <Table dataSource={toolHistory} columns={columns} />
         </div>
     </div>
     

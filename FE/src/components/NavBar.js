@@ -30,8 +30,8 @@ return (
 		<NavLink to='/ToolHistory' activestyle>
 			Tool History
 		</NavLink>
-		<NavLink to='/placeholder2' activestyle>
-			placeholder
+		<NavLink to='/toolRequest' activestyle>
+			Tool Requests
 		</NavLink>
 		{/* Second Nav */}
 		{/* <NavBtnLink to='/sign-in'>Sign In</NavBtnLink> */}
