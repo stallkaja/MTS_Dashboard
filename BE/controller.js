@@ -105,7 +105,7 @@ app.get('/ToolHistoryHeaders', (_, res) => {
 app.post('/searchNVL', (req, res) => {
   console.log(req.body)
   const args = [[
-    req.body.searchnvl,
+    req.body.searchNVL,
   ]]
   console.log(args)
   const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ?"
