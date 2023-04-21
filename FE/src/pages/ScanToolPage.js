@@ -4,6 +4,7 @@ import ItemTable from '../components/ItemTable';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
+import ScanHistoryATable from '../components/ScanHistoryATable';
 import {Table} from 'antd'
 
 
@@ -26,65 +27,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
         setToolHistory(data);
         console.log(toolHistory)
       }
-    
-    //useEffect(() =>  loadToolHistory(), []);
 
-    
-    const loadHeaders = async () => {
-      const response = await fetch('/ToolHistoryHeaders');
-      const headersData = await response.json();
-
-      setHeaders(headersData);
-    }
-        
-    useEffect(()=> loadHeaders(),[]);
-    //----------------------------------------------------------------------------
-    // Make a GET request to request records related to a specific NVL
-    //---------------------------------------------------------------------------
-    //adams garbage:
-    const columns = [
-      {
-        title: 'NVL',
-        dataIndex: 'NVL',
-        key: 'NVL',
-      },
-      {
-        title: 'Current Location',
-        dataIndex: 'curentLoction',
-        key: 'curentLoction',
-      },
-      {
-      title: 'New Location',
-      dataIndex: 'newLocation',
-      key: 'newLocation'
-      
-      }
-    ]
-
-    const searchNVL = async () => {
-        const lookNvl = { searchnvl }
-        const response = await fetch('/searchNVL', {
-            method: 'POST',
-            body: JSON.stringify(lookNvl),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-
-        }).then((response) => {
-          if (response.ok) {
-            response.json().then((responseData) => {
-              setToolHistory(responseData)
-            })
-          }
-        });
-      // const data = await response.json();
-      // console.log("data recieved on FE");
-      // console.log(data);
-      // // setToolHistory(data)
-      // console.log("Tool history after setting")
-    }
-
-      console.log('front door', toolHistory);
     //useEffect(() => searchNVL(), []);
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
@@ -162,20 +105,12 @@ const ScanToolPage = ({ setItemToEdit }) => {
                 </fieldset>
             </div>
             <div className={ScanToolStyles.column}>
-                  <h2>History</h2>
-                  <label for="searchnvl">Search NVL History</label>
-                  <input id="searchnvl"
-                      type="text"
-                      value={searchnvl}
-                      onInput={e => setSearchNvl(e.target.value)}
-                      placeholder="Search an NVL"
-                  />
-                  <button onClick={searchNVL}> Submit </button>
+{/*                   <button onClick={searchNVL}> Submit </button>
                   <br/>
-                  <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/>
-
+                  <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/> */}
+                  <ScanHistoryATable/>
             </div>
-            <Table dataSource={toolHistory} columns={columns} />
+            {/* <Table dataSource={toolHistory} columns={columns} /> */}
         </div>
     </div>
     

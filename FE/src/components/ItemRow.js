@@ -11,6 +11,7 @@ function ItemRow({item, onDelete, onEdit}){
 				itemArray.push(item[prop])
 			}
 		}
+		//console.log(itemArray)
 		setItemArray(itemArray);
 	},[]);
 

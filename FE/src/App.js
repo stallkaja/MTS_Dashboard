@@ -8,7 +8,7 @@ import LandingPage from './pages/LandingPage.js'
 import MaterialListPage from './pages/MaterialListPage.js'
 import MapPage from './pages/MapPage.tsx'
 import CreateMaterialPage from './pages/CreateMaterialPage.js'
-import EditExercisePage from './pages/EditExercisePage.js'
+import TicketDashboard from './pages/TicketDashboard.tsx'
 import Navbar from './components/NavBar.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
@@ -22,13 +22,13 @@ return (
       		<Navbar />
       		<Routes>
         		<Route path='/' element={<LandingPage/>} />
+				<Route path='/TicketDashboard' element={<TicketDashboard/>} />
         		<Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
         		<Route path='/Map' element={<MapPage/>} />
         		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
         		<Route path='/toolRequest' element={<ToolRequestPage/>} />
         		<Route path='/create' element={<CreateMaterialPage/>} />
-				<Route path='/edit' element={<EditExercisePage/>} itemToEdit={ItemToEdit}/>
       		</Routes>
     	</Router>
 

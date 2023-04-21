@@ -18,6 +18,9 @@ return (
 		<NavLink to='/' activestyle>
 			LandingPage
 		</NavLink>
+		<NavLink to='/TicketDashboard' activestyle>
+			Ticket Dashboard
+		</NavLink>
 		<NavLink to='/MaterialListPage' activestyle>
 			Material List
 		</NavLink>

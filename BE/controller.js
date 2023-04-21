@@ -72,13 +72,17 @@ app.post('/newScan', (req, res) => {
   });
 
 // read headers using a get request
-app.get('/headers', (_, res) => {
-  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='materiallisttable' order by ordinal_position", (err, rows, fields) => {
+app.post('/headers', (req, res) => {
+  console.log(req.body);
+  const args=[[
+    req.body.tName
+  ]]
+  const stms = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
+  connection.query(stms,[args], (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
     }
-    //console.log(rows)
     res.json(rows)
   })
   //connection.end()
@@ -111,6 +115,7 @@ app.post('/searchNVL', (req, res) => {
         connection.end();
     }
     console.log(rows)
+    console.log('sending data')
     res.json(rows)
   })
 
@@ -126,7 +131,7 @@ app.get('/toolhistory', (_, res) => {
       console.log(rows)
       res.json(rows)
   })
-})
+});
   // read exercises using a get request
 app.get('/items', (_, res) => {
   connection.query('Select * from materiallisttable', (err, rows, fields) => {
@@ -134,6 +139,7 @@ app.get('/items', (_, res) => {
       throw err
       connection.end();
     }
+    console.log(rows)
     res.json(rows)
   })
   //connection.end()
