@@ -34,9 +34,13 @@ const ScanToolPage = ({ setItemToEdit }) => {
     //----------------------------------------------------------------------------
     const newScan = async () => {
         // Create new object with the variables set in the form
-        const time = Date.now();
-        const date = (new Intl.DateTimeFormat('en-us', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(time));
+        let yourDate = new Date()
+        const offset = yourDate.getTimezoneOffset()
+        yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+        const date = yourDate.toISOString().split('T')[0]
         const newScan = { nvl, employeeID, newLoc, date };
+        console.log(date)
+        console.log(newScan)
         const response = await fetch('/newScan', {
             method: 'POST',
             body: JSON.stringify(newScan),

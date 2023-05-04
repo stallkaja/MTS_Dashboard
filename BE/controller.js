@@ -58,7 +58,7 @@ app.post('/newScan', (req, res) => {
         req.body.date,
     ]]
     console.log(args);
-    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, datetime) VALUES ? "
+    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, curDate) VALUES ? "
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
@@ -104,18 +104,10 @@ app.get('/ToolHistoryHeaders', (_, res) => {
 
 // select * from toolhistorytable where nvl=given nvl
 app.post('/searchNVL', (req, res) => {
-<<<<<<< HEAD
-  const sql = connection.format("SELECT * FROM toolhistorytable WHERE NVL = ?",[req.body.searchnvl])
-  console.log(sql);
-  console.log(req.body.searchNVL)
-  const args = req.body.searchNVL
-=======
   console.log(req.body)
   const args = [[
     req.body.searchNVL,
   ]]
->>>>>>> 3271c037f87304bd426eb067f0c12af5f1004fea
-  console.log(args)
   const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ?"
   connection.query(stmt, [args], (err, rows, fields) => {
     if (err) {
