@@ -55,9 +55,10 @@ app.post('/newScan', (req, res) => {
         req.body.nvl,
         req.body.employeeID,
         req.body.newLoc,
+        req.body.date,
     ]]
     console.log(args);
-    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc) VALUES ? "
+    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, datetime) VALUES ? "
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {

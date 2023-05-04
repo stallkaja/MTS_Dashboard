@@ -34,7 +34,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
     //----------------------------------------------------------------------------
     const newScan = async () => {
         // Create new object with the variables set in the form
-        const newScan = { nvl, employeeID, newLoc };
+        const time = Date.now();
+        const date = (new Intl.DateTimeFormat('en-us', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit'}).format(time));
+        const newScan = { nvl, employeeID, newLoc, date };
         const response = await fetch('/newScan', {
             method: 'POST',
             body: JSON.stringify(newScan),
