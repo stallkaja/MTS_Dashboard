@@ -28,7 +28,6 @@ const onDelete = async PK => {
 //WIP this does not work either because it uses this setExerciseToEdit which is 
 const onEdit = item => {
     console.log(item)
-    console.log(setItemToEdit)
     setItemToEdit(item);
     navigate('/edit');
   };

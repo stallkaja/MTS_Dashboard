@@ -10,6 +10,7 @@ import MapPage from './pages/MapPage.tsx'
 import CreateMaterialPage from './pages/CreateMaterialPage.js'
 import TicketDashboard from './pages/TicketDashboard.tsx'
 import Navbar from './components/NavBar.js';
+import TicketPage from './pages/TicketPage.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 
@@ -29,6 +30,7 @@ return (
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
         		<Route path='/toolRequest' element={<ToolRequestPage/>} />
         		<Route path='/create' element={<CreateMaterialPage/>} />
+				<Route path='/ticketPage' element={<TicketPage/>} />
       		</Routes>
     	</Router>
 
