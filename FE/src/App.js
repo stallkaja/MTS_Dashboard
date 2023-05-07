@@ -10,14 +10,21 @@ import MapPage from './pages/MapPage.tsx'
 import CreateMaterialPage from './pages/CreateMaterialPage.js'
 import TicketDashboard from './pages/TicketDashboard.tsx'
 import Navbar from './components/NavBar.js';
+import LoginPage from './components/LoginPage.js';
 import TicketPage from './pages/TicketPage.js'
+import useToken from './components/useToken.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 
 
 function App() {  
-const [ItemToEdit, setItemToEdit] = useState();
-return (
+	const [ItemToEdit, setItemToEdit] = useState();
+	const { token, setToken } = useToken();
+
+	if(!token) {
+    	return <LoginPage setToken={setToken} />
+  	}
+	return (
     <div className="App">
 		<Router>
       		<Navbar />

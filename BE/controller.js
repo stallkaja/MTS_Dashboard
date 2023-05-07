@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express();
 const PORT = 3000;
+const cors = require('cors')
 
 //My SQL Connection  and config
 const mysql = require('mysql')
@@ -17,6 +18,18 @@ const connection = mysql.createConnection({
 app.use(express.json());
 
 
+/**********************************************
+ * Login page WIP code
+app.use(cors());
+
+app.use('/login', (req, res) => {
+  console.log(req.body.username)
+  console.log(req.body.password)
+  res.send({
+    token: 'test123'
+  });
+});
+*********************************************** */
 // Create a new material using a post request
 app.post('/newMaterial', (req, res) => {
 
