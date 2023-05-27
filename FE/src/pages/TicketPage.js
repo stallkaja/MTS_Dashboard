@@ -1,16 +1,5 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import {
-	BrowserRouter as Router,
-	Switch,
-	Route,
-	Link
-  } from "react-router-dom";
-
-
-//handleChange: function e() {
-	
-//}
 
 
 
@@ -171,5 +160,4 @@ export default function CreateMaterialPage() {
   
 	  </div>
 	)
-  
   }

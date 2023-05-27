@@ -123,11 +123,22 @@ function OpenTicketATable(targetNVL){
         for(let i =0;i<responseData.length;i++){
 
             console.log(responseData[i].COLUMN_NAME)
-            let payload = {
-              title: responseData[i].COLUMN_NAME,
-              dataIndex: responseData[i].COLUMN_NAME,
-              key: responseData[i].COLUMN_NAME,
+            if(responseData[i].COLUMN_NAME == "TicketNum"){
+              var payload = {
+                title: responseData[i].COLUMN_NAME,
+                dataIndex: responseData[i].COLUMN_NAME,
+                key: responseData[i].COLUMN_NAME,
+                sorter: (a, b) => a.TicketNum - b.TicketNum,
+              }
             }
+            else{
+              var payload = {
+                title: responseData[i].COLUMN_NAME,
+                dataIndex: responseData[i].COLUMN_NAME,
+                key: responseData[i].COLUMN_NAME,
+              }
+            }
+
             headerArray.push(payload)
         }
         const buttonPayload = {

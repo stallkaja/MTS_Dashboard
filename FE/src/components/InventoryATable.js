@@ -93,14 +93,50 @@ function InventoryATable(targetNVL){
         //console.log(responseData)
         for(let i =0;i<responseData.length;i++){
 
-            console.log(responseData[i].COLUMN_NAME)
-            let payload = {
+          console.log(responseData[i].COLUMN_NAME)
+          if(responseData[i].COLUMN_NAME == "MaterialName"){
+            var payload = {
+              title: responseData[i].COLUMN_NAME,
+              dataIndex: responseData[i].COLUMN_NAME,
+              key: responseData[i].COLUMN_NAME,
+              sorter: (a, b) => a.MaterialName - b.MaterialName,
+            }
+          }
+          else if(responseData[i].COLUMN_NAME == "BEN"){
+            var payload = {
+              title: responseData[i].COLUMN_NAME,
+              dataIndex: responseData[i].COLUMN_NAME,
+              key: responseData[i].COLUMN_NAME,
+              filters: [
+                {
+                  text: 'Joe',
+                  value: 'Joe',
+                },
+                {
+                  text: 'Category 1',
+                  value: 'Category 1',
+                },
+                {
+                  text: 'Category 2',
+                  value: 'Category 2',
+                },
+              ],
+              filterMode: 'tree',
+              filterSearch: true,
+              onFilter: (value, record) => record.name.startsWith(value),
+              width: '30%',
+            }
+          }
+          else{
+            var payload = {
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
             }
-            headerArray.push(payload)
-        }
+          }
+
+          headerArray.push(payload)
+      }
         setHeaders(headerArray)
       })
     }

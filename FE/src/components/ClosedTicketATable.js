@@ -1,5 +1,6 @@
 import { Space, Table, Tag } from 'antd';
 import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router';
 //Example code from antD. 
 /* const columns = [
   {
@@ -76,6 +77,12 @@ const data = [
 function ClosedTicketATable(targetNVL){
   const [items, setItems] = useState([]);
   const [headers, setHeaders] = useState([]);
+    const navigate = useNavigate();
+
+  const EditRecord=(record)=>{
+    navigate('/ticketPage',{state:{record:record}});
+  };
+
   const loadHeaders = async () => {
   const tName = 'ticketstable'
   const tableName = {tName}
@@ -94,24 +101,35 @@ function ClosedTicketATable(targetNVL){
         for(let i =0;i<responseData.length;i++){
 
             console.log(responseData[i].COLUMN_NAME)
-            let payload = {
-              title: responseData[i].COLUMN_NAME,
-              dataIndex: responseData[i].COLUMN_NAME,
-              key: responseData[i].COLUMN_NAME,
+            if(responseData[i].COLUMN_NAME == "TicketNum"){
+              var payload = {
+                title: responseData[i].COLUMN_NAME,
+                dataIndex: responseData[i].COLUMN_NAME,
+                key: responseData[i].COLUMN_NAME,
+                sorter: (a, b) => a.TicketNum - b.TicketNum,
+              }
             }
-            
+            else{
+              var payload = {
+                title: responseData[i].COLUMN_NAME,
+                dataIndex: responseData[i].COLUMN_NAME,
+                key: responseData[i].COLUMN_NAME,
+              }
+            }
+
             headerArray.push(payload)
         }
         const buttonPayload = {
-            title: 'Do it',
-            key: 'key',
-            dataIndex: 'key',
-            render: (text, record) => (
-             <button onClick={()=> console.log(record)}>
-               {"Claim"}
-             </button>
-            ),
-          }
+          title: 'Do it',
+          key: 'key',
+          dataIndex: 'key',
+          render: (text, record) => (
+           <button onClick={()=>EditRecord(record)}>
+            {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
+             {"Claim"}
+           </button>
+          ),
+        }
           headerArray.push(buttonPayload)
         setHeaders(headerArray)
       })
