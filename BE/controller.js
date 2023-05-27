@@ -18,18 +18,37 @@ const connection = mysql.createConnection({
 app.use(express.json());
 
 
-/**********************************************
- * Login page WIP code
+
 app.use(cors());
 
 app.use('/login', (req, res) => {
   console.log(req.body.username)
   console.log(req.body.password)
-  res.send({
-    token: 'test123'
-  });
+  const args=[[
+    req.body.username
+  ]]
+
+  const stmt = "select pword from userstable where username= ?"
+  connection.query(stmt,[args], (err, rows, fields) => {
+    if (err) {
+      throw err
+      connection.end();
+    }
+    console.log(rows[0].pword)
+    if(req.body.password == rows[0].pword){
+      res.send({
+        token: "abc123"
+      });
+    }
+    else {
+      res.send({
+        token: null
+      });
+    }
+  }) 
+
 });
-*********************************************** */
+
 // Create a new material using a post request
 app.post('/newMaterial', (req, res) => {
 
@@ -91,8 +110,8 @@ app.post('/headers', (req, res) => {
   const args=[[
     req.body.tName
   ]]
-  const stms = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
-  connection.query(stms,[args], (err, rows, fields) => {
+  const stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
+  connection.query(stmt,[args], (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
