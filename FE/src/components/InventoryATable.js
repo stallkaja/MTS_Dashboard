@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd';
+import { Space, Table, Tag, Typography } from 'antd';
 import { useState, useEffect } from 'react';
 //Example code from antD. 
 /* const columns = [
@@ -76,9 +76,9 @@ const data = [
 function InventoryATable(targetNVL){
   const [items, setItems] = useState([]);
   const [headers, setHeaders] = useState([]);
-  const loadHeaders = async () => {
-  const tName = 'materialListtable'
-  const tableName = {tName}
+    const loadHeaders = async () => {
+  //const tName = 'materialListtable'
+        const tableName = {tName: 'materialListtable'}
   const response = await fetch('/headers', {
       method: 'POST',
       body: JSON.stringify(tableName),

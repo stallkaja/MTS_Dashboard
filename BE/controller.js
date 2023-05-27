@@ -147,7 +147,7 @@ app.get('/items', (_, res) => {
   
     // load tickets
 app.get('/loadOpenTickets', (_, res) => {
-  connection.query('Select * from ticketstable WHERE TicketStatus="Open"', (err, rows, fields) => {
+  connection.query('Select * from ticketstable WHERE TicketStatus = "Open"', (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
@@ -158,7 +158,7 @@ app.get('/loadOpenTickets', (_, res) => {
   //connection.end()
   });
   app.get('/loadClosedTickets', (_, res) => {
-    connection.query('Select * from ticketstable WHERE TicketStatus="Closed"', (err, rows, fields) => {
+    connection.query('Select * from ticketstable WHERE TicketStatus = "Closed"', (err, rows, fields) => {
       if (err) {
         throw err
         connection.end();
@@ -167,7 +167,19 @@ app.get('/loadOpenTickets', (_, res) => {
       res.json(rows)
     })
     //connection.end()
-    });
+  });
+//retrieve calibrated tools information
+app.get('/calTools', (_, res) => {
+    connection.query('Select * from caltools', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        console.log(rows)
+        res.json(rows)
+    })
+    //connection.end()
+});
   
 app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
