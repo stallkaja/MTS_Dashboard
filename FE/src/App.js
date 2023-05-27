@@ -21,9 +21,9 @@ function App() {
 	const [ItemToEdit, setItemToEdit] = useState();
 	const { token, setToken } = useToken();
 
-/* 	if(!token) {
+	if(!token) {
     	return <LoginPage setToken={setToken} />
-  	} */
+  	}
 	return (
     <div className="App">
 		<Router>
