@@ -25,7 +25,14 @@ export default function Login({ setToken }) {
       username,
       password
     });
-    setToken(token);
+    console.log(token.token)
+    if(token.token != null){
+      setToken(token);
+    }
+    else{
+      alert("Login Failed")
+    }
+
   }
 
   return(
