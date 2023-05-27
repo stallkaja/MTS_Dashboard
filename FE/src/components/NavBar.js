@@ -31,7 +31,7 @@ return (
 			Scan Tool
 		</NavLink>
 		<NavLink to='/ToolHistory' activestyle>
-			Tool History
+			Tool Info
 		</NavLink>
 		<NavLink to='/toolRequest' activestyle>
 			Tool Requests

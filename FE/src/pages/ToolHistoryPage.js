@@ -1,5 +1,7 @@
 
 import React from 'react';
+import ToolInfoATable from '../components/ToolinfoATable';
+import { useNavigate, Link } from 'react-router';
   
 const ToolHistoryPage = () => {
   return (
@@ -11,7 +13,8 @@ const ToolHistoryPage = () => {
         height: '100vh'
       }}
     >
-      <h1>Tool History / Report Page</h1>
+          <h1>Tool Information Page</h1>
+          <ToolInfoATable/>
     </div>
   );
 };

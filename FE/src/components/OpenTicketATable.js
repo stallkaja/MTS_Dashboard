@@ -107,7 +107,7 @@ function OpenTicketATable(targetNVL){
 
   const loadHeaders = async () => {
   const tName = 'ticketstable'
-  const tableName = {tName}
+  const tableName = { tName }
   const response = await fetch('/headers', {
       method: 'POST',
       body: JSON.stringify(tableName),
