@@ -8,7 +8,7 @@ export default function CreateToolPage() {
 
 	const history = useNavigate();
 	const location = useLocation();
-	//console.log(location.state.record)
+	console.log(location);
 	const [manu, setManu] = useState('');
 	const [model, setModel] = useState('');
 	const [desc, setDesc] = useState('')
@@ -19,7 +19,7 @@ export default function CreateToolPage() {
 	const [caldue, setCaldue] = useState('');
 
 	useEffect(() => {
-		if (location.state.record == null) {
+		if (location.state == null) {
 			console.log('record is null')
 			}
 		else {
