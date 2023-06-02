@@ -1,6 +1,6 @@
 
 import React, { Component }  from 'react';
-//import map from '../DOSMap.png'
+import dosmap from '../images/DOSMap.png'; //Imports DOS Map from the image folder, yet gives syntax error.
 import ReactSearchBox from "react-search-box";
   
 const MapPage = () => {
@@ -43,10 +43,12 @@ const MapPage = () => {
       }}
       onChange={(value) => console.log(value)}
       autoFocus
-      leftIcon={<>🎨</>}
-      iconBoxSize="48px"
-    />
-      {/* <img src={map} alt="map" width="95%" height="95%"/> */}
+      leftIcon={<>🔎</>}
+      iconBoxSize="28px"
+    />|
+        <img 
+          src={dosmap} alt="map" width="65%" height="65%">
+        </img>
     </div>
   );
 };
