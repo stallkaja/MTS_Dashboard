@@ -202,7 +202,7 @@ app.get('/loadOpenTickets', (_, res) => {
   });
 //retrieve calibrated tools information
 app.get('/calTools', (_, res) => {
-    connection.query('Select * from caltools', (err, rows, fields) => {
+    connection.query('Select * from caltoolstable', (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();
