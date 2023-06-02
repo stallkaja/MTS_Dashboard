@@ -15,6 +15,7 @@ import TicketPage from './pages/TicketPage.js'
 import useToken from './components/useToken.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
+import ToolInfoForm from './pages/ToolInfoForm.js';
 
 
 function App() {  
@@ -37,7 +38,8 @@ function App() {
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
         		<Route path='/toolRequest' element={<ToolRequestPage/>} />
         		<Route path='/create' element={<CreateMaterialPage/>} />
-				<Route path='/ticketPage' element={<TicketPage/>} />
+                <Route path='/ticketPage' element={<TicketPage />} />
+                <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
       		</Routes>
     	</Router>
 

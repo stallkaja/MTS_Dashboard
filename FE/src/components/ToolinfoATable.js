@@ -178,7 +178,7 @@ function ToolInfoATable(targetNVL) {
     const navigate = useNavigate();
 
     const EditRecord = (record) => {
-        navigate('/ticketPage', { state: { record: record } });
+        navigate('/ToolInfoForm', { state: { record: record } });
     };
 
 
@@ -200,7 +200,7 @@ function ToolInfoATable(targetNVL) {
                     //console.log(responseData)
                     for (let i = 0; i < responseData.length; i++) {
 
-                        console.log(responseData[i].COLUMN_NAME)
+                        //console.log(responseData[i].COLUMN_NAME)
                         let payload = {
                             title: responseData[i].COLUMN_NAME,
                             dataIndex: responseData[i].COLUMN_NAME,
@@ -209,7 +209,7 @@ function ToolInfoATable(targetNVL) {
                         headerArray.push(payload)
                     }
                     const buttonPayload = {
-                        title: 'Do it',
+                        title: 'Edit',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
