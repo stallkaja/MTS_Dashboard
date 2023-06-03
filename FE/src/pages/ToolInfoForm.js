@@ -8,7 +8,6 @@ export default function CreateToolPage() {
 
 	const history = useNavigate();
 	const location = useLocation();
-	console.log(location);
 	const [manu, setManu] = useState('');
 	const [model, setModel] = useState('');
 	const [desc, setDesc] = useState('')
@@ -124,11 +123,6 @@ export default function CreateToolPage() {
 					value={caldue}
 					onChange={e => setCaldue(e.target.value)}
 				/> <br />
-				
-
-
-
-
 				<button onClick={addTool}> Submit </button>
 
 			</fieldset>

@@ -1,6 +1,7 @@
 import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag, Typography } from 'antd';
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate, Link } from 'react-router';
 //Example code from antD. 
 /* const columns = [
   {
@@ -86,6 +87,10 @@ function InventoryATable(targetNVL){
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
+  const navigate = useNavigate();
+  const EditRecord=(record)=>{
+    navigate('/createMaterial',{state:{record:record}});
+  };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -197,7 +202,7 @@ function InventoryATable(targetNVL){
         //console.log(responseData)
         for(let i =0;i<responseData.length;i++){
 
-          console.log(responseData[i].COLUMN_NAME)
+          //console.log(responseData[i].COLUMN_NAME)
           if(responseData[i].COLUMN_NAME == "MaterialName"){
             var payload = {
               title: responseData[i].COLUMN_NAME,
@@ -233,6 +238,18 @@ function InventoryATable(targetNVL){
 
           headerArray.push(payload)
       }
+        const buttonPayload = {
+         title: '',
+          key: 'key',
+          dataIndex: 'key',
+          render: (text, record) => (
+            <button onClick={()=>EditRecord(record)}>
+            {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
+              {"Open"}
+          </button>
+          ),
+        }
+        headerArray.push(buttonPayload)
         setHeaders(headerArray)
       })
     }

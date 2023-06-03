@@ -36,7 +36,7 @@ const onEdit = item => {
     <>
     
       <h1>DOS Material List</h1>
-      <h2 style={{color: "white"}}><Link to='/create'>Create an Item</Link></h2>
+      <h2 style={{color: "white"}}><Link to='/createMaterial'>Create an Item</Link></h2>
       <InventoryATable/>
       {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
       <br/>

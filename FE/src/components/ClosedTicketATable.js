@@ -100,7 +100,6 @@ function ClosedTicketATable(targetNVL){
         //console.log(responseData)
         for(let i =0;i<responseData.length;i++){
 
-            console.log(responseData[i].COLUMN_NAME)
             if(responseData[i].COLUMN_NAME == "TicketNum"){
               var payload = {
                 title: responseData[i].COLUMN_NAME,
@@ -126,7 +125,7 @@ function ClosedTicketATable(targetNVL){
           render: (text, record) => (
            <button onClick={()=>EditRecord(record)}>
             {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
-             {"Claim"}
+             {"Open"}
            </button>
           ),
         }

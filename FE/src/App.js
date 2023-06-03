@@ -37,7 +37,7 @@ function App() {
         		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
         		<Route path='/toolRequest' element={<ToolRequestPage/>} />
-        		<Route path='/create' element={<CreateMaterialPage/>} />
+        		<Route path='/createMaterial' element={<CreateMaterialPage/>} />
                 <Route path='/ticketPage' element={<TicketPage />} />
                 <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
       		</Routes>

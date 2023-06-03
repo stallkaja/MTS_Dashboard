@@ -22,8 +22,6 @@ app.use(express.json());
 app.use(cors());
 
 app.use('/login', (req, res) => {
-  console.log(req.body.username)
-  console.log(req.body.password)
   const args=[[
     req.body.username
   ]]
@@ -34,7 +32,6 @@ app.use('/login', (req, res) => {
       throw err
       connection.end();
     }
-    console.log(rows[0].pword)
     if(req.body.password == rows[0].pword){
       res.send({
         token: "abc123"
@@ -62,12 +59,9 @@ app.post('/newMaterial', (req, res) => {
         req.body.stat,
         req.body.part,
         req.body.serial,
-        //req.body.date,
-        //req.body.loc,
-        
+        req.body.loc,
     ]]
-    console.log(args);
-    const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber) VALUES ? "
+    const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber,Location) VALUES ? ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = VALUES(Location), LaptopAssignedMF = VALUES(LaptopAssignedMF), LaptopAssignedFEDShift = VALUES(LaptopAssignedFEDShift), LaptopAssignedFENShift = VALUES(LaptopAssignedFENShift), LaptopAssignedBEDShift = VALUES(LaptopAssignedBEDShift), LaptopAssignedBENShift = VALUES(LaptopAssignedBENShift), LaptopDepartment = VALUES(LaptopDepartment)"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
@@ -78,6 +72,33 @@ app.post('/newMaterial', (req, res) => {
             res.status(200).json({ Error: 'Success' })
         }
     })
+});
+
+
+// Create a new Ticket using a post request
+app.post('/newTicket', (req, res) => {
+
+  const args = [
+      req.body.ticketStatus,
+      req.body.ticketNum,
+      req.body.ben,
+      req.body.ticketDescription,
+      req.body.department,
+      req.body.toolBay
+
+  ]
+  const stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
+  //WIP
+  connection.query(stmt, [args], (err, rows, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+      }
+      else {
+        console.log(rows)
+        res.status(200).json({ Error: 'Success' })
+      }
+  })
 });
 
 // Create a new Tool using a post request
@@ -94,7 +115,6 @@ app.post('/newTool', (req, res) => {
         req.body.caldue
 
     ]
-    //console.log(args);
     const stmt = "INSERT INTO caltoolstable (ID, ManufacturerName, ModelName, Description, SerialNumber, Area, Location, CalibrationDue) VALUES(?) ON DUPLICATE KEY UPDATE ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), Location = VALUES(Location), CalibrationDue = VALUES(CalibrationDue)"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
@@ -117,7 +137,6 @@ app.post('/newScan', (req, res) => {
         req.body.newLoc,
         req.body.date,
     ]]
-    console.log(args);
     const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, curDate) VALUES ? "
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
@@ -134,7 +153,6 @@ app.post('/newScan', (req, res) => {
 
 // read headers using a get request
 app.post('/headers', (req, res) => {
-  console.log(req.body);
   const args=[[
     req.body.tName
   ]]
@@ -156,7 +174,6 @@ app.get('/ToolHistoryHeaders', (_, res) => {
       throw err
       connection.end();
     }
-    //console.log(rows)
     res.json(rows)
   })
   //connection.end()
@@ -164,7 +181,6 @@ app.get('/ToolHistoryHeaders', (_, res) => {
 
 // select * from toolhistorytable where nvl=given nvl
 app.post('/searchNVL', (req, res) => {
-  console.log(req.body)
   const args = [[
     req.body.searchNVL,
   ]]
@@ -174,8 +190,6 @@ app.post('/searchNVL', (req, res) => {
         throw err
         connection.end();
     }
-    console.log(rows)
-    console.log('sending data')
     res.json(rows)
   })
 
@@ -188,7 +202,6 @@ app.get('/toolhistory', (_, res) => {
           throw err
           connection.end();
       }
-      console.log(rows)
       res.json(rows)
   })
 });
@@ -199,7 +212,6 @@ app.get('/items', (_, res) => {
       throw err
       connection.end();
     }
-    console.log(rows)
     res.json(rows)
   })
   //connection.end()
@@ -212,7 +224,6 @@ app.get('/loadOpenTickets', (_, res) => {
       throw err
       connection.end();
     }
-    console.log(rows)
     res.json(rows)
   })
   //connection.end()
@@ -223,7 +234,6 @@ app.get('/loadOpenTickets', (_, res) => {
         throw err
         connection.end();
       }
-      console.log(rows)
       res.json(rows)
     })
     //connection.end()
@@ -235,7 +245,6 @@ app.get('/calTools', (_, res) => {
             throw err
             connection.end();
         }
-        console.log(rows)
         res.json(rows)
     })
     //connection.end()

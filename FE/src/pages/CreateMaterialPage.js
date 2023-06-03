@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState,useEffect } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 import {
 	BrowserRouter as Router,
 	Switch,
@@ -17,6 +17,7 @@ import {
 export default function CreateMaterialPage() {
 
 	const history = useNavigate();
+	const location = useLocation();
   
 	// Variables which are initialized to empty string and updated by form below
 	const [name, setName] = useState('');
@@ -30,6 +31,27 @@ export default function CreateMaterialPage() {
 	const [note, setNote] = useState('');
 	const [loc, setLoc] = useState('');
 	const [nvl, setNvl] = useState('');
+	const [materialPK, setMaterialPK] = useState('');
+	console.log(location.state)
+	useEffect(() => {
+		if (location.state == null) {
+			console.log('record is null')
+			}
+		else {
+			setName(location.state.record.MaterialName);
+			setQty(location.state.record.Quantity);
+			setStat(location.state.record.CurrentState);
+			setCat(location.state.record.Category);
+			setAsset(location.state.record.AssetNumber);
+			setPart(location.state.record.LamPartNumber);
+			setSerial(location.state.record.SerialNumber);
+			setNote(location.state.record.AdditionalNotes);
+			setLoc(location.state.record.Location);
+			setNvl(location.state.record.NVL);
+			setMaterialPK(location.state.materialPK)
+			
+		};
+	}, []) // <-- empty dependency array
 
 	
 	//----------------------------------------------------------------------------
@@ -37,7 +59,7 @@ export default function CreateMaterialPage() {
 	//----------------------------------------------------------------------------
 	const addMaterial = async () => {
 	  // Create new object with the variables set in the form
-	  const newMaterial = {name, qty, stat, cat, asset, part, serial, note, loc, date, nvl};
+	  const newMaterial = {name, qty, stat, cat, asset, part, serial, note, loc, nvl,materialPK};
 	  const response = await fetch('/newMaterial', {
 		method: 'POST',
 		body: JSON.stringify(newMaterial),
@@ -47,7 +69,7 @@ export default function CreateMaterialPage() {
 	  }).then(response =>{
 		if (response.status === 200) {
 			alert("Material has been added!");
-			history.push("/MaterialListPage");
+			history("/MaterialListPage");
 		} else {
 			alert(`Failed to add material, status code = ${response.status}`);
 		}
@@ -113,13 +135,6 @@ export default function CreateMaterialPage() {
 				<option value="torque">Tools-Torque Wrench</option>
 				<option value="vi">VI Probe Kit</option>
 			</select> <br/>
-  
-			<label for="date">Due Date</label> 
-			<input id="date"
-			  type="text"
-			  value={date}
-			  onChange={e => setDate(e.target.value)}
-				/> <br/>
 
 			<label for="asset">Asset Tag #</label>
 			<input id="asset"
@@ -163,9 +178,7 @@ export default function CreateMaterialPage() {
 				onChange={e => setNvl(e.target.value)}
 			/> <br/>
   
-			
 			<button onClick={addMaterial}> Create </button>
-  
 		  </fieldset>
   
 	  </div>
