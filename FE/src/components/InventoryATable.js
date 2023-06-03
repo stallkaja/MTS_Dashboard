@@ -1,5 +1,6 @@
-import { Space, Table, Tag, Typography } from 'antd';
-import { useState, useEffect } from 'react';
+import { SearchOutlined } from '@ant-design/icons';
+import { Button, Input, Space, Table, Tag, Typography } from 'antd';
+import { useState, useEffect, useRef } from 'react';
 //Example code from antD. 
 /* const columns = [
   {
@@ -74,6 +75,109 @@ const data = [
 ]; */
 
 function InventoryATable(targetNVL){
+  //Sort method to sort numbers and strings without having to determine type in column
+  const defaultSort = (a, b) => {
+    if (a < b) return -1;
+    if (b < a) return 1;
+    return 0;
+  };
+  
+  //Methods for search and sort in columns -----------------------
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText('');
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+      <div
+        style={{
+          padding: 8,
+        }}
+        onKeyDown={(e) => e.stopPropagation()}
+      >
+        <Input
+          ref={searchInput}
+          placeholder={`Search ${dataIndex}`}
+          value={selectedKeys[0]}
+          onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+          onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+          style={{
+            marginBottom: 8,
+            display: 'block',
+          }}
+        />
+        <Space>
+          <Button
+            type="primary"
+            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+            icon={<SearchOutlined />}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Search
+          </Button>
+          <Button
+            onClick={() => clearFilters && handleReset(clearFilters)}
+            size="small"
+            style={{
+              width: 90,
+            }}
+          >
+            Reset
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              confirm({
+                closeDropdown: false,
+              });
+              setSearchText(selectedKeys[0]);
+              setSearchedColumn(dataIndex);
+            }}
+          >
+            Filter
+          </Button>
+          <Button
+            type="link"
+            size="small"
+            onClick={() => {
+              close();
+            }}
+          >
+            close
+          </Button>
+        </Space>
+      </div>
+    ),
+    filterIcon: (filtered) => (
+      <SearchOutlined
+        style={{
+          color: filtered ? '#1677ff' : undefined,
+        }}
+      />
+    ),
+    onFilter: (value, record) =>
+      record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+  });
+  //---------------------------------------------------
+
+
   const [items, setItems] = useState([]);
   const [headers, setHeaders] = useState([]);
     const loadHeaders = async () => {
@@ -99,7 +203,8 @@ function InventoryATable(targetNVL){
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
-              sorter: (a, b) => a.MaterialName - b.MaterialName,
+              sorter: (a, b) => a.MaterialName.localeCompare(b.MaterialName),
+              sortDirections: ['ascend', 'descend'],
             }
           }
           else if(responseData[i].COLUMN_NAME == "BEN"){
@@ -107,23 +212,9 @@ function InventoryATable(targetNVL){
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
-              filters: [
-                {
-                  text: 'Joe',
-                  value: 'Joe',
-                },
-                {
-                  text: 'Category 1',
-                  value: 'Category 1',
-                },
-                {
-                  text: 'Category 2',
-                  value: 'Category 2',
-                },
-              ],
-              filterMode: 'tree',
-              filterSearch: true,
-              onFilter: (value, record) => record.name.startsWith(value),
+              ...getColumnSearchProps('BEN'),
+              sorter: (a, b) => a.BEN.localeCompare(b.BEN),
+              sortDirections: ['descend', 'ascend'],
               width: '30%',
             }
           }
@@ -132,6 +223,11 @@ function InventoryATable(targetNVL){
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
+              sorter: {
+                compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
+              },
+              
+              sortDirections: ['ascend', 'descend'],
             }
           }
 
