@@ -80,6 +80,34 @@ app.post('/newMaterial', (req, res) => {
     })
 });
 
+// Create a new Tool using a post request
+app.post('/newTool', (req, res) => {
+
+    const args = [
+        req.body.id,
+        req.body.manu,
+        req.body.model,
+        req.body.desc,
+        req.body.serial,
+        req.body.area,
+        req.body.loc,
+        req.body.caldue
+
+    ]
+    //console.log(args);
+    const stmt = "INSERT INTO caltoolstable (ID, ManufacturerName, ModelName, Description, SerialNumber, Area, Location, CalibrationDue) VALUES(?) ON DUPLICATE KEY UPDATE ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), Location = VALUES(Location), CalibrationDue = VALUES(CalibrationDue)"
+    //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        else {
+            res.status(200).json({ Error: 'Success' })
+        }
+    })
+});
+
 // Create a new scan using a post request
 app.post('/newScan', (req, res) => {
 
@@ -202,7 +230,7 @@ app.get('/loadOpenTickets', (_, res) => {
   });
 //retrieve calibrated tools information
 app.get('/calTools', (_, res) => {
-    connection.query('Select * from caltools', (err, rows, fields) => {
+    connection.query('Select * from caltoolstable', (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();

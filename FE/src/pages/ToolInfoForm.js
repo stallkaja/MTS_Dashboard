@@ -23,14 +23,14 @@ export default function CreateToolPage() {
 			console.log('record is null')
 			}
 		else {
-			setManu(location.state.record['Manufacturer Name']);
-			setModel(location.state.record['Model Name']);
+			setManu(location.state.record.ManufacturerName);
+			setModel(location.state.record.ModelName);
 			setDesc(location.state.record.Description);
-			setSerial(location.state.record['Serial Number']);
+			setSerial(location.state.record.SerialNumber);
 			setArea(location.state.record.Area);
 			setId(location.state.record.ID);
 			setLoc(location.state.record.Location);
-			setCaldue(location.state.record['Calibration Due']);
+			setCaldue(location.state.record.CalibrationDue);
 		};
 	}, []) // <-- empty dependency array
 
@@ -44,7 +44,7 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTool = async () => {
 		// Create new object with the variables set in the form
-		const newTool = { manu, model, desc, serial, area, id, loc, caldue,};
+		const newTool = { manu, model, desc, serial, area, id, loc, caldue};
 		const response = await fetch('/newTool', {
 			method: 'POST',
 			body: JSON.stringify(newTool),
@@ -54,12 +54,12 @@ export default function CreateToolPage() {
 		}).then(response => {
 			if (response.status === 200) {
 				alert("Tool has been added!");
-				history.push("/ToolHistoryPage");
+				history('/ToolHistory');
 			} else {
 				alert(`Failed to add tool, status code = ${response.status}`);
 			}
 		});
-		this.props.history.push('</ToolHistoryPage>')
+		
 	}
 
 
@@ -69,14 +69,21 @@ export default function CreateToolPage() {
 			<h1>Tool Form</h1>
 
 			<fieldset>
-				<label for="name">Manufacturer Name</label>
+				<label for="ID">ID</label>
+				<input id="id"
+					type="text"
+					value={id}
+					onChange={e => setId(e.target.value)}
+				/> <br />
+
+				<label for="Manufacturer Name">Manufacturer Name</label>
 				<input id="manu"
 					type="text"
 					value={manu}
 					onChange={e => setManu(e.target.value)}
 				/> <br />
 
-				<label for="Model Name">Quantity</label>
+				<label for="Model Name">Model Name</label>
 				<input id="model"
 					type="text"
 					value={model}
@@ -102,13 +109,6 @@ export default function CreateToolPage() {
 					type="text"
 					value={area}
 					onChange={e => setArea(e.target.value)}
-				/> <br />
-
-				<label for="ID">ID</label>
-				<input id="id"
-					type="text"
-					value={id}
-					onChange={e => setId(e.target.value)}
 				/> <br />
 
 				<label for="Location">Location</label>

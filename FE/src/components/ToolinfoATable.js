@@ -184,7 +184,7 @@ function ToolInfoATable(targetNVL) {
 
 
     const loadHeaders = async () => {
-        const tName = 'caltools'
+        const tName = 'caltoolstable'
         const tableName = { tName }
         const response = await fetch('/headers', {
             method: 'POST',
