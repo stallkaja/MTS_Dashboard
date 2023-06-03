@@ -12,7 +12,7 @@ const TicketDashboard = () => {
             <h1>Open and In Progress Tickets</h1>
             <OpenTicketATable/>
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
-            <h1>closed and Under Review</h1>
+            <h1>Closed and Under Review</h1>
             <ClosedTicketATable/>
         </div>
 

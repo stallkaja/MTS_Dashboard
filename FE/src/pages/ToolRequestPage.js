@@ -1,14 +1,14 @@
 
 import React from 'react';
-import toolBoardWrenches from './toolBoardWrenches.jpg';
+import toolBoardWrenches from '../images/toolBoardWrenches.jpg';
 import {ImageBackground, StyleSheet, Text, View} from 'react-native';
-import wrench1 from './wrench1.jpg'
+import wrench1 from '../images/wrench1.jpg'
 import './ToolRequestPage.css';
   
 const ToolRequestPage = () => {
     const bayCount = 10;
     const options = [];
-    const toolBoardWrenches = require('./toolBoardWrenches.jpg');
+    const toolBoardWrenches = require('../images/toolBoardWrenches.jpg');
     const [showFields, setShowFields] = React.useState(false)
     const onClick = () => setShowFields(true)
     for(let i = 1;i<bayCount;i++){
