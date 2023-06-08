@@ -39,6 +39,7 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTicket = async () => {
 		// Create new object with the variables set in the form
+		console.log('ticket status is: ' + ticketStatus)
 		const newTicket = { ticketStatus, ticketNum, ben, ticketDescription, department, toolBay};
 		const response = await fetch('/newTicket', {
 			method: 'POST',
@@ -65,8 +66,8 @@ export default function CreateToolPage() {
 
 			<fieldset>
 				<label for="TicketStatus">Ticket Status</label>
-				<select name="ticketStatus" id="TicketStatus" onChange={e => setTicketStatus(e.target.value)}>
-  				<option value="open">Open</option>
+				<select name="ticketStatus" id="TicketStatus" onChange={e => {setTicketStatus(e.target.value);}}>
+  				<option value="Open">Open</option>
   				{/* <option value="inProgress">In Progress</option> */}
   				<option value="Closed">closed</option>
 				</select>
