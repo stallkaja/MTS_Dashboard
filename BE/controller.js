@@ -49,7 +49,7 @@ app.use('/login', (req, res) => {
 // Create a new material using a post request
 app.post('/newMaterial', (req, res) => {
 
-    const args = [[
+    const args = [
         req.body.name,
         req.body.cat,
         req.body.note,
@@ -60,9 +60,12 @@ app.post('/newMaterial', (req, res) => {
         req.body.part,
         req.body.serial,
         req.body.loc,
-    ]]
-    const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber,Location) VALUES ? ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = VALUES(Location), LaptopAssignedMF = VALUES(LaptopAssignedMF), LaptopAssignedFEDShift = VALUES(LaptopAssignedFEDShift), LaptopAssignedFENShift = VALUES(LaptopAssignedFENShift), LaptopAssignedBEDShift = VALUES(LaptopAssignedBEDShift), LaptopAssignedBENShift = VALUES(LaptopAssignedBENShift), LaptopDepartment = VALUES(LaptopDepartment)"
+        req.body.materialPK
+    ]
+    const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location, materialPK) VALUES(?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = Values(Location), materialPK = VALUES(materialPK)"
+    //const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location) VALUES (?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = VALUES(Location)"
     //WIP
+    console.log(args)
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
             throw err
@@ -86,10 +89,11 @@ app.post('/newTicket', (req, res) => {
       req.body.department,
       req.body.toolBay
 
-  ]
+    ]
   const stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
   //WIP
-  connection.query(stmt, [args], (err, rows, fields) => {
+    console.log(req)
+    connection.query(stmt, [args], (err, rows, fields) => {
       if (err) {
           throw err
           connection.end();

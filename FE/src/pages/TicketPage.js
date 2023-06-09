@@ -8,7 +8,7 @@ export default function CreateToolPage() {
 
 	const history = useNavigate();
 	const location = useLocation();
-	const [ticketStatus, setTicketStatus] = useState('');
+	const [ticketStatus, setTicketStatus] = useState('Open');
 	const [ticketNum, setTicketNum] = useState('');
 	const [ben, setBen] = useState('')
 	const [ticketDescription, setTicketDescription] = useState('')

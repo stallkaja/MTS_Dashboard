@@ -88,7 +88,8 @@ function InventoryATable(targetNVL){
   const [searchedColumn, setSearchedColumn] = useState('');
   const searchInput = useRef(null);
   const navigate = useNavigate();
-  const EditRecord=(record)=>{
+    const EditRecord = (record) => {
+        console.log(record);
     navigate('/createMaterial',{state:{record:record}});
   };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
