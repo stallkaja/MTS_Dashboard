@@ -18,10 +18,11 @@ const TicketDashboard = () => {
             <button onClick={() => OpenTicket()}>
               {"Create Ticket"}
             </button>
-            <OpenTicketATable/>
+            <table>
+            <OpenTicketATable/></table>
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <h1>Closed and Under Review</h1>
-            <ClosedTicketATable/>
+            <table><ClosedTicketATable/></table>
         </div>
 
     );
