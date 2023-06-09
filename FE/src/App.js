@@ -10,6 +10,7 @@ import MapPage from './pages/MapPage.tsx'
 import CreateMaterialPage from './pages/CreateMaterialPage.js'
 import TicketDashboard from './pages/TicketDashboard.tsx'
 import Navbar from './components/NavBar.js';
+import Sidenav from './components/sidenav';
 import LoginPage from './components/LoginPage.js';
 import TicketPage from './pages/TicketPage.js'
 import useToken from './components/useToken.js'
@@ -18,18 +19,18 @@ import { useState } from 'react';
 import ToolInfoForm from './pages/ToolInfoForm.js';
 
 
-function App() {  
+  function App() {
 	const [ItemToEdit, setItemToEdit] = useState();
 	const { token, setToken } = useToken();
 
 	if(!token) {
-    	return <LoginPage setToken={setToken} />
+		return <LoginPage setToken={setToken} />
   	}
 	return (
-    <div className="App">
-		<Router>
-      		<Navbar />
-      		<Routes>
+	  <div className="App">
+		<Sidenav/>
+		<main>
+		<Routes>
         		<Route path='/' element={<LandingPage/>} />
 				<Route path='/TicketDashboard' element={<TicketDashboard/>} />
         		<Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
@@ -40,30 +41,9 @@ function App() {
         		<Route path='/createMaterial' element={<CreateMaterialPage/>} />
                 <Route path='/ticketPage' element={<TicketPage />} />
                 <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
-      		</Routes>
-    	</Router>
-
-		
-{/* 		<Router>
-			<Route path='/' exact>
-          		<LandingPage/>
-        	</Route>
-			<Route path='/tablePage'>
-          		<MaterialListPage setExerciseToEdit={setExerciseToEdit}/>
-        	</Route>
-
-        	<Route path='/create'>
-          		<CreateMaterialPage/>
-        	</Route>
-
-        	<Route path='/edit'>
-          		<EditExercisePage exerciseToEdit={exerciseToEdit} />
-        	</Route>
-			<footer>
-				<p> &copy; 2022 James Stallkamp.</p>
-			</footer>
-		</Router> */}
-		
+				</Routes>
+      	</main>
+     
     </div>
   );
 }
