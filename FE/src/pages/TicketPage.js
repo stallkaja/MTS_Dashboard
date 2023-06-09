@@ -62,7 +62,7 @@ export default function CreateToolPage() {
 
 	return (
 		<div>
-			<h1>Tool Form</h1>
+			<h1>Ticket Form</h1>
 
 			<fieldset>
 				<label for="TicketStatus">Ticket Status</label>
