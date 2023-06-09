@@ -10,3 +10,6 @@ main {
   padding: 10px;
   width:auto
 }
+table {
+  width: 180%
+} /* limited fix- Ive assigned TicketDashboard ticket tables this tag to try and fill them to screen */
