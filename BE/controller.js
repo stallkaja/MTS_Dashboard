@@ -63,7 +63,6 @@ app.post('/newMaterial', (req, res) => {
         req.body.materialPK
     ]
     const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location, materialPK) VALUES(?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = Values(Location), materialPK = VALUES(materialPK)"
-    //const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location) VALUES (?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = VALUES(Location)"
     //WIP
     console.log(args)
     connection.query(stmt, [args], (err, rows, fields) => {

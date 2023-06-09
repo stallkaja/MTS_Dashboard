@@ -1,0 +1,56 @@
+CREATE TABLE `caltoolstable` (
+   `ID` varchar(255) NOT NULL,
+   `ManufacturerName` text,
+   `ModelName` text,
+   `Description` text,
+   `SerialNumber` int DEFAULT NULL,
+   `Area` int NOT NULL,
+   `Location` text,
+   `CalibrationDue` text,
+   PRIMARY KEY (`ID`,`Area`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+CREATE TABLE `materiallisttable` (
+   `MaterialName` text,
+   `Category` text,
+   `AdditionalNotes` text,
+   `Quantity` int DEFAULT NULL,
+   `NVL` text,
+   `BEN` text,
+   `CurrentState` text,
+   `LamPartNumber` text,
+   `RecordIDNumber` int DEFAULT NULL,
+   `SerialNumber` text,
+   `materialPK` int NOT NULL AUTO_INCREMENT,
+   `Location` varchar(255) DEFAULT NULL,
+   PRIMARY KEY (`materialPK`)
+ ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+CREATE TABLE `ticketstable` (
+   `TicketStatus` text,
+   `TicketNum` int NOT NULL,
+   `BEN` text,
+   `TicketDescription` text,
+   `Department` text,
+   `ToolBay` int DEFAULT NULL,
+   PRIMARY KEY (`TicketNum`)
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+CREATE TABLE `toolhistorytable` (
+   `NVL` int DEFAULT NULL,
+   `employeeID` int DEFAULT NULL,
+   `newLoc` varchar(255) DEFAULT NULL,
+   `curDate` text
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+
+
+
+CREATE TABLE `userstable` (
+   `username` text,
+   `pword` int DEFAULT NULL
+ ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
