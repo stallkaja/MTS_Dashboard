@@ -37,8 +37,8 @@ export const navData = [
     {
         id: 5,
         icon: <SettingsIcon/>,
-        text: "ToolHistory'",
-        link: "ToolHistory'"
+        text: "ToolHistory",
+        link: "ToolHistory"
     },
     {
         id: 6,
