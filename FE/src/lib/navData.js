@@ -19,13 +19,49 @@ export const navData = [
     {
         id: 2,
         icon: <BarChartIcon/>,
-        text: "Statistics",
-        link: "statistics"
+        text: "MaterialListPage",
+        link: "MaterialListPage"
     },
     {
         id: 3,
         icon: <SettingsIcon/>,
-        text: "Settings",
-        link: "settings"
+        text: "Map",
+        link: "Map"
+    },
+    {
+        id: 4,
+        icon: <SettingsIcon/>,
+        text: "ScanTool",
+        link: "ScanTool"
+    },
+    {
+        id: 5,
+        icon: <SettingsIcon/>,
+        text: "ToolHistory'",
+        link: "ToolHistory'"
+    },
+    {
+        id: 6,
+        icon: <SettingsIcon/>,
+        text: "toolRequest",
+        link: "toolRequest"
+    },
+    {
+        id: 7,
+        icon: <SettingsIcon/>,
+        text: "createMaterial",
+        link: "createMaterial"
+    },
+    {
+        id: 8,
+        icon: <SettingsIcon/>,
+        text: "ticketPage",
+        link: "ticketPage"
+    },
+    {
+        id: 9,
+        icon: <SettingsIcon/>,
+        text: "ToolInfoForm",
+        link: "ToolInfoForm"
     }
 ]
