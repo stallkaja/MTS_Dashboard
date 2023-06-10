@@ -22,7 +22,7 @@ import ToolInfoForm from './pages/ToolInfoForm.js';
   function App() {
 	const [ItemToEdit, setItemToEdit] = useState();
 	const { token, setToken } = useToken();
-
+	//test
 	if(!token) {
 		return <LoginPage setToken={setToken} />
   	}
