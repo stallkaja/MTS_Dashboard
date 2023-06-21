@@ -27,7 +27,7 @@ const ToolHistoryPage = () => {
         height: '100vh'
       }}*/
     >
-          <h1>Tool Information Page</h1>
+          <h1>Calibrated Tool Information Page</h1>
           <button onClick={() => OpenForm()}>
               {"Create New Tool"}
           </button>

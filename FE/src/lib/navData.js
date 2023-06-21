@@ -13,13 +13,13 @@ export const navData = [
     {
         id: 1,
         icon: <TravelExploreIcon/>,
-        text: "TicketDashboard",
+        text: "Ticket Dashboard",
         link: "TicketDashboard"
     },
     {
         id: 2,
         icon: <BarChartIcon/>,
-        text: "MaterialListPage",
+        text: "Material List Page",
         link: "MaterialListPage"
     },
     {
@@ -31,37 +31,37 @@ export const navData = [
     {
         id: 4,
         icon: <SettingsIcon/>,
-        text: "ScanTool",
+        text: "Cal Tool Movement Log",
         link: "ScanTool"
     },
     {
         id: 5,
         icon: <SettingsIcon/>,
-        text: "ToolHistory",
+        text: "Cal Tool Info",
         link: "ToolHistory"
     },
     {
         id: 6,
         icon: <SettingsIcon/>,
-        text: "toolRequest",
+        text: "Tool Request",
         link: "toolRequest"
     },
     {
         id: 7,
         icon: <SettingsIcon/>,
-        text: "createMaterial",
+        text: "Create Material",
         link: "createMaterial"
     },
     {
         id: 8,
         icon: <SettingsIcon/>,
-        text: "ticketPage",
+        text: "Ticket Page",
         link: "ticketPage"
     },
     {
         id: 9,
         icon: <SettingsIcon/>,
-        text: "ToolInfoForm",
+        text: "Tool Info Form",
         link: "ToolInfoForm"
     }
 ]
