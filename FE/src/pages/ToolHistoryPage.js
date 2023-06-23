@@ -2,7 +2,7 @@
 import React from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate, Link } from 'react-router';
-
+import 'C:/Users/osterjo/Documents/DOS_Site/FE/src/App.css';
 
   
 const ToolHistoryPage = () => {
@@ -18,22 +18,20 @@ const ToolHistoryPage = () => {
         dataIndex: 'key',
 
     }*/
-  return (
-    <div
-      /*style={{
-        display: 'flex',
-        justifyContent: 'Center',
-        alignItems: 'Right',
-        height: '100vh'
-      }}*/
-    >
-          <h1>Calibrated Tool Information Page</h1>
-          <button onClick={() => OpenForm()}>
+
+    return (
+
+        
+    <div>
+            <h1 style={{ textAlign: "center" }}>Calibrated Tool Information Page</h1>
+            
+            
+            <button onClick={() => OpenForm()}>
               {"Create New Tool"}
           </button>
-
-
+           
           <ToolInfoATable/>
+            
     </div>
   );
 };
