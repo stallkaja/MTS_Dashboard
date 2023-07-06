@@ -20,7 +20,7 @@ return (
 		default font weights and sizes */}
 
 		<Typography variant="h6"
-			component="div" sx={{ flexGrow: 1, position:'static' }}>
+			component="div" sx={{ flexGrow: 1, position:'static !important' }}>
 			Support Dashboard
 		</Typography>
 		<Button color="inherit">Exit</Button>
