@@ -84,7 +84,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
   return (
     <div>
-        <h1>Tool Scan Page</h1>
+        <h1>Calibrated Tool Movement Log</h1>
         <div className={ScanToolStyles.row}>
             <div className={ScanToolStyles.column}>
                 <h2>Scan Tool</h2>

@@ -13,7 +13,7 @@ export const navData = [
     {
         id: 1,
         icon: <TravelExploreIcon/>,
-        text: "Ticket Dashboard",
+        text: "Ticket  Dashboard",
         link: "TicketDashboard"
     },
     {
@@ -37,17 +37,23 @@ export const navData = [
     {
         id: 5,
         icon: <SettingsIcon/>,
-        text: "Scan Tools",
+        text: "Cal Tool Movement Log",
         link: "ScanTool"
     },
     {
         id: 6,
         icon: <SettingsIcon/>,
-        text: "Tools History",
+        text: "Cal Tool Info",
         link: "ToolHistory"
     },
     {
         id: 7,
+        icon: <SettingsIcon/>,
+        text: "Tools History",
+        link: "ToolHistory"
+    },
+    {
+        id: 8,
         icon: <SettingsIcon/>,
         text: "Tool Requests",
         link: "toolRequest"
