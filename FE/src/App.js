@@ -33,7 +33,7 @@ import styles from "./components/Header.module.css"
 		<div id='headerDiv'>
 				<Header />
 			</div>
-			<div>
+			<div id='headerDiv'>
 			<h2>Does color work the way wee think it does?</h2>
 			</div>
 		<div className="App" style={{position: "relative"}} >
