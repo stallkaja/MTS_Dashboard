@@ -13,55 +13,43 @@ export const navData = [
     {
         id: 1,
         icon: <TravelExploreIcon/>,
-        text: "TicketDashboard",
+        text: "Ticket Dashboard",
         link: "TicketDashboard"
     },
     {
         id: 2,
         icon: <BarChartIcon/>,
-        text: "MaterialListPage",
-        link: "MaterialListPage"
+        text: "Material Ordering",
+        link: "MaterialOrderingPage"
     },
     {
         id: 3,
+        icon: <BarChartIcon/>,
+        text: "Material List Page",
+        link: "MaterialListPage"
+    },
+    {
+        id: 4,
         icon: <SettingsIcon/>,
         text: "Map",
         link: "Map"
     },
     {
-        id: 4,
-        icon: <SettingsIcon/>,
-        text: "ScanTool",
-        link: "ScanTool"
-    },
-    {
         id: 5,
         icon: <SettingsIcon/>,
-        text: "ToolHistory",
-        link: "ToolHistory"
+        text: "Scan Tools",
+        link: "ScanTool"
     },
     {
         id: 6,
         icon: <SettingsIcon/>,
-        text: "toolRequest",
-        link: "toolRequest"
+        text: "Tools History",
+        link: "ToolHistory"
     },
     {
         id: 7,
         icon: <SettingsIcon/>,
-        text: "createMaterial",
-        link: "createMaterial"
-    },
-    {
-        id: 8,
-        icon: <SettingsIcon/>,
-        text: "ticketPage",
-        link: "ticketPage"
-    },
-    {
-        id: 9,
-        icon: <SettingsIcon/>,
-        text: "ToolInfoForm",
-        link: "ToolInfoForm"
+        text: "Tool Requests",
+        link: "toolRequest"
     }
 ]

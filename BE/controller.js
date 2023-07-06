@@ -32,6 +32,7 @@ app.use('/login', (req, res) => {
       throw err
       connection.end();
     }
+    console.log(rows[0].pword)
     if(req.body.password == rows[0].pword){
       res.send({
         token: "abc123"
