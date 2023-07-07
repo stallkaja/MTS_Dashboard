@@ -17,7 +17,7 @@ const theme = createTheme({
 	},
 	palette: {
 		primary: {
-			main: '#0a1929',
+			main: '#001f3f',
 			darker: '#4266f5',
 		},
 		neutral: {
@@ -39,10 +39,10 @@ export default function Header() {
 		default font weights and sizes */}
 
 		<Typography variant="h3"
-			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#fec615", textAlign: "center" }}>
+			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "center" }}>
 			Support Dashboard
 		</Typography>
-			<Button sx={{color:"#fec615"}}>Exit</Button>
+			<Button sx={{color:"#ffffff"}}>Exit</Button>
 		</Toolbar>
 			</AppBar>
 		</ThemeProvider>
