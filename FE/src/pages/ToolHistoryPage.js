@@ -24,16 +24,16 @@ const ToolHistoryPage = () => {
 
         
         <div>
-           <div className={ToolHistoryPageStyles.header}>
+        <main>
             <h1 style={{ textAlign: "center" }}>Calibrated Tool Information Page</h1>
-            </div>
+            
             <div className={ToolHistoryPageStyles.button}>
             <button onClick={() => OpenForm()}>
               {"Create New Tool"}
           </button>
-           </div>
-          <ToolInfoATable/>
-            
+            </div>
+                <ToolInfoATable />
+            </main>
     </div>
   );
 };

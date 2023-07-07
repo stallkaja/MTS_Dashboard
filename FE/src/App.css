@@ -1,6 +1,8 @@
 body {
   margin: 0;
   padding: 0;
+  justify-content: center;
+  align-items: center;
 }
 .App {
   display: flex;
@@ -8,10 +10,14 @@ body {
 }
 main {
   padding: 10px;
-  width:auto
+  width:100%;
+  align-items: center;
+  justify-content: center;
 }
 table {
-  width: 180%
+  width: 100%;
+  align-items: center;
+  justify-content: center;
 } /* limited fix- Ive assigned TicketDashboard ticket tables this tag to try and fill them to screen */
 
 container {
@@ -21,7 +27,7 @@ container {
 }
 
 center {
-    display: flex;
+    display: static;
     justify-content: center;
     align-items: center;
     height: 200px;
@@ -29,7 +35,13 @@ center {
 }
 
 #headerDiv {
-    color: #cdbc28;
-    position: static !important;
+    color: #cdbc28 !important;
+    position: static;
 
+}
+
+buttonStyle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

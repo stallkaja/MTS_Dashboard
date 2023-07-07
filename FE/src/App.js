@@ -29,13 +29,11 @@ import styles from "./components/Header.module.css"
 		return <LoginPage setToken={setToken} />
   	}
 	return (
-	<div style={{position: "static !important"}}>
-		<div id='headerDiv'>
+	<div>
+			<div>
 				<Header />
 			</div>
-			<div id='headerDiv'>
-			<h2>Does color work the way wee think it does?</h2>
-			</div>
+
 		<div className="App" style={{position: "relative"}} >
 			<Sidenav/>
 			<main>

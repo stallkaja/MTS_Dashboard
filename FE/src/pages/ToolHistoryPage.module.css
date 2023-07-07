@@ -3,3 +3,15 @@ display: flex;
 justify-content: center;
 align-items: center;
 }
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.body{
+    display: flex;
+    justify-contents: center;
+    align-items: center;
+}

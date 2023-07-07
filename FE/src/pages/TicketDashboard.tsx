@@ -14,14 +14,17 @@ const TicketDashboard = () => {
   
     return(
         <div>
-            <h1>Open and In Progress Tickets</h1>
+        
+            <h1 style={{ textAlign: "center" }}>Open and In Progress Tickets</h1>
+            <buttonStyle>  
             <button onClick={() => OpenTicket()}>
               {"Create Ticket"}
-            </button>
+                </button>
+            </buttonStyle>
             <table>
-            <OpenTicketATable/></table>
+            <OpenTicketATable/> </table>
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
-            <h1>Closed and Under Review</h1>
+                <h1 style={{ textAlign: "center"} }>Closed and Under Review</h1>
             <table><ClosedTicketATable/></table>
         </div>
 
