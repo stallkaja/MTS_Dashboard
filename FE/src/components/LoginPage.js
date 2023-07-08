@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 
 import './Login.css';
 
@@ -18,6 +19,7 @@ async function loginUser(credentials) {
 export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
+  const location = useLocation();
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -25,9 +27,11 @@ export default function Login({ setToken }) {
       username,
       password
     });
-    console.log(token.token)
+    if(setToken == null)
+        setToken=location.state.setToken
     if(token.token != null){
-      setToken(token);
+        setToken(token)
+      console.log(token.token);
     }
     else{
       alert("Login Failed")

@@ -15,6 +15,7 @@ import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Link from "@mui/material/Link";
+import { useNavigate, useLocation} from "react-router-dom";
 
 const theme = createTheme({
 	status: {
@@ -39,7 +40,14 @@ const onDownload = () => {
 	link.click();
   };
 
-export default function Header() {
+
+const Header = ({ setToken }) => {
+    const navigate = useNavigate();
+    const LogoutButton = () => {
+        let path = '/LoginPage';
+        navigate (path,{state:{setToken:setToken}});
+    }
+
 	return (
 		<ThemeProvider theme={theme}>
 	<AppBar position="static" color="primary">
@@ -58,9 +66,10 @@ export default function Header() {
 			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" >VFD</Button>
 			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" >KM</Button>
 			<Button sx={{color:"#ffffff"}} onClick={onDownload} >SAP</Button>
-			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>}>Logout</Button>
+			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>} onClick={LogoutButton}>Logout</Button>
 		</Toolbar>
 			</AppBar>
 		</ThemeProvider>
 );
 }
+export default Header

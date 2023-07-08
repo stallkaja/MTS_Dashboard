@@ -31,7 +31,7 @@ import styles from "./components/Header.module.css"
 	return (
 	<div>
 			<div>
-				<Header />
+				<Header setToken={setToken}/>
 			</div>
 
 		<div className="App" style={{position: "relative"}} >
@@ -50,6 +50,7 @@ import styles from "./components/Header.module.css"
                 <Route path='/ticketPage' element={<TicketPage />} />
 				<Route path='/OrderPage' element={<OrderPage />} />
                 <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
+				<Route path='/LoginPage' element={<LoginPage/>} />
 				</Routes>
       		</main>
     	</div>
