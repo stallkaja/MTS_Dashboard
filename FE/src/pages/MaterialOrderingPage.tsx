@@ -14,10 +14,12 @@ const TicketDashboard = () => {
   
     return(
         <div>
-            <h1>Awaiting Approval</h1>
+            <h1 style={{textAlign: "center"} }>Awaiting Approval</h1>
+            <buttonStyle>
             <button onClick={() => OpenTicket()}>
               {"Create New Order"}
-            </button>
+                </button>
+            </buttonStyle>
             <table>
             <OpenTicketATable/></table>
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}

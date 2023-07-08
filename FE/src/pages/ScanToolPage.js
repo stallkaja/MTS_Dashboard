@@ -84,10 +84,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
   return (
     <div>
-        <h1>Calibrated Tool Movement Log</h1>
+          <h1 style={{textAlign: "center"} }>Calibrated Tool Movement Log</h1>
         <div className={ScanToolStyles.row}>
             <div className={ScanToolStyles.column}>
-                <h2>Scan Tool</h2>
+                  <h2 style={{textAlign: "center"} }>Scan Tool</h2>
                 <fieldset>
                   <label for="nvl">NVL #</label>
                     <input id="nvl"
