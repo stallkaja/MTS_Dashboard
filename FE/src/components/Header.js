@@ -13,6 +13,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import lamLogo from '../images/lamLogo2.jpg';
 import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import Link from "@mui/material/Link";
 
 const theme = createTheme({
 	status: {
@@ -30,6 +32,12 @@ const theme = createTheme({
 	},
 });
 
+const onDownload = () => {
+	const link = document.createElement("a");
+	link.download = `tx.sap`;
+	link.href = "../../tx.sap";
+	link.click();
+  };
 
 export default function Header() {
 	return (
@@ -47,10 +55,10 @@ export default function Header() {
 			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "left" }}>
 			Support Dashboard
 		</Typography>
-			<Button sx={{color:"#ffffff"}}>VFD</Button>
-			<Button sx={{color:"#ffffff"}}>KM</Button>
-			<Button sx={{color:"#ffffff"}}>SAP</Button>
-			<Button sx={{color:"#ffffff"}}>Exit</Button>
+			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" >VFD</Button>
+			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" >KM</Button>
+			<Button sx={{color:"#ffffff"}} onClick={onDownload} >SAP</Button>
+			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>}>Logout</Button>
 		</Toolbar>
 			</AppBar>
 		</ThemeProvider>
