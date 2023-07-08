@@ -1,0 +1,31 @@
+
+#OpenTicketCard{
+    background:linear-gradient(180deg,rgb(81, 81, 99),#242437);
+    border-radius: 15px;
+    height:60px;
+}
+#OpenTicketTitle{
+    transform: translateY(-30%);
+    display:inline-block;
+    color:white;
+    padding-left:10px;
+}
+#CreateTicketButton{
+    position: relative;
+    transform: translateY(-190%);
+    padding-right: 10px;
+    display: flex;
+    justify-content: right;
+    align-items: right;
+}
+#ClosedTicketCard{
+    background:linear-gradient(180deg,rgb(81, 81, 99),#242437);
+    border-radius: 15px;
+    height:60px;
+}
+#CloseTicketTitle{
+    transform: translateY(-30%);
+    display:inline-block;
+    color:white;
+    padding-left:10px;
+}

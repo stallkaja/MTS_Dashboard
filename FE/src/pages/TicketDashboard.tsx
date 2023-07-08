@@ -1,6 +1,7 @@
 import React from 'react';
 import OpenTicketATable from '../components/OpenTicketATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
+import "./TicketDashboard.css";
 import { useNavigate } from 'react-router';
 import { Button, Space } from 'antd';
 
@@ -15,24 +16,24 @@ const TicketDashboard = () => {
     return (
 
         <div>
-        <div1>
-            <h1>Open and In Progress Tickets</h1>
-                
-
-                   <buttonRight>     
-                    <Button style={{ width: '100%'}}type="primary"  size="large" colorPrimary="#004d40" block onClick={() => OpenTicket()}>
-                    {"Create Ticket"}
-                </Button>
-            </buttonRight>
-
-               
-            </div1>
-            <table>
-                <OpenTicketATable /> </table>
+            <div id='OpenTicketCard'>
+                <div>
+                    <h1 id='OpenTicketTitle'>Open and In Progress Tickets</h1>
+                </div>
+                <div id="CreateTicketButton">
+                    <Button  type="primary"  size="large" colorPrimary="#004d40" onClick={() => OpenTicket()}>
+                        {"Create Ticket"}
+                    </Button>
+                </div>
+            </div>
+            <OpenTicketATable />
 
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
-            <h1 style={{textAlign: "center"} }>Closed and Under Review</h1>
-            <table><ClosedTicketATable/></table>
+            <div id='ClosedTicketCard'>
+                <h1 id='CloseTicketTitle'>Closed and Under Review</h1>
+            </div>
+
+            <ClosedTicketATable/>
         </div>
 
     );
