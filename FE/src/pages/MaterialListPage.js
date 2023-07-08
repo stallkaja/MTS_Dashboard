@@ -18,7 +18,6 @@ const OpenForm = () => {
 
   return (
     <>
-    
       <h1 style={{textAlign: 'left'} }>DOS Material List</h1>
           <Button type="primary" onClick={() => OpenForm()}>
             {"Create Item"}

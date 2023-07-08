@@ -18,6 +18,7 @@ const TicketDashboard = () => {
             <Button type="primary" onClick={() => OpenTicket()}>
               {"Create New Order"}
             </Button>
+
             <table>
             <OpenTicketATable/></table>
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}

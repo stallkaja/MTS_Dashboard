@@ -10,6 +10,9 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./Header.module.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import lamLogo from '../images/lamLogo2.jpg';
+import Avatar from '@mui/material/Avatar';
+import AdbIcon from '@mui/icons-material/Adb';
 
 const theme = createTheme({
 	status: {
@@ -17,7 +20,7 @@ const theme = createTheme({
 	},
 	palette: {
 		primary: {
-			main: '#001f3f',
+			main: '#26a69a',
 			darker: '#4266f5',
 		},
 		neutral: {
@@ -37,9 +40,11 @@ export default function Header() {
 		can render various icons*/}
 		{/* The Typography component applies
 		default font weights and sizes */}
+					<img
+						src={lamLogo} alt="lamlogo" width="2.5%" height="2.5%" />
 
 		<Typography variant="h3"
-			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "center" }}>
+			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "left" }}>
 			Support Dashboard
 		</Typography>
 			<Button sx={{color:"#ffffff"}}>VFD</Button>

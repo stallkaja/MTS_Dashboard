@@ -128,7 +128,7 @@ const fetchNVLs = async () => {
 }
     return(
         <div>
-            <h2>History</h2>
+            <h2 style={{textAlign: "center"} }>History</h2>
             <label for="searchnvl">Search NVL History</label>
             <input id="searchnvl"
                 type="text"
