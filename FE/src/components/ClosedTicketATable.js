@@ -154,7 +154,11 @@ const loadItems = async () => {
 }
 useEffect(() =>  loadItems(), []);
     return(
-        <Table columns={headers} dataSource={items} />
+        <Table
+          columns={headers}
+          dataSource={items}
+          bordered
+        />
     );
 }
 export default ClosedTicketATable;

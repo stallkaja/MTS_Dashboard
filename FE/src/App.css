@@ -14,12 +14,6 @@ main {
   align-items: center;
   justify-content: center;
 }
-table {
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-} /* limited fix- Ive assigned TicketDashboard ticket tables this tag to try and fill them to screen */
-
 container {
     height: 200px;
     position: relative;

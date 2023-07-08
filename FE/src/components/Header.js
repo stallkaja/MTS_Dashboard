@@ -55,8 +55,8 @@ export default function Header() {
 			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "left" }}>
 			Support Dashboard
 		</Typography>
-			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" >VFD</Button>
-			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" >KM</Button>
+			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" target="_blank" rel="noopener referrer">VFD</Button>
+			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" target="_blank" rel="noopener referrer">KM</Button>
 			<Button sx={{color:"#ffffff"}} onClick={onDownload} >SAP</Button>
 			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>}>Logout</Button>
 		</Toolbar>
