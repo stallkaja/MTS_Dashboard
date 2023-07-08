@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { Button, Space } from 'antd';
 
 
 
@@ -107,7 +107,7 @@ export default function CreateToolPage() {
 					value={toolBay}
 					onChange={e => setToolBay(e.target.value)}
 				/> <br />
-				<button onClick={addTicket}> Submit </button>
+				<Button type="primary" onClick={addTicket}> Save </Button>
 
 			</fieldset>
 

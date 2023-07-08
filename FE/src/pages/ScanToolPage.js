@@ -6,7 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
 import {Table} from 'antd'
-
+import { Button, Space } from 'antd';
 
 const ScanToolPage = ({ setItemToEdit }) => {
     const [newLoc, setLoc] = useState('');
@@ -107,7 +107,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
                       value={newLoc}
                       onChange={e => setLoc(e.target.value)}
                   /> <br/>
-			            <button onClick={newScan}> Submit </button>
+			            <Button type="primary" onClick={newScan}> Save </Button>
                 </fieldset>
             </div>
             <div className={ScanToolStyles.column}>

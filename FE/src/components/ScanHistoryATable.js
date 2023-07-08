@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd';
+import {Button, Space, Table, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 //Example code from antD. 
 /* const columns = [
@@ -136,7 +136,7 @@ const fetchNVLs = async () => {
                 onInput={e => setSearchNVL(e.target.value)}
                 placeholder="Search an NVL"
             />
-            <button onClick={fetchNVLs}> Submit </button>
+            <Button type="primary" onClick={fetchNVLs}> Submit </Button>
             <br/>
             <Table columns={headers} dataSource={toolHistory} />
         </div>

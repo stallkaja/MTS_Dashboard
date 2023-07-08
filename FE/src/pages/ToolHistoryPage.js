@@ -3,6 +3,7 @@ import React from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate, Link } from 'react-router';
 import ToolHistoryPageStyles from './ToolHistoryPage.module.css';
+import { Button, Space } from 'antd';
 
 
   
@@ -25,12 +26,12 @@ const ToolHistoryPage = () => {
         
         <div>
         <main>
-            <h1 style={{ textAlign: "center" }}>Calibrated Tool Information Page</h1>
+            <h1>Calibrated Tool Information Page</h1>
             
             <div className={ToolHistoryPageStyles.button}>
-            <button onClick={() => OpenForm()}>
+            <Button type="primary" onClick={() => OpenForm()}>
               {"Create New Tool"}
-          </button>
+            </Button>
             </div>
                 <ToolInfoATable />
             </main>

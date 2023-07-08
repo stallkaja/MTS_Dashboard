@@ -5,7 +5,6 @@ const LandingPage = () => {
     <div
       style={{
         display: 'flex',
-        justifyContent: 'Center',
         alignItems: 'Right',
         height: '100vh'
       }}

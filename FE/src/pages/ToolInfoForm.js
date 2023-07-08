@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-
+import { Button, Space } from 'antd';
 
 
 
@@ -123,7 +123,7 @@ export default function CreateToolPage() {
 					value={caldue}
 					onChange={e => setCaldue(e.target.value)}
 				/> <br />
-				<button onClick={addTool}> Submit </button>
+				<Button type="primary" onClick={addTool}> Submit </Button>
 
 			</fieldset>
 

@@ -42,6 +42,9 @@ export default function Header() {
 			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "center" }}>
 			Support Dashboard
 		</Typography>
+			<Button sx={{color:"#ffffff"}}>VFD</Button>
+			<Button sx={{color:"#ffffff"}}>KM</Button>
+			<Button sx={{color:"#ffffff"}}>SAP</Button>
 			<Button sx={{color:"#ffffff"}}>Exit</Button>
 		</Toolbar>
 			</AppBar>

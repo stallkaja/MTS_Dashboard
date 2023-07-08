@@ -6,8 +6,7 @@ import {
 	Route,
 	Link
   } from "react-router-dom";
-
-
+import { Button, Space } from 'antd';
 //handleChange: function e() {
 	
 //}
@@ -179,7 +178,7 @@ export default function CreateMaterialPage() {
 				onChange={e => setNvl(e.target.value)}
 			/> <br/>
   
-			<button onClick={addMaterial}> Create </button>
+			<Button type="primary" onClick={addMaterial}> Save </Button>
 		  </fieldset>
   
 	  </div>
