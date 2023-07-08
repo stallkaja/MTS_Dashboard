@@ -45,3 +45,18 @@ buttonStyle {
     justify-content: center;
     align-items: center;
 }
+
+div1 {
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+h1 {
+    text-align: center;
+}
+
+buttonRight {
+    position: absolute;
+    right: 0;
+}

@@ -8,21 +8,30 @@ const TicketDashboard = () => {
     const navigate = useNavigate();
     const OpenTicket = () => {
         let path = '/TicketPage';
-        navigate (path);
+        navigate(path);
     }
 
   
-    return(
+    return (
+
         <div>
-        
+        <div1>
             <h1>Open and In Progress Tickets</h1>
-            <Button type="primary" onClick={() => OpenTicket()}>
-              {"Create Ticket"}
-            </Button>
+                
+
+                   <buttonRight>     
+                    <Button style={{ width: '100%'}}type="primary"  size="large" colorPrimary="#004d40" block onClick={() => OpenTicket()}>
+                    {"Create Ticket"}
+                </Button>
+            </buttonRight>
+
+               
+            </div1>
             <table>
-            <OpenTicketATable/> </table>
+                <OpenTicketATable /> </table>
+
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
-                <h1>Closed and Under Review</h1>
+            <h1 style={{textAlign: "center"} }>Closed and Under Review</h1>
             <table><ClosedTicketATable/></table>
         </div>
 
