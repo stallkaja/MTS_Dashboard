@@ -40,25 +40,25 @@ const onDownload = () => {
   };
 
 export default function Header() {
+	
 	return (
 		<ThemeProvider theme={theme}>
-	<AppBar position="static" color="primary">
+	<AppBar position="static">
 		<Toolbar>
 		{/*Inside the IconButton, we
 		can render various icons*/}
 		{/* The Typography component applies
 		default font weights and sizes */}
-					<img
-						src={lamLogo} alt="lamlogo" width="2.5%" height="2.5%" />
+					<img src={lamLogo} alt="lamlogo" width="2.5%" height="2.5%" />
 
 		<Typography variant="h3"
 			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "left" }}>
 			Support Dashboard
 		</Typography>
-			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" target="_blank" rel="noopener referrer">VFD</Button>
-			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" target="_blank" rel="noopener referrer">KM</Button>
-			<Button sx={{color:"#ffffff"}} onClick={onDownload} >SAP</Button>
-			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>}>Logout</Button>
+			<Button sx={{color:"#242437"}} href="https://vfd.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>VFD</b></Button>
+			<Button sx={{color:"#242437"}} href="https://kmmatrix.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>KM</b></Button>
+			<Button sx={{color:"#242437"}} onClick={onDownload}><b>SAP</b></Button>
+			<Button sx={{color:"#242437"}} endIcon={<ExitToAppIcon/>}><b>Logout</b></Button>
 		</Toolbar>
 			</AppBar>
 		</ThemeProvider>

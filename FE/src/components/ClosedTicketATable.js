@@ -155,6 +155,7 @@ const loadItems = async () => {
 useEffect(() =>  loadItems(), []);
     return(
         <Table
+          className="ClosedTicketTable"
           columns={headers}
           dataSource={items}
           bordered

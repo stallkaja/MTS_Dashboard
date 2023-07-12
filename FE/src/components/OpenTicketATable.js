@@ -1,3 +1,4 @@
+import { green } from '@mui/material/colors';
 import {Button, Space, Table, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -176,6 +177,7 @@ const loadItems = async () => {
 useEffect(() =>  loadItems(), []);
     return(
         <Table 
+          className="OpenTicketTable"
           columns={headers} 
           dataSource={items}
           bordered
