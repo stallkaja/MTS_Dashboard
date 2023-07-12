@@ -1,5 +1,5 @@
+import {Button, Space, Table, Tag, configProvider } from 'antd';
 import { green } from '@mui/material/colors';
-import {Button, Space, Table, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
 
@@ -140,16 +140,19 @@ function OpenTicketATable(targetNVL){
             }
 
             headerArray.push(payload)
-        }
-        const buttonPayload = {
-          title: 'Do it', /*Calm down Emperor*/
-          key: 'key',
-          dataIndex: 'key',
-          render: (text, record) => (
-           <Button type="primary" onClick={()=>EditRecord(record)}>
+          }
+ 
+          const buttonPayload = {
+              title: 'Do it',
+              key: 'key',
+              dataIndex: 'key',
+              render: (text, record) => (
+
+                  <Button style={{ backgroundColor: '#20a785', color: '#e6e3dc', borderColor: '#e6e3dc' }} onClick={()=>EditRecord(record)}>
             {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
              {"Open"}
-           </Button>
+              </Button>
+
           ),
         }
         headerArray.push(buttonPayload)

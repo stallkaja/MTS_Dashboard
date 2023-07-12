@@ -20,7 +20,8 @@ const TicketDashboard = () => {
             </Button>
 
             <table>
-            <OpenTicketATable/></table>
+            <OpenTicketATable />
+            </table>
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <h1>Submitted</h1>
             <table><ClosedTicketATable/></table>

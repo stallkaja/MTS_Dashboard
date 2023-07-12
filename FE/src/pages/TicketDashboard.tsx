@@ -3,9 +3,9 @@ import OpenTicketATable from '../components/OpenTicketATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
 import "./TicketDashboard.css";
 import { useNavigate } from 'react-router';
-import { Button, Space } from 'antd';
+import { Button, Space, ConfigProvider } from 'antd';
 
-const TicketDashboard = () => {
+const TicketDashboard: React.FC = () => {
     const navigate = useNavigate();
     const OpenTicket = () => {
         let path = '/TicketPage';
@@ -14,14 +14,22 @@ const TicketDashboard = () => {
 
   
     return (
-
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#6ce3c6',
+                    colorBorder: '#242437',
+                    colorPrimaryHover: '#c74f26'
+                },
+            }}>
+        
         <div>
             <div id='OpenTicketCard'>
                 <div>
                     <h1 id='OpenTicketTitle'>Open and In Progress Tickets</h1>
                 </div>
                 <div id="CreateTicketButton">
-                    <Button  type="primary"  size="large" colorPrimary="#004d40" onClick={() => OpenTicket()}>
+                    <Button  type="primary"  size="large" onClick={() => OpenTicket()}>
                         {"Create Ticket"}
                     </Button>
                 </div>
@@ -35,7 +43,7 @@ const TicketDashboard = () => {
 
             <ClosedTicketATable/>
         </div>
-
+        </ConfigProvider>
     );
 };
 
