@@ -54,3 +54,21 @@ buttonRight {
     position: absolute;
     right: 0;
 }
+
+.OpenTicketTable tr {
+    background-color: rgb(190, 55, 55);
+}
+.OpenTicketTable thead {
+    background-color: rgb(218, 55, 55);
+}
+
+.ClosedTicketTable tr {
+    background-color: rgb(25, 228, 18);
+}
+.ClosedTicketTable thead {
+    background-color: rgb(91, 226, 13);
+}
+
+header {
+    background: linear-gradient(to right, #00d1fa, #fff5b2);
+}
