@@ -55,18 +55,18 @@ buttonRight {
     right: 0;
 }
 
-.OpenTicketTable tr {
-    background-color: rgb(190, 55, 55);
+.OpenTicketTable tr:nth-child(2n) td {
+    background-color: #bbb9b97c;
 }
-.OpenTicketTable thead {
-    background-color: rgb(218, 55, 55);
+.OpenTicketTable thead>tr>th {
+    background-color: rgb(255, 0, 0)!important;
 }
 
-.ClosedTicketTable tr {
-    background-color: rgb(25, 228, 18);
+.ClosedTicketTable tr:nth-child(2n) td {
+    background-color: #bbb9b97c;
 }
-.ClosedTicketTable thead {
-    background-color: rgb(91, 226, 13);
+.ClosedTicketTable thead>tr>th {
+    background-color: rgb(94, 255, 0)!important;
 }
 
 header {
