@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import ItemTable from '../components/ItemTable';
 import InventoryATable from '../components/InventoryATable';
-import { Button, Space } from 'antd';
+import { Button, Space, ConfigProvider } from 'antd';
 import './MaterialListPage.css';
 
 const HomePage = ({ setItemToEdit }) =>{
@@ -19,6 +19,15 @@ const OpenForm = () => {
 
   return (
       <>
+          <ConfigProvider
+              theme={{
+                  token: {
+                      colorPrimary: '#ffffff',
+                      colorTextLightSolid: '#000000',
+                      colorBorder: '#242437',
+                      colorPrimaryHover: '#e0ded6'
+                  },
+              }}>
     <div id='MaterialCard'>
         <h1 id='MaterialText'>DOS Material List</h1>
       <div id='MaterialButton'>
@@ -31,7 +40,7 @@ const OpenForm = () => {
       {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
       <br/>
 		
-      
+      </ConfigProvider>
     </>
   )
 }

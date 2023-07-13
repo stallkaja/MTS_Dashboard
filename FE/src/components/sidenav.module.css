@@ -2,8 +2,9 @@
     width: 250px;
     transition: width 0.3s ease-in-out;
     height: 100vh;
-    background-image: linear-gradient(to right, #242437 50%, #2e3042);
+    background-image: linear-gradient(to right, #242437 50%, #243742);
     padding-top: 28px;
+    /*#2e3042 for slate gradient*/
 }
 .sidenavClosed {
     composes: sidenav;

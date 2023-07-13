@@ -2,40 +2,57 @@
 #OpenTicketCard {
     background: linear-gradient(red, #242437 60%);
     border-radius: 15px;
-    height: 60px;
+    height: 50px;
 }
-#OpenTicketTitle{
-    transform: translateY(-30%);
-    display:inline-block;
-    color:white;
-    padding-left:10px;
+#OpenTicketTitle {
+    position: relative;
+    justify-content: left;
+    text-align: left;
+    transform: translate(-61%, -50%);
+    display: inline-block;
+    color: white;
+    padding-left: 10px;
 }
 #CreateTicketButton{
     position: relative;
-    transform: translateY(-190%);
+    transform: translateY(-203%);
     padding-right: 10px;
     display: flex;
     justify-content: right;
     align-items: right;
 }
 #ClosedTicketCard {
-    background: linear-gradient(#20A785, #242437 60%);
+    background: linear-gradient(#20A742, #242437 60%);
     border-radius: 15px;
-    height: 60px;
+    height: 50px;
 }
 #CloseTicketTitle{
-    transform: translateY(-30%);
+    transform: translateY(-42%);
     display:inline-block;
     color:white;
     padding-left:10px;
 }
 #TicketDashCard {
-height: 90px;
-
+    background: white;
+    border-radius: 15px;
+    height: 60px;
+    margin-bottom: 10px;
 }
 #TicketSearchBar {
     position: absolute;
     display: fixed;
     justify-content: right;
     text-align: right;
+}
+#TicketTitle {
+    float: left;
+    transform: translateY(-35%);
+    padding-left: 10px;
+    
+}
+#TicketSearch {
+    float: right;
+    transform: translateY(-35%);
+    padding-right: 10px;
+    
 }
