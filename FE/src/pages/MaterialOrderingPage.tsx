@@ -24,6 +24,9 @@ const TicketDashboard = () => {
                 },
             }}>
         <div>
+            <div>
+                <h1>Material Ordering</h1>
+            </div>
         <div id='AwaitingCard'>
                 <h1 id='AwaitingText'>Awaiting Approval</h1>
             <div id='CreateButton'>

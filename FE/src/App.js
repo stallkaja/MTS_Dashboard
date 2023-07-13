@@ -16,6 +16,11 @@ import TicketPage from './pages/TicketPage.js'
 import OrderPage from './pages/OrderPage.js'
 import Header from "./components/Header";
 import useToken from './components/useToken.js'
+import TicketsListPage from './pages/ticketsListPage.tsx'
+import KitBasePage from './pages/kitBasePage.tsx'
+import SwicBasePage from './pages/swicBasePage.tsx'
+import ToolPullListPage from './pages/toolPullListPage.js'
+import PassDownPage from './pages/passDownPage.js'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import ToolInfoForm from './pages/ToolInfoForm.js';
@@ -42,7 +47,7 @@ import styles from "./components/Header.module.css"
 				<Route path='/TicketDashboard' element={<TicketDashboard/>} />
         		<Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
 				<Route path='/MaterialOrderingPage' element={<MaterialOrderingPage/>} />
-        		<Route path='/Map' element={<MapPage/>} />
+        		<Route path='/map' element={<MapPage/>} />
         		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
         		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
         		<Route path='/toolRequest' element={<ToolRequestPage/>} />
@@ -50,6 +55,11 @@ import styles from "./components/Header.module.css"
                 <Route path='/ticketPage' element={<TicketPage />} />
 				<Route path='/OrderPage' element={<OrderPage />} />
                 <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
+				<Route path='/TicketsList' element={<TicketsListPage/>} />
+				<Route path='/KitBase' element={<KitBasePage/>} />
+				<Route path='/SwicBase' element={<SwicBasePage/>} />
+				<Route path='/ToolPullList' element={<ToolPullListPage/>} />
+				<Route path='/PassDown' element={<PassDownPage/>} />
 				</Routes>
       		</main>
     	</div>

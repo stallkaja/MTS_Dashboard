@@ -56,7 +56,7 @@ export default function Header() {
 			Support Dashboard
 		</Typography>
 			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>VFD</b></Button>
-			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>KM</b></Button>
+			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>KMM</b></Button>
 			<Button sx={{color:"#ffffff"}} onClick={onDownload}><b>SAP</b></Button>
 			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>}><b>Logout</b></Button>
 		</Toolbar>
