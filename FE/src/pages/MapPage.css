@@ -1,18 +1,11 @@
-.row {
-    display: flex;
-  }
-  
-  .column {
-    flex: 50%;
-  }
-
-.header {
+﻿#MapCard {
     background: linear-gradient(#20a785, #242437 60%);
     border-radius: 15px;
     height: 60px;
 }
-.headtext{
+
+#MapText {
     color: white;
-    transform: translateY(20%);
+    transform: translateY(10%);
     padding-left: 10px;
 }

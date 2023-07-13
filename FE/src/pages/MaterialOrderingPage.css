@@ -1,0 +1,35 @@
+﻿#AwaitingCard {
+    background: linear-gradient(red, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+}
+#AwaitingText{
+    color: white;
+    transform: translateY(10%);
+    padding-left: 10px;
+}
+#CreateButton{
+    float: right;
+    transform: translateY(-160%);
+    padding-right: 10px;
+}
+#SubmittedCard {
+    background: linear-gradient(#e89945, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+}
+#SubmittedText {
+    color: white;
+    transform: translateY(10%);
+    padding-left: 10px;
+}
+#ArrivedCard {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+}
+#ArrivedText {
+    color: white;
+    transform: translateY(10%);
+    padding-left: 10px;
+}

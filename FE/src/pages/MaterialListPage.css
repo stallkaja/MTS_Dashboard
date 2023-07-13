@@ -1,0 +1,16 @@
+﻿#MaterialCard {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+}
+
+#MaterialText {
+    color: white;
+    transform: translateY(10%);
+    padding-left: 10px;
+}
+#MaterialButton {
+    float: right;
+    transform: translateY(-160%);
+    padding-right: 10px;
+}

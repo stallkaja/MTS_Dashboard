@@ -2,7 +2,7 @@
     width: 250px;
     transition: width 0.3s ease-in-out;
     height: 100vh;
-    background-image: linear-gradient(to right, #242437 87%, #6a7885);
+    background-image: linear-gradient(to right, #242437 50%, #2e3042);
     padding-top: 28px;
 }
 .sidenavClosed {

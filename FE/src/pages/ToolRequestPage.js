@@ -66,15 +66,12 @@ const ToolRequestPage = () => {
       
     )
   return (
-    <div
-/*       style={{
-        display: 'flex',
-        justifyContent: 'Center',
-        alignItems: 'Right',
-        height: '100vh'
-      }} */
-    >
-      <h1>Tool Request Page</h1>
+      <div>
+          <div id='ReqCard'>
+    <div id='ReqText'>
+                  <h1>Tool Request Page</h1>
+              </div>
+          </div>
       <label>
        Bay Number
        <br></br>

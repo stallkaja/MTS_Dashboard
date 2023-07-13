@@ -2,17 +2,16 @@
 import React, { Component }  from 'react';
 import dosmap from '../images/DOSMap.png'; /* Imports DOS Map from the image folder, yet gives syntax error. If anyone knows why, let me know. -LeathJo 06/02/23 */
 import ReactSearchBox from "react-search-box";
+import './MapPage.css';
   
 const MapPage = () => {
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'Center',
-        height: '100vh'
-      }}
-    >
-      <h1>Map Page</h1>
+      <div>
+          <div id='MapCard'>
+    <div id='MapText'>
+                  <h1>Map Page</h1>
+              </div>
+          </div>
       <ReactSearchBox
       placeholder="Search for Jon, Jane or Mary"
       data={[

@@ -83,8 +83,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
 
   return (
-    <div>
-          <h1>Calibrated Tool Movement Log</h1>
+      <div>
+          <div className={ScanToolStyles.header}>
+              <h1 className={ScanToolStyles.headtext}>Calibrated Tool Movement Log</h1>
+          </div>
         <div className={ScanToolStyles.row}>
             <div className={ScanToolStyles.column}>
                   <h2 style={{textAlign: "center"} }>Scan Tool</h2>

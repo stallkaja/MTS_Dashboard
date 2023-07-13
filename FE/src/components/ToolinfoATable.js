@@ -322,7 +322,7 @@ function ToolInfoATable(targetNVL) {
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            <button onClick={() => EditRecord(record)}>
+                            <button type="primary" onClick={() => EditRecord(record)}>
                                 {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
                                 {"Edit"}
                             </button>

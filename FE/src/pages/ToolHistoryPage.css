@@ -1,0 +1,11 @@
+
+#ToolHeader {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+}
+#ToolButton{
+    float: right;
+    transform: translateY(-45%);
+    padding-right: 10px;
+}
