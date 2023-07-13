@@ -19,12 +19,13 @@ const TicketDashboard = () => {
               {"Create New Order"}
             </Button>
 
-            <table>
+            <main>
             <OpenTicketATable />
-            </table>
+            
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <h1>Submitted</h1>
-            <table><ClosedTicketATable/></table>
+            <ClosedTicketATable />
+        </main>
         </div>
 
     );

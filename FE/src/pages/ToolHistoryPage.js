@@ -26,7 +26,7 @@ const ToolHistoryPage = () => {
         
         <div>
         <main>
-            <h1>Calibrated Tool Information Page</h1>
+                <h1 style={{ textAlign: 'left'} }>Calibrated Tool Information Page</h1>
             
             <div className={ToolHistoryPageStyles.button}>
             <Button type="primary" onClick={() => OpenForm()}>

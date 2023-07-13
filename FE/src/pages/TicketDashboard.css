@@ -1,8 +1,8 @@
 
-#OpenTicketCard{
-    background:linear-gradient(180deg,rgb(81, 81, 99),#242437);
+#OpenTicketCard {
+    background: linear-gradient(red, #242437 60%);
     border-radius: 15px;
-    height:60px;
+    height: 60px;
 }
 #OpenTicketTitle{
     transform: translateY(-30%);
@@ -18,14 +18,24 @@
     justify-content: right;
     align-items: right;
 }
-#ClosedTicketCard{
-    background:linear-gradient(180deg,rgb(81, 81, 99),#242437);
+#ClosedTicketCard {
+    background: linear-gradient(#20A785, #242437 60%);
     border-radius: 15px;
-    height:60px;
+    height: 60px;
 }
 #CloseTicketTitle{
     transform: translateY(-30%);
     display:inline-block;
     color:white;
     padding-left:10px;
+}
+#TicketDashCard {
+height: 90px;
+
+}
+#TicketSearchBar {
+    position: absolute;
+    display: fixed;
+    justify-content: right;
+    text-align: right;
 }

@@ -22,14 +22,21 @@ const TicketDashboard: React.FC = () => {
                     colorPrimaryHover: '#c74f26'
                 },
             }}>
-        
-        <div>
+            
+            <div>
+                <div id='TicketDashCard'>
+                    <h1 style={{float: 'left'} }>Ticket Dashboard</h1>
+                 
+                    <h1 style={{float: 'right'} }> Search Bar Place Holder</h1>
+                </div>
+                
             <div id='OpenTicketCard'>
                 <div>
                     <h1 id='OpenTicketTitle'>Open and In Progress Tickets</h1>
-                </div>
+                    </div>
+                
                 <div id="CreateTicketButton">
-                    <Button  type="primary"  size="large" onClick={() => OpenTicket()}>
+                    <Button size="large" onClick={() => OpenTicket()}>
                         {"Create Ticket"}
                     </Button>
                 </div>

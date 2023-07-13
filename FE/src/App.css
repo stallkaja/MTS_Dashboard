@@ -46,9 +46,7 @@ div1 {
     position: relative;
 }
 
-h1 {
-    text-align: center;
-}
+
 
 buttonRight {
     position: absolute;
@@ -58,17 +56,13 @@ buttonRight {
 .OpenTicketTable tr:nth-child(2n) td {
     background-color: #bbb9b97c;
 }
-.OpenTicketTable thead>tr>th {
-    background-color: rgb(255, 0, 0)!important;
-}
+
 
 .ClosedTicketTable tr:nth-child(2n) td {
     background-color: #bbb9b97c;
 }
-.ClosedTicketTable thead>tr>th {
-    background-color: rgb(94, 255, 0)!important;
-}
+
 
 header {
-    background: linear-gradient(to right, #00d1fa, #fff5b2);
+    background: radial-gradient(circle, #6a7885, #242437 90%);
 }

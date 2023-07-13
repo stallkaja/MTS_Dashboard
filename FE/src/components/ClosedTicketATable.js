@@ -124,7 +124,7 @@ function ClosedTicketATable(targetNVL){
           key: 'key',
           dataIndex: 'key',
           render: (text, record) => (
-           <Button type="primary" onClick={()=>EditRecord(record)}>
+              <Button style={{ backgroundColor: '#00a800', color: '#000000', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
             {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
              {"Open"}
            </Button>
