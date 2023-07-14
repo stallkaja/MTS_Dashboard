@@ -28,8 +28,11 @@ const OpenForm = () => {
                       colorPrimaryHover: '#e0ded6'
                   },
               }}>
+              <div id='TitleCard'>
+                  <h1 id='MaterialText'>DOS Material List</h1>
+              </div>
     <div id='MaterialCard'>
-        <h1 id='MaterialText'>DOS Material List</h1>
+        
       <div id='MaterialButton'>
         <Button type="primary" onClick={() => OpenForm()}>
           {"Create Item"}

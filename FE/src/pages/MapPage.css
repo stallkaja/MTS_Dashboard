@@ -2,10 +2,29 @@
     background: linear-gradient(#20a785, #242437 60%);
     border-radius: 15px;
     height: 60px;
+    display: flex;
 }
 
 #MapText {
-    color: white;
-    transform: translateY(10%);
     padding-left: 10px;
+}
+#MapSearch {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    align-content: flex-start;
+    padding-left: 10px;
+}
+#TitleCard {
+    background: white;
+    border-radius: 15px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
 }

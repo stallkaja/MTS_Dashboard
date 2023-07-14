@@ -130,13 +130,15 @@ const fetchNVLs = async () => {
         <div>
             <h2 style={{textAlign: "center"} }>History</h2>
             <label for="searchnvl">Search NVL History</label>
+            <div style={{display: "flex"} }>
             <input id="searchnvl"
                 type="text"
                 value={searchNVL}
                 onInput={e => setSearchNVL(e.target.value)}
                 placeholder="Search an NVL"
             />
-            <Button type="primary" onClick={fetchNVLs}> Submit </Button>
+            <div style={{paddingLeft: "5px"} }>
+            <Button type="default" onClick={fetchNVLs}>Search</Button></div></div>
             <br/>
             <Table columns={headers} dataSource={toolHistory} />
         </div>

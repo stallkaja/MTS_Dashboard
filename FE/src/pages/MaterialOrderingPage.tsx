@@ -24,11 +24,11 @@ const TicketDashboard = () => {
                 },
             }}>
         <div>
-            <div>
-                <h1>Material Ordering</h1>
+            <div id='TitleCard'>
+                    <h1 id='TitleText'>Material Ordering</h1>
             </div>
         <div id='AwaitingCard'>
-                <h1 id='AwaitingText'>Awaiting Approval</h1>
+                <div id='AwaitingText'>Awaiting Approval</div>
             <div id='CreateButton'>
             <Button type="primary" onClick={() => OpenTicket()}>
               {"Create New Order"}
@@ -41,14 +41,14 @@ const TicketDashboard = () => {
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
                 <div id='SubmittedCard'>
             <div id='SubmittedText'>
-                    <h1>Submitted</h1>
+                    Submitted
                     </div>
                     </div>
             <ClosedTicketATable />
 
                 <div id='ArrivedCard'>
                     <div id='ArrivedText'>
-                        <h1>Arrived</h1>
+                        Arrived
                     </div>
                 </div>
                 <ClosedTicketATable />

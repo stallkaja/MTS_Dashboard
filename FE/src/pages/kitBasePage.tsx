@@ -26,14 +26,14 @@ const TicketDashboard: React.FC = () => {
             
             <div>
                 <div id='TicketDashCard'>
-                    <h1 style={{float: 'left'} }>Ticket Dashboard</h1>
+                    <h1 id='TicketTitle'>Ticket Dashboard</h1>
                  
-                    <h1 style={{float: 'right'} }> Search Bar Place Holder</h1>
+                    <h1 id='TicketSearch'> Search Bar Place Holder</h1>
                 </div>
                 
             <div id='OpenTicketCard'>
                 <div>
-                    <h1 id='OpenTicketTitle'>Open and In Progress Tickets</h1>
+                    <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
                     </div>
                 
                 <div id="CreateTicketButton">
@@ -46,7 +46,7 @@ const TicketDashboard: React.FC = () => {
 
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <div id='ClosedTicketCard'>
-                <h1 id='CloseTicketTitle'>Closed and Under Review</h1>
+                <div id='CloseTicketTitle'>Closed and Under Review</div>
             </div>
 
             <ClosedTicketATable/>

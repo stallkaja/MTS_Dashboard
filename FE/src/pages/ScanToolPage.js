@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
-import {Table} from 'antd'
+import {Table, ConfigProvider} from 'antd'
 import { Button, Space } from 'antd';
 
 const ScanToolPage = ({ setItemToEdit }) => {
@@ -82,15 +82,30 @@ const ScanToolPage = ({ setItemToEdit }) => {
   };
 
 
-  return (
+    return (
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#ffffff',
+                    colorTextLightSolid: '#000000',
+                    colorBorder: '#000000',
+                    //lineType: 'default',
+                    //lineWidth: '1',
+                    colorPrimaryHover: '#e0ded6'
+                },
+            }}>
       <div>
-          <div className={ScanToolStyles.header}>
+          <div className={ScanToolStyles.titlecard}>
               <h1 className={ScanToolStyles.headtext}>Calibrated Tool Movement Log</h1>
+          </div>
+          <div className={ScanToolStyles.header}>
+  
           </div>
         <div className={ScanToolStyles.row}>
             <div className={ScanToolStyles.column}>
-                  <h2 style={{textAlign: "center"} }>Scan Tool</h2>
-                <fieldset>
+                        <h2 style={{textAlign: "center"} }>Scan Tool</h2>
+                            <fieldset>
+                <legend>Tool Movement Form</legend>
                   <label for="nvl">NVL #</label>
                     <input id="nvl"
                       type="text"
@@ -108,8 +123,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
                       type="text"
                       value={newLoc}
                       onChange={e => setLoc(e.target.value)}
-                  /> <br/>
-			            <Button type="primary" onClick={newScan}> Save </Button>
+                            /> <br />
+                            <div className={ScanToolStyles.buttonmove}>
+                                <Button type="default" onClick={newScan}> Save </Button>
+                        </div>
                 </fieldset>
             </div>
             <div className={ScanToolStyles.column}>
@@ -120,7 +137,8 @@ const ScanToolPage = ({ setItemToEdit }) => {
             </div>
             {/* <Table dataSource={toolHistory} columns={columns} /> */}
         </div>
-    </div>
+            </div>
+    </ConfigProvider>
     
     
   );

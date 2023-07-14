@@ -7,13 +7,14 @@ import './MapPage.css';
 const MapPage = () => {
   return (
       <div>
+      <div id='TitleCard'>
+          <h1 id='MapText'>Map Page</h1>
+      </div>   
           <div id='MapCard'>
-    <div id='MapText'>
-                  <h1>Map Page</h1>
-              </div>
-          </div>
+ 
+          <div id='MapSearch'>
       <ReactSearchBox
-      placeholder="Search for Jon, Jane or Mary"
+      placeholder="Search for Stuff 'n' Things"
       data={[
         {
           key: "jon",
@@ -44,7 +45,9 @@ const MapPage = () => {
       autoFocus
       leftIcon={<>🔎</>}
       iconBoxSize="28px"
-    />
+                  />
+              </div>
+          </div>
         {/* This is displaying the map, currently I cannot get it to center underneath the header, but its a WIP, feel free to assist if bored. -LeathJo 06/02/23 */
         <img 
           src={dosmap} alt="map" width="80%" height="80%">

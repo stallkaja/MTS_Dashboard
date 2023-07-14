@@ -32,15 +32,17 @@ const ToolHistoryPage = () => {
                 },
             }}>
         
-        <div>
-            
+            <div>
+        <div id='TitleCard'>
+                    <h1 id='ToolTitle'>Calibrated Tool Information Page</h1>
+                </div>
                 <div id='ToolHeader'>
-                <h1 style={{float: 'left', transform: 'translateY(-30%)', color: 'white', paddingLeft: '10px'} }>Calibrated Tool Information Page</h1>
+                
             
-            <h1 id='ToolButton'>
+            <div id='ToolButton'>
                     <Button type="primary" onClick={() => OpenForm()}>              {"Create New Tool"}
             </Button>
-                </h1>
+                </div>
             </div>
                 
                 <ToolInfoATable />

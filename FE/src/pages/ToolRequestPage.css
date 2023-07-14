@@ -102,8 +102,20 @@
     height: 60px;
 }
 
-#ReqText {
-    color: white;
-    transform: translateY(10%);
+
+
+#TitleCard {
+    background: white;
+    border-radius: 15px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#TitleText {
     padding-left: 10px;
 }

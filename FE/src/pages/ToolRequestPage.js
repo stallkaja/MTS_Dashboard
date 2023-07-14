@@ -67,10 +67,11 @@ const ToolRequestPage = () => {
     )
   return (
       <div>
+          <div id='TitleCard'>
+              <h1 id='TitleText'>Tool Request Page</h1>
+          </div>
           <div id='ReqCard'>
-    <div id='ReqText'>
-                  <h1>Tool Request Page</h1>
-              </div>
+ 
           </div>
       <label>
        Bay Number

@@ -1,21 +1,23 @@
-.row {
-    display: flex;
-  }
-  
-  .column {
-    flex: 50%;
-  }
-
-.header {
+﻿#ToolHeader {
     background: linear-gradient(#20a785, #242437 60%);
     border-radius: 15px;
     height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
-.headtext{
 
+#ToolTitle {
+ padding-left: 10px;
+}
+
+#ToolButton {
+    display: flex;
+    justify-content: flex-start;
+    float: right;
     padding-left: 10px;
 }
-.titlecard {
+#TitleCard {
     background: white;
     border-radius: 15px;
     height: 60px;
@@ -25,20 +27,4 @@
     align-content: space-between;
     flex-wrap: wrap;
     justify-content: center;
-}
-.buttonmove{
-    padding-top: 10px;
-}
-
-fieldset {
-    margin-inline-start: 2%;
-    margin-inline-end: 2%;
-    background: #e6e3dc;
-}
-legend {
-    background: linear-gradient(#20a785, #242437 60%);
-    color: #ffffff;
-}
-label{
-    border: 0px
 }
