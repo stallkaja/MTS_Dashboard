@@ -3,56 +3,70 @@
     background: linear-gradient(red, #242437 60%);
     border-radius: 15px;
     height: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: flex-start;
 }
 #OpenTicketTitle {
-    position: relative;
-    justify-content: left;
+    display: flex;
     text-align: left;
-    transform: translate(-61%, -50%);
-    display: inline-block;
     color: white;
     padding-left: 10px;
+    float: left;
+    font-size: 30px;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 #CreateTicketButton{
     position: relative;
-    transform: translateY(-203%);
+    transform: translateY(-88%);
     padding-right: 10px;
     display: flex;
-    justify-content: right;
-    align-items: right;
+    align-items: flex-end;
+    flex-direction: column;
 }
 #ClosedTicketCard {
     background: linear-gradient(#20A742, #242437 60%);
     border-radius: 15px;
     height: 50px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
 }
 #CloseTicketTitle{
-    transform: translateY(-42%);
-    display:inline-block;
+    display:flex;
     color:white;
     padding-left:10px;
+    font-size: 30px;
+    flex-direction: column;
+    align-content: flex-start;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 #TicketDashCard {
     background: white;
     border-radius: 15px;
     height: 60px;
     margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 #TicketSearchBar {
     position: absolute;
-    display: fixed;
+    display: flex;
     justify-content: right;
     text-align: right;
 }
 #TicketTitle {
-    float: left;
-    transform: translateY(-35%);
-    padding-left: 10px;
-    
+    padding-left: 10px;  
 }
 #TicketSearch {
-    float: right;
-    transform: translateY(-35%);
     padding-right: 10px;
     
 }

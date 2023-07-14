@@ -12,7 +12,7 @@ const TicketDashboard: React.FC = () => {
         navigate(path);
     }
 
-  
+
     return (
         <ConfigProvider
             theme={{
@@ -23,8 +23,8 @@ const TicketDashboard: React.FC = () => {
                     colorPrimaryHover: '#e0ded6'
                 },
             }}>
-            
-            <div>
+
+            {/*<div>*/}
                 <div id='TicketDashCard'>
                     <h1 id='TicketTitle'>Ticket Dashboard</h1>
                  
@@ -32,9 +32,9 @@ const TicketDashboard: React.FC = () => {
                 </div>
                 
             <div id='OpenTicketCard'>
-                <div>
-                        <h1 id='OpenTicketTitle'>Open and In Progress Tickets</h1>
-                    </div>
+                
+                        <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
+                    
                 
                 <div id="CreateTicketButton">
                     <Button type="primary" size="large" onClick={() => OpenTicket()}>
@@ -46,11 +46,11 @@ const TicketDashboard: React.FC = () => {
 
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <div id='ClosedTicketCard'>
-                <h1 id='CloseTicketTitle'>Closed and Under Review</h1>
+                <div id='CloseTicketTitle'>Closed and Under Review</div>
             </div>
 
-            <ClosedTicketATable/>
-        </div>
+            <ClosedTicketATable />
+            {/*</div>*/}
         </ConfigProvider>
     );
 };
