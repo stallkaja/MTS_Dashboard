@@ -136,8 +136,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
                     <fieldbox>
                         <fieldset>
                             <legend>
-                                Tool Movement Form</legend>
-                            <label for="nvl">NVL #</label>
+                            Tool Movement Form</legend>
+                        
+                        <label for="nvl">NVL #</label>
                             <input id="nvl"
                                 type="text"
                                 value={nvl}
