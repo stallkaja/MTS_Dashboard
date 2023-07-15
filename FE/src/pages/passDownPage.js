@@ -35,10 +35,10 @@ const ToolHistoryPage = () => {
         <div>
             
                 <div id='ToolHeader'>
-                <h1 style={{float: 'left', transform: 'translateY(-30%)', color: 'white', paddingLeft: '10px'} }>Calibrated Tool Information Page</h1>
+                <h1 style={{float: 'left', transform: 'translateY(-30%)', color: 'white', paddingLeft: '10px'} }>Passdown</h1>
             
             <h1 id='ToolButton'>
-                    <Button type="primary" onClick={() => OpenForm()}>              {"Create New Tool"}
+                    <Button type="primary" onClick={() => OpenForm()}>              {"Create New Passdown"}
             </Button>
                 </h1>
             </div>
