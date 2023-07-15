@@ -56,7 +56,7 @@ export const navData = [
     {
         id: 8,
         icon: <SettingsIcon/>,
-        text: "Cal Tool Movement Log",
+        text: "Cal Tool History",
         link: "ScanTool"
     },
     {

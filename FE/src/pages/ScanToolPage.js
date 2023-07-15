@@ -15,6 +15,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
     const [searchnvl, setSearchNvl] = useState('');
     const history = useNavigate();
     const [headers, setHeaders] = useState([]);
+    const [searchNVL, setSearchNVL] = useState('');
     
     const [toolHistory, setToolHistory] = useState([
       {NVL: '',
@@ -80,7 +81,23 @@ const ScanToolPage = ({ setItemToEdit }) => {
     setItemToEdit(item);
     history.push('/edit');
   };
-
+    const fetchNVLs = async () => {
+        const targetNVL = { searchNVL }
+        const response = await fetch('/searchNVL', {
+            method: 'POST',
+            body: JSON.stringify(targetNVL),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    setToolHistory(responseData)
+                    console.log(toolHistory)
+                })
+            }
+        });
+    }
 
     return (
         <ConfigProvider
@@ -96,17 +113,62 @@ const ScanToolPage = ({ setItemToEdit }) => {
             }}>
       <div>
           <div className={ScanToolStyles.titlecard}>
-              <h1 className={ScanToolStyles.headtext}>Calibrated Tool Movement Log</h1>
+              <h1 className={ScanToolStyles.headtext2}>Calibrated Tool History</h1>
           </div>
-          <div className={ScanToolStyles.header}>
-  
-          </div>
+                <div className={ScanToolStyles.header}>
+                    <div className={ScanToolStyles.headtext }>Movement Log</div>
+                    {/*<label for="searchnvl">Search NVL History</label>*/}
+                    <div className={ScanToolStyles.searchbar }>
+                        <input id="searchnvl"
+                            type="text"
+                            value={searchNVL}
+                            onInput={e => setSearchNVL(e.target.value)}
+                            placeholder="Search an NVL"
+                            size="25"
+                        />
+
+                        <div className={ScanToolStyles.searchbutton }>
+                            <Button type="default" onClick={fetchNVLs}>Search</Button></div>
+                            </div>
+                    <br /></div>
+
+                    {/*<h2 style={{ textAlign: "center" }}>Scan Tool</h2>*/}
+                    <fieldbox>
+                        <fieldset>
+                            <legend>
+                            Tool Movement Form</legend>
+                        
+                        <label for="nvl">NVL #</label>
+                            <input id="nvl"
+                                type="text"
+                                value={nvl}
+                                onChange={e => setNvl(e.target.value)}
+                            /> <br />
+                            <label for="employeeID">Employee ID #</label>
+                            <input id="employeeID"
+                                type="text"
+                                value={employeeID}
+                                onChange={e => setEmployeeID(e.target.value)}
+                            /> <br />
+                            <label for="newLoc">New Location</label>
+                            <input id="newLoc"
+                                type="text"
+                                value={newLoc}
+                                onChange={e => setLoc(e.target.value)}
+                            /> <br />
+                            <div className={ScanToolStyles.buttonmove}>
+                                <Button type="default" onClick={newScan}> Save </Button>
+                            </div>
+                        </fieldset>
+                    </fieldbox> 
+          
         <div className={ScanToolStyles.row}>
-            <div className={ScanToolStyles.column}>
+                    {/*<div className={ScanToolStyles.column}>
                         <h2 style={{ textAlign: "center" }}>Scan Tool</h2>
                         <fieldbox>
                             <fieldset>
-                <legend>Tool Movement Form</legend>
+                                <legend>                                  
+                                        Tool Movement Form</legend>
                   <label for="nvl">NVL #</label>
                     <input id="nvl"
                       type="text"
@@ -130,14 +192,16 @@ const ScanToolPage = ({ setItemToEdit }) => {
                         </div>
                             </fieldset>
                 </fieldbox>
-            </div>
+            </div>*/}
             <div className={ScanToolStyles.column}>
 {/*                   <button onClick={searchNVL}> Submit </button>
                   <br/>
                   <ItemTable headers ={headers} items={toolHistory} onEdit={onEdit} onDelete={onDelete}/> */}
-                  <ScanHistoryATable/>
+                        {/*<ScanHistoryATable/>*/}
+                        <ScanHistoryATable
+                            toolHistory={toolHistory} />
             </div>
-            {/* <Table dataSource={toolHistory} columns={columns} /> */}
+                    {/* <Table dataSource={toolHistory} columns={columns} /> */}
         </div>
             </div>
     </ConfigProvider>
