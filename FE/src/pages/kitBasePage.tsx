@@ -3,7 +3,7 @@ import OpenTicketATable from '../components/OpenTicketATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
 import "./TicketDashboard.css";
 import { useNavigate } from 'react-router';
-import { Button, Space, ConfigProvider } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 
 const TicketDashboard: React.FC = () => {
     const navigate = useNavigate();

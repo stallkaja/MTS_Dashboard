@@ -2,11 +2,11 @@ import React from 'react';
 import ScanToolStyles from './ScanTool.module.css' 
 import ItemTable from '../components/ItemTable';
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
 import {Table, ConfigProvider} from 'antd'
-import { Button, Space } from 'antd';
+import { Button} from 'antd';
 
 const ScanToolPage = ({ setItemToEdit }) => {
     const [newLoc, setLoc] = useState('');
@@ -22,12 +22,6 @@ const ScanToolPage = ({ setItemToEdit }) => {
     tool: 'ad'}
     ]);
 
-    const loadToolHistory = async () => {
-        const response = await fetch('/toolhistory');
-        const data = await response.json();
-        setToolHistory(data);
-        console.log(toolHistory)
-      }
 
     //useEffect(() => searchNVL(), []);
     //----------------------------------------------------------------------------
@@ -38,10 +32,12 @@ const ScanToolPage = ({ setItemToEdit }) => {
         let yourDate = new Date()
         const offset = yourDate.getTimezoneOffset()
         yourDate = new Date(yourDate.getTime() - (offset*60*1000))
+
         const date = yourDate.toISOString().split('T')[0]
-        const newScan = { nvl, employeeID, newLoc, date };
-        console.log(date)
-        console.log(newScan)
+        const time = (yourDate.toISOString().split('T')[1]).split('.')[0]
+        const dateTime = date + ' ' + time;
+
+        const newScan = { nvl, employeeID, newLoc, dateTime };
         const response = await fetch('/newScan', {
             method: 'POST',
             body: JSON.stringify(newScan),
@@ -92,8 +88,11 @@ const ScanToolPage = ({ setItemToEdit }) => {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
+                    for(let i =0; i<responseData.length;i++){
+                        let cleanDate = (responseData[i].curDate.split('T')[0]) + ' ' + ((responseData[i].curDate.split('T')[1]).split('.')[0])
+                        responseData[i].curDate = cleanDate
+                    }
                     setToolHistory(responseData)
-                    console.log(toolHistory)
                 })
             }
         });

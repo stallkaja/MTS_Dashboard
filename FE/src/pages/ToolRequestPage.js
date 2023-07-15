@@ -1,7 +1,6 @@
 
 import React from 'react';
 import toolBoardWrenches from '../images/toolBoardWrenches.jpg';
-import {ImageBackground, StyleSheet, Text, View} from 'react-native';
 import wrench1 from '../images/wrench1.jpg'
 import './ToolRequestPage.css';
   

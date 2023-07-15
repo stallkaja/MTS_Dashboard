@@ -89,7 +89,6 @@ function InventoryATable(targetNVL){
   const searchInput = useRef(null);
   const navigate = useNavigate();
     const EditRecord = (record) => {
-        console.log(record);
     navigate('/createMaterial',{state:{record:record}});
   };
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -191,10 +190,7 @@ function InventoryATable(targetNVL){
     if (response.ok) {
       response.json().then((responseData) => {
         const headerArray=[];
-        //console.log(responseData)
         for(let i =0;i<responseData.length;i++){
-
-          //console.log(responseData[i].COLUMN_NAME)
           if(responseData[i].COLUMN_NAME == "MaterialName"){
             var payload = {
               title: responseData[i].COLUMN_NAME,

@@ -297,10 +297,7 @@ function ToolInfoATable(targetNVL) {
             if (response.ok) {
                 response.json().then((responseData) => {
                     const headerArray = [];
-                    //console.log(responseData)
                     for (let i = 0; i < responseData.length; i++) {
-
-                        //console.log(responseData[i].COLUMN_NAME)
                         let payload = {
                             /*title: responseData[i].COLUMN_NAME,
                             dataIndex: responseData[i].COLUMN_NAME,
@@ -352,7 +349,7 @@ function ToolInfoATable(targetNVL) {
     }
     useEffect(() => loadItems(), []);
     return (
-        <Table columns={headers} dataSource={items} />
+        <Table columns={headers.filter(col=>col.dataIndex!=='PK')} dataSource={items} />
     );
 }
 export default ToolInfoATable;

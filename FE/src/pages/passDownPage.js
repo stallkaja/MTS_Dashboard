@@ -2,8 +2,7 @@
 import React from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate, Link } from 'react-router';
-import './PassdownPage.css';
-import { Button, Space, ConfigProvider } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 
 
   

@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import ItemTable from '../components/ItemTable';
+import { useNavigate} from 'react-router-dom';
 import InventoryATable from '../components/InventoryATable';
 import { Button, Space, ConfigProvider } from 'antd';
 import './MaterialListPage.css';

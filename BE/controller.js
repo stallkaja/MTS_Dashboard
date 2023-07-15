@@ -32,7 +32,6 @@ app.use('/login', (req, res) => {
       throw err
       connection.end();
     }
-    console.log(rows[0].pword)
     if(req.body.password == rows[0].pword){
       res.send({
         token: "abc123"
@@ -64,8 +63,6 @@ app.post('/newMaterial', (req, res) => {
         req.body.materialPK
     ]
     const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location, materialPK) VALUES(?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = Values(Location), materialPK = VALUES(materialPK)"
-    //WIP
-    console.log(args)
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
             throw err
@@ -92,14 +89,12 @@ app.post('/newTicket', (req, res) => {
     ]
   const stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
   //WIP
-    console.log(req)
     connection.query(stmt, [args], (err, rows, fields) => {
       if (err) {
           throw err
           connection.end();
       }
       else {
-        console.log(rows)
         res.status(200).json({ Error: 'Success' })
       }
   })
@@ -139,7 +134,7 @@ app.post('/newScan', (req, res) => {
         req.body.nvl,
         req.body.employeeID,
         req.body.newLoc,
-        req.body.date,
+        req.body.dateTime,
     ]]
     const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, curDate) VALUES ? "
     //WIP
@@ -188,7 +183,7 @@ app.post('/searchNVL', (req, res) => {
   const args = [[
     req.body.searchNVL,
   ]]
-  const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ?"
+  const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ? order by CurDate DESC"
   connection.query(stmt, [args], (err, rows, fields) => {
     if (err) {
         throw err

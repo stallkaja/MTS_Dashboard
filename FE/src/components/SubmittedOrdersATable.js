@@ -97,7 +97,6 @@ function ClosedTicketATable(targetNVL){
     if (response.ok) {
       response.json().then((responseData) => {
         const headerArray=[];
-        //console.log(responseData)
         for(let i =0;i<responseData.length;i++){
 
             if(responseData[i].COLUMN_NAME == "TicketNum"){

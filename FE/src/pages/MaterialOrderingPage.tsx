@@ -2,7 +2,7 @@ import React from 'react';
 import OpenTicketATable from '../components/OpenTicketATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
 import { useNavigate } from 'react-router';
-import { Button, Space, ConfigProvider } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 import './MaterialOrderingPage.css';
 
 const TicketDashboard = () => {

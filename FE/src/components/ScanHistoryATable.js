@@ -1,4 +1,4 @@
-import {Button, Space, Table, Tag } from 'antd';
+import {Table} from 'antd';
 import { useState, useEffect } from 'react';
 //Example code from antD. 
 /* const columns = [
@@ -91,10 +91,7 @@ function ScanHistoryATable({toolHistory }){
     if (response.ok) {
       response.json().then((responseData) => {
         const headerArray=[];
-        //console.log(responseData)
         for(let i =0;i<responseData.length;i++){
-
-            // console.log(responseData[i].COLUMN_NAME)
             let payload = {
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
@@ -140,7 +137,7 @@ useEffect(()=> loadHeaders(),[]);
             <div style={{paddingLeft: "5px"} }>
             <Button type="default" onClick={fetchNVLs}>Search</Button></div></div>
             <br/>*/}
-            <Table columns={headers} dataSource={toolHistory} />
+            <Table columns={headers.filter(col=>col.dataIndex!=='PK')} dataSource={toolHistory} />
         </div>
 
     );

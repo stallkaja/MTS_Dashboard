@@ -1,9 +1,9 @@
 
 import React from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
-import { useNavigate, Link } from 'react-router';
+import { useNavigate} from 'react-router';
 import './toolPullList.css';
-import { Button, Space, ConfigProvider } from 'antd';
+import { Button, ConfigProvider } from 'antd';
 
 
   
@@ -37,16 +37,12 @@ const ToolHistoryPage = () => {
                     <h1 id='ToolTitle'>Staggering List</h1>
                 </div>
                 <div id='ToolHeader'>
-                
-            
             <div id='ToolButton'>
                     <Button type="primary" onClick={() => OpenForm()}>              {"Generate List"}
             </Button>
                 </div>
             </div>
-                
                 <ToolInfoATable />
-            
             </div>
     </ConfigProvider>
   );

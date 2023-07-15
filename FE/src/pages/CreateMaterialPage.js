@@ -31,7 +31,6 @@ export default function CreateMaterialPage() {
 	const [loc, setLoc] = useState('');
 	const [nvl, setNvl] = useState('');
 	const [materialPK, setMaterialPK] = useState('');
-	console.log(location.state)
 	useEffect(() => {
 		if (location.state == null) {
 			console.log('record is null')
@@ -57,24 +56,23 @@ export default function CreateMaterialPage() {
 	// Make a POST request to create a new material
 	//----------------------------------------------------------------------------
 	const addMaterial = async () => {
-	  // Create new object with the variables set in the form
+	  	// Create new object with the variables set in the form
 		const newMaterial = { name, qty, stat, cat, asset, part, serial, note, loc, nvl, materialPK };
-		console.log(newMaterial);
-	  const response = await fetch('/newMaterial', {
-		method: 'POST',
-		body: JSON.stringify(newMaterial),
-		headers: {
-		  'Content-Type': 'application/json'
+	  	const response = await fetch('/newMaterial', {
+			method: 'POST',
+			body: JSON.stringify(newMaterial),
+			headers: {
+		  	'Content-Type': 'application/json'
 		}
-	  }).then(response =>{
+	  	}).then(response =>{
 		if (response.status === 200) {
 			alert("Material has been added!");
 			history("/MaterialListPage");
 		} else {
 			alert(`Failed to add material, status code = ${response.status}`);
 		}
-	  });
-	  this.props.history.push('</MaterialListPage>')
+	  	});
+	  	this.props.history.push('</MaterialListPage>')
 }
 
 

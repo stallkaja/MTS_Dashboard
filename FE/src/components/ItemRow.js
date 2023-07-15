@@ -3,7 +3,6 @@ import ItemCell from '../components/ItemCell.js'
 import React, { useState, useEffect } from 'react';
 
 function ItemRow({item, onDelete, onEdit}){
-	//console.log(onDelete)
 	const [itemArray, setItemArray]=useState([]);
 	useEffect(()=>{
 		for (var prop in item) {
@@ -11,7 +10,6 @@ function ItemRow({item, onDelete, onEdit}){
 				itemArray.push(item[prop])
 			}
 		}
-		//console.log(itemArray)
 		setItemArray(itemArray);
 	},[]);
 
