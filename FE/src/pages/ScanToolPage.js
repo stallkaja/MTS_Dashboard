@@ -103,7 +103,8 @@ const ScanToolPage = ({ setItemToEdit }) => {
           </div>
         <div className={ScanToolStyles.row}>
             <div className={ScanToolStyles.column}>
-                        <h2 style={{textAlign: "center"} }>Scan Tool</h2>
+                        <h2 style={{ textAlign: "center" }}>Scan Tool</h2>
+                        <fieldbox>
                             <fieldset>
                 <legend>Tool Movement Form</legend>
                   <label for="nvl">NVL #</label>
@@ -127,7 +128,8 @@ const ScanToolPage = ({ setItemToEdit }) => {
                             <div className={ScanToolStyles.buttonmove}>
                                 <Button type="default" onClick={newScan}> Save </Button>
                         </div>
-                </fieldset>
+                            </fieldset>
+                </fieldbox>
             </div>
             <div className={ScanToolStyles.column}>
 {/*                   <button onClick={searchNVL}> Submit </button>

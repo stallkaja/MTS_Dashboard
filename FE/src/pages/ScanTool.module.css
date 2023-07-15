@@ -4,6 +4,7 @@
   
   .column {
     flex: 50%;
+    width: 70%;
   }
 
 .header {
@@ -31,14 +32,34 @@
 }
 
 fieldset {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
     margin-inline-start: 2%;
     margin-inline-end: 2%;
     background: #e6e3dc;
+    align-content: flex-start;
 }
 legend {
-    background: linear-gradient(#20a785, #242437 60%);
-    color: #ffffff;
+    background: linear-gradient(#20a785, #e6e3dc 60%);
+    /*background: #6a7885;*/
+    color: #000000;
+    text-align: left;
+    border-radius: 5px;
+    padding-inline-start: 5px;
+    padding-inline-end: 5px;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-top-style: none;
+    border-bottom-style: none;
+    border-width: thin;
 }
 label{
     border: 0px
+}
+fieldbox {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
 }

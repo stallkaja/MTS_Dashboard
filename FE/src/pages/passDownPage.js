@@ -34,9 +34,9 @@ const ToolHistoryPage = () => {
         
         <div>
             
+                <div id='TitleCard'>
+                <h1 >Passdown</h1> </div>
                 <div id='ToolHeader'>
-                <h1 style={{float: 'left', transform: 'translateY(-30%)', color: 'white', paddingLeft: '10px'} }>Passdown</h1>
-            
             <h1 id='ToolButton'>
                     <Button type="primary" onClick={() => OpenForm()}>              {"Create New Passdown"}
             </Button>
