@@ -127,12 +127,16 @@ function InventoryATable(targetNVL){
             icon={<SearchOutlined />}
             size="small"
             style={{
+              background: "#20A785",
+              borderColor: "#242437",
+              color: "#ffffff",
               width: 90,
             }}
           >
             Search
           </Button>
           <Button
+            type="primary"
             onClick={() => clearFilters && handleReset(clearFilters)}
             size="small"
             style={{
@@ -142,26 +146,13 @@ function InventoryATable(targetNVL){
             Reset
           </Button>
           <Button
-            type="link"
-            size="small"
-            onClick={() => {
-              confirm({
-                closeDropdown: false,
-              });
-              setSearchText(selectedKeys[0]);
-              setSearchedColumn(dataIndex);
-            }}
-          >
-            Filter
-          </Button>
-          <Button
-            type="link"
+            type="primary"
             size="small"
             onClick={() => {
               close();
             }}
           >
-            close
+            Close
           </Button>
         </Space>
       </div>
@@ -209,6 +200,7 @@ function InventoryATable(targetNVL){
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
+              ...getColumnSearchProps(responseData[i].COLUMN_NAME),
               sorter: (a, b) => a.MaterialName.localeCompare(b.MaterialName),
               sortDirections: ['ascend', 'descend'],
             }
@@ -218,7 +210,7 @@ function InventoryATable(targetNVL){
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
-              ...getColumnSearchProps('BEN'),
+              ...getColumnSearchProps(responseData[i].COLUMN_NAME),
               sorter: (a, b) => a.BEN.localeCompare(b.BEN),
               sortDirections: ['descend', 'ascend'],
               width: '30%',
@@ -229,6 +221,7 @@ function InventoryATable(targetNVL){
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
+              ...getColumnSearchProps(responseData[i].COLUMN_NAME),
               sorter: {
                 compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
               },
