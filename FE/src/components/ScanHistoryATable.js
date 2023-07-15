@@ -73,10 +73,10 @@ const data = [
   },
 ]; */
 
-function ScanHistoryATable(){
-    const [searchNVL, setSearchNVL] = useState('');
+function ScanHistoryATable({toolHistory }){
+    //const [searchNVL, setSearchNVL] = useState('');
     const [headers, setHeaders] = useState([]);
-    const [toolHistory, setToolHistory] = useState([]);
+    //const [toolHistory, setToolHistory] = useState([]);
     const loadHeaders = async () => {
     const tName = 'toolhistorytable'
     const tableName = {tName}
@@ -109,7 +109,7 @@ function ScanHistoryATable(){
 }
 useEffect(()=> loadHeaders(),[]);
 
-const fetchNVLs = async () => {
+    /*const fetchNVLs = async () => {
     const targetNVL = { searchNVL }
     const response = await fetch('/searchNVL', {
         method: 'POST',
@@ -125,10 +125,10 @@ const fetchNVLs = async () => {
         })
       }
     });
-}
+}*/
     return(
         <div>
-            <h2 style={{textAlign: "center"} }>History</h2>
+            {/*<h2 style={{textAlign: "center"} }>Movement Log</h2>
             <label for="searchnvl">Search NVL History</label>
             <div style={{display: "flex"} }>
             <input id="searchnvl"
@@ -139,7 +139,7 @@ const fetchNVLs = async () => {
             />
             <div style={{paddingLeft: "5px"} }>
             <Button type="default" onClick={fetchNVLs}>Search</Button></div></div>
-            <br/>
+            <br/>*/}
             <Table columns={headers} dataSource={toolHistory} />
         </div>
 
