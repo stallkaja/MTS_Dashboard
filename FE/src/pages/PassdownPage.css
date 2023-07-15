@@ -1,0 +1,31 @@
+﻿#PassHeader {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#PassTitle {
+    padding-left: 10px;
+}
+
+#PassButton {
+    display: flex;
+    justify-content: flex-start;
+    float: right;
+    padding-left: 10px;
+}
+
+#TitleCard {
+    background: white;
+    border-radius: 15px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+}
