@@ -253,3 +253,25 @@ app.listen(PORT, () => {
     console.log(`Server listening on port ${PORT}`);
   });
 
+// Create a new Passdown using a post request
+app.post('/newPass', (req, res) => {
+
+    const args = [[
+        req.body.date,
+        req.body.shift,
+        req.body.tech,
+        req.body.depar,
+        req.body.pass
+    ]]
+    const stmt = "INSERT INTO passdowntable (Date, Shift, Technician, Department, Passdown) VALUES ?"
+    //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        else {
+            res.status(200).json({ Error: 'Success' })
+        }
+    })
+});

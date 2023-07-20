@@ -43,25 +43,25 @@ import styles from "./components/Header.module.css"
 		<div className="App" style={{position: "relative"}} >
 			<Sidenav/>
 			<main>
-			<Routes>
-        		<Route path='/' element={<LandingPage/>} />
-				<Route path='/TicketDashboard' element={<TicketDashboard/>} />
-        		<Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
-				<Route path='/MaterialOrderingPage' element={<MaterialOrderingPage/>} />
-        		<Route path='/map' element={<MapPage/>} />
-        		<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
-        		<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
-        		<Route path='/toolRequest' element={<ToolRequestPage/>} />
-        		<Route path='/createMaterial' element={<CreateMaterialPage/>} />
-                <Route path='/ticketPage' element={<TicketPage />} />
-				<Route path='/OrderPage' element={<OrderPage />} />
-                <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
-				<Route path='/TicketsList' element={<TicketsListPage/>} />
-				<Route path='/KitBase' element={<KitBasePage/>} />
-				<Route path='/SwicBase' element={<SwicBasePage/>} />
-				<Route path='/ToolPullList' element={<ToolPullListPage/>} />
-						<Route path='/PassDown' element={<PassDownPage />} />
-						<Route path='/PassdownForm' element={<PassdownForm /> } />
+				<Routes>
+        			<Route path='/' element={<LandingPage/>} />
+					<Route path='/TicketDashboard' element={<TicketDashboard/>} />
+        			<Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
+					<Route path='/MaterialOrderingPage' element={<MaterialOrderingPage/>} />
+        			<Route path='/map' element={<MapPage/>} />
+        			<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
+        			<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
+        			<Route path='/toolRequest' element={<ToolRequestPage/>} />
+        			<Route path='/createMaterial' element={<CreateMaterialPage/>} />
+					<Route path='/ticketPage' element={<TicketPage />} />
+					<Route path='/OrderPage' element={<OrderPage />} />
+					<Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
+					<Route path='/TicketsList' element={<TicketsListPage/>} />
+					<Route path='/KitBase' element={<KitBasePage/>} />
+					<Route path='/SwicBase' element={<SwicBasePage/>} />
+					<Route path='/ToolPullList' element={<ToolPullListPage/>} />
+					<Route path='/PassDownPage' element={<PassDownPage />} />
+					<Route path='/PassdownForm' element={<PassdownForm /> } />
 				</Routes>
       		</main>
     	</div>

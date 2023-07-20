@@ -81,6 +81,6 @@ export const navData = [
         id: 12,
         icon: <TravelExploreIcon/>,
         text: "Pass Down",
-        link: "PassDown"
+        link: "PassDownPage"
     },
 ]

@@ -5,6 +5,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 export default function CreatePassdownPage() {
 
+    const history = useNavigate();
     const [date, setDate] = useState('');
     const [shift, setShift] = useState('');
     const [tech, setTech] = useState('');
