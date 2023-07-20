@@ -20,7 +20,8 @@ import TicketsListPage from './pages/ticketsListPage.tsx'
 import KitBasePage from './pages/kitBasePage.tsx'
 import SwicBasePage from './pages/swicBasePage.tsx'
 import ToolPullListPage from './pages/toolPullListPage.js'
-import PassDownPage from './pages/passDownPage.js'
+import PassDownPage from './pages/passDownPage.js';
+import PassdownForm from './pages/PassdownForm.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import ToolInfoForm from './pages/ToolInfoForm.js';
@@ -59,7 +60,8 @@ import styles from "./components/Header.module.css"
 				<Route path='/KitBase' element={<KitBasePage/>} />
 				<Route path='/SwicBase' element={<SwicBasePage/>} />
 				<Route path='/ToolPullList' element={<ToolPullListPage/>} />
-				<Route path='/PassDown' element={<PassDownPage/>} />
+						<Route path='/PassDown' element={<PassDownPage />} />
+						<Route path='/PassdownForm' element={<PassdownForm /> } />
 				</Routes>
       		</main>
     	</div>

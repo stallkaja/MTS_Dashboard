@@ -9,7 +9,7 @@ import { Button, ConfigProvider } from 'antd';
 const ToolHistoryPage = () => {
     const navigate = useNavigate();
     const OpenForm = () => {
-        let path = '/ToolInfoForm';
+        let path = '/PassdownForm';
         navigate (path);
     }
 
