@@ -3,6 +3,7 @@ import React from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate, Link } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
+import './PassdownPage.css';
 
 
   
@@ -33,18 +34,18 @@ const ToolHistoryPage = () => {
         
         <div>
             
-                <div id='TitleCard'>
-                <h1 >Passdown</h1> </div>
-                <div id='PassHeader'>
-            <h1 id='PassButton'>
-                    <Button type="primary" onClick={() => OpenForm()}>              {"Create New Passdown"}
-            </Button>
-                </h1>
+            <div id='TitleCard'>
+                <h1 id='PassTitle'>Passdown</h1>
+            </div>
+            <div id='PassHeader'>
+                <div id='PassButton'>
+                    <Button type="primary" onClick={() => OpenForm()}>              {"Create New Passdown"}</Button>
+                </div>
             </div>
                 
                 <ToolInfoATable />
             
-            </div>
+         </div>
     </ConfigProvider>
   );
 };

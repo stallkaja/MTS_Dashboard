@@ -33,22 +33,20 @@ const ToolHistoryPage = () => {
             }}>
         
             <div>
-        <div id='TitleCard'>
+                <div id='TitleCard'>
                     <h1 id='ToolTitle'>Calibrated Tool Information Page</h1>
                 </div>
-                <div id='ToolHeader'>
-                
-            
-            <div id='ToolButton'>
-                    <Button type="primary" onClick={() => OpenForm()}>              {"Create New Tool"}
-            </Button>
+                <div id='ToolHeader'>           
+                    <div id='ToolButton'>
+                        <Button type="primary" onClick={() => OpenForm()}>              {"Create New Tool"}
+                        </Button>
+                    </div>
                 </div>
-            </div>
                 
-                <ToolInfoATable />
+                        <ToolInfoATable />
             
             </div>
-    </ConfigProvider>
+        </ConfigProvider>
   );
 };
   
