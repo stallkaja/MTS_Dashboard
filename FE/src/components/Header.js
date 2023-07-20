@@ -2,19 +2,15 @@ import * as React from "react";
 
 // importing material UI components
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import MenuIcon from "@mui/icons-material/Menu";
 import styles from "./Header.module.css";
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import lamLogo from '../images/lamLogo2.jpg';
-import Avatar from '@mui/material/Avatar';
-import AdbIcon from '@mui/icons-material/Adb';
-import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import Link from "@mui/material/Link";
+import {Button, Space, ConfigProvider} from 'antd';
+import { LogoutOutlined } from '@ant-design/icons'; 
+
+function Header() {
 
 const theme = createTheme({
 	status: {
@@ -32,16 +28,16 @@ const theme = createTheme({
 	},
 });
 
-const onDownload = () => {
-	const link = document.createElement("a");
-	link.download = `tx.sap`;
-	link.href = "../../tx.sap";
-	link.click();
-  };
-
-export default function Header() {
-	
 	return (
+		<ConfigProvider
+		theme={{
+			token: {
+				colorLink: '#ffffff',
+				colorLinkHover: '#6ce3c6',
+				colorLinkActive: '#20A785'
+			},
+		}}>
+			
 		<ThemeProvider theme={theme}>
 	<AppBar position="static">
 		<Toolbar>
@@ -55,12 +51,18 @@ export default function Header() {
 			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "left" }}>
 			Support Dashboard
 		</Typography>
-			<Button sx={{color:"#ffffff"}} href="https://vfd.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>VFD</b></Button>
-			<Button sx={{color:"#ffffff"}} href="https://kmmatrix.fremont.lamrc.net/" target="_blank" rel="noopener referrer"><b>KMM</b></Button>
-			<Button sx={{color:"#ffffff"}} onClick={onDownload}><b>SAP</b></Button>
-			<Button sx={{color:"#ffffff"}} endIcon={<ExitToAppIcon/>}><b>Logout</b></Button>
+			<Space wrap>
+				<Button type="link" href="https://vfd.fremont.lamrc.net/" target="_blank"><b>VFD</b></Button>
+				<Button type="link" href="https://kmmatrix.fremont.lamrc.net/" target="_blank"><b>KM</b></Button>
+				<Button type="link" href="../../tx.sap" download="tx.sap"><b>SAP</b></Button> 
+				<Button type="link"><b>Logout </b>{<LogoutOutlined/>}</Button>
+			</Space>
+
 		</Toolbar>
 			</AppBar>
 		</ThemeProvider>
-);
+		</ConfigProvider>
+    );
 }
+
+export default Header;                
