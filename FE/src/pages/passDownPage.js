@@ -34,7 +34,7 @@ const ToolHistoryPage = () => {
         
         <div>
             
-            <div id='TitleCard'>
+            <div id='PassTitleCard'>
                 <h1 id='PassTitle'>Passdown</h1>
             </div>
             <div id='PassHeader'>

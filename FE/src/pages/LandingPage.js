@@ -6,7 +6,7 @@ const LandingPage = () => {
       style={{
         display: 'flex',
         alignItems: 'Right',
-        height: '100vh'
+        //height: '100vh'
       }}
     >
       <h1>DOS App HomePage</h1>

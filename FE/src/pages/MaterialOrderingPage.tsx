@@ -24,7 +24,7 @@ const TicketDashboard = () => {
                 },
             }}>
         <div>
-            <div id='TitleCard'>
+            <div id='MatTitleCard'>
                     <h1 id='TitleText'>Material Ordering</h1>
             </div>
         <div id='AwaitingCard'>

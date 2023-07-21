@@ -7,7 +7,7 @@ import './MapPage.css';
 const MapPage = () => {
   return (
       <div>
-      <div id='TitleCard'>
+      <div id='MapTitleCard'>
           <h1 id='MapText'>Map Page</h1>
       </div>   
           <div id='MapCard'>

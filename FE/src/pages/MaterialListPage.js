@@ -27,7 +27,7 @@ const OpenForm = () => {
                       colorPrimaryHover: '#e0ded6'
                   },
               }}>
-              <div id='TitleCard'>
+              <div id='MateTitleCard'>
                   <h1 id='MaterialText'>DOS Material List</h1>
               </div>
     <div id='MaterialCard'>

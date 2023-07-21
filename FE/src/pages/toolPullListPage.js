@@ -33,7 +33,7 @@ const ToolHistoryPage = () => {
             }}>
         
             <div>
-                <div id='TitleCard'>
+                <div id='PullTitleCard'>
                     <h1 id='ToolTitle'>Staggering List</h1>
                 </div>
                 <div id='ToolHeader'>

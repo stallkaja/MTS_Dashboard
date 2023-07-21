@@ -66,7 +66,7 @@ const ToolRequestPage = () => {
     )
   return (
       <div>
-          <div id='TitleCard'>
+          <div id='ReqTitleCard'>
               <h1 id='TitleText'>Tool Request Page</h1>
           </div>
           <div id='ReqCard'>

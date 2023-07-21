@@ -17,8 +17,8 @@
     align-content: flex-start;
     padding-left: 10px;
 }
-#TitleCard {
-    background: white;
+#MapTitleCard {
+    background: #e6e3dc;
     border-radius: 15px;
     height: 60px;
     margin-bottom: 10px;

@@ -51,8 +51,8 @@
     padding-left: 10px;
     font-size: 30px;
 }
-#TitleCard {
-    background: white;
+#MatTitleCard {
+    background-color: #e6e3dc;
     border-radius: 15px;
     height: 60px;
     margin-bottom: 10px;

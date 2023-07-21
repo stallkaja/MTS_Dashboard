@@ -33,7 +33,7 @@ const ToolHistoryPage = () => {
             }}>
         
             <div>
-                <div id='TitleCard'>
+                <div id='ToolTitleCard'>
                     <h1 id='ToolTitle'>Calibrated Tool Information Page</h1>
                 </div>
                 <div id='ToolHeader'>           
