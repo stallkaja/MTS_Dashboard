@@ -16,7 +16,6 @@
 }
 
 #FormCard {
-    background-image: radial-gradient(rgba(230, 227, 220), rgba(255, 255, 255)); 
     /*border-radius: 15px;*/
     height: auto;
     width: auto;
@@ -54,4 +53,10 @@
 #column{
     flex: 50%;
     width: 100%;
+}
+
+#ToolButtonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
 }

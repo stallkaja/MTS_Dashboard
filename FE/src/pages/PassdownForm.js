@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, typography } from 'antd';
+import { Button, Input, Space, Table, typography,DatePicker,ConfigProvider } from 'antd';
 import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
+import "./PassdownForm.css"
 
 export default function CreatePassdownPage() {
 
@@ -31,11 +32,33 @@ export default function CreatePassdownPage() {
         });
 
     }
+    const onPick = (date, dateString) => {
+        //console.log(date, dateString)
+        setDate(dateString)
+    }
+    const navigate = useNavigate();
+    const backButton = () => {
+        let path = '/PassDownPage';
+        navigate(path);
+    }
+    const { TextArea } = Input;
     return (
+        <ConfigProvider
+            theme={{
+                token: {
+                    colorPrimary: '#ffffff',
+                    colorTextLightSolid: '#000000',
+                    colorBorder: '#000000',
+                    //lineType: 'default',
+                    //lineWidth: '1',
+                    colorPrimaryHover: '#f2c22e'
+                },
+            }}>
         <div>
-        <h1> PassDown </h1>
+                <h1>Passdown Entry</h1>
+        <div id="PassFormInfoHeader" />
 
-        <fieldset>
+                {/*<fieldset>
             <label for="Date">Date</label>
             <input id="date"
                 type="datetime-local"
@@ -71,7 +94,43 @@ export default function CreatePassdownPage() {
                onChange={e => setPass(e.target.value)}
            /> <br />
            <Button type="primary" onClick={addPass}> Submit </Button>
-        </fieldset>
-    </div>
+        </fieldset>*/}
+        <div id="PassFormCard">
+                    <div id="PassFormInputBox">
+                        <div id="PassFormLabel">Shift</div>
+                        <Input placeholder="Shift" onChange={e => setShift(e.target.value) } />
+                    </div>
+
+                    <div id="PassFormInputBox">
+                        <div id="PassFormLabel">Technician</div>
+                        <Input placeholder="Technician" onChange={e => setTech(e.target.value) } />
+                    </div>
+                    <div id="PassFormInputBox">
+                    <div id="PassFormLabel">Department</div>
+                        <Input placeholder="Department" onChange={e => setDepar(e.target.value)} />
+                    </div>
+                    <div id="PassFormInputBox">
+                        <div id="PasssFormLabel">Date</div>
+                        <Space direction="vertical">
+                            <DatePicker onChange={onPick} />
+                        </Space>
+                    </div>
+                    </div>
+                    <div id="PassFormLabel">Passdown</div>
+                    <div id="PassFormTextBox">
+                        <TextArea rows={6} placeholder="Passdown" />
+                </div>
+                <div id="PassFormButtonBox">
+                    <div id="PassFormBackButton">
+                        <Button onClick={backButton}>Back</Button>
+                    </div>
+                    <div id="PassFormSubmitButton">
+                        <Button onClick={addPass}>Submit</Button>
+                    </div>
+                </div>
+
+                
+            </div>
+    </ConfigProvider>
     )
 }

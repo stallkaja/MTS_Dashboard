@@ -90,12 +90,7 @@ export default function CreateToolPage() {
 		<div>
 			<h1>Tool Form</h1>
 				<div id="InfoHeader">
-					<div id="BackButton">
-						<Button type="primary" onClick={backButton}> Back</Button>
-					</div>
-					<div id="SubmitButton">
-						<Button type="primary" onClick={addTool}> Submit </Button>
-					</div>
+
 
 				</div>
 				<div id="FormCard">
@@ -113,7 +108,8 @@ export default function CreateToolPage() {
 				<div id="InputBox">
 				<div id="Label">Model Name</div>
 				<Input placeholder="Model Name" onChange={e => setModel(e.target.value) } />
-					</div></div>
+						</div>
+</div>
 					<div id="column">
 				<div id="InputBox">
 				<div id="Label">Description</div>
@@ -141,7 +137,18 @@ export default function CreateToolPage() {
 					<DatePicker onChange={onPick} />
 				</Space>
 				
-				</div></div>
+						</div>
+						
+					</div></div>
+					<br />
+					<div id="ToolButtonBox">
+					<div id="BackButton">
+						<Button onClick={backButton}> Back</Button>
+					</div>
+					<div id="SubmitButton">
+						<Button onClick={addTool}> Submit </Button>
+					</div>
+
 
 
 					
