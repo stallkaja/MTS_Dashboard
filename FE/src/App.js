@@ -25,17 +25,36 @@ import PassdownForm from './pages/PassdownForm.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import ToolInfoForm from './pages/ToolInfoForm.js';
-import styles from "./components/Header.module.css"
+import styles from "./components/Header.module.css";
+import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
 
+const { Footer } = Layout;
+const emailFac = () => {
+
+}
+
+const emailSwic = () => {
+
+}
+
+const emailCtu = () => {
+
+}
+
+const emailSwat = () => {
+
+}
   function App() {
 	const [ItemToEdit, setItemToEdit] = useState();
 	const { token, setToken } = useToken();
 	//test
 	if(!token) {
 		return <LoginPage setToken={setToken} />
-  	}
+	  }
+	
 	return (
-	<div>
+		<div>
+	<Layout className="layout">
 			<div>
 				<Header />
 			</div>
@@ -64,7 +83,17 @@ import styles from "./components/Header.module.css"
 					<Route path='/PassdownForm' element={<PassdownForm /> } />
 				</Routes>
       		</main>
-    	</div>
+			</div>
+			<div>
+					<Footer style={{ background: 'linear-gradient(to right, #242437, #20A785)', textAlign: 'right', color: 'white'}}>
+						Contact: 
+						<Button type="Link" size="large" onClick={emailFac}>Facilites Kits</Button>
+						<Button type="Link" size="Large" onClick={emailSwic}>SWIC</Button>
+						<Button type="Link" size="Large" onClick={emailCtu}>CTU</Button>
+						<Button type="Link" size="Large" onClick={emailSwat}>SWAT</Button>
+					</Footer>
+			</div>
+			</Layout>
 	</div>
   );
 }

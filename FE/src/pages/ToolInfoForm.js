@@ -1,6 +1,8 @@
 import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button} from 'antd';
+import { Button, DatePicker, Space, Input, ConfigProvider } from 'antd';
+import "./ToolInfoForm.css";
+
 
 
 
@@ -61,72 +63,91 @@ export default function CreateToolPage() {
 		
 	}
 
+	const onPick = (date, dateString) => {
+		//console.log(date, dateString)
+		setCaldue(dateString)
+	}
+	const navigate = useNavigate();
+	const backButton = () => {
+		let path = '/ToolHistory';
+		navigate(path);
+	}
+
 
 
 	return (
+		<ConfigProvider
+			theme={{
+				token: {
+					colorPrimary: '#ffffff',
+					colorTextLightSolid: '#000000',
+					colorBorder: '#000000',
+					//lineType: 'default',
+					//lineWidth: '1',
+					colorPrimaryHover: '#e6e3dc'
+				},
+			}}>
 		<div>
 			<h1>Tool Form</h1>
+				<div id="InfoHeader">
+					<div id="BackButton">
+						<Button type="primary" onClick={backButton}> Back</Button>
+					</div>
+					<div id="SubmitButton">
+						<Button type="primary" onClick={addTool}> Submit </Button>
+					</div>
 
-			<fieldset>
-				<label for="ID">ID</label>
-				<input id="id"
-					type="text"
-					value={id}
-					onChange={e => setId(e.target.value)}
-				/> <br />
+				</div>
+				<div id="FormCard">
+					
+					<div id="column">
+				<div id="InputBox">
+				<div id="label">ID</div>
+				<Input placeholder="ID" onChange={e => setId(e.target.value)} />
+						
+				</div>
+						<div id="InputBox">
+				<div id="Label">Manufacturer Name</div>
+					<Input placeholder="Manufacturer Name" onChange={e => setManu(e.target.value) } />
+					</div>
+				<div id="InputBox">
+				<div id="Label">Model Name</div>
+				<Input placeholder="Model Name" onChange={e => setModel(e.target.value) } />
+					</div></div>
+					<div id="column">
+				<div id="InputBox">
+				<div id="Label">Description</div>
+					<Input placeholder="Description" onChange={e => setDesc(e.target.value) } />
+					</div>
 
-				<label for="Manufacturer Name">Manufacturer Name</label>
-				<input id="manu"
-					type="text"
-					value={manu}
-					onChange={e => setManu(e.target.value)}
-				/> <br />
+				<div id="InputBox">
+				<div id="Label">Serial Number</div>
+					<Input placeholder="Serial Number" onChange={e => setSerial(e.target.value) } />
+					</div>
 
-				<label for="Model Name">Model Name</label>
-				<input id="model"
-					type="text"
-					value={model}
-					onChange={e => setModel(e.target.value)}
-				/> <br />
+						<div id="InputBox">
+				<div id="Label">Area</div>
+					<Input placeholder="Area" onChange={e => setArea(e.target.value) } />
+					</div></div>
+					<div id="column">
+						<div id="InputBox">
+				<div id="Label">Location</div>
+					<Input placeholder="Location" onChange={e => setLoc(e.target.value) } />
+				</div>
 
-				<label for="Description">Description</label>
-				<input id="desc"
-					type="text"
-					value={desc}
-					onChange={e => setDesc(e.target.value)}
-				/> <br />
+						<div id="InputBox">
+				<div id="Label">Calibration Due Date</div>
+				<Space direction="vertical">
+					<DatePicker onChange={onPick} />
+				</Space>
+				
+				</div></div>
 
-				<label for="Serial Number">Serial Number</label>
-				<input id="serial"
-					type="text"
-					value={serial}
-					onChange={e => setSerial(e.target.value)}
-				/> <br />
 
-				<label for="Area">Area</label>
-				<input id="area"
-					type="text"
-					value={area}
-					onChange={e => setArea(e.target.value)}
-				/> <br />
+					
+			</div>
 
-				<label for="Location">Location</label>
-				<input id="loc"
-					type="text"
-					value={loc}
-					onChange={e => setLoc(e.target.value)}
-				/> <br />
-
-				<label for="Calibration Due Date">Calibration Due Date</label>
-				<input id="caldue"
-					type="text"
-					value={caldue}
-					onChange={e => setCaldue(e.target.value)}
-				/> <br />
-				<Button type="primary" onClick={addTool}> Submit </Button>
-
-			</fieldset>
-
-		</div>
+			</div>
+		</ConfigProvider>
 	)
 }

@@ -342,6 +342,11 @@ function ToolInfoATable(targetNVL) {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
+                    for (let i = 0; i < responseData.length; i++) {
+                        console.log(responseData[i])
+                        let cleanDate = (responseData[i].CalibrationDue.split('T')[0])
+                        responseData[i].CalibrationDue = cleanDate
+                    }
                     setItems(responseData)
                 })
             }

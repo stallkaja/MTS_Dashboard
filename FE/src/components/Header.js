@@ -37,7 +37,7 @@ const onDownload = () => {
 	link.download = `tx.sap`;
 	link.href = "../../tx.sap";
 	link.click();
-  };
+}; 
 
 export default function Header() {
 	
