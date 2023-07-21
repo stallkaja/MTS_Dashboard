@@ -1,6 +1,6 @@
 
 import React from 'react';
-import ToolInfoATable from '../components/ToolinfoATable';
+import PassDownTable from '../components/PassDownTable';
 import { useNavigate, Link } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
 import './PassdownPage.css';
@@ -43,7 +43,7 @@ const ToolHistoryPage = () => {
                 </div>
             </div>
                 
-                <ToolInfoATable />
+                <PassDownTable />
             
          </div>
     </ConfigProvider>

@@ -17,7 +17,7 @@ function PassDownTable(targetNVL) {
     const searchInput = useRef(null);
     const navigate = useNavigate();
     const EditRecord = (record) => {
-        navigate('/PassDownPage', { state: { record: record } });
+        navigate('/PassdownForm', { state: { record: record } });
     };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -157,7 +157,7 @@ function PassDownTable(targetNVL) {
                         headerArray.push(payload)
                     }
                     const buttonPayload = {
-                        title: '',
+                        title: 'Open',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
@@ -176,7 +176,7 @@ function PassDownTable(targetNVL) {
     useEffect(() => loadHeaders(), []);
 
     const loadItems = async () => {
-        const response = await fetch('/items', {
+        const response = await fetch('/passdowns', {
             headers: {
                 'Content-Type': 'application/json'
             }

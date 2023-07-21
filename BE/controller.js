@@ -275,3 +275,15 @@ app.post('/newPass', (req, res) => {
         }
     })
 });
+
+app.get('/passdowns', (_, res) => {
+    connection.query('Select * from passdowntable', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+        console.log(rows)
+    })
+    //connection.end()
+});

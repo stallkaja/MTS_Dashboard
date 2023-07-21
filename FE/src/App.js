@@ -86,7 +86,7 @@ const emailSwat = () => {
       		</main>
 			</div>
 			<div>
-					<Footer style={{ background: 'linear-gradient(to right, #242437, #20A785)', textAlign: 'right', color: 'white'}}>
+					<Footer style={{ background: 'linear-gradient(to right, #242437 10%, #20A785)', textAlign: 'right', color: 'white'}}>
 						Contact: 
 						<Button type="Link" size="large" onClick={emailFac}>Facilites Kits</Button>
 						<Button type="Link" size="Large" onClick={emailSwic}>SWIC</Button>

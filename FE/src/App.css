@@ -64,5 +64,6 @@ buttonRight {
 
 
 header {
-    background: radial-gradient(circle, #20A785, #242437 90%);    
+    /*background: radial-gradient(circle, #20A785, #242437 90%);*/
+    background: linear-gradient(to right, #20A785, #242437 90%);
 }
