@@ -10,7 +10,7 @@ body {
     display: flex;
     width: auto;
     min-height: 83.4vh;
-    background-color: #e6e3dc;
+    /*background-color: #e6e3dc;*/
 }
 main {
   padding: 10px;
@@ -71,10 +71,14 @@ buttonRight {
 header {
     /*background: radial-gradient(circle, #20A785, #242437 90%);*/
     background: linear-gradient(to right, #20A785, #242437 );
-    border-bottom: 2px solid white;
-}
+    /*border-bottom: 2px solid white;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
+*/}
 
 footer {
     border-top: 2px solid white;
     box-shadow: 0px -2px 4px -1px rgba(0,0,0,0.2), 0px -4px 5px 0px rgba(0,0,0,0.14), 0px -1px 10px 0px rgba(0,0,0,0.12);
+}
+.layout{
+    background-color: #e6e3dc;
 }

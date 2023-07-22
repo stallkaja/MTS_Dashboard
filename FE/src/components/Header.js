@@ -38,9 +38,10 @@ const theme = createTheme({
 			},
 		}}>
 			
-		<ThemeProvider theme={theme}>
-	<AppBar position="static">
-		<Toolbar>
+			<ThemeProvider theme={theme}>
+				<div className={styles.header}>
+					<AppBar position="static" sx={{boxShadow: '0'} }>
+					<Toolbar>
 		{/*Inside the IconButton, we
 		can render various icons*/}
 		{/* The Typography component applies
@@ -48,9 +49,9 @@ const theme = createTheme({
 					<img src={lamLogo} alt="lamlogo" width="2.5%" height="2.5%" />
 
 		<Typography variant="h3"
-			component="div" sx={{ flexGrow: 1, position:'static !important', color:"#ffffff", textAlign: "left" }}>
+							component="div" sx={{ flexGrow: 1, position: 'static !important', color: "#ffffff", textAlign: "left"}}>
 			Support Dashboard
-		</Typography>
+							</Typography>		
 			<Space wrap>
 				<Button type="link" href="https://vfd.fremont.lamrc.net/" target="_blank"><b>VFD</b></Button>
 				<Button type="link" href="https://kmmatrix.fremont.lamrc.net/" target="_blank"><b>KM</b></Button>
@@ -59,7 +60,8 @@ const theme = createTheme({
 			</Space>
 
 		</Toolbar>
-			</AppBar>
+					</AppBar>
+			</div>
 		</ThemeProvider>
 		</ConfigProvider>
     );
