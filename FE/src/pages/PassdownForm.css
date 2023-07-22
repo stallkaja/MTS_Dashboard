@@ -1,0 +1,75 @@
+﻿#PassFormInputBox {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 225px;
+}
+#PassFormTextBox {
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 70%;
+}
+
+#PassFormInfoHeader {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+
+#PassFormCard {
+    /*border-radius: 15px;*/
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 70%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#PassFormSubmitButton {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#PassFormBody {
+    display: flex;
+}
+
+#PassFormLabel {
+    display: flex;
+    align-items: flex-start;
+}
+
+#PassFormBackButton {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#PassFormColumn {
+    flex: 50%;
+    width: 100%;
+}
+
+#PassFormButtonBox{
+    display: flex;
+    justify-content:space-between;
+    width: 70%;
+
+}
