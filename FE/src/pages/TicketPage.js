@@ -16,6 +16,8 @@ export default function CreateToolPage() {
 	const [toolBay, setToolBay] = useState('');
 
 	useEffect(() => {
+		console.log(location)
+		console.log(location.state)
 		if (location.state == null) {
 			console.log('record is null')
 			}

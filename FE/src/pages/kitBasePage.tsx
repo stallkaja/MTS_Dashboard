@@ -7,8 +7,8 @@ import { Button, ConfigProvider } from 'antd';
 
 const TicketDashboard: React.FC = () => {
     const navigate = useNavigate();
-    const OpenTicket = () => {
-        let path = '/TicketPage';
+    const OpenForm = () => {
+        let path = '/KitFormPage';
         navigate(path);
     }
 
@@ -33,12 +33,12 @@ const TicketDashboard: React.FC = () => {
                 
             <div id='OpenTicketCard'>
                 <div>
-                    <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
+                    <div id='OpenTicketTitle'>New Kits</div>
                     </div>
                 
                 <div id="CreateTicketButton">
-                    <Button type="primary" size="large" onClick={() => OpenTicket()}>
-                        {"Create Ticket"}
+                    <Button type="primary" size="large" onClick={() => OpenForm()}>
+                        {"New Facility Kit Entry"}
                     </Button>
                 </div>
             </div>

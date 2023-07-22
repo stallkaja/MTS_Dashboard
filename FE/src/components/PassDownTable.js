@@ -3,7 +3,7 @@ import { Button, Input, Space, Table, Tag, Typography } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
 
-function PassDownTable(targetNVL) {
+function PassDownTable() {
     //Sort method to sort numbers and strings without having to determine type in column
     const defaultSort = (a, b) => {
         if (a < b) return -1;
@@ -17,7 +17,10 @@ function PassDownTable(targetNVL) {
     const searchInput = useRef(null);
     const navigate = useNavigate();
     const EditRecord = (record) => {
-        navigate('/PassdownForm', { state: { record: record } });
+        console.log('Editing Record')
+        console.log(record)
+        //navigate('/ticketPage',{state:{record:record}});
+        navigate('/PassdownForm', {state:{record:record}});
     };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -161,10 +164,10 @@ function PassDownTable(targetNVL) {
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            <button onClick={() => EditRecord(record)}>
+                            <Button onClick={() => EditRecord(record)}>
                                 {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
                                 {"Open"}
-                            </button>
+                            </Button>
                         ),
                     }
                     headerArray.push(buttonPayload)
@@ -184,11 +187,10 @@ function PassDownTable(targetNVL) {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    /*for (let i = 0; i < responseData.length; i++) {
-                        //console.log(responseData[i])
-                        let cleanDate = (responseData[i].CalibrationDue.split('T')[0])
-                        responseData[i].CalibrationDue = cleanDate
-                    }*/
+                    for (let i = 0; i < responseData.length; i++) {
+                        let cleanDate = (responseData[i].Date.split('T')[0])
+                        responseData[i].Date = cleanDate
+                    }
                     setItems(responseData)
                 })
             }

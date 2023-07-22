@@ -1,13 +1,15 @@
 /* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from 'react';
 import { Button, Input, Space, Table, typography,DatePicker,ConfigProvider } from 'antd';
-import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
+import { useNavigate, useLocation } from 'react-router-dom';
+import dayjs from 'dayjs'; 
 import "./PassdownForm.css"
 
 export default function CreatePassdownPage() {
 
     const history = useNavigate();
+    const location = useLocation();
     const [date, setDate] = useState('');
     const [shift, setShift] = useState('');
     const [tech, setTech] = useState('');
@@ -15,13 +17,18 @@ export default function CreatePassdownPage() {
     const [pass, setPass] = useState('');
 
     useEffect(() => {
+
         if (location.state == null) {
             console.log('record is null')
         }
         else {
             console.log(location.state)
+            console.log(location.state.Shift)
+            console.log(location.state.Date)
             setDate(location.state.record.Date);
+            console.log(date)
             setShift(location.state.record.Shift);
+            console.log(shift)
             setTech(location.state.record.Technician);
             setDepar(location.state.record.Department);
             setPass(location.state.record.Passdown);
@@ -127,7 +134,7 @@ export default function CreatePassdownPage() {
                     <div id="PassFormInputBox">
                         <div id="PasssFormLabel">Date</div>
                         <Space direction="vertical">
-                            <DatePicker value={date} onChange={onPick} />
+                            <DatePicker defaultValue={dayjs(date, 'YYYY-MM-DD')} onChange={onPick} />
                         </Space>
                     </div>
                     </div>

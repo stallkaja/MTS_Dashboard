@@ -18,6 +18,7 @@ import Header from "./components/Header";
 import useToken from './components/useToken.js'
 import TicketsListPage from './pages/ticketsListPage.tsx'
 import KitBasePage from './pages/kitBasePage.tsx'
+import KitFormPage from './pages/KitFormPage.js'
 import SwicBasePage from './pages/swicBasePage.tsx'
 import ToolPullListPage from './pages/toolPullListPage.js'
 import PassDownPage from './pages/passDownPage.js';
@@ -77,7 +78,8 @@ const emailSwat = () => {
 					<Route path='/OrderPage' element={<OrderPage />} />
 					<Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
 					<Route path='/TicketsList' element={<TicketsListPage/>} />
-					<Route path='/KitBase' element={<KitBasePage/>} />
+					<Route path='/KitBasePage' element={<KitBasePage/>} />
+					<Route path='/KitFormPage' element={<KitFormPage/>} />
 					<Route path='/SwicBase' element={<SwicBasePage/>} />
 					<Route path='/ToolPullList' element={<ToolPullListPage/>} />
 					<Route path='/PassDownPage' element={<PassDownPage />} />
