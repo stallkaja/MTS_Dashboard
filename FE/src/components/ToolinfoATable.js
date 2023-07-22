@@ -189,7 +189,7 @@ function ToolInfoATable(targetNVL) {
     const navigate = useNavigate();
 
     const EditRecord = (record) => {
-        navigate('/ToolInfoForm', { state: { record: record } });
+        navigate('/ToolInfoForm',{state:{record:record}});
     };
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -343,7 +343,7 @@ function ToolInfoATable(targetNVL) {
             if (response.ok) {
                 response.json().then((responseData) => {
                     for (let i = 0; i < responseData.length; i++) {
-                        console.log(responseData[i])
+                        //console.log(responseData[i])
                         let cleanDate = (responseData[i].CalibrationDue.split('T')[0])
                         responseData[i].CalibrationDue = cleanDate
                     }

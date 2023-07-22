@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 import { useState, useEffect, useRef } from 'react';
 import { Button, Input, Space, Table, typography,DatePicker,ConfigProvider } from 'antd';
 import { useNavigate, Link } from 'react-router';
@@ -12,6 +13,20 @@ export default function CreatePassdownPage() {
     const [tech, setTech] = useState('');
     const [depar, setDepar] = useState('');
     const [pass, setPass] = useState('');
+
+    useEffect(() => {
+        if (location.state == null) {
+            console.log('record is null')
+        }
+        else {
+            console.log(location.state)
+            setDate(location.state.record.Date);
+            setShift(location.state.record.Shift);
+            setTech(location.state.record.Technician);
+            setDepar(location.state.record.Department);
+            setPass(location.state.record.Passdown);
+        };
+    }, [])
 
     const addPass = async () => {
         // Create new object with the variables set in the form
@@ -51,7 +66,7 @@ export default function CreatePassdownPage() {
                     colorBorder: '#000000',
                     //lineType: 'default',
                     //lineWidth: '1',
-                    colorPrimaryHover: '#f2c22e'
+                    colorPrimaryHover: '#6ce3c6'
                 },
             }}>
         <div>
@@ -98,27 +113,27 @@ export default function CreatePassdownPage() {
         <div id="PassFormCard">
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Shift</div>
-                        <Input placeholder="Shift" onChange={e => setShift(e.target.value) } />
+                        <Input placeholder="Shift" value={shift}  onChange={e => setShift(e.target.value) } />
                     </div>
 
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Technician</div>
-                        <Input placeholder="Technician" onChange={e => setTech(e.target.value) } />
+                        <Input placeholder="Technician" value={tech}  onChange={e => setTech(e.target.value) } />
                     </div>
                     <div id="PassFormInputBox">
                     <div id="PassFormLabel">Department</div>
-                        <Input placeholder="Department" onChange={e => setDepar(e.target.value)} />
+                        <Input placeholder="Department" value={depar}  onChange={e => setDepar(e.target.value)} />
                     </div>
                     <div id="PassFormInputBox">
                         <div id="PasssFormLabel">Date</div>
                         <Space direction="vertical">
-                            <DatePicker onChange={onPick} />
+                            <DatePicker value={date} onChange={onPick} />
                         </Space>
                     </div>
                     </div>
                     <div id="PassFormLabel">Passdown</div>
                     <div id="PassFormTextBox">
-                        <TextArea rows={6} placeholder="Passdown" />
+                    <TextArea rows={6} value={pass} placeholder="Passdown" />
                 </div>
                 <div id="PassFormButtonBox">
                     <div id="PassFormBackButton">

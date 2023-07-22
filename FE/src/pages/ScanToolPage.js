@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
 import {Table, ConfigProvider} from 'antd'
-import { Button} from 'antd';
+import { Button, Input} from 'antd';
 
 const ScanToolPage = ({ setItemToEdit }) => {
     const [newLoc, setLoc] = useState('');
@@ -102,12 +102,12 @@ const ScanToolPage = ({ setItemToEdit }) => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#000000',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#000000',
                     //lineType: 'default',
                     //lineWidth: '1',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#6ce3c6'
                 },
             }}>
       <div>
@@ -136,25 +136,17 @@ const ScanToolPage = ({ setItemToEdit }) => {
                         <fieldset>
                             <legend>
                             Tool Movement Form</legend>
-                        
+                        <div className={ScanToolStyles.formColumn}>
                         <label for="nvl">NVL #</label>
-                            <input id="nvl"
-                                type="text"
-                                value={nvl}
-                                onChange={e => setNvl(e.target.value)}
-                            /> <br />
-                            <label for="employeeID">Employee ID #</label>
-                            <input id="employeeID"
-                                type="text"
-                                value={employeeID}
-                                onChange={e => setEmployeeID(e.target.value)}
-                            /> <br />
+                                <Input placeholder="NVL" onChange={e => setNvl(e.target.value)} /> </div>
+                        <div className={ScanToolStyles.formColumn}>
+                        <label for="employeeID">Employee ID #</label>
+                            <Input placeholder="Empoloyee ID" onChange={e => setEmployeeID(e.target.value)}
+                            /> </div>
+                        <div className={ScanToolStyles.formColumn}>
                             <label for="newLoc">New Location</label>
-                            <input id="newLoc"
-                                type="text"
-                                value={newLoc}
-                                onChange={e => setLoc(e.target.value)}
-                            /> <br />
+                        <Input placeholder="New Location" onChange={e => setLoc(e.target.value)}
+                            /> </div>
                             <div className={ScanToolStyles.buttonmove}>
                                 <Button type="default" onClick={newScan}> Save </Button>
                             </div>

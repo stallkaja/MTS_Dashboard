@@ -24,12 +24,13 @@ export default function CreateToolPage() {
 			console.log('record is null')
 			}
 		else {
+			//console.log(location.state)
+			setId(location.state.record.NVL);
 			setManu(location.state.record.ManufacturerName);
 			setModel(location.state.record.ModelName);
 			setDesc(location.state.record.Description);
 			setSerial(location.state.record.SerialNumber);
 			setArea(location.state.record.Area);
-			setId(location.state.record.ID);
 			setLoc(location.state.record.Location);
 			setCaldue(location.state.record.CalibrationDue);
 		};
@@ -98,43 +99,43 @@ export default function CreateToolPage() {
 					<div id="column">
 				<div id="InputBox">
 				<div id="label">ID</div>
-				<Input placeholder="ID" onChange={e => setId(e.target.value)} />
+							<Input placeholder="ID" value={id}  onChange={e => setId(e.target.value)} />
 						
 				</div>
 						<div id="InputBox">
 				<div id="Label">Manufacturer Name</div>
-					<Input placeholder="Manufacturer Name" onChange={e => setManu(e.target.value) } />
+							<Input placeholder="Manufacturer Name" value={manu}  onChange={e => setManu(e.target.value) } />
 					</div>
 				<div id="InputBox">
 				<div id="Label">Model Name</div>
-				<Input placeholder="Model Name" onChange={e => setModel(e.target.value) } />
+							<Input placeholder="Model Name" value={model}  onChange={e => setModel(e.target.value) } />
 						</div>
 </div>
 					<div id="column">
 				<div id="InputBox">
 				<div id="Label">Description</div>
-					<Input placeholder="Description" onChange={e => setDesc(e.target.value) } />
+							<Input placeholder="Description" value={desc}  onChange={e => setDesc(e.target.value) } />
 					</div>
 
 				<div id="InputBox">
 				<div id="Label">Serial Number</div>
-					<Input placeholder="Serial Number" onChange={e => setSerial(e.target.value) } />
+							<Input placeholder="Serial Number" value={serial}  onChange={e => setSerial(e.target.value) } />
 					</div>
 
 						<div id="InputBox">
 				<div id="Label">Area</div>
-					<Input placeholder="Area" onChange={e => setArea(e.target.value) } />
+							<Input placeholder="Area" value={area}  onChange={e => setArea(e.target.value) } />
 					</div></div>
 					<div id="column">
 						<div id="InputBox">
 				<div id="Label">Location</div>
-					<Input placeholder="Location" onChange={e => setLoc(e.target.value) } />
+							<Input placeholder="Location" value={loc}  onChange={e => setLoc(e.target.value) } />
 				</div>
 
 						<div id="InputBox">
 				<div id="Label">Calibration Due Date</div>
 				<Space direction="vertical">
-					<DatePicker onChange={onPick} />
+								<DatePicker defaultValue={caldue}  onChange={onPick} />
 				</Space>
 				
 						</div>

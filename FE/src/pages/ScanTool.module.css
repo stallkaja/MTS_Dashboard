@@ -67,12 +67,14 @@ fieldset {
     flex-wrap: wrap;
     margin-inline-start: 2%;
     margin-inline-end: 2%;
-    background: #e6e3dc;
-    align-content: stretch;
+    background: #ffffff;
+    align-content: center;
+    justify-content:space-between;
     align-items: center;
+    width: 95%;
 }
 legend {
-    background: linear-gradient(#adadad, #e6e3dc 60%);
+    background: linear-gradient(#adadad, #ffffff 40%);
     /*background: #6a7885;*/
     color: #000000;
     text-align: left;
@@ -89,7 +91,7 @@ legend {
 label {
     border: none!important;
     padding-right: 2px!important;
-    padding-left: 25px!important;
+    
     
 }
 fieldbox {
@@ -97,10 +99,14 @@ fieldbox {
     flex-wrap: wrap;
     flex-direction: column;
     align-content: center;
+    width: 100%;
 }
 .borderLeft {
     border-left: 2px solid #0004ff;
     position: absolute;
     top: 50%;
     bottom: 0;
+}
+.formColumn{
+    display: flex;
 }

@@ -17,10 +17,10 @@ const TicketDashboard: React.FC = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#000000',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#6ce3c6'
                 },
             }}>
 
@@ -37,7 +37,7 @@ const TicketDashboard: React.FC = () => {
                     
                 
                 <div id="CreateTicketButton">
-                    <Button type="primary" size="large" onClick={() => OpenTicket()}>
+                    <Button size="large" onClick={() => OpenTicket()}>
                         {"Create Ticket"}
                     </Button>
                 </div>
