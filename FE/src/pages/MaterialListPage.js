@@ -21,10 +21,10 @@ const OpenForm = () => {
           <ConfigProvider
               theme={{
                   token: {
-                      colorPrimary: '#ffffff',
+                      colorPrimary: '#000000',
                       colorTextLightSolid: '#000000',
                       colorBorder: '#242437',
-                      colorPrimaryHover: '#e0ded6'
+                      colorPrimaryHover: '#6ce3c6'
                   },
               }}>
               <div id='MateTitleCard'>
@@ -33,7 +33,7 @@ const OpenForm = () => {
     <div id='MaterialCard'>
         
       <div id='MaterialButton'>
-        <Button type="primary" onClick={() => OpenForm()}>
+        <Button onClick={() => OpenForm()}>
           {"Create Item"}
         </Button>
       </div>

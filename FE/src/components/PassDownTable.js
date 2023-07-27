@@ -187,6 +187,7 @@ function PassDownTable() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
+                    
                     for (let i = 0; i < responseData.length; i++) {
                         let cleanDate = (responseData[i].Date.split('T')[0])
                         responseData[i].Date = cleanDate

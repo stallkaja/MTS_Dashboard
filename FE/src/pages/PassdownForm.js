@@ -22,19 +22,13 @@ export default function CreatePassdownPage() {
             console.log('record is null')
         }
         else {
-            console.log(location.state)
-            console.log(location.state.Shift)
-            console.log(location.state.Date)
             setDate(location.state.record.Date);
-            console.log(date)
             setShift(location.state.record.Shift);
-            console.log(shift)
             setTech(location.state.record.Technician);
             setDepar(location.state.record.Department);
             setPass(location.state.record.Passdown);
         };
     }, [])
-
     const addPass = async () => {
         // Create new object with the variables set in the form
         const newPass = { date, shift, tech, depar, pass };
@@ -80,43 +74,7 @@ export default function CreatePassdownPage() {
                 <h1>Passdown Entry</h1>
         <div id="PassFormInfoHeader" />
 
-                {/*<fieldset>
-            <label for="Date">Date</label>
-            <input id="date"
-                type="datetime-local"
-                value={date}
-                onChange={e => setDate(e.target.value)}
-            /> <br />
 
-           <label for="Shift">Shift</label>
-           <input id="shift"
-               type="text"
-                    value={shift}
-               onChange={e => setShift(e.target.value)}
-           /> <br />
-
-           <label for="Technician">Technician</label>
-           <input id="tech"
-               type="text"
-               value={tech}
-               onChange={e => setTech(e.target.value)}
-           /> <br />
-
-           <label for="Department">Department</label>
-           <input id="depar"
-               type="text"
-               value={depar}
-               onChange={e => setDepar(e.target.value)}
-           /> <br />
-
-           <label for="PassDown">PassDown</label>
-           <input id="pass"
-               type="text"
-               value={pass}
-               onChange={e => setPass(e.target.value)}
-           /> <br />
-           <Button type="primary" onClick={addPass}> Submit </Button>
-        </fieldset>*/}
         <div id="PassFormCard">
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Shift</div>
@@ -132,9 +90,9 @@ export default function CreatePassdownPage() {
                         <Input placeholder="Department" value={depar}  onChange={e => setDepar(e.target.value)} />
                     </div>
                     <div id="PassFormInputBox">
-                        <div id="PasssFormLabel">Date</div>
+                        <div id="PassFormLabel">Date</div>
                         <Space direction="vertical">
-                            <DatePicker defaultValue={dayjs(date, 'YYYY-MM-DD')} onChange={onPick} />
+                            <DatePicker value={dayjs(date)} onChange={onPick} />
                         </Space>
                     </div>
                     </div>

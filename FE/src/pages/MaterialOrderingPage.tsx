@@ -17,10 +17,10 @@ const TicketDashboard = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#000000',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#6ce6c6'
                 },
             }}>
         <div>
@@ -30,7 +30,7 @@ const TicketDashboard = () => {
         <div id='AwaitingCard'>
                 <div id='AwaitingText'>Awaiting Approval</div>
             <div id='CreateButton'>
-            <Button type="primary" onClick={() => OpenTicket()}>
+            <Button onClick={() => OpenTicket()}>
               {"Create New Order"}
                     </Button>
                 </div>

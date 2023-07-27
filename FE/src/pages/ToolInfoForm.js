@@ -2,6 +2,7 @@ import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, DatePicker, Space, Input, ConfigProvider } from 'antd';
 import "./ToolInfoForm.css";
+import dayjs from 'dayjs';
 
 
 
@@ -33,6 +34,8 @@ export default function CreateToolPage() {
 			setArea(location.state.record.Area);
 			setLoc(location.state.record.Location);
 			setCaldue(location.state.record.CalibrationDue);
+			console.log(id);
+			console.log(caldue);
 		};
 	}, []) // <-- empty dependency array
 
@@ -80,12 +83,12 @@ export default function CreateToolPage() {
 		<ConfigProvider
 			theme={{
 				token: {
-					colorPrimary: '#ffffff',
+					colorPrimary: '#000000',
 					colorTextLightSolid: '#000000',
 					colorBorder: '#000000',
 					//lineType: 'default',
 					//lineWidth: '1',
-					colorPrimaryHover: '#e6e3dc'
+					colorPrimaryHover: '#6ce3c6'
 				},
 			}}>
 		<div>
@@ -135,7 +138,7 @@ export default function CreateToolPage() {
 						<div id="InputBox">
 				<div id="Label">Calibration Due Date</div>
 				<Space direction="vertical">
-								<DatePicker defaultValue={caldue}  onChange={onPick} />
+								<DatePicker value={dayjs(caldue)}  onChange={onPick} />
 				</Space>
 				
 						</div>

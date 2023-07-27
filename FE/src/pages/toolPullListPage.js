@@ -25,10 +25,10 @@ const ToolHistoryPage = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#000000',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#6ce3c6'
                 },
             }}>
         
@@ -38,7 +38,7 @@ const ToolHistoryPage = () => {
                 </div>
                 <div id='ToolHeader'>
             <div id='ToolButton'>
-                    <Button type="primary" onClick={() => OpenForm()}>              {"Generate List"}
+                    <Button onClick={() => OpenForm()}>              {"Generate List"}
             </Button>
                 </div>
             </div>

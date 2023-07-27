@@ -283,7 +283,6 @@ app.get('/passdowns', (_, res) => {
             connection.end();
         }
         res.json(rows)
-        
     })
     //connection.end()
 });

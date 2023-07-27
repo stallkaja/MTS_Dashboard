@@ -25,10 +25,10 @@ const ToolHistoryPage = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#000000',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#6ce3c6'
                 },
             }}>
         
@@ -39,7 +39,7 @@ const ToolHistoryPage = () => {
             </div>
             <div id='PassHeader'>
                 <div id='PassButton'>
-                    <Button type="primary" onClick={() => OpenForm()}>              {"Create New Passdown"}</Button>
+                    <Button onClick={() => OpenForm()}>              {"Create New Passdown"}</Button>
                 </div>
             </div>
                 
