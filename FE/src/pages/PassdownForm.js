@@ -20,6 +20,7 @@ export default function CreatePassdownPage() {
 
         if (location.state == null) {
             console.log('record is null')
+            setDate(dayjs());
         }
         else {
             setDate(location.state.record.Date);
@@ -48,6 +49,8 @@ export default function CreatePassdownPage() {
         });
 
     }
+    console.log(dayjs(date));
+    console.log(date);
     const onPick = (date, dateString) => {
         //console.log(date, dateString)
         setDate(dateString)
@@ -92,13 +95,13 @@ export default function CreatePassdownPage() {
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Date</div>
                         <Space direction="vertical">
-                            <DatePicker value={dayjs(date)} onChange={onPick} />
+                            <DatePicker defaultPickerValue={dayjs()} value={dayjs(date)} onChange={onPick} />
                         </Space>
                     </div>
                     </div>
                     <div id="PassFormLabel">Passdown</div>
                     <div id="PassFormTextBox">
-                    <TextArea rows={6} value={pass} placeholder="Passdown" />
+                    <TextArea rows={6} value={pass} placeholder="Passdown" onChange={e => setPass(e.target.value)} />
                 </div>
                 <div id="PassFormButtonBox">
                     <div id="PassFormBackButton">

@@ -1,6 +1,7 @@
 import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button} from 'antd';
+import { Button, Input, Select, Space, ConfigProvider } from 'antd';
+import "./TicketPage.css";
 
 
 
@@ -59,60 +60,89 @@ export default function CreateToolPage() {
 		});
 		
 	}
+	const navigate = useNavigate();
+	const backButton = () => {
+		let path = '/TicketDashboard';
+		navigate(path);
+	}
+	const handleChange = (value) => {
+		setTicketStatus(value)
+	}
 
-
+	const { TextArea } = Input;
 
 	return (
+		<ConfigProvider
+			theme={{
+				token: {
+					colorPrimary: '#ffffff',
+					colorTextLightSolid: '#000000',
+					colorBorder: '#000000',
+					//lineType: 'default',
+					//lineWidth: '1',
+					colorPrimaryHover: '#6ce3c6'
+				},
+			}}>
 		<div>
-			<h1>Ticket Form</h1>
+				<h1>Ticket Form</h1>
+			<div id="TickHeader" />
 
-			<fieldset>
-				<label for="TicketStatus">Ticket Status</label>
-				<select name="ticketStatus" id="TicketStatus" onChange={e => {setTicketStatus(e.target.value);}}>
-  				<option value="Open">Open</option>
-  				{/* <option value="inProgress">In Progress</option> */}
-  				<option value="Closed">closed</option>
-				</select>
-				<br />
+			<div id="TickFormCard">
+				<div id="TickInputBox">
+					<div id="TickLabel">Ticket Status</div>
 
-				<label for="ticketNum">Ticket Num</label>
-				<input id="ticketNum"
-					type="text"
-					value={ticketNum}
-					onChange={e => setTicketNum(e.target.value)}
-				/> <br />
+					<Select
+						defaultValue="Open"
+						value={ticketStatus}
+						onChange={handleChange}
+						options={[
+							{ value: 'Open', label: 'Open', },
+							//{ value: 'inProgress', label: 'In Progress', },
+							{ value: 'Closed', label: 'Closed', },
+						]}
+					/>
+				</div>
 
-				<label for="ben">BEN</label>
-				<input id="Ben"
-					type="text"
-					value={ben}
-					onChange={e => setBen(e.target.value)}
-				/> <br />
+				<div id="TickInputBox">
+					<div id="TickLabel">Ticket Number</div>
+					<Input placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value) }	/>
+				</div>
 
-				<label for="ticketDescription">Ticket Description</label>
-				<input id="ticketDescription"
-					type="text"
-					value={ticketDescription}
-					onChange={e => setTicketDescription(e.target.value)}
-				/> <br />
+				<div id="TickInputBox">
+					<div id="TickLabel">BEN</div>
+					<Input placeholder="BEN" value={ben} onChange={e => setBen(e.target.value)} />
+				</div>
 
-				<label for="department">Department</label>
-				<input id="department"
-					type="text"
-					value={department}
-					onChange={e => setDepartment(e.target.value)}
-				/> <br />
+				<div id="TickInputBox">
+					<div id="TickLabel">Department</div>
+					<Input placeholder="Department" value={department} onChange={e => setDepartment(e.target.value)} />
+				</div>
 
-				<label for="toolBay">Tool Bay</label>
-				<input id="toolBay"
-					type="text"
-					value={toolBay}
-					onChange={e => setToolBay(e.target.value)}
-				/> <br />
-				<Button type="primary" onClick={addTicket}> Save </Button>
+				<div id="TickInputBox">
+					<div id="TickLabel">Tool Bay</div>
+					<Input placeholder="Tool Bay" value={toolBay} onChange={e => setToolBay(e.target.value)} />
+				</div>
+			</div>
 
-			</fieldset>
+					<div id="TickLabel">Ticket Description</div>
+					<div id="TickTextBox">
+					<TextArea rows={6} value={ticketDescription} placeholder="Description" onChange={e => setTicketDescription(e.target.value)} />
+				</div>
+			
 
-		</div>
+			<div id="TickButtonBox">
+				<div id="TickBackButton">
+					<Button onClick={backButton}>Back</Button>
+				</div>
+
+				<div id="TickSubmitButton">
+					<Button onClick={addTicket}> Save </Button>
+				</div>
+			</div>
+
+				
+			
+			</div>
+		</ConfigProvider>
 	)
 }
