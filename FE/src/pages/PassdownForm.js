@@ -5,6 +5,8 @@ import { SearchOutlined } from '@ant-design/icons';
 import { useNavigate, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs'; 
 import "./PassdownForm.css"
+var customParseFormat = require('dayjs/plugin/customParseFormat');
+dayjs.extend(customParseFormat);
 
 export default function CreatePassdownPage() {
 
@@ -20,7 +22,7 @@ export default function CreatePassdownPage() {
 
         if (location.state == null) {
             console.log('record is null')
-            setDate(dayjs(undefined));
+            setDate(dayjs().format('YYYY-MM-DD HH:mm:ss'));
         }
         else {
             setDate(location.state.record.Date);
@@ -49,19 +51,13 @@ export default function CreatePassdownPage() {
         });
 
     }
-    console.log(dayjs(date));
-    console.log(date);
     const onPick = (date, dateString) => {
-        console.log(date, dateString)
-        if (date === null) {
-           setDate('undefined')
-        } else {
 
         setDate(dateString)
 
-        console.log(date)}
+        }
     
-    }
+    
     const navigate = useNavigate();
     const backButton = () => {
         let path = '/PassDownPage';

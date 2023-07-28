@@ -23,6 +23,7 @@ export default function CreateToolPage() {
 	useEffect(() => {
 		if (location.state == null) {
 			console.log('record is null')
+			setCaldue(dayjs().format('YYYY-MM-DD HH:mm:ss'));
 			}
 		else {
 			//console.log(location.state)
