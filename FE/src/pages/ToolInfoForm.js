@@ -83,7 +83,7 @@ export default function CreateToolPage() {
 		<ConfigProvider
 			theme={{
 				token: {
-					colorPrimary: '#000000',
+					colorPrimary: '#6ce3c6',
 					colorTextLightSolid: '#000000',
 					colorBorder: '#000000',
 					//lineType: 'default',
@@ -138,7 +138,7 @@ export default function CreateToolPage() {
 						<div id="InputBox">
 				<div id="Label">Calibration Due Date</div>
 				<Space direction="vertical">
-								<DatePicker value={dayjs(caldue)}  onChange={onPick} />
+								<DatePicker value={dayjs(caldue)} onChange={onPick} allowClear={false} />
 				</Space>
 				
 						</div>

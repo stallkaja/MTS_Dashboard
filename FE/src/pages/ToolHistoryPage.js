@@ -25,7 +25,7 @@ const ToolHistoryPage = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#000000',
+                    colorPrimary: '#6ce3c6',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
                     colorPrimaryHover: '#6ce3c6'

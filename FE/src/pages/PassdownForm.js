@@ -20,7 +20,7 @@ export default function CreatePassdownPage() {
 
         if (location.state == null) {
             console.log('record is null')
-            setDate(dayjs());
+            setDate(dayjs(undefined));
         }
         else {
             setDate(location.state.record.Date);
@@ -52,8 +52,15 @@ export default function CreatePassdownPage() {
     console.log(dayjs(date));
     console.log(date);
     const onPick = (date, dateString) => {
-        //console.log(date, dateString)
+        console.log(date, dateString)
+        if (date === null) {
+           setDate('undefined')
+        } else {
+
         setDate(dateString)
+
+        console.log(date)}
+    
     }
     const navigate = useNavigate();
     const backButton = () => {
@@ -65,7 +72,7 @@ export default function CreatePassdownPage() {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#6ce3c6',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#000000',
                     //lineType: 'default',
@@ -95,7 +102,7 @@ export default function CreatePassdownPage() {
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Date</div>
                         <Space direction="vertical">
-                            <DatePicker defaultPickerValue={dayjs()} value={dayjs(date)} onChange={onPick} />
+                            <DatePicker showToday={"True"} value={dayjs(date)} onChange={onPick} allowClear={false} />
                         </Space>
                     </div>
                     </div>
