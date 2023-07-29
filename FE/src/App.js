@@ -23,6 +23,7 @@ import SwicBasePage from './pages/swicBasePage.tsx'
 import ToolPullListPage from './pages/toolPullListPage.js'
 import PassDownPage from './pages/passDownPage.js';
 import PassdownForm from './pages/PassdownForm.js';
+import PtoRequestForm from './pages/PtoRequestForm.js';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import ToolInfoForm from './pages/ToolInfoForm.js';
@@ -83,7 +84,8 @@ const emailSwat = () => {
 					<Route path='/SwicBase' element={<SwicBasePage/>} />
 					<Route path='/ToolPullList' element={<ToolPullListPage/>} />
 					<Route path='/PassDownPage' element={<PassDownPage />} />
-					<Route path='/PassdownForm' element={<PassdownForm /> } />
+					<Route path='/PassdownForm' element={<PassdownForm />} />
+					<Route path='PtoRequestForm' element={<PtoRequestForm /> } />
 				</Routes>
       		</main>
 			</div>
