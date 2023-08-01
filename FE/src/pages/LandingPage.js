@@ -24,7 +24,7 @@ const LandingPage = () => {
             }}>
         <div>
             <div id='LandingTitleCard'>
-                    <h1 id='LandingTitle'>App HomePage</h1>
+                    <h1 id='LandingTitle'>Support App HomePage</h1>
           </div>
           <div id='LandingHeader' />
           <div id='LandingSpacer' />
@@ -53,14 +53,14 @@ const LandingPage = () => {
                                 <div id='LandingInfoSub'>
                                 <div id='LandingSwat'>
                                 SWAT<br />
-                                    FED Lead: "Placeholder"<br />
-                                    FEN Lead: "Placeholder"
+                                    FED Lead: Hunter Collins<br />
+                                    FEN Lead: David Alexander
                                     </div>
                                 
                                 <div id='LandingDos'>
                                     DOS <br />
-                                    FED Lead: "Placeholder" <br />
-                                FEN Lead: "Placeholder"
+                                    FED Lead: JJ Tatton <br />
+                                FEN Lead: Jalen Lowry
                                     </div>
                                 </div>
                         </div>
@@ -69,14 +69,14 @@ const LandingPage = () => {
                                 <div id='LandingInfoSub'>
                                     <div id='LandingSwat'>
                                         SWAT<br />
-                                        BED Lead: "Placeholder"<br />
-                                        BEN Lead: "Placeholder"
+                                        BED Lead: Nicholas Johnson<br />
+                                        BEN Lead: Shelby Abbot
                                     </div>
 
                                     <div id='LandingDos'>
                                         DOS <br />
-                                        BED Lead: "Placeholder" <br />
-                                        BEN Lead: "Placeholder"
+                                        BED Lead: James Stallkamp <br />
+                                        BEN Lead: John Portis
                                     </div>
                                 </div>
                             </div>
