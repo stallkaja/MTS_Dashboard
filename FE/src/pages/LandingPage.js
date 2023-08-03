@@ -52,7 +52,7 @@ const LandingPage = () => {
                                 FE Supervisor: Nick Walker
                                 <div id='LandingInfoSub'>
                                 <div id='LandingSwat'>
-                                SWAT<br />
+                                    SWAT<br />
                                     FED Lead: Hunter Collins<br />
                                     FEN Lead: David Alexander
                                     </div>
@@ -60,7 +60,7 @@ const LandingPage = () => {
                                 <div id='LandingDos'>
                                     DOS <br />
                                     FED Lead: JJ Tatton <br />
-                                FEN Lead: Jalen Lowry
+                                    FEN Lead: Jalen Lowry
                                     </div>
                                 </div>
                         </div>

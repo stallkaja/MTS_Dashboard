@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, typography } from 'antd';
+import { Button, Input, Space, Table, typography, Popconfirm, message } from 'antd';
 import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
 
@@ -187,10 +187,30 @@ function ToolInfoATable(targetNVL) {
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const navigate = useNavigate();
+    const [open, setOpen] = useState(false);
+    const [key, setKey] = useState('');
 
-    const EditRecord = (record) => {
-        navigate('/ToolInfoForm',{state:{record:record}});
+    const cancel = (e) => {
+        console.log(e);
+        message.error('click on no');
     };
+    const EditRecord = (record) => {
+        console.log(record);
+        navigate('/ToolInfoForm', { state: { record: record } });
+    };
+
+    const DeleteRecord = () => {
+        console.log(key);
+        message.success('click on yes');
+
+    };
+
+    const DefineRecord = (record) => {
+        console.log(record.PK);
+        setKey(record.PK);
+        console.log(key);
+
+    }
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -319,13 +339,35 @@ function ToolInfoATable(targetNVL) {
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            <button type="primary" onClick={() => EditRecord(record)}>
+                            <Button onClick={() => EditRecord(record)}>
                                 {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
                                 {"Edit"}
-                            </button>
+                            </Button>
                         ),
                     }
                     headerArray.push(buttonPayload)
+                    const button2Payload = {
+                        title: 'Delete',
+                        key: 'key',
+                        dataIndex: 'key',
+                        render: (text, record) => (
+                            /*<Button onClick={() => DeleteRecord(record)}>
+                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div>
+                                {"Delete"}
+                            </Button>*/
+                            <Popconfirm
+                                title="Confirm Delete"
+                                description="Are you sure you want to delete"
+                                onConfirm={DeleteRecord}
+                                onCancel={cancel}
+                                okText="Yes"
+                                cancelText="No"
+                                >
+                                <Button onClick={() => DefineRecord(record)}>Delete</Button>
+                                </Popconfirm>
+                        ),
+                    }
+                    headerArray.push(button2Payload)
                     setHeaders(headerArray)
                 })
             }

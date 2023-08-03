@@ -35,8 +35,8 @@ export default function CreateToolPage() {
 			setArea(location.state.record.Area);
 			setLoc(location.state.record.Location);
 			setCaldue(location.state.record.CalibrationDue);
-			console.log(id);
-			console.log(caldue);
+			//console.log(id);
+			//console.log(caldue);
 		};
 	}, []) // <-- empty dependency array
 
@@ -72,6 +72,7 @@ export default function CreateToolPage() {
 		//console.log(date, dateString)
 		setCaldue(dateString)
 	}
+
 	const navigate = useNavigate();
 	const backButton = () => {
 		let path = '/ToolHistory';
