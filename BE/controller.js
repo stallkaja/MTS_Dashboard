@@ -111,10 +111,11 @@ app.post('/newTool', (req, res) => {
         req.body.serial,
         req.body.area,
         req.body.loc,
-        req.body.caldue
+        req.body.caldue,
+        req.body.key
 
     ]
-    const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, Location, CalibrationDue) VALUES(?) ON DUPLICATE KEY UPDATE ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), Location = VALUES(Location), CalibrationDue = VALUES(CalibrationDue)"
+    const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, Location, CalibrationDue, PK) VALUES(?) ON DUPLICATE KEY UPDATE NVL = VALUES(NVL), ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), Location = VALUES(Location), CalibrationDue = VALUES(CalibrationDue)"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
@@ -239,7 +240,7 @@ app.get('/loadOpenTickets', (_, res) => {
   });
 //retrieve calibrated tools information
 app.get('/calTools', (_, res) => {
-    connection.query('Select * from caltoolstable', (err, rows, fields) => {
+    connection.query('Select * from caltoolstable WHERE Status = "Active"', (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();
@@ -285,4 +286,24 @@ app.get('/passdowns', (_, res) => {
         res.json(rows)
     })
     //connection.end()
+});
+
+app.post('/deactivate', (req, res) => {
+
+    const args = [
+        req.body.key,
+        req.body.stat
+    ]
+    console.log(args);
+    const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = VALUES (Status)"
+    //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        else {
+            res.status(200).json({ Error: 'Success' })
+        }
+    })
 });

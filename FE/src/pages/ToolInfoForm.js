@@ -19,7 +19,8 @@ export default function CreateToolPage() {
 	const [id, setId] = useState('');
 	const [loc, setLoc] = useState('');
 	const [caldue, setCaldue] = useState('');
-
+	const [key, setKey] = useState('');
+	
 	useEffect(() => {
 		if (location.state == null) {
 			console.log('record is null')
@@ -35,6 +36,7 @@ export default function CreateToolPage() {
 			setArea(location.state.record.Area);
 			setLoc(location.state.record.Location);
 			setCaldue(location.state.record.CalibrationDue);
+			setKey(location.state.record.PK);
 			//console.log(id);
 			//console.log(caldue);
 		};
@@ -50,7 +52,7 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTool = async () => {
 		// Create new object with the variables set in the form
-		const newTool = { manu, model, desc, serial, area, id, loc, caldue};
+		const newTool = { manu, model, desc, serial, area, id, loc, caldue, key};
 		const response = await fetch('/newTool', {
 			method: 'POST',
 			body: JSON.stringify(newTool),

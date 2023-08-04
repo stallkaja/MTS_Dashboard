@@ -187,8 +187,10 @@ function ToolInfoATable(targetNVL) {
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const navigate = useNavigate();
-    const [open, setOpen] = useState(false);
-    const [key, setKey] = useState('');
+    //const [key, setKey] = useState(0);
+    const [stat, setStat] = useState('Inactive');
+    const [hideList, setHideList] = useState(['PK', 'Status'])
+    const [pk, setPk] = useState(0);
 
     const cancel = (e) => {
         console.log(e);
@@ -199,18 +201,33 @@ function ToolInfoATable(targetNVL) {
         navigate('/ToolInfoForm', { state: { record: record } });
     };
 
-    const DeleteRecord = () => {
-        console.log(key);
-        message.success('click on yes');
-
+    const DefineRecord = (record) => {
+        console.log(record);
+        console.log(typeof (record.PK));
+        setPk(record.PK);
+        console.log(pk);
     };
 
-    const DefineRecord = (record) => {
-        console.log(record.PK);
-        setKey(record.PK);
-        console.log(key);
+    const DeactRecord = async () => {
+        message.success('click on yes');
+        const deact = { pk, stat };
+        console.log(deact);
+        const response = await fetch('/deactivate', {
+            method: 'POST',
+            body: JSON.stringify(deact),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                alert("Tool has been deacitvated");
+            } else {
+                alert('Failed to deactivate, status code = ${response.status}')
+            }
+        });
+    };
 
-    }
+
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -221,6 +238,8 @@ function ToolInfoATable(targetNVL) {
         clearFilters();
         setSearchText('');
     };
+
+    
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div
@@ -318,21 +337,35 @@ function ToolInfoATable(targetNVL) {
                 response.json().then((responseData) => {
                     const headerArray = [];
                     for (let i = 0; i < responseData.length; i++) {
-                        let payload = {
-                            /*title: responseData[i].COLUMN_NAME,
-                            dataIndex: responseData[i].COLUMN_NAME,
-                            key: responseData[i].COLUMN_NAME,*/
-                            title: responseData[i].COLUMN_NAME,
-                            dataIndex: responseData[i].COLUMN_NAME,
-                            key: responseData[i].COLUMN_NAME,
-                            ...getColumnSearchProps(responseData[i].COLUMN_NAME),
-                            sorter: {
-                                compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
-                                    },
-                            sortDirections: ['descend', 'ascend'],
-                            width: '30%',
+                        let payload = {};
+                        console.log(responseData[i].COLUMN_NAME);
+                        console.log(hideList);
+                        if (hideList.includes(responseData[i].COLUMN_NAME)) {
+                            console.log('here');
+                            payload = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                hidden: true
+                            }
+                        }
+                        else {
+                            payload = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                                sorter: {
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
+                                },
+                                sortDirections: ['descend', 'ascend'],
+                                width: '30%',
+                            }
+
                         }
                         headerArray.push(payload)
+                        
+
                     }
                     const buttonPayload = {
                         title: 'Edit',
@@ -346,25 +379,23 @@ function ToolInfoATable(targetNVL) {
                         ),
                     }
                     headerArray.push(buttonPayload)
+
+
                     const button2Payload = {
-                        title: 'Delete',
+                        title: 'Deactivate',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            /*<Button onClick={() => DeleteRecord(record)}>
-                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div>
-                                {"Delete"}
-                            </Button>*/
                             <Popconfirm
-                                title="Confirm Delete"
-                                description="Are you sure you want to delete"
-                                onConfirm={DeleteRecord}
+                                title="Confirm Deactivation"
+                                description="Are you sure you want to deactivate"
+                                onConfirm={DeactRecord}
                                 onCancel={cancel}
                                 okText="Yes"
                                 cancelText="No"
                                 >
-                                <Button onClick={() => DefineRecord(record)}>Delete</Button>
-                                </Popconfirm>
+                                <Button onClick={() => DefineRecord(record)}>Deactivate</Button>
+                            </Popconfirm>
                         ),
                     }
                     headerArray.push(button2Payload)
@@ -396,7 +427,7 @@ function ToolInfoATable(targetNVL) {
     }
     useEffect(() => loadItems(), []);
     return (
-        <Table columns={headers.filter(col=>col.dataIndex!=='PK')} dataSource={items} />
+        <Table columns={headers.filter(item => !item.hidden)} dataSource={items} />
     );
 }
 export default ToolInfoATable;
