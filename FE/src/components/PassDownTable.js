@@ -15,6 +15,7 @@ function PassDownTable() {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const [hideList, setHideList] = useState(['PK'])
     const navigate = useNavigate();
     const EditRecord = (record) => {
         console.log('Editing Record')
@@ -122,7 +123,16 @@ function PassDownTable() {
                 response.json().then((responseData) => {
                     const headerArray = [];
                     for (let i = 0; i < responseData.length; i++) {
-                        if (responseData[i].COLUMN_NAME == "Date") {
+
+                        if(hideList.includes(responseData[i].COLUMN_NAME)){
+                            var payload = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                hidden: true
+                            }
+                        }
+                        else if (responseData[i].COLUMN_NAME == "Date") {
                             var payload = {
                                 title: responseData[i].COLUMN_NAME,
                                 dataIndex: responseData[i].COLUMN_NAME,
@@ -199,7 +209,7 @@ function PassDownTable() {
     }
     useEffect(() => loadItems(), []);
     return (
-        <Table columns={headers.filter(col=>col.dataIndex!=='PK')} dataSource={items} />
+        <Table columns={headers.filter(item => !item.hidden)} dataSource={items} />
     );
 }
 export default PassDownTable;

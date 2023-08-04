@@ -1,4 +1,4 @@
-import { Space, Table, Tag } from 'antd';
+import { Button, Space, Table, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
 
@@ -144,10 +144,10 @@ function OpenTicketATable(targetNVL){
           key: 'key',
           dataIndex: 'key',
           render: (text, record) => (
-           <button onClick={()=>EditRecord(record)}>
+           <Button onClick={()=>EditRecord(record)}>
             {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
              {"Open"}
-           </button>
+           </Button>
           ),
         }
         headerArray.push(buttonPayload)

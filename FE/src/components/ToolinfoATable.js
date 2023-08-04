@@ -189,7 +189,7 @@ function ToolInfoATable(targetNVL) {
     const navigate = useNavigate();
     //const [key, setKey] = useState(0);
     const [stat, setStat] = useState('Inactive');
-    const [hideList, setHideList] = useState(['PK', 'Status'])
+    const [hideList, setHideList] = useState(['PK'])
     const [pk, setPk] = useState(0);
 
     const cancel = (e) => {
@@ -208,9 +208,9 @@ function ToolInfoATable(targetNVL) {
         console.log(pk);
     };
 
-    const DeactRecord = async () => {
+    const DeactRecord = async (record) => {
         message.success('click on yes');
-        const deact = { pk, stat };
+        const deact = { record };
         console.log(deact);
         const response = await fetch('/deactivate', {
             method: 'POST',
@@ -338,10 +338,7 @@ function ToolInfoATable(targetNVL) {
                     const headerArray = [];
                     for (let i = 0; i < responseData.length; i++) {
                         let payload = {};
-                        console.log(responseData[i].COLUMN_NAME);
-                        console.log(hideList);
                         if (hideList.includes(responseData[i].COLUMN_NAME)) {
-                            console.log('here');
                             payload = {
                                 title: responseData[i].COLUMN_NAME,
                                 dataIndex: responseData[i].COLUMN_NAME,
@@ -379,14 +376,14 @@ function ToolInfoATable(targetNVL) {
                         ),
                     }
                     headerArray.push(buttonPayload)
-
-
                     const button2Payload = {
                         title: 'Deactivate',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            <Popconfirm
+                            <Button onClick={() => DeactRecord(record)}>Deactivate</Button>
+                            
+                            /*<Popconfirm
                                 title="Confirm Deactivation"
                                 description="Are you sure you want to deactivate"
                                 onConfirm={DeactRecord}
@@ -395,7 +392,7 @@ function ToolInfoATable(targetNVL) {
                                 cancelText="No"
                                 >
                                 <Button onClick={() => DefineRecord(record)}>Deactivate</Button>
-                            </Popconfirm>
+                            </Popconfirm>*/
                         ),
                     }
                     headerArray.push(button2Payload)
@@ -417,8 +414,11 @@ function ToolInfoATable(targetNVL) {
                 response.json().then((responseData) => {
                     for (let i = 0; i < responseData.length; i++) {
                         //console.log(responseData[i])
-                        let cleanDate = (responseData[i].CalibrationDue.split('T')[0])
-                        responseData[i].CalibrationDue = cleanDate
+                        if(responseData[i].CalibrationDue !== null){
+                            let cleanDate = (responseData[i].CalibrationDue.split('T')[0])
+                            responseData[i].CalibrationDue = cleanDate
+                        }
+
                     }
                     setItems(responseData)
                 })

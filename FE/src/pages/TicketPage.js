@@ -10,7 +10,7 @@ export default function CreateToolPage() {
 	const history = useNavigate();
 	const location = useLocation();
 	const [ticketStatus, setTicketStatus] = useState('Open');
-	const [ticketNum, setTicketNum] = useState('');
+	const [ticketNum, setTicketNum] = useState('new ticket');
 	const [ben, setBen] = useState('')
 	const [ticketDescription, setTicketDescription] = useState('')
 	const [department, setDepartment] = useState('');
@@ -44,6 +44,7 @@ export default function CreateToolPage() {
 		// Create new object with the variables set in the form
 		console.log('ticket status is: ' + ticketStatus)
 		const newTicket = { ticketStatus, ticketNum, ben, ticketDescription, department, toolBay};
+		console.log(newTicket)
 		const response = await fetch('/newTicket', {
 			method: 'POST',
 			body: JSON.stringify(newTicket),
@@ -105,7 +106,7 @@ export default function CreateToolPage() {
 
 				<div id="TickInputBox">
 					<div id="TickLabel">Ticket Number</div>
-					<Input placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value) }	/>
+					<Input readonly={1} placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value) }/>
 				</div>
 
 				<div id="TickInputBox">

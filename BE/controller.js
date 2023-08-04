@@ -77,8 +77,21 @@ app.post('/newMaterial', (req, res) => {
 
 // Create a new Ticket using a post request
 app.post('/newTicket', (req, res) => {
+  var stmt = ""
+  var args = []
+  if(req.body.ticketNum =='new ticket'){
+    args = [
+      req.body.ticketStatus,
+      req.body.ben,
+      req.body.ticketDescription,
+      req.body.department,
+      req.body.toolBay
 
-  const args = [
+    ]
+    stmt = "INSERT INTO ticketsTable (TicketStatus, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
+  }
+  else{
+    args = [
       req.body.ticketStatus,
       req.body.ticketNum,
       req.body.ben,
@@ -87,7 +100,10 @@ app.post('/newTicket', (req, res) => {
       req.body.toolBay
 
     ]
-  const stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
+    stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
+  }
+
+  
   //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
       if (err) {
@@ -167,17 +183,7 @@ app.post('/headers', (req, res) => {
   //connection.end()
 });
 
-// read tool history headers using a get request
-app.get('/ToolHistoryHeaders', (_, res) => {
-  connection.query("Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME='toolHistorytable' order by ordinal_position", (err, rows, fields) => {
-    if (err) {
-      throw err
-      connection.end();
-    }
-    res.json(rows)
-  })
-  //connection.end()
-});
+
 
 // select * from toolhistorytable where nvl=given nvl
 app.post('/searchNVL', (req, res) => {
@@ -289,13 +295,13 @@ app.get('/passdowns', (_, res) => {
 });
 
 app.post('/deactivate', (req, res) => {
-
+    console.log(req.body.record.PK)
     const args = [
-        req.body.key,
-        req.body.stat
+      req.body.record.PK,
+      req.body.record.Status
     ]
     console.log(args);
-    const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = VALUES (Status)"
+    const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = 'Inactive'"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
