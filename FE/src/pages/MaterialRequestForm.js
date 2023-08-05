@@ -16,7 +16,7 @@ export default function MaterialRequestForm() {
     const [needDate, setNeedDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [openDate, setOpenDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
     const [subDate, setSubDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
-    const [closeDate, setCloseDate] = useState(dayjs('1900-00-00').format('YYYY-MM-DD'));
+    const [closeDate, setCloseDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
     const [adminCom, setAdminCom] = useState('');
     const [costCenter, setCostCenter] = useState('');
     const [email, setEmail] = useState('');
