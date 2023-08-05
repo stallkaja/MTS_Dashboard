@@ -86,6 +86,7 @@ function InventoryATable(targetNVL){
   //Methods for search and sort in columns -----------------------
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [hideList, setHideList] = useState(['PK'])
   const searchInput = useRef(null);
   const navigate = useNavigate();
     const EditRecord = (record) => {
@@ -191,7 +192,16 @@ function InventoryATable(targetNVL){
       response.json().then((responseData) => {
         const headerArray=[];
         for(let i =0;i<responseData.length;i++){
-          if(responseData[i].COLUMN_NAME == "MaterialName"){
+          var payload={}
+          if(hideList.includes(responseData[i].COLUMN_NAME)){
+            payload = {
+              title: responseData[i].COLUMN_NAME,
+              dataIndex: responseData[i].COLUMN_NAME,
+              key: responseData[i].COLUMN_NAME,
+              hidden: true
+          }
+          }
+          else if(responseData[i].COLUMN_NAME == "MaterialName"){
             var payload = {
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
@@ -263,7 +273,7 @@ const loadItems = async () => {
 }
 useEffect(() =>  loadItems(), []);
     return(
-        <Table columns={headers} dataSource={items} />
+        <Table columns={headers.filter(item => !item.hidden)} dataSource={items} />
     );
 }
 export default InventoryATable;

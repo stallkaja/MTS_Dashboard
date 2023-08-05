@@ -76,6 +76,7 @@ const data = [
 function ScanHistoryATable({toolHistory }){
     //const [searchNVL, setSearchNVL] = useState('');
     const [headers, setHeaders] = useState([]);
+    const [hideList, setHideList] = useState(['PK'])
     //const [toolHistory, setToolHistory] = useState([]);
     const loadHeaders = async () => {
     const tName = 'toolhistorytable'
@@ -92,11 +93,23 @@ function ScanHistoryATable({toolHistory }){
       response.json().then((responseData) => {
         const headerArray=[];
         for(let i =0;i<responseData.length;i++){
-            let payload = {
+          let payload = {};
+          if(hideList.includes(responseData[i].COLUMN_NAME)){
+            payload = {
+            title: responseData[i].COLUMN_NAME,
+            dataIndex: responseData[i].COLUMN_NAME,
+            key: responseData[i].COLUMN_NAME,
+            hidden: true
+            }
+          }
+          else{
+            payload = {
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
               key: responseData[i].COLUMN_NAME,
             }
+          }
+
             headerArray.push(payload)
         }
         setHeaders(headerArray)
@@ -137,7 +150,7 @@ useEffect(()=> loadHeaders(),[]);
             <div style={{paddingLeft: "5px"} }>
             <Button type="default" onClick={fetchNVLs}>Search</Button></div></div>
             <br/>*/}
-            <Table columns={headers.filter(col=>col.dataIndex!=='PK')} dataSource={toolHistory} />
+            <Table columns={headers.filter(item => !item.hidden)} dataSource={toolHistory} />
         </div>
 
     );
