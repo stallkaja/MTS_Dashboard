@@ -295,7 +295,7 @@ app.get('/passdowns', (_, res) => {
 });
 
 app.post('/deactivate', (req, res) => {
-    console.log(req.body.record.PK)
+    console.log(req.body.record.Status)
     const args = [
       req.body.record.PK,
       req.body.record.Status
@@ -303,6 +303,60 @@ app.post('/deactivate', (req, res) => {
     console.log(args);
     const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = 'Inactive'"
     //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        else {
+            res.status(200).json({ Error: 'Success' })
+        }
+    })
+});
+app.post('/newRequest', (req, res) => {
+    var stmt = ""
+    var args = []
+    if (req.body.requestNum == 'new ticket') {
+        args = [
+            req.body.requestStatus,
+            req.body.needDate,
+            req.body.openDate,
+            req.body.subDate,
+            req.body.closeDate,
+            req.body.adminCom,
+            req.body.costCenter,
+            req.body.email,
+            req.body.orderMethod,
+            req.body.purchNum,
+            req.body.vendor,
+            req.body.priority,
+            req.body.requestor,
+            req.body.reqCom
+        ]
+        stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
+    }
+    else {
+        args = [
+            req.body.requestNum,
+            req.body.requestStatus,
+            req.body.needDate,
+            req.body.openDate,
+            req.body.subDate,
+            req.body.closeDate,
+            req.body.adminCom,
+            req.body.costCenter,
+            req.body.email,
+            req.body.orderMethod,
+            req.body.purchNum,
+            req.body.vendor,
+            req.body.priority,
+            req.body.requestor,
+            req.body.reqCom
+
+        ]
+        stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
+    }
+
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
             throw err

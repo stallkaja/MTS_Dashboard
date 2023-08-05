@@ -12,7 +12,7 @@ export default function CreatePassdownPage() {
 
     const history = useNavigate();
     const location = useLocation();
-    const [date, setDate] = useState('');
+    const [date, setDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [shift, setShift] = useState('');
     const [tech, setTech] = useState('');
     const [depar, setDepar] = useState('');
@@ -22,7 +22,7 @@ export default function CreatePassdownPage() {
 
         if (location.state == null) {
             console.log('record is null')
-            setDate(dayjs().format('YYYY-MM-DD HH:mm:ss'));
+
         }
         else {
             setDate(location.state.record.Date);
