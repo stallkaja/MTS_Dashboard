@@ -78,6 +78,7 @@ function ScanHistoryATable({toolHistory }){
     const [headers, setHeaders] = useState([]);
     const [hideList, setHideList] = useState(['PK'])
     //const [toolHistory, setToolHistory] = useState([]);
+
     const loadHeaders = async () => {
     const tName = 'toolhistorytable'
     const tableName = {tName}

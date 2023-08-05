@@ -8,7 +8,7 @@ import './MaterialOrderingPage.css';
 const TicketDashboard = () => {
     const navigate = useNavigate();
     const OpenTicket = () => {
-        let path = '/OrderPage';
+        let path = '/MaterialRequestForm';
         navigate (path);
     }
     

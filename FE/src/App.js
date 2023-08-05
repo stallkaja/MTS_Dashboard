@@ -29,6 +29,7 @@ import { useState } from 'react';
 import ToolInfoForm from './pages/ToolInfoForm.js';
 import styles from "./components/Header.module.css";
 import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
+import MaterialRequestForm from './pages/MaterialRequestForm.js';
 
 const { Footer } = Layout;
 
@@ -85,7 +86,9 @@ const emailSwat = () => {
 					<Route path='/ToolPullList' element={<ToolPullListPage/>} />
 					<Route path='/PassDownPage' element={<PassDownPage />} />
 					<Route path='/PassdownForm' element={<PassdownForm />} />
-					<Route path='PtoRequestForm' element={<PtoRequestForm /> } />
+					<Route path='/PtoRequestForm' element={<PtoRequestForm />} />
+                    <Route path='/MaterialRequestForm' element={<MaterialRequestForm />} />
+
 				</Routes>
       		</main>
 			</div>
