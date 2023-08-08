@@ -2,16 +2,85 @@ import React from 'react';
 import { Badge, Calendar, Button, Typography, ConfigProvider } from 'antd';
 import './LandingPage.css';
 import { useNavigate } from 'react-router';
-
+import { useState, useEffect } from 'react';
 
 const LandingPage = () => {
+    useEffect(() =>  loadPtoTable(), []);
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(true)
+    const [ptoTable, setPtoTable] = useState([]);
     const request = () => {
         let path = '/PtoRequestForm';
         navigate(path);
     }
+    const loadPtoTable = async () => {
+        console.log('loading pto table')
+        const response = await fetch('/loadPtoTable', {
+            headers: {
+                'Content-Type': 'application/json'
+            }            
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    setPtoTable(responseData)
+                    setIsLoading(false)
+                })
+            }
+        });
+    }
 
     
+    const loadListData = (value) => {
+        let listData = [];
+        let test = [
+            {
+              type: 'error',
+              content: 'James Stallkamp',
+            },
+
+          ];
+        for (let i =0; i<ptoTable.length;i++){
+            let cellYear = value.year()
+            let cellMonth = value.month()
+            let cellDay = value.date()
+            let curDate = ptoTable[i].date.split('T')[0]
+            let curYear = curDate.split('-')[0]
+            let curMonth = curDate.split('-')[1]
+            let curDay = curDate.split('-')[2]
+            if(cellYear == curYear && (cellMonth == (curMonth-1)) && cellDay == curDay){
+                let payload = {
+                    type: 'warning',
+                    content:ptoTable[i].name,
+                }
+                console.log(payload)
+                listData.push(payload)
+            }
+        }
+        console.log('returning')
+        console.log(test)
+        console.log(listData)
+        return listData || [];
+    }
+    const cellRender = (current, info) =>{
+        window.test = current;
+        const listData = loadListData(current);
+        console.log('in render')
+        console.log(listData)
+        return (
+            <ul className="events">
+              {listData.map((item) => (
+                <li key={item.content}>
+                  <Badge status={item.type} text={item.content} />
+                </li>
+              ))}
+            </ul>
+          );
+    }
+    if(isLoading){
+        return(
+            <span>loading</span>
+        );
+    }
     return (
         <ConfigProvider
             theme={{
@@ -34,7 +103,7 @@ const LandingPage = () => {
                     <div id='LandingRequest'>
                         <Button onClick={() => request()}>PTO Request</Button>
                     </div>
-                    <Calendar />
+                    <Calendar cellRender={cellRender}/>
                 </div>
               <div id='LandingLinksBox'>
                   <div id='LandingLinksTitle'>Helpful Links</div>
