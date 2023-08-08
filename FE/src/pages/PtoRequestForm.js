@@ -5,11 +5,14 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './PtoRequestForm.css';
 
 const PtoRequestForm = () => {
+    let yourDate = new Date()
+    yourDate = yourDate.toISOString().split('T')[0]
+    console.log(yourDate)
     const history = useNavigate();
     const location = useLocation();
     const navigate = useNavigate();
-    const [value, setValue] = useState(() => dayjs('2017-01-25'));
-    const [selectedValue, setSelectedValue] = useState(() => dayjs('2017-01-25'));
+    const [value, setValue] = useState(() => dayjs(yourDate));
+    const [selectedValue, setSelectedValue] = useState(() => dayjs(yourDate));
     const [name, setName] = useState('');
     const onSelect = (newValue) => {
       setValue(newValue);
