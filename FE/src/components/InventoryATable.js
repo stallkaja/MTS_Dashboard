@@ -2,78 +2,7 @@ import { SearchOutlined } from '@ant-design/icons';
 import { Button, Input, Space, Table, Tag, Typography } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
-//Example code from antD. 
-/* const columns = [
-  {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
-  },
-  {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-  },
-  {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
-  },
-  {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
-  },
-  {
-    title: 'Action',
-    key: 'action',
-    render: (_, record) => (
-      <Space size="middle">
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
-      </Space>
-    ),
-  },
-];
-const data = [
-  {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
-  },
-]; */
+
 
 function InventoryATable(targetNVL){
   //Sort method to sort numbers and strings without having to determine type in column
@@ -86,6 +15,7 @@ function InventoryATable(targetNVL){
   //Methods for search and sort in columns -----------------------
   const [searchText, setSearchText] = useState('');
   const [searchedColumn, setSearchedColumn] = useState('');
+  const [hideList, setHideList] = useState(['PK'])
   const searchInput = useRef(null);
   const navigate = useNavigate();
     const EditRecord = (record) => {
@@ -191,7 +121,16 @@ function InventoryATable(targetNVL){
       response.json().then((responseData) => {
         const headerArray=[];
         for(let i =0;i<responseData.length;i++){
-          if(responseData[i].COLUMN_NAME == "MaterialName"){
+          var payload={}
+          if(hideList.includes(responseData[i].COLUMN_NAME)){
+            payload = {
+              title: responseData[i].COLUMN_NAME,
+              dataIndex: responseData[i].COLUMN_NAME,
+              key: responseData[i].COLUMN_NAME,
+              hidden: true
+          }
+          }
+          else if(responseData[i].COLUMN_NAME == "MaterialName"){
             var payload = {
               title: responseData[i].COLUMN_NAME,
               dataIndex: responseData[i].COLUMN_NAME,
@@ -263,7 +202,7 @@ const loadItems = async () => {
 }
 useEffect(() =>  loadItems(), []);
     return(
-        <Table columns={headers} dataSource={items} />
+        <Table columns={headers.filter(item => !item.hidden)} dataSource={items} />
     );
 }
 export default InventoryATable;

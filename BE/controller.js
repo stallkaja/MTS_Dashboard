@@ -16,9 +16,6 @@ const connection = mysql.createConnection({
 
 // Also allows parsing of req.body.
 app.use(express.json());
-
-
-
 app.use(cors());
 
 app.use('/login', (req, res) => {
@@ -366,4 +363,41 @@ app.post('/newRequest', (req, res) => {
             res.status(200).json({ Error: 'Success' })
         }
     })
+});
+
+// select * from ptoTable, reads all of ptoTable
+app.get('/loadPtoTable', (_, res) => {
+  console.log('loading pto table')
+  connection.query("SELECT * FROM ptoTable", (err, rows, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+      }
+      res.json(rows)
+  })
+});
+
+// Create a new pto request using a post request
+app.post('/ptoRequest', (req, res) => {
+  var stmt = ""
+  var args = []
+  let cleanDate = (String(req.body.selectedValue).split('T')[0])
+    args = [
+      req.body.name,
+      cleanDate,
+    ]
+    stmt = "INSERT INTO ptoTable (name, date) VALUES(?) ON DUPLICATE KEY UPDATE name = VALUES(name), date = VALUES(date)"
+  
+  
+  //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+      }
+      else {
+        res.status(200).json({ Error: 'Success' })
+      }
+  })
+  
 });
