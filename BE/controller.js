@@ -16,9 +16,6 @@ const connection = mysql.createConnection({
 
 // Also allows parsing of req.body.
 app.use(express.json());
-
-
-
 app.use(cors());
 
 app.use('/login', (req, res) => {
@@ -384,12 +381,7 @@ app.get('/loadPtoTable', (_, res) => {
 app.post('/ptoRequest', (req, res) => {
   var stmt = ""
   var args = []
-  console.log("PTO req recieved")
-  console.log(req.body.selectedValue)
-  console.log(req.body.name)
   let cleanDate = (String(req.body.selectedValue).split('T')[0])
-  console.log('here')
-  console.log(cleanDate)
     args = [
       req.body.name,
       cleanDate,

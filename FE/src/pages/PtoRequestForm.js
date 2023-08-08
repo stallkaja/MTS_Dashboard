@@ -7,7 +7,6 @@ import './PtoRequestForm.css';
 const PtoRequestForm = () => {
     let yourDate = new Date()
     yourDate = yourDate.toISOString().split('T')[0]
-    console.log(yourDate)
     const history = useNavigate();
     const location = useLocation();
     const navigate = useNavigate();

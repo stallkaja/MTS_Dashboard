@@ -52,20 +52,14 @@ const LandingPage = () => {
                     type: 'warning',
                     content:ptoTable[i].name,
                 }
-                console.log(payload)
                 listData.push(payload)
             }
         }
-        console.log('returning')
-        console.log(test)
-        console.log(listData)
         return listData || [];
     }
     const cellRender = (current, info) =>{
         window.test = current;
         const listData = loadListData(current);
-        console.log('in render')
-        console.log(listData)
         return (
             <ul className="events">
               {listData.map((item) => (
