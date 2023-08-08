@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import dayjs from 'dayjs';
 import { Alert, Calendar, Button } from 'antd';
 import { useNavigate, useLocation } from 'react-router-dom';
+import './PtoRequestForm.css';
 
 const PtoRequestForm = () => {
     const history = useNavigate();
-	const location = useLocation();
+    const location = useLocation();
+    const navigate = useNavigate();
     const [value, setValue] = useState(() => dayjs('2017-01-25'));
     const [selectedValue, setSelectedValue] = useState(() => dayjs('2017-01-25'));
     const [name, setName] = useState('');
@@ -36,6 +38,10 @@ const PtoRequestForm = () => {
 		});
 		
 	}
+    const backButton = () => {
+        let path = '/';
+        navigate(path);
+    }
     return (
       <>
         <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
@@ -46,6 +52,9 @@ const PtoRequestForm = () => {
 			  onChange={e => setName(e.target.value)}
 			/>
         <Button onClick={submitRequest}> Submit </Button>
+        <div id="ptoBackButton">
+            <Button onClick={backButton}>Back</Button>
+        </div>
         <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
       </>
     );
