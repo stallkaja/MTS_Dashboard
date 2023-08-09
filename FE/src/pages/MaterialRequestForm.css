@@ -46,8 +46,8 @@
 #reqInputBox {
     display: flex;
     flex-direction: column;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    /*padding-bottom: 10px;
+    padding-top: 10px;*/
     width: 225px;
 }
 
@@ -84,4 +84,16 @@
     padding-right: 5px;
     padding-left: 5px;
     width: 70%;
+}
+#reqLineCard {
+    /*border-radius: 15px;*/
+    height: auto;
+    width: auto;
+    display: column;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 70%;
+    padding-left: 5px;
+    padding-right: 5px;
 }

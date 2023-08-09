@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Input, Select, Space, ConfigProvider, DatePicker } from 'antd';
+import { Button, Input, Select, Space, ConfigProvider, DatePicker, Form } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import "./MaterialRequestForm.css";
 import dayjs from 'dayjs';
 var customParseFormat = require('dayjs/plugin/customParseFormat');
@@ -131,6 +132,11 @@ export default function MaterialRequestForm() {
 
     const { TextArea } = Input;
 
+    const [form] = Form.useForm();
+    const onFinish = (values) => {
+        console.log('Received values of form:', values);
+    };
+
     return (
         <ConfigProvider
             theme={{
@@ -147,189 +153,411 @@ export default function MaterialRequestForm() {
                 <h1>Order Request Form</h1>
                 <div id="reqHeader" />
 
-                <div id="reqFormCard">
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Ticket Status</div>
+                <Form 
+                    form={form}
+                    name="dynamic_form_complex"
+                    layout="vertical"
+                    onFinish={onFinish}
+                    autoComplete="off"
+                >
+                    <div id="reqFormCard">
+                        <div id="reqInputBox">
+                            {/*<div id="reqLabel">Ticket Status</div>*/}
+                            <Form.Item
+                                name="requestStatus"
+                                label="Request Status"
+                                rules={[
+                                    {
+                                        required: false,
+                                    }
+                                ] }
+                            >
+                            <Select
+                                defaultValue="awaitingApproval"
+                                value={requestStatus}
+                                onChange={handleStatus}
+                                options={[
+                                    { value: 'awaitingApproval', label: 'Awaiting Approval', },
+                                    { value: 'Submitted', label: 'Submitted', },
+                                    { value: 'Arrived', label: 'Arrived', },
+                                ]}
+                            />
+                            </Form.Item>
+                        </div>
+                
+                        <Form.Item
+                            name="requestNumber"
+                            label="Request Number"
+                            rules={[
+                                {
+                                    required: false
+                                }
+                            ] }
+                        >
+                            <div id="reqInputBox">
+                                {/*<div id="reqLabel">Request Number</div>*/}
+                                <Input 
+                                    readonly={1} 
+                                    placeholder="Request Number" 
+                                    value={requestNum} 
+                                    onChange={e => setRequestNum(e.target.value)} 
+                                />
+                            </div>
+                        </Form.Item>
 
-                        <Select
-                            defaultValue="awaitingApproval"
-                            value={requestStatus}
-                            onChange={handleStatus}
-                            options={[
-                                { value: 'awaitingApproval', label: 'Awaiting Approval', },
-                                { value: 'Submitted', label: 'Submitted', },
-                                { value: 'Arrived', label: 'Arrived', },
-                            ]}
-                        />
+                        <Form.Item
+                            name="requestor"
+                            label="Requestor"
+                            rules={[
+                                {
+                                    required:true,
+                                    message: "Missing Name"    
+                                }
+                            ] }
+                        >
+                            <div id="reqInputBox">
+                                    {/*<div id="reqLabel">Requestor</div>*/}
+                                <Input 
+                                    placeholder="Requestor" 
+                                    value={requestor} 
+                                    onChange={e => setRequestor(e.target.value)} 
+                                />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="requestorEmail"
+                            label="Requestor's Email"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Missing Email"
+                                }
+                            ] }
+                        >
+                        <div id="reqInputBox">
+                                {/*<div id="reqLabel">Requestor Email</div>*/}
+                            <Input
+                                placeholder="Requestor Email"
+                                value={email}
+                                onChange={e => setEmail(e.target.value)}
+                            />
+                        </div>
+                        </Form.Item>
                     </div>
                 
+                    <div id="reqFormCard">
+                        <Form.Item
+                            name="costCenter"
+                            label="Cost Center"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Missing Cost Center"
+                                }
+                            ] }
+                        >
+                            <div id="reqInputBox">
+                                    {/*<div id="reqLabel">Cost Center</div>*/}
+                                <Select
+                                    value={costCenter}
+                                    onChange={handleCostCenter}
+                                    options={[
+                                        { value: '17015', label: '17015', },
+                                        { value: '17020', label: '17012', },
+                                        { value: '17021', label: '17021', },
+                                        { value: '17025', label: '17025', },
+                                        { value: '17028', label: '17028 - Assembly', },
+                                        { value: '17029', label: '17029 - Final Test', },
+                                        { value: '17030', label: '17030', },
+                                        { value: '17031', label: '17031', },
+                                        { value: '17032', label: '17032', },
+                                        { value: '17035', label: '17035', },
+                                        { value: '17038', label: '17038', },
+                                        { value: '17039', label: '17039', },
+                                        { value: '17048', label: '17048', },
+                                        { value: '20120', label: '20120', },
+                                        { value: '27109', label: '27109 - Pilot', },
+                                        { value: '72031', label: '72031', },
+                                        { value: '77012', label: '77012', },
+                                    ]}
+                                />
+                            </div>
+                        </Form.Item>
 
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Request Number</div>
-                        <Input 
-                            readonly={1} 
-                            placeholder="Request Number" 
-                            value={requestNum} 
-                            onChange={e => setRequestNum(e.target.value)} 
-                        />
+                        <Form.Item
+                            name="priority"
+                            label="Priority"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Missing Priority"
+                                }
+                            ] }
+                        >
+                            <div id="reqInputBox">
+                                {/*<div id="reqLabel">Priority</div>*/}
+
+                                <Select
+                                    value={priority}
+                                    onChange={handlePriority}
+                                    options={[
+                                        { value: '1', label: '1-Low', },
+                                        { value: '2', label: '2', },
+                                        { value: '3', label: '3-Medium', },
+                                        { value: '4', label: '4', },
+                                        { value: '5', label: '5-High', },
+                                    ]}
+                                />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="preferredVendor"
+                            label="Preferred Vendor"
+                            rules={[
+                                {
+                                    required: false
+                                }
+                            ] }
+                        >
+                            <div id="reqInputBox">
+                                    {/*<div id="reqLabel">Preferred Vendor</div>*/}
+
+                                <Select
+                                    value={vendor}
+                                    onChange={handleVendor}
+                                    options={[
+                                        { value: 'amazon', label: 'Amazon', },
+                                        { value: 'grainger', label: 'Grainger', },
+                                        { value: 'mcMasterCarr', label: 'McMaster Carr', },
+                                    ]}
+                                />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item
+                            name="needDate"
+                            label="Need by Date (At least 2 weeks)"
+                            rules={[
+                                {
+                                    required: true,
+                                    message: "Missing Need Date"
+                                }
+                            ] }
+                        >
+                            <div id="reqInputBox">
+                                    {/*<div id="reqLabel">Need by Date (At least 2 weeks)</div>*/}
+                                <DatePicker
+                                    value={dayjs(needDate,'YYYY-MM-DD')}
+                                    onChange={handleNeedDate}
+                                    allowClear={false}
+                                />
+                            </div>
+                        </Form.Item>
+                    </div>
+                    <Form.Item
+                        name="comments"
+                        label="Requestor Comments"
+                    >
+                        {/*<div id="reqLabel">Requestor Comments</div>*/}
+                        <div id="reqTextBox">
+                            <TextArea 
+                                rows={6} 
+                                value={reqCom} 
+                                placeholder="Commments" 
+                                onChange={e => setReqCom(e.target.value)} 
+                            />
+                        </div>
+                    </Form.Item>
+                    <div id="reqLineCard">
+                        <Form.List name="lineItems">
+                            {(fields, {add, remove }) => (
+                                <>
+                                    {fields.map((field) => (
+                                        <Space key={field.key} align="baseline">
+
+                                            <Form.Item
+                                                {...field}
+                                                label="Part Name"
+                                                name={[field.name, 'partName']}
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Mising Part Name"
+                                                    }
+                                                ] }
+                                            >
+                                                <Input placeholder="Part Name" />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                {...field}
+                                                label="Part Number"
+                                                name={[field.name, 'partNumber']}
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Missing Part Number"
+                                                    }
+                                                ] }
+                                            >
+                                                <Input placeholder="Part Number" />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                {...field}
+                                                label="Price"
+                                                name={[field.name, 'price']}
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Missing Part Price"
+                                                    }
+                                                ]}
+                                            >
+                                                <Input placeholder="Price" />
+                                            </Form.Item>
+
+                                            <Form.Item
+                                                {...field}
+                                                label="Quantity"
+                                                name={[field.name, 'quantity']}
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: "Missing Part Quantity"
+                                                    }
+                                                ]}
+                                            >
+                                                <Input placeholder="Quantity" />
+                                            </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                label="Status"
+                                                name={[field.name, 'lineStatus']}
+                                                rules={[
+                                                    {
+                                                        required: false
+                                                    }
+                                                ]}
+                                            >
+                                                <Select
+                                                    defaultValue="awaitingApproval"
+                                                    //value={lineStatus}
+                                                    //onChange={handleStatus}
+                                                    options={[
+                                                        { value: 'awaitingApproval', label: 'Awaiting Approval', },
+                                                        { value: 'submitted', label: 'Submitted', },
+                                                        { value: 'arrived', label: 'Arrived', },
+                                                        { value: 'rejected', label: 'Rejected'}
+                                                    ]}
+                                                />
+                                            </Form.Item>
+                                            <MinusCircleOutlined onClick={() => remove(field.name)} />
+                                        </Space>
+
+                                    ))}
+                                    <Form.Item>
+                                        <Button type="dashed" onClick={() => add()} block icon={<PlusOutlined />}>
+                                            Add Line
+                                        </Button>
+                                    </Form.Item>
+                                </>
+                            )
+                        }
+                        </Form.List>
                     </div>
 
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Requestor</div>
-                        <Input 
-                            placeholder="Requestor" 
-                            value={requestor} 
-                            onChange={e => setRequestor(e.target.value)} 
-                        />
-                    </div>
+                    <div id="reqFormCard">
+                        <Form.Item
+                            name="purchNum"
+                            label="Purchase Order Number"
+                        >
+                            <div id="reqInputBox">
+                                {/*<div id="reqLabel">Purchase Order Number</div>*/}
+                                <Input
+                                    placeholder="Purchase Order Number"
+                                    value={purchNum}
+                                    onChange={e => setPurchNum(e.target.value)}
+                                />
+                            </div>
+                        </Form.Item>
 
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Requestor Email</div>
-                        <Input
-                            placeholder="Requestor Email"
-                            value={email}
-                            onChange={e => setEmail(e.target.value)}
-                        />
-                    </div>
-                </div>
+                        <Form.Item
+                            name="openDate"
+                            label="Opened Date"
+                        >
+                            <div id="reqInputBox">
+                                {/*<div id="reqLabel">Opened Date</div>*/}
+                                <DatePicker
+                                    value={dayjs(openDate)}
+                                    onChange={handleOpenDate}
+                                    allowClear={false}
+                                    disabled
+                                />
+                            </div>
+                        </Form.Item>
 
-                <div id='reqFormCard'>
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Cost Center</div>
-                        <Select
-                            value={costCenter}
-                            onChange={handleCostCenter}
-                            options={[
-                                { value: '17015', label: '17015', },
-                                { value: '17020', label: '17012', },
-                                { value: '17021', label: '17021', },
-                                { value: '17025', label: '17025', },
-                                { value: '17028', label: '17028 - Assembly', },
-                                { value: '17029', label: '17029 - Final Test', },
-                                { value: '17030', label: '17030', },
-                                { value: '17031', label: '17031', },
-                                { value: '17032', label: '17032', },
-                                { value: '17035', label: '17035', },
-                                { value: '17038', label: '17038', },
-                                { value: '17039', label: '17039', },
-                                { value: '17048', label: '17048', },
-                                { value: '20120', label: '20120', },
-                                { value: '27109', label: '27109 - Pilot', },
-                                { value: '72031', label: '72031', },
-                                { value: '77012', label: '77012', },
-                            ]}
-                        />
-                    </div>
+                        <Form.Item
+                            name="subDate"
+                            label="Submitted Date"
+                        >
+                            <div id="reqInputBox">
+                                {/*<div id="reqLabel">Submitted Date</div>*/}
+                                <DatePicker
+                                    value={dayjs(subDate)}
+                                    onChange={handleSubDate}
+                                    allowClear={false}
+                                    disabled
+                                />
+                            </div>
+                        </Form.Item>
 
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Priority</div>
+                        <Form.Item
+                            name="closeDate"
+                            label="Closed Date"
+                        >
+                        <div id="reqInputBox">
+                                {/*<div id="reqLabel">Closed Date</div>*/}
+                            <DatePicker
+                                value={dayjs(closeDate)}
+                                onChange={handleCloseDate}
+                                allowClear={false}
+                                disabled
+                            />
+                        </div>
+                        </Form.Item>
+                    </div>
+               
 
-                        <Select
-                            defaultValue="1-Low"
-                            value={priority}
-                            onChange={handlePriority}
-                            options={[
-                                { value: '1', label: '1-Low', },
-                                { value: '2', label: '2', },
-                                { value: '3', label: '3-Medium', },
-                                { value: '4', label: '4', },
-                                { value: '5', label: '5-High', },
-                            ]}
-                        />
-                    </div>
-
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Preferred Vendor</div>
-
-                        <Select
-                            value={vendor}
-                            onChange={handleVendor}
-                            options={[
-                                { value: 'amazon', label: 'Amazon', },
-                                { value: 'grainger', label: 'Grainger', },
-                                { value: 'mcMasterCarr', label: 'McMaster Carr', },
-                            ]}
-                        />
-                    </div>
-
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Need by Date (At least 2 weeks)</div>
-                        <DatePicker
-                            value={dayjs(needDate,'YYYY-MM-DD')}
-                            onChange={handleNeedDate}
-                            allowClear={false}
-                        />
-                    </div>
-                </div>
-                
-                <div id="reqLabel">Requestor Comments</div>
-                <div id="reqTextBox">
-                    <TextArea 
-                        rows={6} 
-                        value={reqCom} 
-                        placeholder="Commments" 
-                        onChange={e => setReqCom(e.target.value)} 
-                    />
-                </div>
-
-                <div id='reqFormCard'>
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Purchase Order Number</div>
-                        <Input
-                            placeholder="Purchase Order Number"
-                            value={purchNum}
-                            onChange={e => setPurchNum(e.target.value)}
-                        />
-                    </div>
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Opened Date</div>
-                        <DatePicker
-                            value={dayjs(openDate)}
-                            onChange={handleOpenDate}
-                            allowClear={false}
-                            disabled
-                        />
-                    </div>
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Submitted Date</div>
-                        <DatePicker
-                            value={dayjs(subDate)}
-                            onChange={handleSubDate}
-                            allowClear={false}
-                            disabled
-                        />
-                    </div>
-                    <div id="reqInputBox">
-                        <div id="reqLabel">Closed Date</div>
-                        <DatePicker
-                            value={dayjs(closeDate)}
-                            onChange={handleCloseDate}
-                            allowClear={false}
-                            disabled
-                        />
-                    </div>
-                </div>
-
-                <div id="reqLabel">Admin Comments</div>
-                <div id="reqTextBox">
-                    <TextArea
-                        rows={6}
-                        value={adminCom}
-                        placeholder="Administrator Commments"
-                        onChange={e => setAdminCom(e.target.value)}
-                    />
-                </div>
+                    {/*<div id="reqLabel">Admin Comments</div>*/}
+                    <Form.Item
+                        name="adminCom"
+                        label="Admin Comments"
+                    >
+                        <div id="reqTextBox">
+                            <TextArea
+                                rows={6}
+                                value={adminCom}
+                                placeholder="Administrator Commments"
+                                onChange={e => setAdminCom(e.target.value)}
+                            />
+                        </div>
+                    </Form.Item>
 
 
-                <div id="reqButtonBox">
-                    <div id="reqBackButton">
-                        <Button onClick={backButton}>Back</Button>
+                    <div id="reqButtonBox">
+                        <div id="reqBackButton">
+                            <Button onClick={backButton}>Back</Button>
+                        </div>
+                        <Form.Item>
+                        <div id="reqSubmitButton">
+                                <Button onClick={onFinish} htmlType="submit"> Save </Button>
+                        </div>
+                        </Form.Item>
                     </div>
-
-                    <div id="reqSubmitButton">
-                        <Button onClick={addRequest}> Save </Button>
-                    </div>
-                </div>
+                </Form>
             </div>
         </ConfigProvider>
     )
