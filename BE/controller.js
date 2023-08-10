@@ -374,9 +374,12 @@ app.post('/newRequest', (req, res) => {
 
 function handleLineInserts(ID,req,res){
   console.log('in second function')
+  var queryPassed = 1;
+  args =[]
+  var payload =[]
   for(let i =0;i<req.body.lineItems.length;i++){
     console.log("The request order num should be" + ID)
-    args = [
+    payload = [
       ID,
       req.body.lineItems[i].partName,
       req.body.lineItems[i].partNumber,
@@ -384,22 +387,21 @@ function handleLineInserts(ID,req,res){
       req.body.lineItems[i].quantity,
       req.body.lineItems[i].lineStatus,
     ]
-    stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status) VALUES(?) ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
-    connection.query(stmt, [args], (err, results, fields) => {
-      if (err) {
-          throw err
-          connection.end();
-          queryPassed = 0;
-      }
-      else {
-        console.log(results)
-        console.log(results.insertId)
-        res.status(200).json({ Error: 'Success' })
-          
-      }
-  })
-  
+    args.push(payload)
   }
+  stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status) VALUES ? ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
+  connection.query(stmt, [args], (err, results, fields) => {
+    if (err) {
+        throw err
+        connection.end();
+        queryPassed = 0;
+    }
+    else {
+      console.log(results)
+      console.log(results.insertId)
+        res.status(200).json({ Error: 'Success' })
+    }
+})
 }
 
 // select * from ptoTable, reads all of ptoTable
