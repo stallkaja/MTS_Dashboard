@@ -474,10 +474,11 @@ app.get('/loadClosedOrders', (_, res) => {
     //connection.end()
 });
 
-app.post('/lineItems', (req, res) => {
+app.post('/loadLineItems', (req, res) => {
     const args = [[
-        req.body.requestNum,
+        req.body.localRequestNum,
     ]]
+    console.log("in loading line items")
     console.log(req.body);
     const stmt = "SELECT * FROM orderlineitemstable WHERE RequestNumber = ?"
     connection.query(stmt, [args], (err, rows, fields) => {

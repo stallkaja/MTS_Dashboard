@@ -11,6 +11,7 @@ function OpenOrderATable() {
     const navigate = useNavigate();
 
     const EditRecord = (record) => {
+        console.log(record)
         navigate('/MaterialRequestform', { state: { record: record } });
     };
 

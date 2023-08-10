@@ -28,6 +28,7 @@ export default function MaterialRequestForm() {
     const [requestor, setRequestor] = useState('');
     const [reqCom, setReqCom] = useState('');
     const [lineArray, setLineArray] = useState([]);
+    const [itemInputs, setItemInputs] = useState([]);
     const cost = [
         { value: '17015', label: '17015', },
         { value: '17020', label: '17012', },
@@ -73,12 +74,44 @@ export default function MaterialRequestForm() {
             setPriority(location.state.record.Priority);
             setRequestor(location.state.record.Requestor);
             setReqCom(location.state.record.RequestorComments);
+            loadLineItems(location.state.record.RequestNumber)
         };
-        console.log(requestNum)
     }, []) // <-- empty dependency array
 
 
 
+    
+    //----------------------------------------------------------------------------
+    // Make a POST request to load line items
+    //----------------------------------------------------------------------------
+    const loadLineItems = async (localRequestNum) => {
+        console.log("loading line items from : " + localRequestNum)
+        const response = await fetch('/loadLineItems', {
+            method: 'POST',
+            body: JSON.stringify({ localRequestNum }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    setLineArray(responseData)
+                    console.log(responseData)
+                    let tempItemInputs = responseData.map((item) => {
+                        return {
+                          partName: item.PartName,
+                          partNumber: item.PartNumber,
+                          pricePer: item.PricePer,
+                          quantity: item.Quantity,
+                          status: item.Status
+                        };
+                      });
+                      setItemInputs(tempItemInputs)
+                })
+            }
+        });
+    }
 
 
 
@@ -175,28 +208,6 @@ export default function MaterialRequestForm() {
         console.log('Received values of form:', values);
         addRequest(values)
     };
-    const loadLineItems = async () => {
-        console.log(JSON.stringify(requestNum));
-        const response = await fetch('/lineItems', {
-            method: 'POST',
-            body: JSON.stringify({ requestNum }),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-
-        }).then((response) => {
-            if (response.ok) {
-                response.json().then((responseData) => {
-                    setLineArray(responseData)
-                    console.log(lineArray)
-                })
-            }
-        });
-    }
-    useEffect(() => {
-        loadLineItems()
-    },[])
-
 
     return (
         <ConfigProvider
@@ -441,7 +452,7 @@ export default function MaterialRequestForm() {
                         </div>
                     </Form.Item>
                     <div id="reqLineCard">
-                        <Form.List name="lineItems">
+                        <Form.List name="lineItems" initialValue={itemInputs}>
                             {(fields, {add, remove }) => (
                                 <>
                                     {fields.map((field) => (
