@@ -401,3 +401,53 @@ app.post('/ptoRequest', (req, res) => {
   })
   
 });
+
+app.get('/loadOpenOrders', (_, res) => {
+    connection.query('Select * from materialorderstable WHERE Status = "Awaiting Approval"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.get('/loadSubOrders', (_, res) => {
+    connection.query('Select * from materialorderstable WHERE Status = "Submitted"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.get('/loadClosedOrders', (_, res) => {
+    connection.query('Select * from materialorderstable WHERE Status = "Arrived"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.post('/lineItems', (req, res) => {
+    const args = [[
+        req.body.requestNum,
+    ]]
+    console.log(req.body);
+    const stmt = "SELECT * FROM orderlineitemstable WHERE RequestNumber = ?"
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+        console.log(rows)
+    })
+
+})

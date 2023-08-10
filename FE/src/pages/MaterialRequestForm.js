@@ -12,10 +12,10 @@ export default function MaterialRequestForm() {
 
     const history = useNavigate();
     const location = useLocation();
-    const [requestStatus, setRequestStatus] = useState('Awaiting Approval');
+    const [requestStatus, setRequestStatus] = useState('awaitingApproval');
     const [requestNum, setRequestNum] = useState('new ticket');
     const [needDate, setNeedDate] = useState(dayjs().format('YYYY-MM-DD'));
-    const [openDate, setOpenDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
+    const [openDate, setOpenDate] = useState(dayjs().format('YYYY-MM-DD'));
     const [subDate, setSubDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
     const [closeDate, setCloseDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
     const [adminCom, setAdminCom] = useState('');
@@ -27,6 +27,27 @@ export default function MaterialRequestForm() {
     const [priority, setPriority] = useState('');
     const [requestor, setRequestor] = useState('');
     const [reqCom, setReqCom] = useState('');
+    const [lineArray, setLineArray] = useState([]);
+    const cost = [
+        { value: '17015', label: '17015', },
+        { value: '17020', label: '17012', },
+        { value: '17021', label: '17021', },
+        { value: '17025', label: '17025', },
+        { value: '17028', label: '17028 - Assembly', },
+        { value: '17029', label: '17029 - Final Test', },
+        { value: '17030', label: '17030', },
+        { value: '17031', label: '17031', },
+        { value: '17032', label: '17032', },
+        { value: '17035', label: '17035', },
+        { value: '17038', label: '17038', },
+        { label: '17039', value: '17039', },
+        { label: '17048', value: '17048', },
+        { label: '20120', value: '20120', },
+        { label: '27109 - Pilot', value: '27109', },
+        { label: '72031', value: '72031', },
+        { label: '77012', value: '77012', },
+
+    ];
 
 
     useEffect(() => {
@@ -52,7 +73,9 @@ export default function MaterialRequestForm() {
             setPriority(location.state.record.Priority);
             setRequestor(location.state.record.Requestor);
             setReqCom(location.state.record.RequestorComments);
+            setOpenDate(location.state.record.OpenDate);
         };
+        console.log(requestNum)
     }, []) // <-- empty dependency array
 
 
@@ -106,36 +129,86 @@ export default function MaterialRequestForm() {
         navigate(path);
     }
     const handleStatus = (value) => {
+        form.setFieldsValue({
+            requestStatus: value
+        })
         setRequestStatus(value)
     }
     const handleCostCenter = (value) => {
+        form.setFieldsValue({
+            costCenter: value
+        })
         setCostCenter(value)
     }
     const handlePriority = (value) => {
+        form.setFieldsValue({
+            priority: value
+        })
         setPriority(value)
     }
     const handleVendor = (value) => {
+        form.setFieldsValue({
+            preferredVendor: value
+        })
         setVendor(value)
     }
     const handleNeedDate = (date, dateString) => {
+        form.setFieldsValue({
+            needDate: dateString
+        })
         setNeedDate(dateString)
     }
     const handleOpenDate = (date, dateString) => {
+        form.setFieldsValue({
+            openDate: dateString
+        })
         setOpenDate(dateString)
     }
     const handleSubDate = (date, dateString) => {
+        form.setFieldsValue({
+            subDate: dateString
+        })
         setSubDate(dateString)
     }
     const handleCloseDate = (date, dateString) => {
+        form.setFieldsValue({
+            closeDate: dateString
+        })
         setCloseDate(dateString)
     }
+    const handleLineStatus = (value) => {
+        form.setFieldsValue({
 
+        })
+    }
     const { TextArea } = Input;
 
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form:', values);
     };
+    const loadLineItems = async () => {
+        console.log(JSON.stringify(requestNum));
+        const response = await fetch('/lineItems', {
+            method: 'POST',
+            body: JSON.stringify({ requestNum }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    setLineArray(responseData)
+                    console.log(lineArray)
+                })
+            }
+        });
+    }
+    useEffect(() => {
+        loadLineItems()
+    },[])
+
 
     return (
         <ConfigProvider
@@ -159,10 +232,15 @@ export default function MaterialRequestForm() {
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete="off"
+                    initialValues={{
+                        'requestStatus':'awaitingApproval',
+                        'requestNum':'new ticket',
+                        'openDate':openDate,
+                        'lineItems':lineArray,
+                    } }
                 >
                     <div id="reqFormCard">
                         <div id="reqInputBox">
-                            {/*<div id="reqLabel">Ticket Status</div>*/}
                             <Form.Item
                                 name="requestStatus"
                                 label="Request Status"
@@ -173,7 +251,7 @@ export default function MaterialRequestForm() {
                                 ] }
                             >
                             <Select
-                                defaultValue="awaitingApproval"
+                                //initialValue="awaitingApproval"
                                 value={requestStatus}
                                 onChange={handleStatus}
                                 options={[
@@ -184,9 +262,9 @@ export default function MaterialRequestForm() {
                             />
                             </Form.Item>
                         </div>
-                
+                        
                         <Form.Item
-                            name="requestNumber"
+                            name="requestNum"
                             label="Request Number"
                             rules={[
                                 {
@@ -195,7 +273,6 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                             <div id="reqInputBox">
-                                {/*<div id="reqLabel">Request Number</div>*/}
                                 <Input 
                                     readonly={1} 
                                     placeholder="Request Number" 
@@ -204,7 +281,7 @@ export default function MaterialRequestForm() {
                                 />
                             </div>
                         </Form.Item>
-
+                        
                         <Form.Item
                             name="requestor"
                             label="Requestor"
@@ -216,7 +293,6 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                             <div id="reqInputBox">
-                                    {/*<div id="reqLabel">Requestor</div>*/}
                                 <Input 
                                     placeholder="Requestor" 
                                     value={requestor} 
@@ -224,7 +300,7 @@ export default function MaterialRequestForm() {
                                 />
                             </div>
                         </Form.Item>
-
+                        
                         <Form.Item
                             name="requestorEmail"
                             label="Requestor's Email"
@@ -236,7 +312,6 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                         <div id="reqInputBox">
-                                {/*<div id="reqLabel">Requestor Email</div>*/}
                             <Input
                                 placeholder="Requestor Email"
                                 value={email}
@@ -245,7 +320,7 @@ export default function MaterialRequestForm() {
                         </div>
                         </Form.Item>
                     </div>
-                
+                    
                     <div id="reqFormCard">
                         <Form.Item
                             name="costCenter"
@@ -258,33 +333,14 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                             <div id="reqInputBox">
-                                    {/*<div id="reqLabel">Cost Center</div>*/}
                                 <Select
                                     value={costCenter}
                                     onChange={handleCostCenter}
-                                    options={[
-                                        { value: '17015', label: '17015', },
-                                        { value: '17020', label: '17012', },
-                                        { value: '17021', label: '17021', },
-                                        { value: '17025', label: '17025', },
-                                        { value: '17028', label: '17028 - Assembly', },
-                                        { value: '17029', label: '17029 - Final Test', },
-                                        { value: '17030', label: '17030', },
-                                        { value: '17031', label: '17031', },
-                                        { value: '17032', label: '17032', },
-                                        { value: '17035', label: '17035', },
-                                        { value: '17038', label: '17038', },
-                                        { value: '17039', label: '17039', },
-                                        { value: '17048', label: '17048', },
-                                        { value: '20120', label: '20120', },
-                                        { value: '27109', label: '27109 - Pilot', },
-                                        { value: '72031', label: '72031', },
-                                        { value: '77012', label: '77012', },
-                                    ]}
+                                    options={cost}
                                 />
                             </div>
                         </Form.Item>
-
+                        
                         <Form.Item
                             name="priority"
                             label="Priority"
@@ -296,8 +352,6 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                             <div id="reqInputBox">
-                                {/*<div id="reqLabel">Priority</div>*/}
-
                                 <Select
                                     value={priority}
                                     onChange={handlePriority}
@@ -322,8 +376,6 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                             <div id="reqInputBox">
-                                    {/*<div id="reqLabel">Preferred Vendor</div>*/}
-
                                 <Select
                                     value={vendor}
                                     onChange={handleVendor}
@@ -347,7 +399,6 @@ export default function MaterialRequestForm() {
                             ] }
                         >
                             <div id="reqInputBox">
-                                    {/*<div id="reqLabel">Need by Date (At least 2 weeks)</div>*/}
                                 <DatePicker
                                     value={dayjs(needDate,'YYYY-MM-DD')}
                                     onChange={handleNeedDate}
@@ -356,11 +407,11 @@ export default function MaterialRequestForm() {
                             </div>
                         </Form.Item>
                     </div>
+                    
                     <Form.Item
                         name="comments"
                         label="Requestor Comments"
                     >
-                        {/*<div id="reqLabel">Requestor Comments</div>*/}
                         <div id="reqTextBox">
                             <TextArea 
                                 rows={6} 
@@ -443,9 +494,7 @@ export default function MaterialRequestForm() {
                                                 ]}
                                             >
                                                 <Select
-                                                    defaultValue="awaitingApproval"
-                                                    //value={lineStatus}
-                                                    //onChange={handleStatus}
+                                                    onChange={handleLineStatus}
                                                     options={[
                                                         { value: 'awaitingApproval', label: 'Awaiting Approval', },
                                                         { value: 'submitted', label: 'Submitted', },
@@ -475,7 +524,6 @@ export default function MaterialRequestForm() {
                             label="Purchase Order Number"
                         >
                             <div id="reqInputBox">
-                                {/*<div id="reqLabel">Purchase Order Number</div>*/}
                                 <Input
                                     placeholder="Purchase Order Number"
                                     value={purchNum}
@@ -489,7 +537,6 @@ export default function MaterialRequestForm() {
                             label="Opened Date"
                         >
                             <div id="reqInputBox">
-                                {/*<div id="reqLabel">Opened Date</div>*/}
                                 <DatePicker
                                     value={dayjs(openDate)}
                                     onChange={handleOpenDate}
@@ -504,7 +551,6 @@ export default function MaterialRequestForm() {
                             label="Submitted Date"
                         >
                             <div id="reqInputBox">
-                                {/*<div id="reqLabel">Submitted Date</div>*/}
                                 <DatePicker
                                     value={dayjs(subDate)}
                                     onChange={handleSubDate}
@@ -519,7 +565,6 @@ export default function MaterialRequestForm() {
                             label="Closed Date"
                         >
                         <div id="reqInputBox">
-                                {/*<div id="reqLabel">Closed Date</div>*/}
                             <DatePicker
                                 value={dayjs(closeDate)}
                                 onChange={handleCloseDate}
@@ -529,9 +574,7 @@ export default function MaterialRequestForm() {
                         </div>
                         </Form.Item>
                     </div>
-               
-
-                    {/*<div id="reqLabel">Admin Comments</div>*/}
+              
                     <Form.Item
                         name="adminCom"
                         label="Admin Comments"
@@ -548,13 +591,15 @@ export default function MaterialRequestForm() {
 
 
                     <div id="reqButtonBox">
-                        <div id="reqBackButton">
-                            <Button onClick={backButton}>Back</Button>
-                        </div>
                         <Form.Item>
-                        <div id="reqSubmitButton">
-                                <Button onClick={onFinish} htmlType="submit"> Save </Button>
-                        </div>
+                            <div id="reqBackButton">
+                                <Button onClick={backButton}>Back</Button>
+                            </div>
+                        </Form.Item>
+                        <Form.Item>
+                            <div id="reqSubmitButton">
+                                <Button htmlType="submit"> Save </Button>
+                            </div>
                         </Form.Item>
                     </div>
                 </Form>

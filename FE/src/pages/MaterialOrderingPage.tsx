@@ -1,5 +1,5 @@
 import React from 'react';
-import OpenTicketATable from '../components/OpenTicketATable';
+import OpenOrderATable from '../components/OpenOrderATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
@@ -36,7 +36,7 @@ const TicketDashboard = () => {
                 </div>
             </div>
             <main>
-            <OpenTicketATable />
+            <OpenOrderATable />
             
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
                 <div id='SubmittedCard'>

@@ -30,6 +30,7 @@ import ToolInfoForm from './pages/ToolInfoForm.js';
 import styles from "./components/Header.module.css";
 import { Breadcrumb, Layout, Menu, theme, Button } from 'antd';
 import MaterialRequestForm from './pages/MaterialRequestForm.js';
+//import Terst from './pages/terst.js';
 
 const { Footer } = Layout;
 
@@ -88,7 +89,7 @@ const emailSwat = () => {
 					<Route path='/PassdownForm' element={<PassdownForm />} />
 					<Route path='/PtoRequestForm' element={<PtoRequestForm />} />
                     <Route path='/MaterialRequestForm' element={<MaterialRequestForm />} />
-
+                            {/*<Route path='/Terst' element={<Terst /> } />*/}
 				</Routes>
       		</main>
 			</div>
