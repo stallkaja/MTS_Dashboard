@@ -73,7 +73,6 @@ export default function MaterialRequestForm() {
             setPriority(location.state.record.Priority);
             setRequestor(location.state.record.Requestor);
             setReqCom(location.state.record.RequestorComments);
-            setOpenDate(location.state.record.OpenDate);
         };
         console.log(requestNum)
     }, []) // <-- empty dependency array
@@ -133,6 +132,12 @@ export default function MaterialRequestForm() {
             requestStatus: value
         })
         setRequestStatus(value)
+    }
+    const handleMethod = (value) => {
+        form.setFieldsValue({
+            orderMethod: value
+        })
+        setOrderMethod(value)
     }
     const handleCostCenter = (value) => {
         form.setFieldsValue({
@@ -281,6 +286,29 @@ export default function MaterialRequestForm() {
                                 />
                             </div>
                         </Form.Item>
+
+                        <div id="reqInputBox">
+                            <Form.Item
+                                name="orderMethod"
+                                label="Order Method"
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: "Missing Order Method"
+                                    }
+                                ]}
+                            >
+                                <Select
+                                    value={orderMethod}
+                                    onChange={handleMethod}
+                                    options={[
+                                        { value: 'ariba', label: 'ARIBA', },
+                                        { value: 'PO', label: 'PO/PR', },
+                                        { value: 'ERF', label: 'ERF/RPM', },
+                                    ]}
+                                />
+                            </Form.Item>
+                        </div>
                         
                         <Form.Item
                             name="requestor"
@@ -404,6 +432,14 @@ export default function MaterialRequestForm() {
                                     onChange={handleNeedDate}
                                     allowClear={false}
                                 />
+                            </div>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Attach a File"
+                        >
+                            <div id="reqInputBox">
+                                <Button>Select File</Button>
                             </div>
                         </Form.Item>
                     </div>
