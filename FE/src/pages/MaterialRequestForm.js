@@ -86,30 +86,12 @@ export default function MaterialRequestForm() {
     //----------------------------------------------------------------------------
     // Make a POST request to create a new material
     //----------------------------------------------------------------------------
-    const addRequest = async () => {
+    const addRequest = async (payload) => {
         // Create new object with the variables set in the form
-        console.log('Request status is: ' + requestStatus)
-        const newReq = { 
-            requestNum, 
-            requestStatus, 
-            needDate, 
-            openDate, 
-            subDate, 
-            closeDate, 
-            adminCom, 
-            costCenter, 
-            email, 
-            orderMethod, 
-            purchNum, 
-            vendor, 
-            priority, 
-            requestor, 
-            reqCom
-        };
-        console.log(newReq)
+        console.log('Request  is: ' + payload)
         const response = await fetch('/newRequest', {
             method: 'POST',
-            body: JSON.stringify(newReq),
+            body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -186,6 +168,7 @@ export default function MaterialRequestForm() {
     const [form] = Form.useForm();
     const onFinish = (values) => {
         console.log('Received values of form:', values);
+        addRequest(values)
     };
     const loadLineItems = async () => {
         console.log(JSON.stringify(requestNum));

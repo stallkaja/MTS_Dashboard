@@ -313,6 +313,8 @@ app.post('/deactivate', (req, res) => {
 app.post('/newRequest', (req, res) => {
     var stmt = ""
     var args = []
+    var ID =0;
+    var queryPassed
     if (req.body.requestNum == 'new ticket') {
         args = [
             req.body.requestStatus,
@@ -354,16 +356,51 @@ app.post('/newRequest', (req, res) => {
         stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
 
-    connection.query(stmt, [args], (err, rows, fields) => {
+    connection.query(stmt, [args], (err, results, fields) => {
         if (err) {
             throw err
             connection.end();
+            queryPassed = 0;
         }
         else {
-            res.status(200).json({ Error: 'Success' })
+          ID = results.insertId;
+          console.log('finished first query')
+          handleLineInserts(ID,req,res)
         }
     })
+
+    
 });
+
+function handleLineInserts(ID,req,res){
+  console.log('in second function')
+  for(let i =0;i<req.body.lineItems.length;i++){
+    console.log("The request order num should be" + ID)
+    args = [
+      ID,
+      req.body.lineItems[i].partName,
+      req.body.lineItems[i].partNumber,
+      req.body.lineItems[i].price,
+      req.body.lineItems[i].quantity,
+      req.body.lineItems[i].lineStatus,
+    ]
+    stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status) VALUES(?) ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
+    connection.query(stmt, [args], (err, results, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+          queryPassed = 0;
+      }
+      else {
+        console.log(results)
+        console.log(results.insertId)
+        res.status(200).json({ Error: 'Success' })
+          
+      }
+  })
+  
+  }
+}
 
 // select * from ptoTable, reads all of ptoTable
 app.get('/loadPtoTable', (_, res) => {
@@ -403,7 +440,7 @@ app.post('/ptoRequest', (req, res) => {
 });
 
 app.get('/loadOpenOrders', (_, res) => {
-    connection.query('Select * from materialorderstable WHERE Status = "Awaiting Approval"', (err, rows, fields) => {
+    connection.query('Select * from materialorderstable WHERE Status = "awaitingApproval"', (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();
