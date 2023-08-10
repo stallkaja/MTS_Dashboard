@@ -81,6 +81,7 @@ function OpenOrderATable() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
+                    console.log(responseData)
                     setItems(responseData)
                 })
             }
