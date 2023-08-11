@@ -96,15 +96,15 @@ export default function MaterialRequestForm() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    setLineArray(responseData)
-                    console.log(responseData)
+                    //setLineArray(responseData)
+                    //console.log(responseData)
                     let tempItemInputs = responseData.map((item) => {
                         return {
                           partName: item.PartName,
                           partNumber: item.PartNumber,
-                          pricePer: item.PricePer,
-                          quantity: item.Quantity,
-                          status: item.Status
+                          price: item.PricePer.toString(),
+                          quantity: item.Quantity.toString(),
+                          lineStatus: item.Status
                         };
                       });
                       setItemInputs(tempItemInputs)
@@ -201,14 +201,22 @@ export default function MaterialRequestForm() {
 
         })
     }
+
     const { TextArea } = Input;
 
     const [form] = Form.useForm();
+
     const onFinish = (values) => {
         console.log('Received values of form:', values);
         addRequest(values)
     };
 
+    useEffect(() => {
+            form.setFieldsValue({
+                openDate: openDate,
+                lineItems: itemInputs
+            });
+    }, [itemInputs]);
     return (
         <ConfigProvider
             theme={{
@@ -225,18 +233,17 @@ export default function MaterialRequestForm() {
                 <h1>Order Request Form</h1>
                 <div id="reqHeader" />
 
-                <Form 
+                <Form
                     form={form}
                     name="dynamic_form_complex"
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete="off"
                     initialValues={{
-                        'requestStatus':'awaitingApproval',
-                        'requestNum':'new ticket',
-                        'openDate':openDate,
-                        'lineItems':lineArray,
-                    } }
+                        'requestStatus': 'awaitingApproval',
+                        'requestNum': 'new ticket',
+                        
+                    }}
                 >
                     <div id="reqFormCard">
                         <div id="reqInputBox">
@@ -452,7 +459,7 @@ export default function MaterialRequestForm() {
                         </div>
                     </Form.Item>
                     <div id="reqLineCard">
-                        <Form.List name="lineItems" initialValue={itemInputs}>
+                        <Form.List name="lineItems">
                             {(fields, {add, remove }) => (
                                 <>
                                     {fields.map((field) => (
@@ -462,12 +469,16 @@ export default function MaterialRequestForm() {
                                                 {...field}
                                                 label="Part Name"
                                                 name={[field.name, 'partName']}
+                                                fieldKey={[field.fieldKey, "partName"] }
                                                 rules={[
                                                     {
                                                         required: true,
                                                         message: "Mising Part Name"
                                                     }
                                                 ] }
+                                                shouldUpdate={(prevValues, curValues) =>
+                                                    prevValues.partName !== curValues.partName
+                                                }
                                             >
                                                 <Input placeholder="Part Name" />
                                             </Form.Item>
@@ -476,6 +487,7 @@ export default function MaterialRequestForm() {
                                                 {...field}
                                                 label="Part Number"
                                                 name={[field.name, 'partNumber']}
+                                                fieldKey={[field.fieldKey, "partNumber"]}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -490,6 +502,7 @@ export default function MaterialRequestForm() {
                                                 {...field}
                                                 label="Price"
                                                 name={[field.name, 'price']}
+                                                fieldKey={[field.fieldKey, "price"]}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -504,6 +517,7 @@ export default function MaterialRequestForm() {
                                                 {...field}
                                                 label="Quantity"
                                                 name={[field.name, 'quantity']}
+                                                fieldKey={[field.fieldKey, "quantity"]}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -517,6 +531,7 @@ export default function MaterialRequestForm() {
                                                 {...field}
                                                 label="Status"
                                                 name={[field.name, 'lineStatus']}
+                                                fieldKey={[field.fieldKey, "lineStatus"]}
                                                 rules={[
                                                     {
                                                         required: false

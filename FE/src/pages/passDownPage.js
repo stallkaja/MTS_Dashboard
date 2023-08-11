@@ -7,7 +7,7 @@ import './PassdownPage.css';
 
 
   
-const ToolHistoryPage = () => {
+const PassdownPage = () => {
     const navigate = useNavigate();
     const OpenForm = () => {
         let path = '/PassdownForm';
@@ -50,4 +50,4 @@ const ToolHistoryPage = () => {
   );
 };
   
-export default ToolHistoryPage;
+export default PassdownPage;
