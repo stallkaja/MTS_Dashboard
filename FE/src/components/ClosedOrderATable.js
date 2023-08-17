@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router';
 
 
 
-function SubmittedOrderATable() {
+function ClosedOrderATable() {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const navigate = useNavigate();
@@ -74,7 +74,7 @@ function SubmittedOrderATable() {
     useEffect(() => loadHeaders(), []);
 
     const loadItems = async () => {
-        const response = await fetch('/loadSubOrders', {
+        const response = await fetch('/loadClosedOrders', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -98,4 +98,4 @@ function SubmittedOrderATable() {
         />
     );
 }
-export default SubmittedOrderATable;
+export default ClosedOrderATable;

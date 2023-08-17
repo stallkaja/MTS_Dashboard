@@ -257,7 +257,7 @@ function ToolInfoATable(targetNVL) {
     }
     useEffect(() => loadItems(), []);
     return (
-        <Table columns={headers.filter(item => !item.hidden)} dataSource={items} />
+        <Table className='OpenTicketTable' columns={headers.filter(item => !item.hidden)} dataSource={items} />
     );
 }
 export default ToolInfoATable;

@@ -1,6 +1,7 @@
 import React from 'react';
 import OpenOrderATable from '../components/OpenOrderATable';
-import ClosedTicketATable from '../components/ClosedTicketATable';
+import SubmittedOrdersATable from '../components/SubmittedOrdersATable';
+import ClosedOrderATable from '../components/ClosedOrderATable';
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
 import './MaterialOrderingPage.css';
@@ -44,14 +45,14 @@ const TicketDashboard = () => {
                     Submitted
                     </div>
                     </div>
-            <ClosedTicketATable />
+            <SubmittedOrdersATable />
 
                 <div id='ArrivedCard'>
                     <div id='ArrivedText'>
                         Arrived
                     </div>
                 </div>
-                <ClosedTicketATable />
+                <ClosedOrderATable />
 
             </main>
 

@@ -83,7 +83,7 @@ const loadItems = async () => {
 useEffect(() =>  loadItems(), []);
     return(
         <Table
-          className="ClosedTicketTable"
+          className="OpenTicketTable"
           columns={headers}
           dataSource={items}
           bordered

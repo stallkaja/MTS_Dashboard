@@ -133,7 +133,7 @@ const LandingPage = () => {
                                     <div id='LandingSwat'>
                                         SWAT<br />
                                         BED Lead: Nicholas Johnson<br />
-                                        BEN Lead: Shelby Abbot
+                                        BEN Lead: Shelby Abbott
                                     </div>
 
                                     <div id='LandingDos'>

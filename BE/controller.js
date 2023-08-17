@@ -315,6 +315,7 @@ app.post('/newRequest', (req, res) => {
     var args = []
     var ID =0;
     var queryPassed
+    console.log(queryPassed)
     if (req.body.requestNum == 'new ticket') {
         args = [
             req.body.requestStatus,
@@ -332,6 +333,7 @@ app.post('/newRequest', (req, res) => {
             req.body.requestor,
             req.body.reqCom
         ]
+        console.log(args)
         stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
     else {
@@ -353,6 +355,7 @@ app.post('/newRequest', (req, res) => {
             req.body.reqCom
 
         ]
+        console.log(args)
         stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
 

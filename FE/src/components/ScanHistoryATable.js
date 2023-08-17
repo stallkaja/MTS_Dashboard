@@ -80,7 +80,7 @@ useEffect(()=> loadHeaders(),[]);
             <div style={{paddingLeft: "5px"} }>
             <Button type="default" onClick={fetchNVLs}>Search</Button></div></div>
             <br/>*/}
-            <Table columns={headers.filter(item => !item.hidden)} dataSource={toolHistory} />
+            <Table className='OpenTicketTable' columns={headers.filter(item => !item.hidden)} dataSource={toolHistory} />
         </div>
 
     );

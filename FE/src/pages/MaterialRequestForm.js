@@ -196,11 +196,6 @@ export default function MaterialRequestForm() {
         })
         setCloseDate(dateString)
     }
-    const handleLineStatus = (value) => {
-        form.setFieldsValue({
-
-        })
-    }
 
     const { TextArea } = Input;
 
@@ -212,8 +207,9 @@ export default function MaterialRequestForm() {
     };
 
     useEffect(() => {
+        console.log(requestNum)
             form.setFieldsValue({
-                openDate: openDate,
+                //reqNum: requestNum,
                 lineItems: itemInputs
             });
     }, [itemInputs]);
@@ -257,7 +253,7 @@ export default function MaterialRequestForm() {
                                 ] }
                             >
                             <Select
-                                //initialValue="awaitingApproval"
+                                initialValue="awaitingApproval"
                                 value={requestStatus}
                                 onChange={handleStatus}
                                 options={[
@@ -270,7 +266,7 @@ export default function MaterialRequestForm() {
                         </div>
                         
                         <Form.Item
-                            name="requestNum"
+                            name="reqNum"
                             label="Request Number"
                             rules={[
                                 {
@@ -280,9 +276,9 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <Input 
-                                    readonly={1} 
+                                    //readonly={1} 
                                     placeholder="Request Number" 
-                                    value={requestNum} 
+                                    //value={requestNum} 
                                     onChange={e => setRequestNum(e.target.value)} 
                                 />
                             </div>
@@ -539,7 +535,6 @@ export default function MaterialRequestForm() {
                                                 ]}
                                             >
                                                 <Select
-                                                    onChange={handleLineStatus}
                                                     options={[
                                                         { value: 'awaitingApproval', label: 'Awaiting Approval', },
                                                         { value: 'submitted', label: 'Submitted', },

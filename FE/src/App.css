@@ -59,7 +59,7 @@ buttonRight {
 }
 
 .OpenTicketTable tr:nth-child(2n) td {
-    background-color: #bbb9b97c;
+    background-color: rgba(36, 36, 55, 0.12);
 }
 
 
