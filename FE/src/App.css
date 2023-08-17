@@ -1,9 +1,12 @@
 body {
     margin: 0;
     padding: 0;
+    display: block;
     justify-content: center;
     align-items: center;
     height: fit-content;
+    min-width: 100%;
+    width: fit-content;
 
 }
 .App {
@@ -36,6 +39,7 @@ center {
 #headerDiv {
     color: #cdbc28 !important;
     position: static;
+    width: auto;
 
 }
 
@@ -73,7 +77,9 @@ header {
     background: linear-gradient(to right, #20A785, #242437 );
     /*border-bottom: 2px solid white;
     box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.2), 0px 4px 5px 0px rgba(0,0,0,0.14), 0px 1px 10px 0px rgba(0,0,0,0.12);
-*/}
+*/
+    width: auto;
+}
 
 footer {
     border-top: 2px solid white;
@@ -81,4 +87,5 @@ footer {
 }
 .layout{
     background-color: #e6e3dc;
+    width: auto;
 }

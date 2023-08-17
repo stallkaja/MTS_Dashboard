@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tag, configProvider, Select } from 'antd';
+import { Button, Space, Table, Switch, Tag, configProvider, Select } from 'antd';
 import { green } from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -18,6 +18,7 @@ function OpenOrderATable() {
         'AdminComments',
         'AttachFile'
     ])
+    const [filt, setFilt] = useState(false);
 
     const EditRecord = (record) => {
         console.log(record)
@@ -134,6 +135,9 @@ function OpenOrderATable() {
     }
     console.log(hideList)
     console.log(headers)*/
+    const switchChange = (checked) => {
+        setFilt(checked)
+    }
     return (
         <div>
             {/*<Select
@@ -146,12 +150,14 @@ function OpenOrderATable() {
                 onChange={columnChange}
                 defaultValue={hideList}
         />*/}
-        <Table
-            className="OpenTicketTable"
-            columns={headers.filter(item => !item.hidden)}
-            dataSource={items}
-            bordered
-        />
+            Show All Columns
+            <Switch onChange={switchChange} checked={filt} />
+            <Table
+                className="OpenTicketTable"
+                columns={filt ? headers : headers.filter(item => !item.hidden)}
+                dataSource={items}
+                bordered
+            />
         </div>
     );
 }

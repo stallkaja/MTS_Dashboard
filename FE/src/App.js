@@ -60,7 +60,7 @@ const emailSwat = () => {
 	return (
 		<div>
 	<Layout className="layout">
-			<div>
+            <div>
 				<Header />
 			</div>
 

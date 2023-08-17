@@ -40,7 +40,7 @@ const theme = createTheme({
 			
 			<ThemeProvider theme={theme}>
 				<div className={styles.header}>
-					<AppBar position="static" sx={{boxShadow: '0'} }>
+					<AppBar position="static" sx={{boxShadow: '0', width: 'auto' } }>
 					<Toolbar>
 		{/*Inside the IconButton, we
 		can render various icons*/}

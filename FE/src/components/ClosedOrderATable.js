@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tag, configProvider } from 'antd';
+import { Button, Space, Table, Tag, configProvider, Switch } from 'antd';
 import { green } from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -9,6 +9,16 @@ function ClosedOrderATable() {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const navigate = useNavigate();
+    const [hideList, setHideList] = useState([
+        'Email',
+        'PreferredVendor',
+        'PurchNumber',
+        'SubmitDate',
+        'OpenDate',
+        'AdminComments',
+        'AttachFile'
+    ])
+    const [filt, setFilt] = useState(false);
 
     const EditRecord = (record) => {
         console.log(record)
@@ -32,9 +42,17 @@ function ClosedOrderATable() {
                 response.json().then((responseData) => {
                     const headerArray = [];
                     for (let i = 0; i < responseData.length; i++) {
-
-                        if (responseData[i].COLUMN_NAME == "RequestNumber") {
-                            var payload = {
+                        let payload = {};
+                        if (hideList.includes(responseData[i].COLUMN_NAME)) {
+                            payload = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                hidden: true
+                            }
+                        }
+                        else if (responseData[i].COLUMN_NAME == "RequestNumber") {
+                            payload = {
                                 title: responseData[i].COLUMN_NAME,
                                 dataIndex: responseData[i].COLUMN_NAME,
                                 key: responseData[i].COLUMN_NAME,
@@ -42,7 +60,7 @@ function ClosedOrderATable() {
                             }
                         }
                         else {
-                            var payload = {
+                            payload = {
                                 title: responseData[i].COLUMN_NAME,
                                 dataIndex: responseData[i].COLUMN_NAME,
                                 key: responseData[i].COLUMN_NAME,
@@ -73,6 +91,7 @@ function ClosedOrderATable() {
     }
     useEffect(() => loadHeaders(), []);
 
+
     const loadItems = async () => {
         const response = await fetch('/loadClosedOrders', {
             headers: {
@@ -89,13 +108,20 @@ function ClosedOrderATable() {
         });
     }
     useEffect(() => loadItems(), []);
+    const switchChange = (checked) => {
+        setFilt(checked)
+    }
     return (
-        <Table
-            className="OpenTicketTable"
-            columns={headers}
-            dataSource={items}
-            bordered
-        />
+        <div>
+            Show All Columns
+            <Switch onChange={switchChange} checked={filt} />
+            <Table
+                className="OpenTicketTable"
+                columns={filt ? headers : headers.filter(item => !item.hidden)}
+                dataSource={items}
+                bordered
+            />
+        </div>
     );
 }
 export default ClosedOrderATable;
