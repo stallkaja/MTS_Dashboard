@@ -25,16 +25,15 @@ const TicketDashboard: React.FC = () => {
             }}>
 
             {/*<div>*/}
-                <div id='TicketDashCard'>
-                    <h1 id='TicketTitle'>Ticket Dashboard</h1>
+            <div id='TicketDashCard'>
+                <h1 id='TicketTitle'>Ticket Dashboard</h1>
                  
-                    <h1 id='TicketSearch'> Search Bar Place Holder</h1>
-                </div>
+                <h1 id='TicketSearch'> Search Bar Place Holder</h1>
+            </div>
                 
             <div id='OpenTicketCard'>
                 
-                        <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
-                    
+                <div id='OpenTicketTitle'>Open and In Progress Tickets</div>             
                 
                 <div id="CreateTicketButton">
                     <Button size="large" onClick={() => OpenTicket()}>

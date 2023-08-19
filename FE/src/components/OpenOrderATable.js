@@ -18,7 +18,8 @@ function OpenOrderATable() {
         'AdminComments',
         'AttachFile'
     ])
-    const [filt, setFilt] = useState(false);
+    const [filtHead, setFiltHead] = useState([]);
+    const [headerSelect, setHeaderSelect] = useState('');
 
     const EditRecord = (record) => {
         console.log(record)
@@ -69,7 +70,6 @@ function OpenOrderATable() {
 
                         headerArray.push(payload)
                     }
-
                     const buttonPayload = {
                         title: 'Do it',
                         key: 'key',
@@ -85,11 +85,20 @@ function OpenOrderATable() {
                     }
                     headerArray.push(buttonPayload)
                     setHeaders(headerArray)
+                    setHeaderSelect(headerArray.map(header => ({
+                        key: header.title,
+                        title: header.title,
+                        value: header.title
+                    })))
+
                 })
             }
         });
     }
+
     useEffect(() => loadHeaders(), []);
+
+
 
     const loadItems = async () => {
         const response = await fetch('/loadOpenOrders', {
@@ -105,25 +114,53 @@ function OpenOrderATable() {
                 })
             }
         });
+
     }
+
     useEffect(() => loadItems(), []);
 
-    /*const headerSelect = headers.map(header => ({
-        key: header.title,
-        title: header.title,
-        value: header.title
-    }))
+    console.log(headers)
 
-    const columnChange = (headers, value) => {
-        setHideList(
-            [
-                ...hideList,
-                (value.title)
-            ]
-        )
-        setHeaders(headers.map(header => {
-            if (hideList.title === header.title) {
+
+    const columnChange = (value) => {
+        console.log(value)
+        let addValue = []
+        addValue = value.map(val => {
+            return val
+        })
+        console.log(addValue)
+        setHideList(addValue)
+        console.log(hideList)
+        console.log(headers)
+        let addHeader = []
+        for (let i = 0; i < headers.length; i++) {
+            let payload = {}
+            if (hideList.includes(headers[i].title)) {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: true
+                }
+            } else {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: false
+                }
+            }
+            addHeader.push(payload)
+        }
+        
+        console.log(addHeader)
+        setHeaders(addHeader)
+    }
+
+        /*setHeaders(headers.map(header => {
+            if (hideList.includes(header.title)) {
                 return {
+
                     ...headers, hidden: true
                 };
             } else {
@@ -131,30 +168,33 @@ function OpenOrderATable() {
                     ...headers, hidden: false
                 }
             }
-        }));
-    }
+        }));*/
+    
     console.log(hideList)
-    console.log(headers)*/
-    const switchChange = (checked) => {
-        setFilt(checked)
-    }
+    console.log(headers)
+    useEffect(() => {
+        setFiltHead(
+        headers.filter(item => !item.hidden))
+    },[headers])
+    console.log(filtHead)
+    useEffect(() => { } ,[filtHead])
     return (
         <div>
-            {/*<Select
+            <Select
                 mode="multiple"
                 placeholder="Select Columns to Hide"
                 options={headerSelect}
                 style={{
-                    width: '20%'
+                    width: '50%'
                 }}
                 onChange={columnChange}
                 defaultValue={hideList}
-        />*/}
-            Show All Columns
-            <Switch onChange={switchChange} checked={filt} />
+            />
+            {/*Show All Columns
+            <Switch onChange={switchChange} checked={filt} />*/}
             <Table
                 className="OpenTicketTable"
-                columns={filt ? headers : headers.filter(item => !item.hidden)}
+                columns={filtHead}
                 dataSource={items}
                 bordered
             />
