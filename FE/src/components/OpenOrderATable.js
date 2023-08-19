@@ -20,6 +20,7 @@ function OpenOrderATable() {
     ])
     const [filtHead, setFiltHead] = useState([]);
     const [headerSelect, setHeaderSelect] = useState('');
+    const [isLoading, setIsLoading] = useState(true);
 
     const EditRecord = (record) => {
         console.log(record)
@@ -119,16 +120,12 @@ function OpenOrderATable() {
 
     useEffect(() => loadItems(), []);
 
-    console.log(headers)
-
 
     const columnChange = (value) => {
-        console.log(value)
         let addValue = []
         addValue = value.map(val => {
             return val
         })
-        console.log(addValue)
         setHideList(addValue)
         console.log(hideList)
         console.log(headers)
@@ -142,6 +139,17 @@ function OpenOrderATable() {
                     key: headers[i].key,
                     hidden: true
                 }
+            } else if (headers[i].title === "Do it") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                        <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+                            {"Edit"}
+                        </Button>
+                    )
+                }
             } else {
                 payload = {
                     title: headers[i].title,
@@ -152,32 +160,26 @@ function OpenOrderATable() {
             }
             addHeader.push(payload)
         }
-        
-        console.log(addHeader)
         setHeaders(addHeader)
+        //setIsLoading(true)
     }
-
-        /*setHeaders(headers.map(header => {
-            if (hideList.includes(header.title)) {
-                return {
-
-                    ...headers, hidden: true
-                };
-            } else {
-                return {
-                    ...headers, hidden: false
-                }
-            }
-        }));*/
     
-    console.log(hideList)
-    console.log(headers)
     useEffect(() => {
         setFiltHead(
-        headers.filter(item => !item.hidden))
+            headers.filter(item => !item.hidden)
+        )
+        setIsLoading(false)
+
+
     },[headers])
     console.log(filtHead)
-    useEffect(() => { } ,[filtHead])
+
+    if (isLoading) {
+        return(
+            <span>Loading</span>
+        )
+    }
+
     return (
         <div>
             <Select
@@ -201,4 +203,5 @@ function OpenOrderATable() {
         </div>
     );
 }
+
 export default OpenOrderATable;
