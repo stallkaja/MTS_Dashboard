@@ -20,7 +20,7 @@ function OpenOrderATable() {
     ])
     const [filtHead, setFiltHead] = useState([]);
     const [headerSelect, setHeaderSelect] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    //const [isLoading, setIsLoading] = useState(true);
 
     const EditRecord = (record) => {
         console.log(record)
@@ -163,22 +163,17 @@ function OpenOrderATable() {
         setHeaders(addHeader)
         //setIsLoading(true)
     }
-    
+    console.log(headers)
+    console.log(headers.filter(item => !item.hidden))
     useEffect(() => {
-        setFiltHead(
+        let filt = []
+        filt = (
             headers.filter(item => !item.hidden)
         )
-        setIsLoading(false)
-
-
+        console.log(filt)
+        setFiltHead([...filt])
     },[headers])
     console.log(filtHead)
-
-    if (isLoading) {
-        return(
-            <span>Loading</span>
-        )
-    }
 
     return (
         <div>
