@@ -23,7 +23,6 @@ function OpenOrderATable() {
     //const [isLoading, setIsLoading] = useState(true);
 
     const EditRecord = (record) => {
-        console.log(record)
         navigate('/MaterialRequestform', { state: { record: record } });
     };
 
@@ -110,7 +109,6 @@ function OpenOrderATable() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    console.log(responseData)
                     setItems(responseData)
                 })
             }
@@ -122,17 +120,19 @@ function OpenOrderATable() {
 
 
     const columnChange = (value) => {
-        let addValue = []
-        addValue = value.map(val => {
+        console.log("ColChange got")
+        console.log(value)
+        let localHideList = []
+        localHideList = value.map(val => {
             return val
         })
-        setHideList(addValue)
-        console.log(hideList)
-        console.log(headers)
+        console.log('localHideList is')
+        console.log(localHideList)
+
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
             let payload = {}
-            if (hideList.includes(headers[i].title)) {
+            if (localHideList.includes(headers[i].title)) {
                 payload = {
                     title: headers[i].title,
                     dataIndex: headers[i].dataIndex,
@@ -160,20 +160,18 @@ function OpenOrderATable() {
             }
             addHeader.push(payload)
         }
+        console.log(addHeader)
         setHeaders(addHeader)
         //setIsLoading(true)
     }
-    console.log(headers)
-    console.log(headers.filter(item => !item.hidden))
+
     useEffect(() => {
         let filt = []
         filt = (
             headers.filter(item => !item.hidden)
         )
-        console.log(filt)
         setFiltHead([...filt])
     },[headers])
-    console.log(filtHead)
 
     return (
         <div>
