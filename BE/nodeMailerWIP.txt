@@ -1,0 +1,50 @@
+//node mailer
+const nodemailer = require("nodemailer")
+const mailOptions = {
+  from: 'jamesstallkamp@gmail.com',
+  to: 'jason.alexander@lamresearch.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};
+const transport = {
+  service: 'gmail',
+  auth: {
+    user: 'jamesstallkamp@gmail.com',
+    pass: 'lfmsyaxkbfzcchtb'
+  }
+};
+/* WIP code for using lam research email / outlook, above code will be proof of concept using gmail
+const transport = {
+  host: "smtp-mail.outlook.com", // hostname
+  secureConnection: false, // TLS requires secureConnection to be false
+  port: 587, // port for secure SMTP
+  auth: {
+      user: "james.stallkamp@lamresearch.com",
+      pass: ""
+  },
+  tls: {
+      ciphers:'SSLv3'
+  }
+}
+
+const mailOptions = {
+  from: 'james.stallkamp@lamresearch.com',
+  to: 'james.stallkamp@lamresearch.com',
+  subject: 'Sending Email using Node.js',
+  text: 'That was easy!'
+};*/
+const transporter = nodemailer.createTransport(transport)
+// WIP to send emails
+app.post('/sendEmail', (req, res) => {
+  transporter.sendMail(mailOptions, function(error, info){
+    if (error) {
+      console.log("found error")
+      throw error
+      connection.end()
+      console.log(error);
+    } else {
+      console.log('Email sent: ');
+      res.status(200).json({ Error: 'Success' })
+    }
+  });
+});
