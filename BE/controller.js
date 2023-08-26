@@ -293,12 +293,10 @@ app.get('/passdowns', (_, res) => {
 });
 
 app.post('/deactivate', (req, res) => {
-    console.log(req.body.record.Status)
     const args = [
       req.body.record.PK,
       req.body.record.Status
     ]
-    console.log(args);
     const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = 'Inactive'"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
@@ -315,8 +313,6 @@ app.post('/newRequest', (req, res) => {
     var stmt = ""
     var args = []
     var ID =0;
-    var queryPassed
-    console.log(req)
     if (req.body.openDate == 'Invalid Date') {
         req.body.openDate = dayjs().format('YYYY-MM-DD')
     }
@@ -352,7 +348,6 @@ app.post('/newRequest', (req, res) => {
             req.body.requestor,
             req.body.comments
         ]
-        console.log(args)
         stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
     else {
@@ -374,18 +369,17 @@ app.post('/newRequest', (req, res) => {
             req.body.comments
 
         ]
-        console.log(args)
         stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
 
     connection.query(stmt, [args], (err, results, fields) => {
-        console.log(results)
+        console.log('insertID is ' + results.insertID)
         if (err) {
             throw err
             connection.end();
             queryPassed = 0;
         }
-        else if (results.insertID === 0) {
+        else if (results.insertID === undefined) {
             console.log("setting to " + req.body.reqNum)
             ID = req.body.reqNum
         }
@@ -395,7 +389,6 @@ app.post('/newRequest', (req, res) => {
         console.log('finished first query' + ID)
         handleLineInserts(ID,req,res)
         
-        console.log(ID)
     })
 
     
@@ -404,7 +397,6 @@ app.post('/newRequest', (req, res) => {
 function handleLineInserts(ID,req,res){
   console.log('in second function')
   console.log(req.body.lineItems)
-  var queryPassed = 1;
   args =[]
   var payload =[]
   for(let i =0;i<req.body.lineItems.length;i++){
@@ -425,11 +417,8 @@ function handleLineInserts(ID,req,res){
     if (err) {
         throw err
         connection.end();
-        queryPassed = 0;
     }
     else {
-      console.log(results)
-      console.log(results.insertId)
         res.status(200).json({ Error: 'Success' })
     }
 })
@@ -437,7 +426,6 @@ function handleLineInserts(ID,req,res){
 
 // select * from ptoTable, reads all of ptoTable
 app.get('/loadPtoTable', (_, res) => {
-  console.log('loading pto table')
   connection.query("SELECT * FROM ptoTable", (err, rows, fields) => {
       if (err) {
           throw err
@@ -509,8 +497,6 @@ app.post('/loadLineItems', (req, res) => {
     const args = [[
         req.body.localRequestNum,
     ]]
-    console.log("in loading line items")
-    console.log(req.body);
     const stmt = "SELECT * FROM orderlineitemstable WHERE RequestNumber = ?"
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
