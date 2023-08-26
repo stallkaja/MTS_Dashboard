@@ -2,6 +2,7 @@ const express = require('express')
 const app = express();
 const PORT = 3000;
 const cors = require('cors')
+const dayjs = require('dayjs')
 
 //My SQL Connection  and config
 const mysql = require('mysql')
@@ -315,8 +316,26 @@ app.post('/newRequest', (req, res) => {
     var args = []
     var ID =0;
     var queryPassed
-    console.log(queryPassed)
-    if (req.body.requestNum == 'new ticket') {
+    console.log(req)
+    if (req.body.openDate == 'Invalid Date') {
+        req.body.openDate = dayjs().format('YYYY-MM-DD')
+    }
+    else if (!req.body.openDate) {
+        req.body.openDate = dayjs().format('YYYY-MM-DD')
+    }
+    if (req.body.subDate == 'Invalid Date') {
+        req.body.subDate = null
+    }
+    if (req.body.requestStatus == 'submitted') {
+        req.body.subDate = dayjs().format('YYYY-MM-DD')
+    }
+    if (req.body.closeDate == 'Invalid Date') {
+        req.body.closeDate = null
+    }
+    if (req.body.requestStatus == 'arrived') {
+        req.body.closeDate = dayjs().format('YYYY-MM-DD')
+    }
+    if (req.body.reqNum == 'new ticket') {
         args = [
             req.body.requestStatus,
             req.body.needDate,
@@ -325,20 +344,20 @@ app.post('/newRequest', (req, res) => {
             req.body.closeDate,
             req.body.adminCom,
             req.body.costCenter,
-            req.body.email,
+            req.body.requestorEmail,
             req.body.orderMethod,
             req.body.purchNum,
-            req.body.vendor,
+            req.body.preferredVendor,
             req.body.priority,
             req.body.requestor,
-            req.body.reqCom
+            req.body.comments
         ]
         console.log(args)
         stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
     else {
         args = [
-            req.body.requestNum,
+            req.body.reqNum,
             req.body.requestStatus,
             req.body.needDate,
             req.body.openDate,
@@ -346,13 +365,13 @@ app.post('/newRequest', (req, res) => {
             req.body.closeDate,
             req.body.adminCom,
             req.body.costCenter,
-            req.body.email,
+            req.body.requestorEmail,
             req.body.orderMethod,
             req.body.purchNum,
-            req.body.vendor,
+            req.body.preferredVendor,
             req.body.priority,
             req.body.requestor,
-            req.body.reqCom
+            req.body.comments
 
         ]
         console.log(args)
@@ -360,16 +379,23 @@ app.post('/newRequest', (req, res) => {
     }
 
     connection.query(stmt, [args], (err, results, fields) => {
+        console.log(results)
         if (err) {
             throw err
             connection.end();
             queryPassed = 0;
         }
-        else {
-          ID = results.insertId;
-          console.log('finished first query')
-          handleLineInserts(ID,req,res)
+        else if (results.insertID === 0) {
+            console.log("setting to " + req.body.reqNum)
+            ID = req.body.reqNum
         }
+        else {
+            ID = results.insertId;
+        }
+        console.log('finished first query' + ID)
+        handleLineInserts(ID,req,res)
+        
+        console.log(ID)
     })
 
     
@@ -377,6 +403,7 @@ app.post('/newRequest', (req, res) => {
 
 function handleLineInserts(ID,req,res){
   console.log('in second function')
+  console.log(req.body.lineItems)
   var queryPassed = 1;
   args =[]
   var payload =[]
@@ -389,10 +416,11 @@ function handleLineInserts(ID,req,res){
       req.body.lineItems[i].price,
       req.body.lineItems[i].quantity,
       req.body.lineItems[i].lineStatus,
+      req.body.lineItems[i].pk,
     ]
     args.push(payload)
   }
-  stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status) VALUES ? ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
+  stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status, PK) VALUES ? ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
   connection.query(stmt, [args], (err, results, fields) => {
     if (err) {
         throw err

@@ -23,7 +23,7 @@ function OpenOrderATable() {
     //const [isLoading, setIsLoading] = useState(true);
 
     const EditRecord = (record) => {
-        navigate('/MaterialRequestform', { state: { record: record } });
+        navigate('/MaterialRequestform', { state: { record: record } })
     };
 
 

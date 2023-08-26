@@ -15,9 +15,9 @@ export default function MaterialRequestForm() {
     const [requestStatus, setRequestStatus] = useState('awaitingApproval');
     const [requestNum, setRequestNum] = useState('new ticket');
     const [needDate, setNeedDate] = useState(dayjs().format('YYYY-MM-DD'));
-    const [openDate, setOpenDate] = useState(dayjs().format('YYYY-MM-DD'));
-    const [subDate, setSubDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
-    const [closeDate, setCloseDate] = useState(dayjs('1900-01-01').format('YYYY-MM-DD'));
+    const [openDate, setOpenDate] = useState('');
+    const [subDate, setSubDate] = useState('');
+    const [closeDate, setCloseDate] = useState('');
     const [adminCom, setAdminCom] = useState('');
     const [costCenter, setCostCenter] = useState('');
     const [email, setEmail] = useState('');
@@ -49,6 +49,7 @@ export default function MaterialRequestForm() {
         { label: '77012', value: '77012', },
 
     ];
+    const dateFormat="YYYY-MM-DD";
 
 
     useEffect(() => {
@@ -56,13 +57,17 @@ export default function MaterialRequestForm() {
         console.log(location.state)
         if (location.state == null) {
             console.log('record is null')
-
+            form.setFieldsValue({
+                reqNum: 'new ticket',
+                requestStatus: 'awaitingApproval',
+                openDate: dayjs().format('YYYY-MM-DD')
+            })
         }
         else {
             setRequestStatus(location.state.record.Status);
             setRequestNum(location.state.record.RequestNumber);
-            setNeedDate(location.state.record.NeedBy);
-            setOpenDate(location.state.record.OpenDate);
+            setNeedDate(dayjs(location.state.record.NeedBy));
+            setOpenDate(dayjs(location.state.record.OpenDate));
             setSubDate(location.state.record.SubmitDate);
             setCloseDate(location.state.record.ClosedDate);
             setAdminCom(location.state.record.AdminComments);
@@ -75,6 +80,23 @@ export default function MaterialRequestForm() {
             setRequestor(location.state.record.Requestor);
             setReqCom(location.state.record.RequestorComments);
             loadLineItems(location.state.record.RequestNumber)
+            form.setFieldsValue({
+                reqNum: location.state.record.RequestNumber,
+                requestStatus: location.state.record.Status,
+                orderMethod: location.state.record.OrderMethod,
+                requestor: location.state.record.Requestor,
+                requestorEmail: location.state.record.Email,
+                costCenter: location.state.record.CostCenter,
+                priority: location.state.record.Priority,
+                preferredVendor: location.state.record.PreferredVendor,
+                needDate: dayjs(location.state.record.NeedBy).format('YYYY-MM-DD'),
+                comments: location.state.record.RequestorComments,
+                purchNum: location.state.record.PurchNumber,
+                openDate: dayjs(location.state.record.OpenDate).format('YYYY-MM-DD'),
+                subDate: dayjs(location.state.record.SubmitDate).format('YYYY-MM-DD'),
+                closeDate: dayjs(location.state.record.ClosedDate).format('YYYY-MM-DD'),
+                adminCom: location.state.record.AdminComments
+            })
         };
     }, []) // <-- empty dependency array
 
@@ -97,14 +119,15 @@ export default function MaterialRequestForm() {
             if (response.ok) {
                 response.json().then((responseData) => {
                     //setLineArray(responseData)
-                    //console.log(responseData)
+                    console.log(responseData)
                     let tempItemInputs = responseData.map((item) => {
                         return {
                           partName: item.PartName,
                           partNumber: item.PartNumber,
                           price: item.PricePer.toString(),
                           quantity: item.Quantity.toString(),
-                          lineStatus: item.Status
+                          lineStatus: item.Status,
+                          pk: item.PK,
                         };
                       });
                       setItemInputs(tempItemInputs)
@@ -120,6 +143,7 @@ export default function MaterialRequestForm() {
     //----------------------------------------------------------------------------
     const addRequest = async (payload) => {
         // Create new object with the variables set in the form
+        console.log(payload)
         console.log('Request  is: ' + payload)
         const response = await fetch('/newRequest', {
             method: 'POST',
@@ -207,11 +231,10 @@ export default function MaterialRequestForm() {
     };
 
     useEffect(() => {
-        console.log(requestNum)
-            form.setFieldsValue({
-                //reqNum: requestNum,
-                lineItems: itemInputs
-            });
+        form.setFieldsValue({
+            //reqNum: requestNum,
+            lineItems: itemInputs
+        });
     }, [itemInputs]);
     return (
         <ConfigProvider
@@ -237,7 +260,7 @@ export default function MaterialRequestForm() {
                     autoComplete="off"
                     initialValues={{
                         'requestStatus': 'awaitingApproval',
-                        'requestNum': 'new ticket',
+                        //'requestNum': 'new ticket',
                         
                     }}
                 >
@@ -258,8 +281,8 @@ export default function MaterialRequestForm() {
                                 onChange={handleStatus}
                                 options={[
                                     { value: 'awaitingApproval', label: 'Awaiting Approval', },
-                                    { value: 'Submitted', label: 'Submitted', },
-                                    { value: 'Arrived', label: 'Arrived', },
+                                    { value: 'submitted', label: 'Submitted', },
+                                    { value: 'arrived', label: 'Arrived', },
                                 ]}
                             />
                             </Form.Item>
@@ -276,9 +299,9 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <Input 
-                                    //readonly={1} 
+                                    readonly={1} 
                                     placeholder="Request Number" 
-                                    //value={requestNum} 
+                                    value={requestNum} 
                                     onChange={e => setRequestNum(e.target.value)} 
                                 />
                             </div>
@@ -425,7 +448,8 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <DatePicker
-                                    value={dayjs(needDate,'YYYY-MM-DD')}
+                                    value={dayjs(needDate)}
+                                    format={dateFormat}
                                     onChange={handleNeedDate}
                                     allowClear={false}
                                 />
@@ -433,6 +457,7 @@ export default function MaterialRequestForm() {
                         </Form.Item>
 
                         <Form.Item
+                            name="attachment"
                             label="Attach a File"
                         >
                             <div id="reqInputBox">
@@ -543,6 +568,15 @@ export default function MaterialRequestForm() {
                                                     ]}
                                                 />
                                             </Form.Item>
+                                            <Form.Item
+                                                {...field}
+                                                label="PK"
+                                                name={[field.name, 'pk']}
+                                                fieldKey={[field.fieldkey, "pk"]}
+                                                hidden="true">
+                                                <Input />
+                                            </Form.Item>
+                                                
                                             <MinusCircleOutlined onClick={() => remove(field.name)} />
                                         </Space>
 
@@ -579,6 +613,7 @@ export default function MaterialRequestForm() {
                             <div id="reqInputBox">
                                 <DatePicker
                                     value={dayjs(openDate)}
+                                    format={dateFormat}
                                     onChange={handleOpenDate}
                                     allowClear={false}
                                     disabled
@@ -593,6 +628,7 @@ export default function MaterialRequestForm() {
                             <div id="reqInputBox">
                                 <DatePicker
                                     value={dayjs(subDate)}
+                                    format={dateFormat}
                                     onChange={handleSubDate}
                                     allowClear={false}
                                     disabled
@@ -607,6 +643,7 @@ export default function MaterialRequestForm() {
                         <div id="reqInputBox">
                             <DatePicker
                                 value={dayjs(closeDate)}
+                                    format={dateFormat}
                                 onChange={handleCloseDate}
                                 allowClear={false}
                                 disabled
@@ -645,5 +682,5 @@ export default function MaterialRequestForm() {
                 </Form>
             </div>
         </ConfigProvider>
-    )
+        )
 }
