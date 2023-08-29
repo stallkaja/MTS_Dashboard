@@ -20,7 +20,6 @@ function OpenOrderATable() {
     ])
     const [filtHead, setFiltHead] = useState([]);
     const [headerSelect, setHeaderSelect] = useState('');
-    //const [isLoading, setIsLoading] = useState(true);
 
     const EditRecord = (record) => {
         navigate('/MaterialRequestform', { state: { record: record } })
@@ -71,7 +70,7 @@ function OpenOrderATable() {
                         headerArray.push(payload)
                     }
                     const buttonPayload = {
-                        title: 'Do it',
+                        title: 'Edit Record',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
@@ -139,7 +138,7 @@ function OpenOrderATable() {
                     key: headers[i].key,
                     hidden: true
                 }
-            } else if (headers[i].title === "Do it") {
+            } else if (headers[i].title === "Edit Record") {
                 payload = {
                     title: headers[i].title,
                     dataIndex: headers[i].dataIndex,

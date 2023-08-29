@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tag, configProvider, Switch } from 'antd';
+import { Button, Space, Table, Tag, configProvider, Switch, Select } from 'antd';
 import { green } from '@mui/material/colors';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -18,7 +18,8 @@ function SubmittedOrderATable() {
         'AdminComments',
         'AttachFile'
     ])
-    const [filt, setFilt] = useState(false);
+    const [filtHead, setFiltHead] = useState([]);
+    const [headerSelect, setHeaderSelect] = useState('');
 
     const EditRecord = (record) => {
         console.log(record)
@@ -71,7 +72,7 @@ function SubmittedOrderATable() {
                     }
 
                     const buttonPayload = {
-                        title: 'Do it',
+                        title: 'Edit Record',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
@@ -85,14 +86,17 @@ function SubmittedOrderATable() {
                     }
                     headerArray.push(buttonPayload)
                     setHeaders(headerArray)
+                    setHeaderSelect(headerArray.map(header => ({
+                        key: header.title,
+                        title: header.title,
+                        value: header.title
+                    })))
+
                 })
             }
         });
     }
     useEffect(() => loadHeaders(), []);
-    const switchChange = (checked) => {
-        setFilt(checked)
-    }
 
     const loadItems = async () => {
         const response = await fetch('/loadSubOrders', {
@@ -110,16 +114,81 @@ function SubmittedOrderATable() {
         });
     }
     useEffect(() => loadItems(), []);
+
+    const columnChange = (value) => {
+        console.log("ColChange got")
+        console.log(value)
+        let localHideList = []
+        localHideList = value.map(val => {
+            return val
+        })
+        console.log('localHideList is')
+        console.log(localHideList)
+
+        let addHeader = []
+        for (let i = 0; i < headers.length; i++) {
+            let payload = {}
+            if (localHideList.includes(headers[i].title)) {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: true
+                }
+            } else if (headers[i].title === "Edit Record") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                        <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+                            {"Edit"}
+                        </Button>
+                    )
+                }
+            } else {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: false
+                }
+            }
+            addHeader.push(payload)
+        }
+        console.log(addHeader)
+        setHeaders(addHeader)
+        //setIsLoading(true)
+    }
+
+    useEffect(() => {
+        let filt = []
+        filt = (
+            headers.filter(item => !item.hidden)
+        )
+        setFiltHead([...filt])
+    }, [headers])
+
     return (
         <div>
-        Show All Columns
-            < Switch onChange = { switchChange } checked = { filt } />
-        <Table
-            className="OpenTicketTable"
-            columns={filt ? headers : headers.filter(item => !item.hidden)}
-            dataSource={items}
-            bordered
-        />
+            <Select
+                mode="multiple"
+                placeholder="Select Columns to Hide"
+                options={headerSelect}
+                style={{
+                    width: '50%'
+                }}
+                onChange={columnChange}
+                defaultValue={hideList}
+            />
+            {/*Show All Columns
+            <Switch onChange={switchChange} checked={filt} />*/}
+            <Table
+                className="OpenTicketTable"
+                columns={filtHead}
+                dataSource={items}
+                bordered
+            />
         </div>
     );
 }
