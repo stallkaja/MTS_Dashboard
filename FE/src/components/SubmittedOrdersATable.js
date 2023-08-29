@@ -107,7 +107,22 @@ function SubmittedOrderATable() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    console.log(responseData)
+                    for (let i = 0; i < responseData.length; i++) {
+                        //console.log(responseData[i])
+                        if (responseData[i].NeedBy !== null) {
+                            let cleanDate = (responseData[i].NeedBy.split('T')[0])
+                            responseData[i].NeedBy = cleanDate
+                        }
+                        if (responseData[i].OpenDate !== null) {
+                            let cleanDate = (responseData[i].OpenDate.split('T')[0])
+                            responseData[i].OpenDate = cleanDate
+                        }
+                        if (responseData[i].SubmitDate !== null) {
+                            let cleanDate = (responseData[i].SubmitDate.split('T')[0])
+                            responseData[i].SubmitDate = cleanDate
+                        }
+
+                    }
                     setItems(responseData)
                 })
             }
