@@ -77,28 +77,55 @@ app.post('/newMaterial', (req, res) => {
 app.post('/newTicket', (req, res) => {
   var stmt = ""
   var args = []
+    if (req.body.ticketStatus == 'inProgress') {
+        req.body.progDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+    if (req.body.progDate == 'Invalid Date') {
+        req.body.progDate = null
+    }
+    if (req.body.closeDate == 'Invalid Date') {
+        req.body.closeDate = null
+    }
+    if (req.body.ticketStatus == 'Closed') {
+        req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+
   if(req.body.ticketNum =='new ticket'){
+      if (!req.body.openDate) {
+          req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+      }
+      else if (req.body.openDate == 'Invalid Date') {
+          req.body.openDate = dayjs()
+      }
+      console.log(req.body)
     args = [
       req.body.ticketStatus,
       req.body.ben,
       req.body.ticketDescription,
       req.body.department,
-      req.body.toolBay
+      req.body.toolBay,
+      req.body.openDate,
+      req.body.progDate,
+      req.body.closeDate
 
     ]
-    stmt = "INSERT INTO ticketsTable (TicketStatus, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
+    stmt = "INSERT INTO ticketsTable (TicketStatus, BEN, TicketDescription, Department, ToolBay, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
   else{
+      console.log(req.body)
     args = [
       req.body.ticketStatus,
       req.body.ticketNum,
       req.body.ben,
       req.body.ticketDescription,
       req.body.department,
-      req.body.toolBay
+      req.body.toolBay,
+      req.body.openDate,
+      req.body.progDate,
+      req.body.closeDate
 
     ]
-    stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay)"
+    stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
 
   
@@ -223,7 +250,7 @@ app.get('/items', (_, res) => {
   
     // load tickets
 app.get('/loadOpenTickets', (_, res) => {
-  connection.query('Select * from ticketstable WHERE TicketStatus = "Open"', (err, rows, fields) => {
+  connection.query('Select * from ticketstable WHERE TicketStatus IN ("Open", "inProgress")', (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();
@@ -266,9 +293,10 @@ app.post('/newPass', (req, res) => {
         req.body.shift,
         req.body.tech,
         req.body.depar,
-        req.body.pass
+        req.body.pass,
+        req.body.pk
     ]]
-    const stmt = "INSERT INTO passdowntable (Date, Shift, Technician, Department, Passdown) VALUES ?"
+    const stmt = "INSERT INTO passdowntable (Date, Shift, Technician, Department, Passdown, PK) VALUES ? ON DUPLICATE KEY UPDATE Date = VALUES(Date), Shift = VALUES(Shift), Technician = VALUES (Technician), Department = VALUES(Department), Passdown = VALUES(Passdown)"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {

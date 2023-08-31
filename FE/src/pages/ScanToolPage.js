@@ -7,6 +7,11 @@ import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
 import {Table, ConfigProvider} from 'antd'
 import { Button, Input} from 'antd';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 const ScanToolPage = ({ setItemToEdit }) => {
     const [newLoc, setLoc] = useState('');
@@ -77,6 +82,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
     setItemToEdit(item);
     history.push('/edit');
   };
+  
     const fetchNVLs = async () => {
         const targetNVL = { searchNVL }
         const response = await fetch('/searchNVL', {
@@ -89,7 +95,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
             if (response.ok) {
                 response.json().then((responseData) => {
                     for(let i =0; i<responseData.length;i++){
-                        let cleanDate = (responseData[i].curDate.split('T')[0]) + ' ' + ((responseData[i].curDate.split('T')[1]).split('.')[0])
+                        let cleanDate = (dayjs(responseData[i].curDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
                         responseData[i].curDate = cleanDate
                     }
                     setToolHistory(responseData)

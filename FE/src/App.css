@@ -6,6 +6,7 @@ body {
     align-items: center;
     height: fit-content;
     min-width: 100%;
+    max-width: 100%;
     width: fit-content;
 
 }
@@ -64,7 +65,9 @@ buttonRight {
 
 .OpenTicketTable tr:nth-child(2n) td {
     background-color: rgba(36, 36, 55, 0.12);
+
 }
+
 
 
 .ClosedTicketTable tr:nth-child(2n) td {

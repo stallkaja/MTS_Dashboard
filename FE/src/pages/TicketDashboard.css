@@ -69,3 +69,7 @@
     padding-right: 10px;
     
 }
+
+#TicketTableOpen{
+    max-width: 100%;
+}

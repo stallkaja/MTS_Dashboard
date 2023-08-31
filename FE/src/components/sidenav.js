@@ -16,7 +16,14 @@ export default function Sidenav() {
             {open? <KeyboardDoubleArrowLeftIcon />: <KeyboardDoubleArrowRightIcon />}
         </button>
         {navData.map(item =>{
-            return <NavLink key={item.id} className={styles.sideitem} to={item.link}>
+            return <NavLink 
+                key={item.id} 
+                className={styles.sideitem} 
+                to={item.link}
+                style={({ isActive }) => ({
+                    background: isActive ? 'rgba(232, 153, 69, .7)' : ''
+                })}
+                >
             {item.icon}
             <span className={styles.linkText}>{item.text}</span>
         </NavLink>

@@ -11,6 +11,7 @@ const TicketDashboard: React.FC = () => {
         let path = '/TicketPage';
         navigate(path);
     }
+    
 
 
     return (
@@ -41,7 +42,9 @@ const TicketDashboard: React.FC = () => {
                     </Button>
                 </div>
             </div>
-            <OpenTicketATable />
+            <div id="TicketTableOpen">
+                <OpenTicketATable />
+            </div>
 
             {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <div id='ClosedTicketCard'>

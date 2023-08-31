@@ -2,6 +2,11 @@ import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Input, Select, Space, ConfigProvider } from 'antd';
 import "./TicketPage.css";
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 
 
@@ -15,6 +20,9 @@ export default function CreateToolPage() {
 	const [ticketDescription, setTicketDescription] = useState('')
 	const [department, setDepartment] = useState('');
 	const [toolBay, setToolBay] = useState('');
+    const [openDate, setOpenDate] = useState('');
+    const [progDate, setProgDate] = useState(null);
+    const [closeDate, setCloseDate] = useState(null)
 
 	useEffect(() => {
 		console.log(location)
@@ -29,6 +37,9 @@ export default function CreateToolPage() {
 			setTicketDescription(location.state.record.TicketDescription);
 			setDepartment(location.state.record.Department);
 			setToolBay(location.state.record.ToolBay);
+            setOpenDate(location.state.record.OpenDate);
+            setProgDate(location.state.record.ProgDate);
+            setCloseDate(location.state.record.CloseDate);
 		};
 	}, []) // <-- empty dependency array
 
@@ -43,7 +54,7 @@ export default function CreateToolPage() {
 	const addTicket = async () => {
 		// Create new object with the variables set in the form
 		console.log('ticket status is: ' + ticketStatus)
-		const newTicket = { ticketStatus, ticketNum, ben, ticketDescription, department, toolBay};
+		const newTicket = { ticketStatus, ticketNum, ben, ticketDescription, department, toolBay, openDate, progDate, closeDate};
 		console.log(newTicket)
 		const response = await fetch('/newTicket', {
 			method: 'POST',
@@ -70,6 +81,7 @@ export default function CreateToolPage() {
 		setTicketStatus(value)
 	}
 
+
 	const { TextArea } = Input;
 
 	return (
@@ -84,66 +96,82 @@ export default function CreateToolPage() {
 					colorPrimaryHover: '#6ce3c6'
 				},
 			}}>
-		<div>
+		    <div>
 				<h1>Ticket Form</h1>
-			<div id="TickHeader" />
 
-			<div id="TickFormCard">
-				<div id="TickInputBox">
-					<div id="TickLabel">Ticket Status</div>
+			    <div id="TickHeader" />
 
-					<Select
-						defaultValue="Open"
-						value={ticketStatus}
-						onChange={handleChange}
-						options={[
-							{ value: 'Open', label: 'Open', },
-							//{ value: 'inProgress', label: 'In Progress', },
-							{ value: 'Closed', label: 'Closed', },
-						]}
-					/>
-				</div>
+			    <div id="TickFormCard">
+				    <div id="TickInputBox">
+					    <div id="TickLabel">Ticket Status</div>
 
-				<div id="TickInputBox">
-					<div id="TickLabel">Ticket Number</div>
-					<Input readonly={1} placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value) }/>
-				</div>
+					    <Select
+						    defaultValue="Open"
+						    value={ticketStatus}
+						    onChange={handleChange}
+						    options={[
+							    { value: 'Open', label: 'Open', },
+							    { value: 'inProgress', label: 'In Progress', },
+							    { value: 'Closed', label: 'Closed', },
+						    ]}
+					    />
+				    </div>
 
-				<div id="TickInputBox">
-					<div id="TickLabel">BEN</div>
-					<Input placeholder="BEN" value={ben} onChange={e => setBen(e.target.value)} />
-				</div>
+				    <div id="TickInputBox">
+					    <div id="TickLabel">Ticket Number</div>
+					    <Input readonly={1} placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value) }/>
+				    </div>
 
-				<div id="TickInputBox">
-					<div id="TickLabel">Department</div>
-					<Input placeholder="Department" value={department} onChange={e => setDepartment(e.target.value)} />
-				</div>
+				    <div id="TickInputBox">
+					    <div id="TickLabel">BEN</div>
+					    <Input placeholder="BEN" value={ben} onChange={e => setBen(e.target.value)} />
+				    </div>
 
-				<div id="TickInputBox">
-					<div id="TickLabel">Tool Bay</div>
-					<Input placeholder="Tool Bay" value={toolBay} onChange={e => setToolBay(e.target.value)} />
-				</div>
-			</div>
+				    <div id="TickInputBox">
+					    <div id="TickLabel">Department</div>
+					    <Input placeholder="Department" value={department} onChange={e => setDepartment(e.target.value)} />
+				    </div>
 
-					<div id="TickLabel">Ticket Description</div>
-					<div id="TickTextBox">
-					<TextArea rows={6} value={ticketDescription} placeholder="Description" onChange={e => setTicketDescription(e.target.value)} />
+				    <div id="TickInputBox">
+					    <div id="TickLabel">Tool Bay</div>
+					    <Input placeholder="Tool Bay" value={toolBay} onChange={e => setToolBay(e.target.value)} />
+				    </div>
+			    </div>
+
+				<div id="TickLabel">Ticket Description</div>
+			    <div id="TickTextBox">
+				<TextArea rows={6} value={ticketDescription} placeholder="Description" onChange={e => setTicketDescription(e.target.value)} />
 				</div>
 			
 
-			<div id="TickButtonBox">
-				<div id="TickBackButton">
-					<Button onClick={backButton}>Back</Button>
-				</div>
+			    <div id="TickButtonBox">
+				    <div id="TickBackButton">
+					    <Button onClick={backButton}>Back</Button>
+				    </div>
 
-				<div id="TickSubmitButton">
-					<Button onClick={addTicket}> Save </Button>
-				</div>
-			</div>
-
+				    <div id="TickSubmitButton">
+					    <Button onClick={addTicket}> Save </Button>
+				    </div>
+			    </div>
 				
+                <div id="TickDateCard">
+                    <div id="TickDateBox">
+                        Opened: {openDate}
+                    </div>
+
+                    <div id="TickDateBox">
+                        In Progress: {progDate}
+                    </div>
+
+                    <div id="TickDateBox">
+                        Closed: {closeDate}
+                    </div>
+
+                </div>
+
 			
 			</div>
+
 		</ConfigProvider>
 	)
 }

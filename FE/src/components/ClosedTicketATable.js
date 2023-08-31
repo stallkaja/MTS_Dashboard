@@ -1,6 +1,11 @@
 import {Button, Space, Table, Tag } from 'antd';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router';
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+import timezone from 'dayjs/plugin/timezone';
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 
 
@@ -75,6 +80,16 @@ const loadItems = async () => {
   }).then((response) => {
     if (response.ok) {
       response.json().then((responseData) => {
+          for (let i = 0; i < responseData.length; i++) {
+              let cleanDate = (dayjs(responseData[i].OpenDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
+              responseData[i].OpenDate = cleanDate
+
+              let cleanDate2 = (dayjs(responseData[i].ProgDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
+              responseData[i].ProgDate = cleanDate2
+
+              let cleanDate3 = (dayjs(responseData[i].CloseDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
+              responseData[i].CloseDate = cleanDate3
+          }
         setItems(responseData)
       })
     }

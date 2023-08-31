@@ -17,6 +17,7 @@ export default function CreatePassdownPage() {
     const [tech, setTech] = useState('');
     const [depar, setDepar] = useState('');
     const [pass, setPass] = useState('');
+    const [pk, setPk] = useState('');
 
     useEffect(() => {
 
@@ -30,11 +31,12 @@ export default function CreatePassdownPage() {
             setTech(location.state.record.Technician);
             setDepar(location.state.record.Department);
             setPass(location.state.record.Passdown);
+            setPk(location.state.record.PK);
         };
     }, [])
     const addPass = async () => {
         // Create new object with the variables set in the form
-        const newPass = { date, shift, tech, depar, pass };
+        const newPass = { date, shift, tech, depar, pass, pk };
         const response = await fetch('/newPass', {
             method: 'POST',
             body: JSON.stringify(newPass),

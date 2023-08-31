@@ -3,6 +3,17 @@ import TravelExploreIcon from '@mui/icons-material/TravelExplore';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import MapIcon from '@mui/icons-material/Map';
+import BuildIcon from '@mui/icons-material/Build';
+import RedeemIcon from '@mui/icons-material/Redeem';
+import HistoryIcon from '@mui/icons-material/AccessAlarm';
+import SquareIcon from '@mui/icons-material/SquareFoot';
+import SupportIcon from '@mui/icons-material/Sos';
+import AssistIcon from '@mui/icons-material/AssistWalker';
+import TubIcon from '@mui/icons-material/HotTub';
+import PasteIcon from '@mui/icons-material/ContentPaste';
+import CompIcon from '@mui/icons-material/Computer';
+import RepairIcon from '@mui/icons-material/HomeRepairService';
+import HandyIcon from '@mui/icons-material/Handyman'
  
 export const navData = [
     {
@@ -13,37 +24,37 @@ export const navData = [
     },
     {
         id: 1,
-        icon: <TravelExploreIcon/>,
+        icon: <SupportIcon/>,
         text: "Ticket  Dashboard",
         link: "TicketDashboard"
     },
     {
         id: 2,
-        icon: <TravelExploreIcon/>,
+        icon: <AssistIcon/>,
         text: "Help Tickets",
         link: "TicketsList"
     },
     {
         id: 3,
-        icon: <TravelExploreIcon/>,
+        icon: <RepairIcon/>,
         text: "KitBase",
         link: "KitBase"
     },
     {
         id: 4,
-        icon: <TravelExploreIcon/>,
+        icon: <CompIcon/>,
         text: "SWICBase",
         link: "SwicBase"
     },
     {
         id: 5,
-        icon: <BarChartIcon/>,
+        icon: <RedeemIcon/>,
         text: "Material Ordering",
         link: "MaterialOrderingPage"
     },
     {
         id: 6,
-        icon: <BarChartIcon/>,
+        icon: <TubIcon/>,
         text: "Material List Page",
         link: "MaterialListPage"
     },
@@ -55,31 +66,31 @@ export const navData = [
     },
     {
         id: 8,
-        icon: <SettingsIcon/>,
+        icon: <HistoryIcon/>,
         text: "Cal Tool History",
         link: "ScanTool"
     },
     {
         id: 9,
-        icon: <TravelExploreIcon/>,
+        icon: <SquareIcon/>,
         text: "Tool Pull List",
         link: "ToolPullList"
     },
     {
         id: 10,
-        icon: <SettingsIcon/>,
+        icon: <BuildIcon/>,
         text: "Cal Tool Info",
         link: "ToolHistory"
     },
     {
         id: 11,
-        icon: <SettingsIcon/>,
+        icon: <HandyIcon/>,
         text: "Tool Requests",
         link: "ToolRequest"
     },
     {
         id: 12,
-        icon: <TravelExploreIcon/>,
+        icon: <PasteIcon/>,
         text: "Pass Down",
         link: "PassDownPage"
     },

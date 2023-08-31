@@ -27,8 +27,10 @@
     padding-left: 16px;
 }
 
+
 .sideitem:hover {
     background-color: #030d181c;
+    color: rgba(242, 194, 46, .8);
 
 }
 .menuBtn {
