@@ -150,7 +150,7 @@ function PassDownTable() {
                                 ...getColumnSearchProps(responseData[i].COLUMN_NAME),
                                 sorter: (a, b) => a.Shift.localeCompare(b.Shift),
                                 sortDirections: ['descend', 'ascend'],
-                                width: '30%',
+                                width: '5%',
                             }
                         }
                         else {
@@ -164,6 +164,13 @@ function PassDownTable() {
                                 },
 
                                 sortDirections: ['ascend', 'descend'],
+                                onCell: () => {
+                                    return {
+                                        style: {
+                                            maxWidth: 900,
+                                        }
+                                    }
+                                }
                             }
                         }
 

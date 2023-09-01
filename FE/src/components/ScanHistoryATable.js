@@ -32,6 +32,27 @@ function ScanHistoryATable({toolHistory }){
             hidden: true
             }
           }
+          else if (responseData[i].COLUMN_NAME == "employeeID") {
+              payload = {
+                  title: "Employee ID",
+                  dataIndex: responseData[i].COLUMN_NAME,
+                  key: responseData[i].COLUMN_NAME 
+              }
+          }
+          else if (responseData[i].COLUMN_NAME == "newLoc") {
+              payload = {
+                  title: "Scanned Location",
+                  dataIndex: responseData[i].COLUMN_NAME,
+                  key: responseData[i].COLUMN_NAME
+              }
+          }
+          else if (responseData[i].COLUMN_NAME == "curDate") {
+              payload = {
+                  title: "Scanned Date",
+                  dataIndex: responseData[i].COLUMN_NAME,
+                  key: responseData[i].COLUMN_NAME
+              }
+          }
           else{
             payload = {
               title: responseData[i].COLUMN_NAME,
@@ -49,37 +70,8 @@ function ScanHistoryATable({toolHistory }){
 }
 useEffect(()=> loadHeaders(),[]);
 
-    /*const fetchNVLs = async () => {
-    const targetNVL = { searchNVL }
-    const response = await fetch('/searchNVL', {
-        method: 'POST',
-        body: JSON.stringify(targetNVL),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    }).then((response) => {
-      if (response.ok) {
-        response.json().then((responseData) => {
-          setToolHistory(responseData)
-          console.log(toolHistory)
-        })
-      }
-    });
-}*/
     return(
         <div>
-            {/*<h2 style={{textAlign: "center"} }>Movement Log</h2>
-            <label for="searchnvl">Search NVL History</label>
-            <div style={{display: "flex"} }>
-            <input id="searchnvl"
-                type="text"
-                value={searchNVL}
-                onInput={e => setSearchNVL(e.target.value)}
-                placeholder="Search an NVL"
-            />
-            <div style={{paddingLeft: "5px"} }>
-            <Button type="default" onClick={fetchNVLs}>Search</Button></div></div>
-            <br/>*/}
             <Table className='OpenTicketTable' columns={headers.filter(item => !item.hidden)} dataSource={toolHistory} />
         </div>
 

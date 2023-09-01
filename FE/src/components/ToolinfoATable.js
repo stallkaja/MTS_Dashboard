@@ -186,7 +186,7 @@ function ToolInfoATable(targetNVL) {
                                     compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
                                 },
                                 sortDirections: ['descend', 'ascend'],
-                                width: '30%',
+                                //width: '30%',
                             }
 
                         }
