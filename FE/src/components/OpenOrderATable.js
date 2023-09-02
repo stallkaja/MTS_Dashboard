@@ -306,7 +306,8 @@ function OpenOrderATable() {
                 placeholder="Select Columns to Hide"
                 options={headerSelect}
                 style={{
-                    width: '50%'
+                    width: '50%',
+                    paddingLeft: '5px',
                 }}
                 onChange={columnChange}
                 defaultValue={hideList}
