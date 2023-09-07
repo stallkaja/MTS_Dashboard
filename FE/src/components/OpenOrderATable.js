@@ -240,14 +240,14 @@ function OpenOrderATable() {
 
 
     const columnChange = (value) => {
-        console.log("ColChange got")
-        console.log(value)
+        //console.log("ColChange got")
+        //console.log(value)
         let localHideList = []
         localHideList = value.map(val => {
             return val
         })
-        console.log('localHideList is')
-        console.log(localHideList)
+        //console.log('localHideList is')
+        //console.log(localHideList)
 
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
@@ -285,9 +285,8 @@ function OpenOrderATable() {
             }
             addHeader.push(payload)
         }
-        console.log(addHeader)
+        //console.log(addHeader)
         setHeaders(addHeader)
-        //setIsLoading(true)
     }
 
     useEffect(() => {
@@ -312,8 +311,6 @@ function OpenOrderATable() {
                 onChange={columnChange}
                 defaultValue={hideList}
             />
-            {/*Show All Columns
-            <Switch onChange={switchChange} checked={filt} />*/}
             <Table
                 className="OpenTicketTable"
                 columns={filtHead}
