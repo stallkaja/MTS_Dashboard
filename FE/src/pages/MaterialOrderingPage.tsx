@@ -20,7 +20,7 @@ const TicketDashboard = () => {
         navigate (path);
     }
     const parent = (childData) => {
-        console.log(childData)
+        //console.log(childData)
         return (
             setHiddenArray(childData)
            
@@ -55,21 +55,24 @@ const TicketDashboard = () => {
                     </div>
             </div>
             <main>
-                <OpenOrderATable />
+                <OpenOrderATable 
+                        hideArray={hiddenArray} />
             
                 <div id='SubmittedCard'>
                     <div id='SubmittedText'>
                         Submitted
                     </div>
                 </div>
-                <SubmittedOrdersATable />
+                <SubmittedOrdersATable
+                        hideArray={hiddenArray} />
 
                 <div id='ArrivedCard'>
                     <div id='ArrivedText'>
                         Arrived
                     </div>
                 </div>
-                <ClosedOrderATable />
+                <ClosedOrderATable
+                        hideArray={hiddenArray} />
 
             </main>
 

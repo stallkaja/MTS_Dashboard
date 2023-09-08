@@ -1,32 +1,28 @@
 import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
-function ColumnChange({ parentPass, tName }) { 
+function ColumnChange({ tName , parentPass }) { 
     //have to pass function as JSON but makes string not work, so no fetch
     const [headers, setHeaders] = useState([]);
     const [hideList, setHideList] = useState([
         'Email',
         'PreferredVendor',
         'PurchNumber',
-        'ClosedDate',
-        'SubmitDate',
         'AdminComments',
         'AttachFile'
     ])
     const [optionsArray, setOptionsArray] = useState([]);
     const [hideArray, setHideArray] = useState([])
-    console.log(tName);
     const loadHeaders = async () => {
         const response = await fetch('/headers', {
             method: 'POST',
-            body: JSON.stringify(tName),
+            body: JSON.stringify({ tName }),
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    console.log(responseData)
                     let opto = [];
                     let hideo = [];
                     for (let i = 0; i < responseData.length; i++) {
@@ -52,13 +48,12 @@ function ColumnChange({ parentPass, tName }) {
     }
 
     useEffect(() => loadHeaders(), []);
-    //useEffect(() => parentPass(hideList), []);
    
     //console.log(parent)
 
     const passData = (value) => {
         console.log(value)
-        //parentPass(value)
+        parentPass(value)
     }
     
 
@@ -70,7 +65,7 @@ function ColumnChange({ parentPass, tName }) {
             placeholder = "Select Columns to Hide"
             options = { optionsArray }
             style = {{
-                width: '70%',
+                width: '900px',
                 paddingLeft: '5px',
             }}
             onChange = { passData }

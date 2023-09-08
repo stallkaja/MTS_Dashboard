@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function ClosedOrderATable() {
+function ClosedOrderATable(hideArray) {
     const defaultSort = (a, b) => {
         if (a < b) return -1;
         if (b < a) return 1;
@@ -22,19 +22,14 @@ function ClosedOrderATable() {
         'Email',
         'PreferredVendor',
         'PurchNumber',
-        'SubmitDate',
-        'OpenDate',
         'AdminComments',
         'AttachFile'
     ])
     const [filtHead, setFiltHead] = useState([]);
-    const [headerSelect, setHeaderSelect] = useState('');
 
     const EditRecord = (record) => {
-        console.log(record)
         navigate('/MaterialRequestform', { state: { record: record } });
     };
-
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -153,18 +148,6 @@ function ClosedOrderATable() {
                                 hidden: true
                             }
                         }
-                        else if (responseData[i].COLUMN_NAME == "RequestNumber") {
-                            payload = {
-                                title: responseData[i].COLUMN_NAME,
-                                dataIndex: responseData[i].COLUMN_NAME,
-                                key: responseData[i].COLUMN_NAME,
-                                ...getColumnSearchProps(responseData[i].COLUMN_NAME),
-                                sorter: {
-                                    compare: (a, b) => defaultSort(a.TicketNum - b.TicketNum)
-                                },
-                                sortDirections: ['descend', 'ascend'],
-                            }
-                        }
                         else {
                             payload = {
                                 title: responseData[i].COLUMN_NAME,
@@ -196,19 +179,12 @@ function ClosedOrderATable() {
                     }
                     headerArray.push(buttonPayload)
                     setHeaders(headerArray)
-                    setHeaderSelect(headerArray.map(header => ({
-                        key: header.title,
-                        title: header.title,
-                        value: header.title
-                    })))
 
                 })
             }
         });
     }
-
     useEffect(() => loadHeaders(), []);
-
 
     const loadItems = async () => {
         const response = await fetch('/loadClosedOrders', {
@@ -220,7 +196,6 @@ function ClosedOrderATable() {
             if (response.ok) {
                 response.json().then((responseData) => {
                     for (let i = 0; i < responseData.length; i++) {
-                        //console.log(responseData[i])
                         if (responseData[i].NeedBy !== null) {
                             let cleanDate = (responseData[i].NeedBy.split('T')[0])
                             responseData[i].NeedBy = cleanDate
@@ -246,17 +221,11 @@ function ClosedOrderATable() {
     }
     useEffect(() => loadItems(), []);
 
-
-    const columnChange = (value) => {
-        console.log("ColChange got")
-        console.log(value)
+    const columnHide = (hideArray, headers) => {
         let localHideList = []
-        localHideList = value.map(val => {
-            return val
-        })
-        console.log('localHideList is')
-        console.log(localHideList)
-
+        for (let i = 0; i < hideArray.hideArray.length; i++) {
+            localHideList.push(hideArray.hideArray[i])
+        }
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
             let payload = {}
@@ -293,10 +262,11 @@ function ClosedOrderATable() {
             }
             addHeader.push(payload)
         }
-        console.log(addHeader)
         setHeaders(addHeader)
-        //setIsLoading(true)
     }
+    useEffect(() => {
+        columnHide(hideArray, headers)
+    }, [hideArray])
 
     useEffect(() => {
         let filt = []
@@ -308,25 +278,15 @@ function ClosedOrderATable() {
 
     return (
         <div>
-            <Select
-                mode="multiple"
-                placeholder="Select Columns to Hide"
-                options={headerSelect}
-                style={{
-                    width: '50%'
-                }}
-                onChange={columnChange}
-                defaultValue={hideList}
-            />
-            {/*Show All Columns
-            <Switch onChange={switchChange} checked={filt} />*/}
             <Table
                 className="OpenTicketTable"
                 columns={filtHead}
                 dataSource={items}
                 bordered
+                showSorterTooltip={false}
             />
         </div>
     );
 }
+
 export default ClosedOrderATable;

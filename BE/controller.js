@@ -197,6 +197,7 @@ app.post('/headers', (req, res) => {
   const args=[[
     req.body.tName
   ]]
+    console.log(req.body.tName);
   const stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
   connection.query(stmt,[args], (err, rows, fields) => {
     if (err) {

@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function OpenOrderATable() {
+function OpenOrderATable(hideArray) {
     const defaultSort = (a, b) => {
         if (a < b) return -1;
         if (b < a) return 1;
@@ -22,13 +22,10 @@ function OpenOrderATable() {
         'Email',
         'PreferredVendor',
         'PurchNumber',
-        'ClosedDate',
-        'SubmitDate',
         'AdminComments',
         'AttachFile'
     ])
     const [filtHead, setFiltHead] = useState([]);
-    const [headerSelect, setHeaderSelect] = useState('');
 
     const EditRecord = (record) => {
         navigate('/MaterialRequestform', { state: { record: record } })
@@ -151,18 +148,6 @@ function OpenOrderATable() {
                                 hidden: true
                             }
                         }
-                        else if (responseData[i].COLUMN_NAME == "RequestNumber") {
-                            payload = {
-                                title: responseData[i].COLUMN_NAME,
-                                dataIndex: responseData[i].COLUMN_NAME,
-                                key: responseData[i].COLUMN_NAME,
-                                ...getColumnSearchProps(responseData[i].COLUMN_NAME),
-                                sorter: {
-                                    compare: (a, b) => defaultSort(a.RequestNumber - b.RequestNumber)
-                                },
-                                sortDirections: ['descend', 'ascend'],
-                            }
-                        }
                         else {
                             payload = {
                                 title: responseData[i].COLUMN_NAME,
@@ -170,43 +155,36 @@ function OpenOrderATable() {
                                 key: responseData[i].COLUMN_NAME,
                                 ...getColumnSearchProps(responseData[i].COLUMN_NAME),
                                 sorter: {
-                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
                                 },
                                 sortDirections: ['descend', 'ascend'],
                             }
                         }
 
-                        headerArray.push(payload)
+                            headerArray.push(payload)                        
                     }
-                    const buttonPayload = {
-                        title: 'Edit Record',
-                        key: 'key',
-                        dataIndex: 'key',
-                        render: (text, record) => (
 
-                            <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
-                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
-                                {"Edit"}
-                            </Button>
+                        const buttonPayload = {
+                            title: 'Edit Record',
+                            key: 'key',
+                            dataIndex: 'key',
+                            render: (text, record) => (
 
-                        ),
-                    }
-                    headerArray.push(buttonPayload)
+                                <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+
+                                    {"Edit"}
+                                </Button>
+
+                            ),
+                        }
+                        headerArray.push(buttonPayload)
                     setHeaders(headerArray)
-                    setHeaderSelect(headerArray.map(header => ({
-                        key: header.title,
-                        title: header.title,
-                        value: header.title
-                    })))
 
                 })
             }
         });
     }
-
     useEffect(() => loadHeaders(), []);
-
-
 
     const loadItems = async () => {
         const response = await fetch('/loadOpenOrders', {
@@ -218,7 +196,6 @@ function OpenOrderATable() {
             if (response.ok) {
                 response.json().then((responseData) => {
                     for (let i = 0; i < responseData.length; i++) {
-                        //console.log(responseData[i])
                         if (responseData[i].NeedBy !== null) {
                             let cleanDate = (responseData[i].NeedBy.split('T')[0])
                             responseData[i].NeedBy = cleanDate
@@ -227,28 +204,28 @@ function OpenOrderATable() {
                             let cleanDate = (responseData[i].OpenDate.split('T')[0])
                             responseData[i].OpenDate = cleanDate
                         }
+                        if (responseData[i].SubmitDate !== null) {
+                            let cleanDate = (responseData[i].SubmitDate.split('T')[0])
+                            responseData[i].SubmitDate = cleanDate
+                        }
+                        if (responseData[i].ClosedDate !== null) {
+                            let cleanDate = (responseData[i].ClosedDate.split('T')[0])
+                            responseData[i].ClosedDate = cleanDate
+                        }
 
                     }
                     setItems(responseData)
                 })
             }
         });
-
     }
-
     useEffect(() => loadItems(), []);
 
-
-    const columnChange = (value) => {
-        //console.log("ColChange got")
-        //console.log(value)
+    const columnHide = (hideArray, headers) => {
         let localHideList = []
-        localHideList = value.map(val => {
-            return val
-        })
-        //console.log('localHideList is')
-        //console.log(localHideList)
-
+        for (let i = 0; i < hideArray.hideArray.length; i++) {
+            localHideList.push(hideArray.hideArray[i])
+        }
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
             let payload = {}
@@ -285,9 +262,11 @@ function OpenOrderATable() {
             }
             addHeader.push(payload)
         }
-        //console.log(addHeader)
         setHeaders(addHeader)
     }
+    useEffect(() => {
+        columnHide(hideArray, headers)
+    },[hideArray])
 
     useEffect(() => {
         let filt = []
@@ -299,23 +278,12 @@ function OpenOrderATable() {
 
     return (
         <div>
-            Hidden Columns:
-            <Select
-                mode="multiple"
-                placeholder="Select Columns to Hide"
-                options={headerSelect}
-                style={{
-                    width: '50%',
-                    paddingLeft: '5px',
-                }}
-                onChange={columnChange}
-                defaultValue={hideList}
-            />
             <Table
                 className="OpenTicketTable"
                 columns={filtHead}
                 dataSource={items}
                 bordered
+                showSorterTooltip={false}
             />
         </div>
     );
