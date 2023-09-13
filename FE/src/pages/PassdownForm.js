@@ -73,41 +73,65 @@ export default function CreatePassdownPage() {
                     colorPrimary: '#6ce3c6',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#000000',
-                    //lineType: 'default',
-                    //lineWidth: '1',
                     colorPrimaryHover: '#6ce3c6'
                 },
             }}>
-        <div>
+            <div>
                 <h1>Passdown Entry</h1>
-        <div id="PassFormInfoHeader" />
+                <div id="PassFormInfoHeader" />
 
 
-        <div id="PassFormCard">
+                <div id="PassFormCard">
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Shift</div>
-                        <Input placeholder="Shift" value={shift}  onChange={e => setShift(e.target.value) } />
+                        <Input 
+                            placeholder="Shift"
+                            value={shift}
+                            onChange={e => setShift(e.target.value) }
+                            />
                     </div>
 
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Technician</div>
-                        <Input placeholder="Technician" value={tech}  onChange={e => setTech(e.target.value) } />
+                        <Input
+                            placeholder="Technician"
+                            value={tech}
+                            onChange={e => setTech(e.target.value) }
+                            />
                     </div>
+
                     <div id="PassFormInputBox">
-                    <div id="PassFormLabel">Department</div>
-                        <Input placeholder="Department" value={depar}  onChange={e => setDepar(e.target.value)} />
+                        <div id="PassFormLabel">Department</div>
+                        <Input
+                            placeholder="Department"
+                            value={depar}
+                            onChange={e => setDepar(e.target.value)}
+                            />
                     </div>
+
                     <div id="PassFormInputBox">
                         <div id="PassFormLabel">Date</div>
                         <Space direction="vertical">
-                            <DatePicker showToday={"True"} value={dayjs(date)} onChange={onPick} allowClear={false} />
+                            <DatePicker
+                                showToday={"True"}
+                                value={dayjs(date)}
+                                onChange={onPick}
+                                allowClear={false}
+                                />
                         </Space>
                     </div>
-                    </div>
-                    <div id="PassFormLabel">Passdown</div>
-                    <div id="PassFormTextBox">
-                    <TextArea rows={6} value={pass} placeholder="Passdown" onChange={e => setPass(e.target.value)} />
                 </div>
+
+                <div id="PassFormLabel">Passdown</div>
+                <div id="PassFormTextBox">
+                    <TextArea
+                        rows={6}
+                        value={pass}
+                        placeholder="Passdown"
+                        onChange={e => setPass(e.target.value)}
+                        />
+                </div>
+
                 <div id="PassFormButtonBox">
                     <div id="PassFormBackButton">
                         <Button onClick={backButton}>Back</Button>
@@ -116,9 +140,8 @@ export default function CreatePassdownPage() {
                         <Button onClick={addPass}>Submit</Button>
                     </div>
                 </div>
-
                 
             </div>
-    </ConfigProvider>
+        </ConfigProvider>
     )
 }

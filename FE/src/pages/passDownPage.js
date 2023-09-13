@@ -14,13 +14,6 @@ const PassdownPage = () => {
         navigate (path);
     }
 
-    /*const buttonPayload = {
-        title: 'create',
-        key: 'key',
-        dataIndex: 'key',
-
-    }*/
-
     return (
         <ConfigProvider
             theme={{
@@ -37,13 +30,16 @@ const PassdownPage = () => {
             <div id='PassTitleCard'>
                 <h1 id='PassTitle'>Passdown</h1>
             </div>
+
             <div id='PassHeader'>
                 <div id='PassButton'>
-                    <Button onClick={() => OpenForm()}>              {"Create New Passdown"}</Button>
+                    <Button onClick={() => OpenForm()}>
+                        {"Create New Passdown"}
+                    </Button>
                 </div>
             </div>
                 
-                <PassDownTable />
+            <PassDownTable />
             
          </div>
     </ConfigProvider>

@@ -7,11 +7,6 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 function ClosedOrderATable(hideArray) {
-    const defaultSort = (a, b) => {
-        if (a < b) return -1;
-        if (b < a) return 1;
-        return 0;
-    };
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -31,6 +26,14 @@ function ClosedOrderATable(hideArray) {
         navigate('/MaterialRequestform', { state: { record: record } });
     };
 
+    //Sort options
+    const defaultSort = (a, b) => {
+        if (a < b) return -1;
+        if (b < a) return 1;
+        return 0;
+    };
+
+    //Search and sort handlers, copied from Ant Design
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -123,7 +126,7 @@ function ClosedOrderATable(hideArray) {
         },
     });
 
-
+    //request headers from DB
     const loadHeaders = async () => {
         const tName = 'materialorderstable'
         const tableName = { tName }
@@ -186,6 +189,7 @@ function ClosedOrderATable(hideArray) {
     }
     useEffect(() => loadHeaders(), []);
 
+    //requesting items from DB
     const loadItems = async () => {
         const response = await fetch('/loadClosedOrders', {
             headers: {
@@ -221,6 +225,7 @@ function ClosedOrderATable(hideArray) {
     }
     useEffect(() => loadItems(), []);
 
+    //Setting hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
         for (let i = 0; i < hideArray.hideArray.length; i++) {

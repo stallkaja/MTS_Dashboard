@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
 function ColumnChange({ tName , parentPass }) { 
-    //have to pass function as JSON but makes string not work, so no fetch
-    const [headers, setHeaders] = useState([]);
     const [hideList, setHideList] = useState([
         'Email',
         'PreferredVendor',
@@ -13,6 +11,9 @@ function ColumnChange({ tName , parentPass }) {
     ])
     const [optionsArray, setOptionsArray] = useState([]);
     const [hideArray, setHideArray] = useState([])
+
+    //retrieving header data from given table and assigning them to arrays to either
+    //be hidden or as part of the options of the select menu
     const loadHeaders = async () => {
         const response = await fetch('/headers', {
             method: 'POST',
@@ -39,7 +40,6 @@ function ColumnChange({ tName , parentPass }) {
                     setOptionsArray(opto);
                     setHideArray(hideo);
 
-
                 }
                 )
             }
@@ -49,8 +49,7 @@ function ColumnChange({ tName , parentPass }) {
 
     useEffect(() => loadHeaders(), []);
    
-    //console.log(parent)
-
+    //passing selections back to parent component
     const passData = (value) => {
         console.log(value)
         parentPass(value)
@@ -59,7 +58,7 @@ function ColumnChange({ tName , parentPass }) {
 
 
     return (
-        <div>
+        <div>Select columns to hide:
             <Select
             mode = "multiple"
             placeholder = "Select Columns to Hide"

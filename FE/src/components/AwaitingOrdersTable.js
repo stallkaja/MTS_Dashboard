@@ -54,7 +54,6 @@ function OpenTicketATable(targetNVL){
           dataIndex: 'key',
           render: (text, record) => (
            <Button onClick={()=>EditRecord(record)}>
-            {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
              {"Open"}
            </Button>
           ),

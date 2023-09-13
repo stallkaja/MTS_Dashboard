@@ -208,10 +208,13 @@ const loadItems = async () => {
 useEffect(() =>  loadItems(), []);
     return(
         <Table
-          className="OpenTicketTable"
-          columns={headers}
-          dataSource={items}
-          bordered
+            className="OpenTicketTable"
+            columns={headers}
+            dataSource={items}
+            bordered
+            style={{
+                paddingTop: '10px',
+            } }
         />
     );
 }

@@ -187,7 +187,6 @@ function OpenTicketATable(targetNVL){
               render: (text, record) => (
 
                   <Button style={{ backgroundColor: 'red', color: '#ffffff', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
-            {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
              {"Open"}
               </Button>
 
@@ -229,10 +228,13 @@ const loadItems = async () => {
 useEffect(() =>  loadItems(), []);
     return(
         <Table 
-          className="OpenTicketTable"
-          columns={headers} 
-          dataSource={items}
-          bordered
+            className="OpenTicketTable"
+            columns={headers}
+            dataSource={items}
+            bordered
+            style={{
+                paddingTop: '10px',
+            } }
         />
     );
 }

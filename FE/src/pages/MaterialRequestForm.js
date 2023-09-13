@@ -51,10 +51,8 @@ export default function MaterialRequestForm() {
     ];
     const dateFormat="YYYY-MM-DD";
 
-
+    //Checking for new record and instantiating record if editing
     useEffect(() => {
-        console.log(location)
-        console.log(location.state)
         if (location.state == null) {
             console.log('record is null')
             form.setFieldsValue({
@@ -98,7 +96,7 @@ export default function MaterialRequestForm() {
                 adminCom: location.state.record.AdminComments
             })
         };
-    }, []) // <-- empty dependency array
+    }, []) // <-- empty dependency array make useEffect fire only once
 
 
 
@@ -118,7 +116,6 @@ export default function MaterialRequestForm() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    //setLineArray(responseData)
                     console.log(responseData)
                     let tempItemInputs = responseData.map((item) => {
                         return {
@@ -143,8 +140,6 @@ export default function MaterialRequestForm() {
     //----------------------------------------------------------------------------
     const addRequest = async (payload) => {
         // Create new object with the variables set in the form
-        console.log(payload)
-        console.log('Request  is: ' + payload)
         const response = await fetch('/newRequest', {
             method: 'POST',
             body: JSON.stringify(payload),
@@ -166,6 +161,8 @@ export default function MaterialRequestForm() {
         let path = '/MaterialOrderingPage';
         navigate(path);
     }
+
+    //handling changes in the form
     const handleStatus = (value) => {
         form.setFieldsValue({
             requestStatus: value
@@ -225,17 +222,18 @@ export default function MaterialRequestForm() {
 
     const [form] = Form.useForm();
 
+    //form submit function
     const onFinish = (values) => {
-        console.log('Received values of form:', values);
         addRequest(values)
     };
-
+    //assigning line items into form
     useEffect(() => {
         form.setFieldsValue({
-            //reqNum: requestNum,
             lineItems: itemInputs
         });
     }, [itemInputs]);
+
+
     return (
         <ConfigProvider
             theme={{
@@ -243,8 +241,6 @@ export default function MaterialRequestForm() {
                     colorPrimary: '#ffffff',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#000000',
-                    //lineType: 'default',
-                    //lineWidth: '1',
                     colorPrimaryHover: '#6ce3c6'
                 },
             }}>
@@ -258,11 +254,6 @@ export default function MaterialRequestForm() {
                     layout="vertical"
                     onFinish={onFinish}
                     autoComplete="off"
-                    initialValues={{
-                        'requestStatus': 'awaitingApproval',
-                        //'requestNum': 'new ticket',
-                        
-                    }}
                 >
                     <div id="reqFormCard">
                         <div id="reqInputBox">

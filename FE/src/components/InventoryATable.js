@@ -229,7 +229,14 @@ const loadItems = async () => {
 }
 useEffect(() =>  loadItems(), []);
     return(
-        <Table className='OpenTicketTable' columns={headers.filter(item => !item.hidden)} dataSource={items} />
+        <Table 
+            className='OpenTicketTable'
+            columns={headers.filter(item => !item.hidden)}
+            dataSource={items}
+            style={{
+                paddingTop: '10px'
+            } }
+        />
     );
 }
 export default InventoryATable;

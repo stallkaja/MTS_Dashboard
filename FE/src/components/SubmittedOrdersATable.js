@@ -7,11 +7,6 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 function SubmittedOrderATable(hideArray) {
-    const defaultSort = (a, b) => {
-        if (a < b) return -1;
-        if (b < a) return 1;
-        return 0;
-    };
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -31,6 +26,12 @@ function SubmittedOrderATable(hideArray) {
         navigate('/MaterialRequestform', { state: { record: record } });
     };
 
+    //search and sort handlers, copied from Ant Design
+    const defaultSort = (a, b) => {
+        if (a < b) return -1;
+        if (b < a) return 1;
+        return 0;
+    };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -123,7 +124,7 @@ function SubmittedOrderATable(hideArray) {
         },
     });
 
-
+    //request headers from DB
     const loadHeaders = async () => {
         const tName = 'materialorderstable'
         const tableName = { tName }
@@ -186,6 +187,7 @@ function SubmittedOrderATable(hideArray) {
     }
     useEffect(() => loadHeaders(), []);
 
+    //request items from DB
     const loadItems = async () => {
         const response = await fetch('/loadSubOrders', {
             headers: {
@@ -217,6 +219,7 @@ function SubmittedOrderATable(hideArray) {
     }
     useEffect(() => loadItems(), []);
 
+    //assigning hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
         for (let i = 0; i < hideArray.hideArray.length; i++) {
