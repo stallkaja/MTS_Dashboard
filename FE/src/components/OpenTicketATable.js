@@ -122,7 +122,7 @@ function OpenTicketATable(targetNVL){
         },
     });
 
-
+    //retreiving headers from DB
     const loadHeaders = async () => {
     const tName = 'ticketstable'
     const tableName = { tName }
@@ -203,6 +203,7 @@ function OpenTicketATable(targetNVL){
     }
     useEffect(()=> loadHeaders(),[]);
 
+    //retrieving items from DB
     const loadItems = async () => {
         const response = await fetch('/loadOpenTickets', {
             headers: {
@@ -228,6 +229,7 @@ function OpenTicketATable(targetNVL){
         });
     }
     useEffect(() =>  loadItems(), []);
+
     return(
         <Table 
             className="OpenTicketTable"

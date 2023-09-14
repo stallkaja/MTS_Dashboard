@@ -4,6 +4,15 @@ import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
 
 function ToolInfoATable(targetNVL) {
+    const [items, setItems] = useState([]);
+    const [headers, setHeaders] = useState([]);
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const searchInput = useRef(null);
+    const navigate = useNavigate();
+    const [stat, setStat] = useState('Inactive');
+    const [hideList, setHideList] = useState(['PK'])
+    const [pk, setPk] = useState(0);
 
     //Sort method to sort numbers and strings without having to determine type in column
     const defaultSort = (a, b) => {
@@ -11,17 +20,6 @@ function ToolInfoATable(targetNVL) {
         if (b < a) return 1;
         return 0;
     };
-    const [items, setItems] = useState([]);
-    const [headers, setHeaders] = useState([]);
-    const [searchText, setSearchText] = useState('');
-    const [searchedColumn, setSearchedColumn] = useState('');
-    const searchInput = useRef(null);
-    const navigate = useNavigate();
-    //const [key, setKey] = useState(0);
-    const [stat, setStat] = useState('Inactive');
-    const [hideList, setHideList] = useState(['PK'])
-    const [pk, setPk] = useState(0);
-
     const cancel = (e) => {
         console.log(e);
         message.error('click on no');
@@ -38,6 +36,7 @@ function ToolInfoATable(targetNVL) {
         console.log(pk);
     };
 
+    //handler for record deactivate button
     const DeactRecord = async (record) => {
         message.success('click on yes');
         const deact = { record };
@@ -151,7 +150,7 @@ function ToolInfoATable(targetNVL) {
         },
     });
 
-
+    //retreiving headers from DB
     const loadHeaders = async () => {
         //const tName = 'caltoolstable'
         const tableName = { tName: 'caltoolstable' }
@@ -211,18 +210,10 @@ function ToolInfoATable(targetNVL) {
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            <Button onClick={() => DeactRecord(record)}>Deactivate</Button>
+                            <Button onClick={() => DeactRecord(record)}>
+                                Deactivate
+                            </Button>
                             
-                            /*<Popconfirm
-                                title="Confirm Deactivation"
-                                description="Are you sure you want to deactivate"
-                                onConfirm={DeactRecord}
-                                onCancel={cancel}
-                                okText="Yes"
-                                cancelText="No"
-                                >
-                                <Button onClick={() => DefineRecord(record)}>Deactivate</Button>
-                            </Popconfirm>*/
                         ),
                     }
                     headerArray.push(button2Payload)
@@ -233,6 +224,7 @@ function ToolInfoATable(targetNVL) {
     }
     useEffect(() => loadHeaders(), []);
 
+    //retreiving items from DB
     const loadItems = async () => {
         const response = await fetch('/calTools', {
             headers: {
@@ -256,6 +248,7 @@ function ToolInfoATable(targetNVL) {
         });
     }
     useEffect(() => loadItems(), []);
+
     return (
         <Table 
             className='OpenTicketTable'

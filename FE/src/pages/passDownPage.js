@@ -9,6 +9,8 @@ import './PassdownPage.css';
   
 const PassdownPage = () => {
     const navigate = useNavigate();
+
+    //navigation function to Passdown entry form
     const OpenForm = () => {
         let path = '/PassdownForm';
         navigate (path);

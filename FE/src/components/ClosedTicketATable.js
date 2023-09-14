@@ -11,11 +11,6 @@ dayjs.extend(timezone);
 
 
 function ClosedTicketATable(targetNVL){
-    const defaultSort = (a, b) => {
-        if (a < b) return -1;
-        if (b < a) return 1;
-        return 0;
-    };
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -26,6 +21,12 @@ function ClosedTicketATable(targetNVL){
   const EditRecord=(record)=>{
     navigate('/ticketPage',{state:{record:record}});
   };
+    //Search and Sort Handlers, copied from Ant Design
+    const defaultSort = (a, b) => {
+        if (a < b) return -1;
+        if (b < a) return 1;
+        return 0;
+    };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -118,94 +119,98 @@ function ClosedTicketATable(targetNVL){
         },
     });
 
-
-  const loadHeaders = async () => {
-  const tName = 'ticketstable'
-  const tableName = {tName}
-  const response = await fetch('/headers', {
-      method: 'POST',
-      body: JSON.stringify(tableName),
-      headers: {
-          'Content-Type': 'application/json'
-      }
-
-  }).then((response) => {
-    if (response.ok) {
-      response.json().then((responseData) => {
-        const headerArray=[];
-        for(let i =0;i<responseData.length;i++){
-
-            if(responseData[i].COLUMN_NAME == "TicketNum"){
-              var payload = {
-                title: responseData[i].COLUMN_NAME,
-                dataIndex: responseData[i].COLUMN_NAME,
-                key: responseData[i].COLUMN_NAME,
-                  ...getColumnSearchProps(responseData[i].COLUMN_NAME),
-                  sorter: {
-                      compare: (a, b) => defaultSort(a.TicketNum - b.TicketNum)
-                  },
-                  sortDirections: ['descend', 'ascend'],
-              }
-            }
-            else{
-              var payload = {
-                title: responseData[i].COLUMN_NAME,
-                dataIndex: responseData[i].COLUMN_NAME,
-                key: responseData[i].COLUMN_NAME,
-                  ...getColumnSearchProps(responseData[i].COLUMN_NAME),
-                  sorter: {
-                      compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
-                  },
-                  sortDirections: ['descend', 'ascend'],
-              }
-            }
-
-            headerArray.push(payload)
+    //retrieving headers from DB
+    const loadHeaders = async () => {
+    const tName = 'ticketstable'
+    const tableName = {tName}
+    const response = await fetch('/headers', {
+        method: 'POST',
+        body: JSON.stringify(tableName),
+        headers: {
+            'Content-Type': 'application/json'
         }
-        const buttonPayload = {
-          title: 'Open Ticket',
-          key: 'key',
-          dataIndex: 'key',
-          render: (text, record) => (
-              <Button style={{ backgroundColor: '#00a800', color: '#000000', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
-            {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
-             {"Open"}
-           </Button>
-          ),
+
+    }).then((response) => {
+        if (response.ok) {
+            response.json().then((responseData) => {
+                const headerArray=[];
+                for(let i =0;i<responseData.length;i++){
+
+                    if(responseData[i].COLUMN_NAME == "TicketNum"){
+                        var payload = {
+                            title: responseData[i].COLUMN_NAME,
+                            dataIndex: responseData[i].COLUMN_NAME,
+                            key: responseData[i].COLUMN_NAME,
+                            ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                            sorter: {
+                                compare: (a, b) => defaultSort(a.TicketNum - b.TicketNum)
+                            },
+                            sortDirections: ['descend', 'ascend'],
+                        } 
+                    }
+            
+                    else{
+                        var payload = {
+                            title: responseData[i].COLUMN_NAME,
+                            dataIndex: responseData[i].COLUMN_NAME,
+                            key: responseData[i].COLUMN_NAME,
+                            ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                            sorter: {
+                                compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
+                            },
+                            sortDirections: ['descend', 'ascend'],
+                        }
+                    }
+
+                headerArray.push(payload)
+                }
+            
+                const buttonPayload = {
+                    title: 'Open Ticket',
+                    key: 'key',
+                    dataIndex: 'key',
+                    render: (text, record) => (
+                        <Button style={{ backgroundColor: '#00a800', color: '#000000', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
+                            {"Open"}
+                        </Button>
+                    ),
+                }
+          
+                headerArray.push(buttonPayload)
+                setHeaders(headerArray)
+            })
         }
-          headerArray.push(buttonPayload)
-        setHeaders(headerArray)
-      })
+        });
     }
-  });
-}
-useEffect(()=> loadHeaders(),[]);
+    useEffect(()=> loadHeaders(),[]);
 
-const loadItems = async () => {
-  const response = await fetch('/loadClosedTickets', {
-      headers: {
-          'Content-Type': 'application/json'
-      }
+    //retrieving items from DB
+    const loadItems = async () => {
+        const response = await fetch('/loadClosedTickets', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
 
-  }).then((response) => {
-    if (response.ok) {
-      response.json().then((responseData) => {
-          for (let i = 0; i < responseData.length; i++) {
-              let cleanDate = (dayjs(responseData[i].OpenDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
-              responseData[i].OpenDate = cleanDate
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    for (let i = 0; i < responseData.length; i++) {
+                        let cleanDate = (dayjs(responseData[i].OpenDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
+                        responseData[i].OpenDate = cleanDate
 
-              let cleanDate2 = (dayjs(responseData[i].ProgDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
-              responseData[i].ProgDate = cleanDate2
+                        let cleanDate2 = (dayjs(responseData[i].ProgDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
+                        responseData[i].ProgDate = cleanDate2
 
-              let cleanDate3 = (dayjs(responseData[i].CloseDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
-              responseData[i].CloseDate = cleanDate3
-          }
-        setItems(responseData)
-      })
+                        let cleanDate3 = (dayjs(responseData[i].CloseDate).tz("America/Los_Angeles").format('YYYY-MM-DD HH:mm:ss'))
+                        responseData[i].CloseDate = cleanDate3
+                    }
+                setItems(responseData)
+                })
+            }
+        });
     }
-  });
-}
-useEffect(() =>  loadItems(), []);
+    useEffect(() =>  loadItems(), []);
+
     return(
         <Table
             className="OpenTicketTable"

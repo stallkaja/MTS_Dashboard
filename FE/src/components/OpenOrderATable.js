@@ -83,6 +83,7 @@ function OpenOrderATable(hideArray) {
                     >
                         Reset
                     </Button>
+
                     <Button
                         type="link"
                         size="small"
@@ -96,6 +97,7 @@ function OpenOrderATable(hideArray) {
                     >
                         Filter
                     </Button>
+
                     <Button
                         type="link"
                         size="small"

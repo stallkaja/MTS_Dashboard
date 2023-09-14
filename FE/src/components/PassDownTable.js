@@ -4,24 +4,24 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
 
 function PassDownTable() {
-    //Sort method to sort numbers and strings without having to determine type in column
-    const defaultSort = (a, b) => {
-        if (a < b) return -1;
-        if (b < a) return 1;
-        return 0;
-    };
-
-    //Methods for search and sort in columns -----------------------
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const [hideList, setHideList] = useState(['PK'])
     const navigate = useNavigate();
+
+    //navigation to passdown form and pulling record from table to populate form
     const EditRecord = (record) => {
-        console.log('Editing Record')
-        console.log(record)
-        //navigate('/ticketPage',{state:{record:record}});
         navigate('/PassdownForm', {state:{record:record}});
+    };
+
+
+    //Methods for search and sort in columns -----------------------
+    //Sort method to sort numbers and strings without having to determine type in column
+    const defaultSort = (a, b) => {
+        if (a < b) return -1;
+        if (b < a) return 1;
+        return 0;
     };
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
@@ -66,6 +66,7 @@ function PassDownTable() {
                     >
                         Search
                     </Button>
+
                     <Button
                         type="primary"
                         onClick={() => clearFilters && handleReset(clearFilters)}
@@ -105,7 +106,7 @@ function PassDownTable() {
     });
     //---------------------------------------------------
 
-
+    //retreiving items from DB
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const loadHeaders = async () => {
@@ -195,6 +196,7 @@ function PassDownTable() {
     }
     useEffect(() => loadHeaders(), []);
 
+    //retreiving items from DB
     const loadItems = async () => {
         const response = await fetch('/passdowns', {
             headers: {
@@ -215,6 +217,7 @@ function PassDownTable() {
         });
     }
     useEffect(() => loadItems(), []);
+
     return (
         <Table 
             className='OpenTicketTable'
@@ -222,7 +225,8 @@ function PassDownTable() {
             dataSource={items}
             style={{
                 paddingTop: '10px',
-            }} />
+            }} 
+        />
     );
 }
 export default PassDownTable;

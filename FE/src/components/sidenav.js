@@ -10,24 +10,26 @@ export default function Sidenav() {
     const toggleOpen = () => {
         setopen(!open)
     }
-  return (
-    <div className={open?styles.sidenav:styles.sidenavClosed}>
-        <button className={styles.menuBtn} onClick={toggleOpen}>
-            {open? <KeyboardDoubleArrowLeftIcon />: <KeyboardDoubleArrowRightIcon />}
-        </button>
-        {navData.map(item =>{
-            return <NavLink 
-                key={item.id} 
-                className={styles.sideitem} 
-                to={item.link}
-                style={({ isActive }) => ({
-                    background: isActive ? 'rgba(232, 153, 69, .7)' : ''
-                })}
-                >
-            {item.icon}
-            <span className={styles.linkText}>{item.text}</span>
-        </NavLink>
-        })}
-    </div>
-  )
+
+    return (
+        <div className={open?styles.sidenav:styles.sidenavClosed}>
+            <button className={styles.menuBtn} onClick={toggleOpen}>
+                {open? <KeyboardDoubleArrowLeftIcon />: <KeyboardDoubleArrowRightIcon />}
+            </button>
+            {navData.map(item =>{
+                return<NavLink 
+                    key={item.id} 
+                    className={styles.sideitem} 
+                    to={item.link}
+                    style={({ isActive }) => ({
+                        background: isActive ? 'rgba(232, 153, 69, .7)' : ''
+                    })}
+                    >
+
+                    {item.icon}
+                    <span className={styles.linkText}>{item.text}</span>
+                </NavLink>
+            })}
+        </div>
+    )
 }

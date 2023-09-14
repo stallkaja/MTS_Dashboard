@@ -7,11 +7,6 @@ import {
 	Link
   } from "react-router-dom";
 import { Button, Space } from 'antd';
-//handleChange: function e() {
-	
-//}
-
-
 
 export default function CreateMaterialPage() {
 

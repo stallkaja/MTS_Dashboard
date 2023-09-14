@@ -26,14 +26,13 @@ function ClosedOrderATable(hideArray) {
         navigate('/MaterialRequestform', { state: { record: record } });
     };
 
-    //Sort options
+    //Search and sort handlers, copied from Ant Design
     const defaultSort = (a, b) => {
         if (a < b) return -1;
         if (b < a) return 1;
         return 0;
     };
 
-    //Search and sort handlers, copied from Ant Design
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
