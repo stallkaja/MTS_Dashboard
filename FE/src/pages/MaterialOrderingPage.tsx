@@ -15,12 +15,15 @@ const TicketDashboard = () => {
         keey: 2,
         keeey: 3
     });
+
+    //Button navigation to Material Request Form
     const OpenTicket = () => {
         let path = '/MaterialRequestForm';
         navigate (path);
     }
+
+    //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
-        //console.log(childData)
         return (
             setHiddenArray(childData)
            

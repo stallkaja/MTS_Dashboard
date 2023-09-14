@@ -19,6 +19,7 @@ export default function CreatePassdownPage() {
     const [pass, setPass] = useState('');
     const [pk, setPk] = useState('');
 
+    //checking for record null, if not null loads record into local vars
     useEffect(() => {
 
         if (location.state == null) {
@@ -34,6 +35,7 @@ export default function CreatePassdownPage() {
             setPk(location.state.record.PK);
         };
     }, [])
+
     const addPass = async () => {
         // Create new object with the variables set in the form
         const newPass = { date, shift, tech, depar, pass, pk };
@@ -51,13 +53,12 @@ export default function CreatePassdownPage() {
                 alert(`Failed to create PassDown, status code = ${response.status}`);
             }
         });
-
     }
+
+    //handles datepicker changes
     const onPick = (date, dateString) => {
-
         setDate(dateString)
-
-        }
+    }
     
     
     const navigate = useNavigate();

@@ -13,6 +13,7 @@ const LandingPage = () => {
         let path = '/PtoRequestForm';
         navigate(path);
     }
+    //requesting PTO entries from DB and causing refresh after load of entries
     const loadPtoTable = async () => {
         console.log('loading pto table')
         const response = await fetch('/loadPtoTable', {
@@ -29,7 +30,7 @@ const LandingPage = () => {
         });
     }
 
-    
+    //loading PTO entries into proper format
     const loadListData = (value) => {
         let listData = [];
         let test = [
@@ -57,6 +58,8 @@ const LandingPage = () => {
         }
         return listData || [];
     }
+
+    //rendering cells of PTO calendar
     const cellRender = (current, info) =>{
         window.test = current;
         const listData = loadListData(current);
@@ -70,6 +73,8 @@ const LandingPage = () => {
             </ul>
           );
     }
+
+    //holds screen in "loading" until PTO entries have loaded
     if(isLoading){
         return(
             <span>loading</span>
