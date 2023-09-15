@@ -16,34 +16,31 @@ const OpenForm = () => {
 
 
 
-  return (
-      <>
-          <ConfigProvider
-              theme={{
-                  token: {
-                      colorPrimary: '#000000',
-                      colorTextLightSolid: '#000000',
-                      colorBorder: '#242437',
-                      colorPrimaryHover: '#6ce3c6'
-                  },
-              }}>
-              <div id='MateTitleCard'>
-                  <h1 id='MaterialText'>DOS Material List</h1>
-              </div>
-    <div id='MaterialCard'>
-        
-      <div id='MaterialButton'>
-        <Button onClick={() => OpenForm()}>
-          {"Create Item"}
-        </Button>
-      </div>
-    </div>
-      <InventoryATable/>
-      {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
-      <br/>
-		
-      </ConfigProvider>
-    </>
-  )
+    return (
+        <>
+            <ConfigProvider
+                theme={{
+                    token: {
+                        colorPrimary: '#000000',
+                        colorTextLightSolid: '#000000',
+                        colorBorder: '#242437',
+                        colorPrimaryHover: '#6ce3c6'
+                    },
+                }}>
+                <div id='MateTitleCard'>
+                    <h1 id='MaterialText'>DOS Material List</h1>
+                </div>
+                <div id='MaterialCard'>
+         
+                    <div id='MaterialButton'>
+                        <Button onClick={() => OpenForm()}>
+                            {"Create Item"}
+                        </Button>
+                    </div>
+                </div>
+                <InventoryATable/>		
+            </ConfigProvider>
+        </>
+    )
 }
 export default HomePage;

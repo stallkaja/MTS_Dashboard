@@ -119,15 +119,15 @@ export default function MaterialRequestForm() {
                     console.log(responseData)
                     let tempItemInputs = responseData.map((item) => {
                         return {
-                          partName: item.PartName,
-                          partNumber: item.PartNumber,
-                          price: item.PricePer.toString(),
-                          quantity: item.Quantity.toString(),
-                          lineStatus: item.Status,
-                          pk: item.PK,
+                            partName: item.PartName,
+                            partNumber: item.PartNumber,
+                            price: item.PricePer.toString(),
+                            quantity: item.Quantity.toString(),
+                            lineStatus: item.Status,
+                            pk: item.PK,
                         };
                       });
-                      setItemInputs(tempItemInputs)
+                    setItemInputs(tempItemInputs)
                 })
             }
         });

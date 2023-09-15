@@ -31,26 +31,29 @@ const TicketDashboard: React.FC = () => {
                     <h1 id='TicketSearch'> Search Bar Place Holder</h1>
                 </div>
                 
-            <div id='OpenTicketCard'>
-                <div>
-                    <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
+                <div id='OpenTicketCard'>
+                    <div>
+                        <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
                     </div>
                 
-                <div id="CreateTicketButton">
-                    <Button type="primary" size="large" onClick={() => OpenTicket()}>
-                        {"Create Ticket"}
-                    </Button>
+                    <div id="CreateTicketButton">
+                        <Button 
+                            type="primary" 
+                            size="large"
+                            onClick={() => OpenTicket()}
+                        >
+                            {"Create Ticket"}
+                        </Button>
+                    </div>
                 </div>
-            </div>
-            <OpenTicketATable />
+                <OpenTicketATable />
+       
+                <div id='ClosedTicketCard'>
+                    <div id='CloseTicketTitle'>Closed and Under Review</div>
+                </div>
 
-            {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
-            <div id='ClosedTicketCard'>
-                <div id='CloseTicketTitle'>Closed and Under Review</div>
+                <ClosedTicketATable/>
             </div>
-
-            <ClosedTicketATable/>
-        </div>
         </ConfigProvider>
     );
 };

@@ -49,62 +49,88 @@ const emailCtu = () => {
 const emailSwat = () => {
 
 }
-  function App() {
+function App() {
 	const [ItemToEdit, setItemToEdit] = useState();
 	const { token, setToken } = useToken();
-	//test
 	if(!token) {
 		return <LoginPage setToken={setToken} />
-	  }
+	}
 	
 	return (
 		<div>
-	<Layout className="layout">
-            <div>
-				<Header />
-			</div>
+	        <Layout className="layout">
+                <div>
+				    <Header />
+			    </div>
 
-		<div className="App" style={{position: "relative"}} >
-			<Sidenav/>
-			<main>
-				<Routes>
-        			<Route path='/' element={<LandingPage/>} />
-					<Route path='/TicketDashboard' element={<TicketDashboard/>} />
-        			<Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
-					<Route path='/MaterialOrderingPage' element={<MaterialOrderingPage/>} />
-        			<Route path='/map' element={<MapPage/>} />
-        			<Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
-        			<Route path='/ToolHistory' element={<ToolHistoryPage/>} />
-        			<Route path='/toolRequest' element={<ToolRequestPage/>} />
-        			<Route path='/createMaterial' element={<CreateMaterialPage/>} />
-					<Route path='/ticketPage' element={<TicketPage />} />
-					<Route path='/OrderPage' element={<OrderPage />} />
-					<Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
-					<Route path='/TicketsList' element={<TicketsListPage/>} />
-					<Route path='/KitBasePage' element={<KitBasePage/>} />
-					<Route path='/KitFormPage' element={<KitFormPage/>} />
-					<Route path='/SwicBase' element={<SwicBasePage/>} />
-					<Route path='/ToolPullList' element={<ToolPullListPage/>} />
-					<Route path='/PassDownPage' element={<PassDownPage />} />
-					<Route path='/PassdownForm' element={<PassdownForm />} />
-					<Route path='/PtoRequestForm' element={<PtoRequestForm />} />
-                    <Route path='/MaterialRequestForm' element={<MaterialRequestForm />} />
-                            {/*<Route path='/Terst' element={<Terst /> } />*/}
-				</Routes>
-      		</main>
-			</div>
-			<div id="Footer">
-					<Footer style={{ background: 'linear-gradient(to right, #242437 10%, #20A785)', textAlign: 'right', color: 'white'}}>
-						Contact: 
-						<Button type="Link" size="large" onClick={emailFac}>Facilites Kits</Button>
-						<Button type="Link" size="Large" onClick={emailSwic}>SWIC</Button>
-						<Button type="Link" size="Large" onClick={emailCtu}>CTU</Button>
-						<Button type="Link" size="Large" onClick={emailSwat}>SWAT</Button>
+		        <div className="App" style={{position: "relative"}} >
+			        <Sidenav/>
+			        <main>
+				        <Routes>
+        			        <Route path='/' element={<LandingPage/>} />
+					        <Route path='/TicketDashboard' element={<TicketDashboard/>} />
+        			        <Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit}/>}   />
+					        <Route path='/MaterialOrderingPage' element={<MaterialOrderingPage/>} />
+        			        <Route path='/map' element={<MapPage/>} />
+        			        <Route path='/ScanTool' element={<ScanToolPage/>} setItemToEdit={setItemToEdit}/>
+        			        <Route path='/ToolHistory' element={<ToolHistoryPage/>} />
+        			        <Route path='/toolRequest' element={<ToolRequestPage/>} />
+        			        <Route path='/createMaterial' element={<CreateMaterialPage/>} />
+					        <Route path='/ticketPage' element={<TicketPage />} />
+					        <Route path='/OrderPage' element={<OrderPage />} />
+					        <Route path='/ToolInfoForm' element={<ToolInfoForm/>} />
+					        <Route path='/TicketsList' element={<TicketsListPage/>} />
+					        <Route path='/KitBasePage' element={<KitBasePage/>} />
+					        <Route path='/KitFormPage' element={<KitFormPage/>} />
+					        <Route path='/SwicBase' element={<SwicBasePage/>} />
+					        <Route path='/ToolPullList' element={<ToolPullListPage/>} />
+					        <Route path='/PassDownPage' element={<PassDownPage />} />
+					        <Route path='/PassdownForm' element={<PassdownForm />} />
+					        <Route path='/PtoRequestForm' element={<PtoRequestForm />} />
+                            <Route path='/MaterialRequestForm' element={<MaterialRequestForm />} />
+				        </Routes>
+      		        </main>
+			    </div>
+
+			    <div id="Footer">
+			        <Footer style={{ background: 'linear-gradient(to right, #242437 10%, #20A785)', textAlign: 'right', color: 'white'}}>
+					    Contact: 
+						<Button 
+                            type="Link"
+                            size="large"
+                            onClick={emailFac}
+                        >
+                            Facilites Kits
+                        </Button>
+
+						<Button
+                            type="Link"
+                            size="Large"
+                            onClick={emailSwic}
+                        >
+                            SWIC
+                        </Button>
+
+						<Button
+                            type="Link"
+                            size="Large"
+                            onClick={emailCtu}
+                        >
+                            CTU
+                        </Button>
+
+						<Button
+                            type="Link"
+                            size="Large"
+                            onClick={emailSwat}
+                        >
+                            SWAT
+                        </Button>
 					</Footer>
-			</div>
+			    </div>
 			</Layout>
-	</div>
-  );
+	    </div>
+    );
 }
 
 export default App;

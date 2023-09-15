@@ -19,6 +19,7 @@ const connection = mysql.createConnection({
 app.use(express.json());
 app.use(cors());
 
+//password check using an use request
 app.use('/login', (req, res) => {
   const args=[[
     req.body.username

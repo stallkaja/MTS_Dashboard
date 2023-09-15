@@ -16,76 +16,138 @@ const ToolRequestPage = () => {
         options.push(newEntry)
     }
     const Fields = () => (
-      <div id="Fields" className="Fields">
-        <view className="row">
-          <table>
-            <tr>
-              <td>box 1</td>
-              <td>box 2</td>
-              <td>box 3</td>
-              <td>box 4</td>
-              <td>box 5</td>
-              <td>box 6</td>
-              <td>box 7</td>
-              <td>box 8</td>
-              <td>box 9</td>
-              <td>box 10</td>
-              <td>box 11</td>
-              <td>box 12</td>
-            </tr>
-            <tr>
-              <td><input type="checkbox" id="cb1" />
-              <label for="cb1"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb2" />
-              <label for="cb2"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb3" />
-              <label for="cb3"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb4" />
-              <label for="cb4"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb5" />
-              <label for="cb5"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb6" />
-              <label for="cb6"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb7" />
-              <label for="cb7"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb8" />
-              <label for="cb8"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb9" />
-              <label for="cb5"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb10" />
-              <label for="cb6"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb11" />
-              <label for="cb7"><img src={wrench1} /></label></td>
-              <td><input type="checkbox" id="cb12" />
-              <label for="cb8"><img src={wrench1} /></label></td>
-            </tr>
-          </table>
-        </view>
-      </div>
+        <div id="Fields" className="Fields">
+            <view className="row">
+                <table>
+                    <tr>
+                        <td>box 1</td>
+                        <td>box 2</td>
+                        <td>box 3</td>
+                        <td>box 4</td>
+                        <td>box 5</td>
+                        <td>box 6</td>
+                        <td>box 7</td>
+                        <td>box 8</td>
+                        <td>box 9</td>
+                        <td>box 10</td>
+                        <td>box 11</td>
+                        <td>box 12</td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <input type="checkbox" id="cb1" />
+                            <label for="cb1">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb2" />
+                            <label for="cb2">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb3" />
+                            <label for="cb3">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb4" />
+                            <label for="cb4">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb5" />
+                            <label for="cb5">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb6" />
+                            <label for="cb6">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb7" />
+                            <label for="cb7">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb8" />
+                            <label for="cb8">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb9" />
+                            <label for="cb5">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                        <input type="checkbox" id="cb10" />
+                        <label for="cb6">
+                        <img src={wrench1} />
+                        </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb11" />
+                            <label for="cb7">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+
+                        <td>
+                            <input type="checkbox" id="cb12" />
+                            <label for="cb8">
+                                <img src={wrench1} />
+                            </label>
+                        </td>
+                    </tr>
+                </table>
+            </view>
+        </div>
       
     )
-  return (
-      <div>
-          <div id='ReqTitleCard'>
-              <h1 id='TitleText'>Tool Request Page</h1>
-          </div>
-          <div id='ReqCard'>
+
+    return (
+        <div>
+            <div id='ReqTitleCard'>
+                <h1 id='TitleText'>Tool Request Page</h1>
+            </div>
+            <div id='ReqCard'>
  
-          </div>
-      <label>
-       Bay Number
-       <br></br>
-       <select onChange={onClick}>
-            <option disabled selected value> -- select an option -- </option>
-            {options.map((option) => (
-            <option value={option.value}>{option.label}</option>
-            ))}
-       </select>
-       { showFields ? <Fields /> : null }
+            </div>
+            <label>
+                Bay Number
+                <br></br>
+                <select onChange={onClick}>
+                    <option disabled selected value> -- select an option -- </option>
+                    {options.map((option) => (
+                        <option value={option.value}>{option.label}</option>
+                    ))}
+                
+                </select>
+                { showFields ? <Fields /> : null }
         
-     </label>
-    </div>
-  );
+            </label>
+        </div>
+    );
 };
   
 export default ToolRequestPage;

@@ -14,13 +14,6 @@ const ToolHistoryPage = () => {
         navigate (path);
     }
 
-    /*const buttonPayload = {
-        title: 'create',
-        key: 'key',
-        dataIndex: 'key',
-
-    }*/
-
     return (
         <ConfigProvider
             theme={{
@@ -36,18 +29,19 @@ const ToolHistoryPage = () => {
                 <div id='ToolTitleCard'>
                     <h1 id='ToolTitle'>Calibrated Tool Information Page</h1>
                 </div>
+
                 <div id='ToolHeader'>           
                     <div id='ToolButton'>
-                        <Button onClick={() => OpenForm()}>              {"Create New Tool"}
+                        <Button onClick={() => OpenForm()}>
+                        {"Create New Tool"}
                         </Button>
                     </div>
                 </div>
                 
-                        <ToolInfoATable />
-            
+                <ToolInfoATable />
             </div>
         </ConfigProvider>
-  );
+    );
 };
   
 export default ToolHistoryPage;

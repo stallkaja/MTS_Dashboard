@@ -45,20 +45,20 @@ const PtoRequestForm = () => {
         navigate(path);
     }
     return (
-      <>
-        <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
-        <label for="name">Name</label> 
-			<input id="name"
-			  type="text"
-			  value={name}
-			  onChange={e => setName(e.target.value)}
+        <>
+            <Alert message={`You selected date: ${selectedValue?.format('YYYY-MM-DD')}`} />
+            <label for="name">Name</label> 
+		    <input id="name"
+			    type="text"
+			    value={name}
+			    onChange={e => setName(e.target.value)}
 			/>
-        <Button onClick={submitRequest}> Submit </Button>
-        <div id="ptoBackButton">
-            <Button onClick={backButton}>Back</Button>
-        </div>
-        <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
-      </>
+            <Button onClick={submitRequest}>Submit</Button>
+            <div id="ptoBackButton">
+                <Button onClick={backButton}>Back</Button>
+            </div>
+            <Calendar value={value} onSelect={onSelect} onPanelChange={onPanelChange} />
+        </>
     );
 }
 

@@ -25,8 +25,6 @@ export default function CreateToolPage() {
     const [closeDate, setCloseDate] = useState(null)
 
 	useEffect(() => {
-		console.log(location)
-		console.log(location.state)
 		if (location.state == null) {
 			console.log('record is null')
 			}
@@ -53,9 +51,7 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTicket = async () => {
 		// Create new object with the variables set in the form
-		console.log('ticket status is: ' + ticketStatus)
 		const newTicket = { ticketStatus, ticketNum, ben, ticketDescription, department, toolBay, openDate, progDate, closeDate};
-		console.log(newTicket)
 		const response = await fetch('/newTicket', {
 			method: 'POST',
 			body: JSON.stringify(newTicket),
@@ -91,8 +87,6 @@ export default function CreateToolPage() {
 					colorPrimary: '#ffffff',
 					colorTextLightSolid: '#000000',
 					colorBorder: '#000000',
-					//lineType: 'default',
-					//lineWidth: '1',
 					colorPrimaryHover: '#6ce3c6'
 				},
 			}}>
@@ -119,28 +113,50 @@ export default function CreateToolPage() {
 
 				    <div id="TickInputBox">
 					    <div id="TickLabel">Ticket Number</div>
-					    <Input readonly={1} placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value) }/>
+					    <Input 
+                            readonly={1}
+                            placeholder="Ticket Number"
+                            value={ticketNum}
+                            onChange={e => setTicketNum(e.target.value) }
+                        />
 				    </div>
 
 				    <div id="TickInputBox">
 					    <div id="TickLabel">BEN</div>
-					    <Input placeholder="BEN" value={ben} onChange={e => setBen(e.target.value)} />
+					    <Input 
+                            placeholder="BEN"
+                            value={ben}
+                            onChange={e => setBen(e.target.value)}
+                        />
 				    </div>
 
 				    <div id="TickInputBox">
 					    <div id="TickLabel">Department</div>
-					    <Input placeholder="Department" value={department} onChange={e => setDepartment(e.target.value)} />
+					    <Input
+                            placeholder="Department"
+                            value={department}
+                            onChange={e => setDepartment(e.target.value)}
+                        />
 				    </div>
 
 				    <div id="TickInputBox">
 					    <div id="TickLabel">Tool Bay</div>
-					    <Input placeholder="Tool Bay" value={toolBay} onChange={e => setToolBay(e.target.value)} />
+					    <Input
+                            placeholder="Tool Bay"
+                            value={toolBay}
+                            onChange={e => setToolBay(e.target.value)}
+                        />
 				    </div>
 			    </div>
 
 				<div id="TickLabel">Ticket Description</div>
 			    <div id="TickTextBox">
-				<TextArea rows={6} value={ticketDescription} placeholder="Description" onChange={e => setTicketDescription(e.target.value)} />
+				    <TextArea
+                        rows={6}
+                        value={ticketDescription}
+                        placeholder="Description"
+                        onChange={e => setTicketDescription(e.target.value)}
+                    />
 				</div>
 			
 

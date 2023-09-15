@@ -25,7 +25,6 @@ const TicketDashboard: React.FC = () => {
                 },
             }}>
 
-            {/*<div>*/}
             <div id='TicketDashCard'>
                 <h1 id='TicketTitle'>Ticket Dashboard</h1>
                  
@@ -42,17 +41,16 @@ const TicketDashboard: React.FC = () => {
                     </Button>
                 </div>
             </div>
+
             <div id="TicketTableOpen">
                 <OpenTicketATable />
             </div>
 
-            {/* <ItemTable headers ={headers} items={items} onEdit={onEdit} onDelete={onDelete}/> */}
             <div id='ClosedTicketCard'>
                 <div id='CloseTicketTitle'>Closed and Under Review</div>
             </div>
 
             <ClosedTicketATable />
-            {/*</div>*/}
         </ConfigProvider>
     );
 };
