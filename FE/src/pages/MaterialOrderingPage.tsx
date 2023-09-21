@@ -15,6 +15,13 @@ const TicketDashboard = () => {
         keey: 2,
         keeey: 3
     });
+    const [hideList, setHideList] = useState([
+        'Email',
+        'PreferredVendor',
+        'PurchNumber',
+        'AdminComments',
+        'AttachFile'
+    ])
 
     //Button navigation to Material Request Form
     const OpenTicket = () => {
@@ -47,7 +54,8 @@ const TicketDashboard = () => {
                     <h1 id='TitleText'>Material Ordering</h1>
                     <ColumnChange
                         tName='materialorderstable'
-                        parentPass={parent} />
+                        parentPass={parent}
+                        hideList={hideList} />
             </div>
             <div id='AwaitingCard'>
                     <div id='AwaitingText'>Awaiting Approval</div>

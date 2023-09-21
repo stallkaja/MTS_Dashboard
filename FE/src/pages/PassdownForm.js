@@ -17,7 +17,7 @@ export default function CreatePassdownPage() {
     const [tech, setTech] = useState('');
     const [depar, setDepar] = useState('');
     const [pass, setPass] = useState('');
-    const [pk, setPk] = useState('');
+    const [pk, setPk] = useState('new');
 
     //checking for record null, if not null loads record into local vars
     useEffect(() => {

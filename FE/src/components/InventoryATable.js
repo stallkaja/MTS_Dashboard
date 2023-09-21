@@ -1,5 +1,5 @@
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Input, Space, Table, Tag, Typography } from 'antd';
+import { Button, Input, Space, Table, message, Popconfirm } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
 
@@ -35,8 +35,13 @@ function InventoryATable(targetNVL){
   
   //Methods for search and sort in columns -----------------------
 
-    const DeleteRecord = (record) => {
-
+    const confirm = (e) => {
+        console.log(e);
+        message.success('Click on Yes');
+    };
+    const cancel = (e) => {
+        //console.log(e);
+        //message.error('Click on No');
     };
 
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
@@ -185,7 +190,7 @@ function InventoryATable(targetNVL){
                     headerArray.push(payload)
                 }
                 const buttonPayload = {
-                    title: 'Edit',
+                    title: 'Edit Item',
                     key: 'key',
                     dataIndex: 'key',
                     render: (text, record) => (
@@ -198,13 +203,22 @@ function InventoryATable(targetNVL){
                 setHeaders(headerArray)
 
                 const buttonPayload2 = {
-                    title: 'Delete',
+                    title: 'Delete Item',
                     key: 'key',
                     dataIndex: 'key',
                     render: (text, record) => (
-                        <Button onClick={() => DeleteRecord(record)}>
-                            {"Delete"}
-                        </Button>
+                        <Popconfirm
+                            title="Delete Record"
+                            description="Are you sure you want to delete this record?"
+                            onConfirm={confirm}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button>
+                                {"Delete"}
+                            </Button>
+                        </Popconfirm>
                     ),
                 }
                 headerArray.push(buttonPayload2)

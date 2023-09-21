@@ -12,13 +12,14 @@ dayjs.extend(timezone);
 
 
 
-function OpenTicketATable(targetNVL){
+function OpenTicketATable(hideArray){
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const navigate = useNavigate();
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
+    const [filtHead, setFiltHead] = useState([]);
 
     const EditRecord=(record)=>{
       navigate('/ticketPage',{state:{record:record}});
@@ -230,15 +231,72 @@ function OpenTicketATable(targetNVL){
     }
     useEffect(() =>  loadItems(), []);
 
+    //assigning hidden columns
+    const columnHide = (hideArray, headers) => {
+        let localHideList = []
+        for (let i = 0; i < hideArray.hideArray.length; i++) {
+            localHideList.push(hideArray.hideArray[i])
+        }
+        let addHeader = []
+        for (let i = 0; i < headers.length; i++) {
+            let payload = {}
+            if (localHideList.includes(headers[i].title)) {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: true
+                }
+            } else if (headers[i].title === "Open Ticket") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                        <Button style={{ backgroundColor: 'red', color: '#ffffff', borderColor: '#ffffff' }} onClick={() => EditRecord(record)}>
+                            {"Open"}
+                        </Button>
+                    )
+                }
+            } else {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: false,
+                    ...getColumnSearchProps(headers[i].title),
+                    sorter: {
+                        compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
+                    },
+                    sortDirections: ['descend', 'ascend'],
+                }
+            }
+            addHeader.push(payload)
+        }
+        setHeaders(addHeader)
+    }
+    useEffect(() => {
+        columnHide(hideArray, headers)
+    }, [hideArray])
+
+    useEffect(() => {
+        let filt = []
+        filt = (
+            headers.filter(item => !item.hidden)
+        )
+        setFiltHead([...filt])
+    }, [headers])
+
     return(
         <Table 
             className="OpenTicketTable"
-            columns={headers}
+            columns={filtHead}
             dataSource={items}
             bordered
             style={{
                 paddingTop: '10px',
-            } }
+            }}
+            showSorterTooltip={false}
         />
     );
 }

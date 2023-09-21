@@ -20,6 +20,7 @@ function OpenOrderATable(hideArray) {
         'AdminComments',
         'AttachFile'
     ])
+
     const [filtHead, setFiltHead] = useState([]);
 
     const EditRecord = (record) => {

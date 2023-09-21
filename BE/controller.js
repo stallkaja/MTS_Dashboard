@@ -289,26 +289,49 @@ app.listen(PORT, () => {
 
 // Create a new Passdown using a post request
 app.post('/newPass', (req, res) => {
+    if (req.body.pk === 'new') {
+        const args = [[
+            req.body.date,
+            req.body.shift,
+            req.body.tech,
+            req.body.depar,
+            req.body.pass,
 
-    const args = [[
-        req.body.date,
-        req.body.shift,
-        req.body.tech,
-        req.body.depar,
-        req.body.pass,
-        req.body.pk
-    ]]
-    const stmt = "INSERT INTO passdowntable (Date, Shift, Technician, Department, Passdown, PK) VALUES ? ON DUPLICATE KEY UPDATE Date = VALUES(Date), Shift = VALUES(Shift), Technician = VALUES (Technician), Department = VALUES(Department), Passdown = VALUES(Passdown)"
-    //WIP
-    connection.query(stmt, [args], (err, rows, fields) => {
-        if (err) {
-            throw err
-            connection.end();
-        }
-        else {
-            res.status(200).json({ Error: 'Success' })
-        }
-    })
+        ]]
+        const stmt = "INSERT INTO passdowntable ( Date, Shift, Technician, Department, Passdown) VALUES ?"
+        //WIP
+        connection.query(stmt, [args], (err, rows, fields) => {
+            if (err) {
+                throw err
+                connection.end();
+            }
+            else {
+                res.status(200).json({ Error: 'Success' })
+            }
+        })
+    }
+    else {
+        const args = [[
+            req.body.pk,
+            req.body.date,
+            req.body.shift,
+            req.body.tech,
+            req.body.depar,
+            req.body.pass,
+
+        ]]
+        const stmt = "INSERT INTO passdowntable (PK, Date, Shift, Technician, Department, Passdown) VALUES ? ON DUPLICATE KEY UPDATE Date = VALUES(Date), Shift = VALUES(Shift), Technician = VALUES (Technician), Department = VALUES(Department), Passdown = VALUES(Passdown)"
+        //WIP
+        connection.query(stmt, [args], (err, rows, fields) => {
+            if (err) {
+                throw err
+                connection.end();
+            }
+            else {
+                res.status(200).json({ Error: 'Success' })
+            }
+        })
+    }
 });
 
 app.get('/passdowns', (_, res) => {
@@ -403,13 +426,18 @@ app.post('/newRequest', (req, res) => {
     }
 
     connection.query(stmt, [args], (err, results, fields) => {
-        console.log('insertID is ' + results.insertID)
+        console.log(results)
+        console.log('insertID is ' + results.insertId)
         if (err) {
             throw err
             connection.end();
             queryPassed = 0;
         }
-        else if (results.insertID === undefined) {
+        else if (results.insertId === undefined) {
+            console.log("setting to " + req.body.reqNum)
+            ID = req.body.reqNum
+        }
+        else if (results.insertId === 0) {
             console.log("setting to " + req.body.reqNum)
             ID = req.body.reqNum
         }

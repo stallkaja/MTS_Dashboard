@@ -1,15 +1,31 @@
 import React from 'react';
+import { useState } from 'react';
 import OpenTicketATable from '../components/OpenTicketATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
 import "./TicketDashboard.css";
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
+import ColumnChange from '../components/ColumnChange';
 
 const TicketDashboard: React.FC = () => {
     const navigate = useNavigate();
+    const [hiddenArray, setHiddenArray] = useState({
+        key: 1,
+        keey: 2,
+        keeey: 3
+    });
+    const [hideList, setHideList] = useState([]);
     const OpenTicket = () => {
         let path = '/TicketPage';
         navigate(path);
+    }
+    //Data being returned from columnChange component, to be passed to child tables
+    const parent = (childData) => {
+        return (
+            setHiddenArray(childData)
+
+
+        )
     }
     
 
@@ -28,7 +44,12 @@ const TicketDashboard: React.FC = () => {
             <div id='TicketDashCard'>
                 <h1 id='TicketTitle'>Ticket Dashboard</h1>
                  
-                <h1 id='TicketSearch'> Search Bar Place Holder</h1>
+                <h1 id='TicketSearch'>
+                    <ColumnChange
+                        tName='ticketstable'
+                        parentPass={parent}
+                        hideList={hideList} />
+                </h1>
             </div>
                 
             <div id='OpenTicketCard'>
@@ -43,14 +64,16 @@ const TicketDashboard: React.FC = () => {
             </div>
 
             <div id="TicketTableOpen">
-                <OpenTicketATable />
+                <OpenTicketATable
+                    hideArray={hiddenArray} />
             </div>
 
             <div id='ClosedTicketCard'>
                 <div id='CloseTicketTitle'>Closed and Under Review</div>
             </div>
 
-            <ClosedTicketATable />
+            <ClosedTicketATable
+                hideArray={hiddenArray}  />
         </ConfigProvider>
     );
 };
