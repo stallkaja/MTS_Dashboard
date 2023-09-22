@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
 
 
-function InventoryATable(targetNVL){
+function InventoryATable(hideArray){
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [items, setItems] = useState([]);
@@ -19,6 +19,7 @@ function InventoryATable(targetNVL){
         'LaptopAssignedBENShift',
         'AdditionalNotes',
         'AssetNumber'])
+    const [filtHead, setFiltHead] = useState([]);
     const searchInput = useRef(null);
     const navigate = useNavigate();
     //edit button function, send user to form page with record from table
@@ -171,7 +172,7 @@ function InventoryATable(targetNVL){
                             ...getColumnSearchProps(responseData[i].COLUMN_NAME),
                             sorter: (a, b) => a.BEN.localeCompare(b.BEN),
                             sortDirections: ['descend', 'ascend'],
-                            width: '30%',
+                            width: '10%',
                         }
                     }
                     else {
@@ -247,14 +248,91 @@ function InventoryATable(targetNVL){
     }
     useEffect(() =>  loadItems(), []);
 
+    //assigning hidden columns
+    const columnHide = (hideArray, headers) => {
+        let localHideList = []
+        for (let i = 0; i < hideArray.hideArray.length; i++) {
+            localHideList.push(hideArray.hideArray[i])
+        }
+        let addHeader = []
+        for (let i = 0; i < headers.length; i++) {
+            let payload = {}
+            if (localHideList.includes(headers[i].title)) {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: true
+                }
+            } else if (headers[i].title === "Edit Item") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                            <Button onClick = { () => EditRecord(record) }>
+                            { "Edit" }
+                        </Button >
+                    )
+                }
+            } else if (headers[i].title === "Delete Item") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                        <Popconfirm
+                            title="Delete Record"
+                            description="Are you sure you want to delete this record?"
+                            onConfirm={confirm}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button>
+                                {"Delete"}
+                            </Button>
+                        </Popconfirm>
+                    )
+                }
+            } else {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: false,
+                    ...getColumnSearchProps(headers[i].title),
+                    sorter: {
+                        compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
+                    },
+                    sortDirections: ['descend', 'ascend'],
+                }
+            }
+            addHeader.push(payload)
+        }
+        setHeaders(addHeader)
+    }
+    useEffect(() => {
+        columnHide(hideArray, headers)
+    }, [hideArray])
+
+    useEffect(() => {
+        let filt = []
+        filt = (
+            headers.filter(item => !item.hidden)
+        )
+        setFiltHead([...filt])
+    }, [headers])
+
     return(
         <Table 
             className='OpenTicketTable'
-            columns={headers.filter(item => !item.hidden)}
+            columns={filtHead}
             dataSource={items}
             style={{
                 paddingTop: '10px'
-            } }
+            }}
+            showSorterTooltip={false}
         />
     );
 }

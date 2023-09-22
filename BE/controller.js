@@ -49,6 +49,7 @@ app.use('/login', (req, res) => {
 app.post('/newMaterial', (req, res) => {
 
     const args = [
+        req.body.pk,
         req.body.name,
         req.body.cat,
         req.body.note,
@@ -59,15 +60,17 @@ app.post('/newMaterial', (req, res) => {
         req.body.part,
         req.body.serial,
         req.body.loc,
-        req.body.materialPK
+        req.body.ben
     ]
-    const stmt = "INSERT INTO materiallisttable (MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location, materialPK) VALUES(?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = Values(Location), materialPK = VALUES(materialPK)"
-    connection.query(stmt, [args], (err, rows, fields) => {
+    console.log(args);
+    const stmt = "INSERT INTO materiallisttable (PK, MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location, BEN) VALUES(?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = Values(Location), BEN = Values(BEN)"
+    connection.query(stmt, [args], (err, results, rows, fields) => {
         if (err) {
             throw err
             connection.end();
         }
         else{
+            console.log(results)
             res.status(200).json({ Error: 'Success' })
         }
     })

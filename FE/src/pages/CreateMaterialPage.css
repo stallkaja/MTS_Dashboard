@@ -1,0 +1,108 @@
+﻿#matHeader {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#matTitle {
+    padding-left: 10px;
+}
+
+#matButton {
+    display: flex;
+    justify-content: flex-start;
+    float: right;
+    padding-left: 10px;
+}
+
+#matTitleCard {
+    background: #e6e3dc;
+    border-radius: 15px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#matFormCard {
+    /*border-radius: 15px;*/
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 85%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#matInputBox {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 225px;
+}
+
+#matLabel {
+    display: flex;
+    align-items: flex-start;
+}
+
+#matButtonBox {
+    display: flex;
+    justify-content: space-between;
+    width: 85%;
+    padding-bottom: 10px;
+}
+
+#matBackButton {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#matSubmitButton {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#matTextBox {
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 85%;
+}
+
+#matDateCard {
+    display: flex;
+    border: solid;
+    border-width: 1px;
+    border-radius: 6px;
+    background-color: #ffffff;
+    width: 70%;
+    height: 40px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+}
+
+#matDateBox {
+    display: flex;
+    width: 33%;
+    justify-content: center;
+}
