@@ -3,7 +3,7 @@ import { Button, Input, Space, Table, typography, Popconfirm, message } from 'an
 import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
 
-function ToolInfoATable(targetNVL) {
+function ToolInfoATable(hideArray) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -13,6 +13,9 @@ function ToolInfoATable(targetNVL) {
     const [stat, setStat] = useState('Inactive');
     const [hideList, setHideList] = useState(['PK'])
     const [pk, setPk] = useState(0);
+    const [filtHead, setFiltHead] = useState([]);
+    //const [recPk, setRecPk] = useState('');
+    //const [recStat, setRecStat] = useState('');
 
     //Sort method to sort numbers and strings without having to determine type in column
     const defaultSort = (a, b) => {
@@ -21,25 +24,22 @@ function ToolInfoATable(targetNVL) {
         return 0;
     };
     const cancel = (e) => {
-        console.log(e);
         message.error('click on no');
     };
     const EditRecord = (record) => {
         console.log(record);
         navigate('/ToolInfoForm', { state: { record: record } });
     };
-
-    const DefineRecord = (record) => {
-        console.log(record);
-        console.log(typeof (record.PK));
-        setPk(record.PK);
-        console.log(pk);
-    };
+    const PassRecord = (record) => {
+        
+    }
 
     //handler for record deactivate button
-    const DeactRecord = async (record) => {
-        message.success('click on yes');
-        const deact = { record };
+    const confirm = async (e, record) => {
+        console.log(record)
+        let recPk = (record.PK);
+        let recStat = (record.Status);
+        const deact = { recPk, recStat };
         console.log(deact);
         const response = await fetch('/deactivate', {
             method: 'POST',
@@ -49,7 +49,8 @@ function ToolInfoATable(targetNVL) {
             }
         }).then(response => {
             if (response.status === 200) {
-                alert("Tool has been deacitvated");
+                alert("Tool has been deactivated");
+
             } else {
                 alert(`Failed to deactivate, status code = ${response.status}`);
             }
@@ -194,25 +195,33 @@ function ToolInfoATable(targetNVL) {
 
                     }
                     const buttonPayload = {
-                        title: 'Edit',
+                        title: 'Edit Tool',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
                             <Button onClick={() => EditRecord(record)}>
-                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
                                 {"Edit"}
                             </Button>
                         ),
                     }
                     headerArray.push(buttonPayload)
                     const button2Payload = {
-                        title: 'Deactivate',
+                        title: 'Deactivate Tool',
                         key: 'key',
                         dataIndex: 'key',
                         render: (text, record) => (
-                            <Button onClick={() => DeactRecord(record)}>
-                                Deactivate
-                            </Button>
+                            <Popconfirm
+                                title="Deactivate Record"
+                                description="Are you sure you want to deactivate this record?"
+                                onConfirm={confirm}
+                                onCancel={cancel}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <Button onClick={()=>PassRecord(record) }>
+                                    Deactivate
+                                </Button>
+                            </Popconfirm>
                             
                         ),
                     }
@@ -249,14 +258,91 @@ function ToolInfoATable(targetNVL) {
     }
     useEffect(() => loadItems(), []);
 
+    //assigning hidden columns
+    const columnHide = (hideArray, headers) => {
+        let localHideList = []
+        for (let i = 0; i < hideArray.hideArray.length; i++) {
+            localHideList.push(hideArray.hideArray[i])
+        }
+        let addHeader = []
+        for (let i = 0; i < headers.length; i++) {
+            let payload = {}
+            if (localHideList.includes(headers[i].title)) {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: true
+                }
+            } else if (headers[i].title === "Edit Tool") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                        <Button onClick={() => EditRecord(record)}>
+                            {"Edit"}
+                        </Button >
+                    )
+                }
+            } else if (headers[i].title === "Deactivate Tool") {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    render: (text, record) => (
+                        <Popconfirm
+                            title="Deactivate Record"
+                            description="Are you sure you want to deactivate this record?"
+                            onConfirm={confirm}
+                            onCancel={cancel}
+                            okText="Yes"
+                            cancelText="No"
+                        >
+                            <Button>
+                                {"Deactivate"}
+                            </Button>
+                        </Popconfirm>
+                    )
+                }
+            } else {
+                payload = {
+                    title: headers[i].title,
+                    dataIndex: headers[i].dataIndex,
+                    key: headers[i].key,
+                    hidden: false,
+                    ...getColumnSearchProps(headers[i].title),
+                    sorter: {
+                        compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
+                    },
+                    sortDirections: ['descend', 'ascend'],
+                }
+            }
+            addHeader.push(payload)
+        }
+        setHeaders(addHeader)
+    }
+    useEffect(() => {
+        columnHide(hideArray, headers)
+    }, [hideArray])
+
+    useEffect(() => {
+        let filt = []
+        filt = (
+            headers.filter(item => !item.hidden)
+        )
+        setFiltHead([...filt])
+    }, [headers])
+
     return (
         <Table 
             className='OpenTicketTable'
-            columns={headers.filter(item => !item.hidden)}
+            columns={filtHead}
             dataSource={items}
             style={{
                 paddingTop: '10px'
-            } }
+            }}
+            showSorterTooltip={false}
         />
     );
 }

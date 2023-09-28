@@ -350,18 +350,20 @@ app.get('/passdowns', (_, res) => {
 
 app.post('/deactivate', (req, res) => {
     const args = [
-      req.body.record.PK,
-      req.body.record.Status
+      req.body.recPk,
+      req.body.recStat
     ]
+    console.log(args)
     const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = 'Inactive'"
     //WIP
-    connection.query(stmt, [args], (err, rows, fields) => {
+    connection.query(stmt, [args], (err, results, rows, fields) => {
         if (err) {
             throw err
             connection.end();
         }
         else {
             res.status(200).json({ Error: 'Success' })
+            console.log(results)
         }
     })
 });
