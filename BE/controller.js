@@ -4,6 +4,7 @@ const PORT = 3000;
 const cors = require('cors')
 const dayjs = require('dayjs')
 const multer = require('multer')
+const path = require('path')
 
 //My SQL Connection  and config
 const mysql = require('mysql')
@@ -16,17 +17,17 @@ const connection = mysql.createConnection({
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, '../uploads')
+        cb(null, '../uploads/')
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = dayjs() + '-' + Math.round(Math.random() * 1E9)
+        const uniqueSuffix = Date.now() + '-' + path.extname(file.originalname)
+        cb(null, file.fieldname + '-' + uniqueSuffix)
     }
 })
 
 const upload = multer({ storage: storage })
 
-//const upload = multer({ dest: '../uploads'})
-
+//const upload = multer({ dest: '../uploads/' })
 
 // Also allows parsing of req.body.
 app.use(express.json());
@@ -380,8 +381,9 @@ app.post('/deactivate', (req, res) => {
         }
     })
 });
-app.post('/newRequest', upload.single('attachment'), function (req, res)  {
-    
+app.post('/newRequest', function (req, res)  {
+    //console.log(req)
+    //console.log(req.file)
     var stmt = ""
     var args = []
     var ID =0;
@@ -446,25 +448,20 @@ app.post('/newRequest', upload.single('attachment'), function (req, res)  {
     }
 
     connection.query(stmt, [args], (err, results, fields) => {
-        console.log(results)
-        console.log('insertID is ' + results.insertId)
         if (err) {
             throw err
             connection.end();
             queryPassed = 0;
         }
         else if (results.insertId === undefined) {
-            console.log("setting to " + req.body.reqNum)
             ID = req.body.reqNum
         }
         else if (results.insertId === 0) {
-            console.log("setting to " + req.body.reqNum)
             ID = req.body.reqNum
         }
         else {
             ID = results.insertId;
         }
-        console.log('finished first query' + ID)
         handleLineInserts(ID,req,res)
         
     })
@@ -473,12 +470,9 @@ app.post('/newRequest', upload.single('attachment'), function (req, res)  {
 });
 
 function handleLineInserts(ID,req,res){
-  console.log('in second function')
-  console.log(req.body.lineItems)
   args =[]
   var payload =[]
   for(let i =0;i<req.body.lineItems.length;i++){
-    console.log("The request order num should be" + ID)
     payload = [
       ID,
       req.body.lineItems[i].partName,
@@ -586,3 +580,12 @@ app.post('/loadLineItems', (req, res) => {
     })
 
 })
+
+
+app.post('/newAttachment', upload.single('attachment'), function (req, res) {
+    // req.file is the name of your file in the form above, here 'uploaded_file'
+    // req.body will hold the text fields, if there were any 
+    console.log(req.file, req.body)
+    //connection.end()
+    res.json({message: "everybody poops"})
+});

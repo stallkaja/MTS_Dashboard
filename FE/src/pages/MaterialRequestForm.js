@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Input, Select, Space, ConfigProvider, DatePicker, Form } from 'antd';
+import { Button, Upload, Input, Select, Space, ConfigProvider, DatePicker, Form } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import "./MaterialRequestForm.css";
 import dayjs from 'dayjs';
@@ -157,6 +157,27 @@ export default function MaterialRequestForm() {
         });
 
     }
+    const addAttachment = async (payload) => {
+        // Create new object with the variables set in the form
+        console.log(payload)
+        const formie = new FormData()
+        formie.append("attachment", payload.attachment.file.orignFileObj)
+        const response = await fetch('/newAttachment', {
+            method: 'POST',
+            body: formie,
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }).then(response => {
+            if (response.status === 200) {
+                alert("Request has been added!");
+                history('/MaterialOrderingPage');
+            } else {
+                alert(`Failed to add Request, status code = ${response.status}`);
+            }
+        });
+
+    }
     const navigate = useNavigate();
     const backButton = () => {
         let path = '/MaterialOrderingPage';
@@ -226,6 +247,7 @@ export default function MaterialRequestForm() {
     //form submit function
     const onFinish = (values) => {
         addRequest(values)
+        addAttachment(values)
     };
     //assigning line items into form
     useEffect(() => {
@@ -453,12 +475,12 @@ export default function MaterialRequestForm() {
                             label="Attach a File"
                         >
                             <div id="reqInputBox">
-                                <Input
-                                    type="file"
-                                    id="filey"
-                                    name="filery"
-                                    placeholder="Select File"
-                                    />                                    
+                                <Upload
+                                    showUploadList={false}>
+                                    <Button>
+                                        {"Upload Hate" }
+                                    </Button>
+                                </Upload>                                   
                             </div>
                         </Form.Item>
                     </div>
