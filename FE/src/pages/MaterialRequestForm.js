@@ -140,6 +140,7 @@ export default function MaterialRequestForm() {
     //----------------------------------------------------------------------------
     const addRequest = async (payload) => {
         // Create new object with the variables set in the form
+        console.log(payload)
         const response = await fetch('/newRequest', {
             method: 'POST',
             body: JSON.stringify(payload),
@@ -452,7 +453,12 @@ export default function MaterialRequestForm() {
                             label="Attach a File"
                         >
                             <div id="reqInputBox">
-                                <Button>Select File</Button>
+                                <Input
+                                    type="file"
+                                    id="filey"
+                                    name="filery"
+                                    placeholder="Select File"
+                                    />                                    
                             </div>
                         </Form.Item>
                     </div>

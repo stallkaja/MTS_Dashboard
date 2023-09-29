@@ -3,6 +3,7 @@ const app = express();
 const PORT = 3000;
 const cors = require('cors')
 const dayjs = require('dayjs')
+const multer = require('multer')
 
 //My SQL Connection  and config
 const mysql = require('mysql')
@@ -13,6 +14,18 @@ const connection = mysql.createConnection({
   database: 'dos_db'
 })
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../uploads')
+    },
+    filename: function (req, file, cb) {
+        const uniqueSuffix = dayjs() + '-' + Math.round(Math.random() * 1E9)
+    }
+})
+
+const upload = multer({ storage: storage })
+
+//const upload = multer({ dest: '../uploads'})
 
 
 // Also allows parsing of req.body.
@@ -367,7 +380,8 @@ app.post('/deactivate', (req, res) => {
         }
     })
 });
-app.post('/newRequest', (req, res) => {
+app.post('/newRequest', upload.single('attachment'), function (req, res)  {
+    
     var stmt = ""
     var args = []
     var ID =0;
@@ -409,6 +423,7 @@ app.post('/newRequest', (req, res) => {
         stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
     }
     else {
+        console.log('file name is ' + req.file)
         args = [
             req.body.reqNum,
             req.body.requestStatus,
