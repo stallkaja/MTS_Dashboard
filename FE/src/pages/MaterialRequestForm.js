@@ -161,13 +161,13 @@ export default function MaterialRequestForm() {
         // Create new object with the variables set in the form
         console.log(payload)
         const formie = new FormData()
-        formie.append("attachment", payload.attachment.file.orignFileObj)
+        formie.append("attachment", payload.attachment.file)
         const response = await fetch('/newAttachment', {
             method: 'POST',
             body: formie,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            //headers: {
+            //    'Content-Type': 'multipart/form-data'
+            //}
         }).then(response => {
             if (response.status === 200) {
                 alert("Request has been added!");
@@ -182,6 +182,10 @@ export default function MaterialRequestForm() {
     const backButton = () => {
         let path = '/MaterialOrderingPage';
         navigate(path);
+    }
+
+    const dummyRequest = (arg1, arg2) => {
+        console.log('nothing')
     }
 
     //handling changes in the form
@@ -476,7 +480,7 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <Upload
-                                    showUploadList={false}>
+                                    customRequest={dummyRequest}>
                                     <Button>
                                         {"Upload Hate" }
                                     </Button>
