@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, Upload, Input, Select, Space, ConfigProvider, DatePicker, Form } from 'antd';
+import { Button, message, Upload, Input, Select, Space, ConfigProvider, DatePicker, Form } from 'antd';
 import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import "./MaterialRequestForm.css";
 import dayjs from 'dayjs';
@@ -161,13 +161,11 @@ export default function MaterialRequestForm() {
         // Create new object with the variables set in the form
         console.log(payload)
         const formie = new FormData()
-        formie.append("attachment", payload.attachment.file.orignFileObj)
+        formie.append("attachment", payload.attachment.file)
+        console.log('attemping attachment post req')
         const response = await fetch('/newAttachment', {
             method: 'POST',
-            body: formie,
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
+            body: formie
         }).then(response => {
             if (response.status === 200) {
                 alert("Request has been added!");
@@ -244,9 +242,21 @@ export default function MaterialRequestForm() {
 
     const [form] = Form.useForm();
 
+    const dummyReq =(arg1,arg2) =>{
+        console.log('dummy req')
+    }
+    const props = {
+        headers: {
+          authorization: 'authorization-text',
+        },
+        action: '/newAttachment',
+        name: 'attachment',
+      };
     //form submit function
     const onFinish = (values) => {
+        console.log('onFinish')
         addRequest(values)
+        console.log('attachmentNext')
         addAttachment(values)
     };
     //assigning line items into form
@@ -475,12 +485,23 @@ export default function MaterialRequestForm() {
                             label="Attach a File"
                         >
                             <div id="reqInputBox">
-                                <Upload
-                                    showUploadList={false}>
-                                    <Button>
-                                        {"Upload Hate" }
-                                    </Button>
-                                </Upload>                                   
+                            <Upload {...props}
+                            onChange={(response) => {
+                                console.log('in chnage')
+                                if (response.file.status !== 'uploading') {
+                                console.log(response.file, response.fileList);
+                                }
+                                if (response.file.status === 'done') {
+                                message.success(`${response.file.name} 
+                                                file uploaded successfully`);
+                                } else if (response.file.status === 'error') {
+                                message.error(`${response.file.name} 
+                                                file upload failed.`);
+                                }
+                            }}
+                            >
+                            <Button>Upload File</Button>
+                            </Upload>                                   
                             </div>
                         </Form.Item>
                     </div>
