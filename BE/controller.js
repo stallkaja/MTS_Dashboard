@@ -582,9 +582,10 @@ app.post('/loadLineItems', (req, res) => {
 })
 
 
-app.post('/newAttachment', upload.single('attachment'), function (req, res) {
+app.post('/newAttachment', upload.single('attachment'), (req, res) => {
     // req.file is the name of your file in the form above, here 'uploaded_file'
-    // req.body will hold the text fields, if there were any 
+    // req.body will hold the text fields, if there were any
+    console.log('In new attachment')
     console.log(req.file, req.body)
     //connection.end()
     res.json({message: "everybody poops"})
