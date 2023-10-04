@@ -489,14 +489,6 @@ export default function MaterialRequestForm() {
                             label="Attach a File"
                         >
                             <div id="reqInputBox">
-<<<<<<< HEAD
-                                <Upload
-                                    customRequest={dummyRequest}>
-                                    <Button>
-                                        {"Upload Hate" }
-                                    </Button>
-                                </Upload>                                   
-=======
                             <Upload {...props}
                             onChange={(response) => {
                                 console.log('in chnage')
@@ -514,7 +506,6 @@ export default function MaterialRequestForm() {
                             >
                             <Button>Upload File</Button>
                             </Upload>                                   
->>>>>>> 8b0ab72f4bfe060a87746f0ff93df529d9799a43
                             </div>
                         </Form.Item>
                     </div>

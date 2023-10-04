@@ -37,7 +37,8 @@ const ToolHistoryPage = () => {
                         </Button>
                     </div>
                 </div>
-                <ToolInfoATable />
+                {/*<ToolInfoATable />*/}
+                Under construction
             </div>
         </ConfigProvider>
     );
