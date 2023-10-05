@@ -51,6 +51,8 @@ export default function MaterialRequestForm() {
     ];
     const dateFormat="YYYY-MM-DD";
 
+    const [fileList, setFileList] = useState([]);
+
     //Checking for new record and instantiating record if editing
     useEffect(() => {
         if (location.state == null) {
@@ -249,6 +251,20 @@ export default function MaterialRequestForm() {
     const dummyReq =(arg1,arg2) =>{
         console.log('dummy req')
     }
+
+    const handleChange = (info) => {
+        let newFileList = [...info.fileList];
+
+        // 2. Read from response and show file link
+        newFileList = newFileList.map((file) => {
+            if (file.response) {
+                // Component will show file.url as link
+                file.url = file.response.url;
+            }
+            return file;
+        });
+        setFileList(newFileList);
+    };
     const props = {
         headers: {
           authorization: 'authorization-text',
@@ -256,6 +272,8 @@ export default function MaterialRequestForm() {
         action: '/newAttachment',
         name: 'attachment',
       };
+
+
     //form submit function
     const onFinish = (values) => {
         console.log('onFinish')
