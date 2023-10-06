@@ -26,6 +26,7 @@ export default function MaterialRequestForm() {
     const [vendor, setVendor] = useState('');
     const [priority, setPriority] = useState('');
     const [requestor, setRequestor] = useState('');
+    const [attachment, setAttachment] = useState('');
     const [reqCom, setReqCom] = useState('');
     const [lineArray, setLineArray] = useState([]);
     const [itemInputs, setItemInputs] = useState([]);
@@ -64,6 +65,7 @@ export default function MaterialRequestForm() {
             })
         }
         else {
+            console.log(location.state.record.AttachFile)
             setRequestStatus(location.state.record.Status);
             setRequestNum(location.state.record.RequestNumber);
             setNeedDate(dayjs(location.state.record.NeedBy));
@@ -80,6 +82,7 @@ export default function MaterialRequestForm() {
             setRequestor(location.state.record.Requestor);
             setReqCom(location.state.record.RequestorComments);
             loadLineItems(location.state.record.RequestNumber)
+            setAttachment(location.state.record.AttachFile)
             form.setFieldsValue({
                 reqNum: location.state.record.RequestNumber,
                 requestStatus: location.state.record.Status,
@@ -95,8 +98,11 @@ export default function MaterialRequestForm() {
                 openDate: dayjs(location.state.record.OpenDate).format('YYYY-MM-DD'),
                 subDate: dayjs(location.state.record.SubmitDate).format('YYYY-MM-DD'),
                 closeDate: dayjs(location.state.record.ClosedDate).format('YYYY-MM-DD'),
-                adminCom: location.state.record.AdminComments
+                adminCom: location.state.record.AdminComments,
+                attachment: location.state.record.AttachFile
             })
+            console.log('attachment is')
+            console.log(attachment)
         };
     }, []) // <-- empty dependency array make useEffect fire only once
 
@@ -118,7 +124,6 @@ export default function MaterialRequestForm() {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    console.log(responseData)
                     let tempItemInputs = responseData.map((item) => {
                         return {
                             partName: item.PartName,
@@ -184,10 +189,6 @@ export default function MaterialRequestForm() {
         navigate(path);
     }
 
-    const dummyRequest = (arg1, arg2) => {
-        console.log('nothing')
-    }
-
     //handling changes in the form
     const handleStatus = (value) => {
         form.setFieldsValue({
@@ -248,23 +249,7 @@ export default function MaterialRequestForm() {
 
     const [form] = Form.useForm();
 
-    const dummyReq =(arg1,arg2) =>{
-        console.log('dummy req')
-    }
 
-    const handleChange = (info) => {
-        let newFileList = [...info.fileList];
-
-        // 2. Read from response and show file link
-        newFileList = newFileList.map((file) => {
-            if (file.response) {
-                // Component will show file.url as link
-                file.url = file.response.url;
-            }
-            return file;
-        });
-        setFileList(newFileList);
-    };
     const props = {
         headers: {
           authorization: 'authorization-text',
@@ -505,6 +490,7 @@ export default function MaterialRequestForm() {
                         <Form.Item
                             name="attachment"
                             label="Attach a File"
+                            defaultFileList={attachment}
                         >
                             <div id="reqInputBox">
                             <Upload {...props}
