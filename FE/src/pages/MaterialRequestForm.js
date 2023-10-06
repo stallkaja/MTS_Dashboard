@@ -490,10 +490,11 @@ export default function MaterialRequestForm() {
                         <Form.Item
                             name="attachment"
                             label="Attach a File"
-                            defaultFileList={attachment}
+                            //defaultFileList={attachment}
                         >
                             <div id="reqInputBox">
                             <Upload {...props}
+                                    //fileList={attachment}
                             onChange={(response) => {
                                 console.log('in chnage')
                                 if (response.file.status !== 'uploading') {

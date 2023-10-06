@@ -440,11 +440,7 @@ app.post('/newRequest', function (req, res)  {
             req.body.comments,
             req.body.attachment.substr(12)
         ]
-<<<<<<< HEAD
-        stmt = "INSERT INTO materialorderstable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
-=======
         stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments, AttachFile) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments), AttachFile=VALUES(AttachFile)"
->>>>>>> c2f63bdfdedd851e0bce931a88be9ad47a24ad8e
     }
 
     connection.query(stmt, [args], (err, results, fields) => {
