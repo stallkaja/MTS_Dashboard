@@ -76,7 +76,6 @@ app.post('/newMaterial', (req, res) => {
         req.body.loc,
         req.body.ben
     ]
-    console.log(args);
     const stmt = "INSERT INTO materiallisttable (PK, MaterialName, Category, AdditionalNotes, Quantity, NVL, AssetNumber, CurrentState, LamPartNumber, SerialNumber, Location, BEN) VALUES(?) ON DUPLICATE KEY UPDATE MaterialName = VALUES(MaterialName), Category = VALUES(Category), AdditionalNotes = VALUES(AdditionalNotes), Quantity = VALUES(Quantity), NVL = VALUES(NVL), AssetNumber = VALUES(AssetNumber), CurrentState = VALUES(CurrentState), LamPartNumber = VALUES(LamPartNumber), SerialNumber = VALUES(SerialNumber), Location = Values(Location), BEN = Values(BEN)"
     connection.query(stmt, [args], (err, results, rows, fields) => {
         if (err) {
@@ -84,7 +83,6 @@ app.post('/newMaterial', (req, res) => {
             connection.end();
         }
         else{
-            console.log(results)
             res.status(200).json({ Error: 'Success' })
         }
     })
@@ -115,7 +113,6 @@ app.post('/newTicket', (req, res) => {
       else if (req.body.openDate == 'Invalid Date') {
           req.body.openDate = dayjs()
       }
-      console.log(req.body)
     args = [
       req.body.ticketStatus,
       req.body.ben,
@@ -215,7 +212,6 @@ app.post('/headers', (req, res) => {
   const args=[[
     req.body.tName
   ]]
-    console.log(req.body.tName);
   const stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
   connection.query(stmt,[args], (err, rows, fields) => {
     if (err) {
@@ -367,7 +363,7 @@ app.post('/deactivate', (req, res) => {
       req.body.recPk,
       req.body.recStat
     ]
-    console.log(args)
+
     const stmt = "INSERT INTO caltoolstable (PK, Status) VALUES(?) ON DUPLICATE KEY UPDATE Status = 'Inactive'"
     //WIP
     connection.query(stmt, [args], (err, results, rows, fields) => {
@@ -377,13 +373,12 @@ app.post('/deactivate', (req, res) => {
         }
         else {
             res.status(200).json({ Error: 'Success' })
-            console.log(results)
         }
     })
 });
 app.post('/newRequest', function (req, res)  {
-    //console.log(req)
-    //console.log(req.file)
+    console.log('in new request')
+    console.log(req.body.attachment.substr(12))
     var stmt = ""
     var args = []
     var ID =0;
@@ -420,9 +415,10 @@ app.post('/newRequest', function (req, res)  {
             req.body.preferredVendor,
             req.body.priority,
             req.body.requestor,
-            req.body.comments
+            req.body.comments,
+            req.body.attachment.substr(12)
         ]
-        stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
+        stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments, AttachFile) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments), AttachFile=VALUES(AttachFile)"
     }
     else {
         console.log('file name is ' + req.file)
@@ -441,10 +437,10 @@ app.post('/newRequest', function (req, res)  {
             req.body.preferredVendor,
             req.body.priority,
             req.body.requestor,
-            req.body.comments
-
+            req.body.comments,
+            req.body.attachment.substr(12)
         ]
-        stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments)"
+        stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments, AttachFile) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments), AttachFile=VALUES(AttachFile)"
     }
 
     connection.query(stmt, [args], (err, results, fields) => {
@@ -585,8 +581,6 @@ app.post('/loadLineItems', (req, res) => {
 app.post('/newAttachment', upload.single('attachment'), (req, res) => {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any
-    console.log('In new attachment')
-    console.log(req.file, req.body)
     //connection.end()
-    res.json({message: "everybody poops"})
+    res.json({message: "success"})
 });

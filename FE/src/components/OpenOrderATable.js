@@ -24,6 +24,7 @@ function OpenOrderATable(hideArray) {
     const [filtHead, setFiltHead] = useState([]);
 
     const EditRecord = (record) => {
+        console.log(record)
         navigate('/MaterialRequestform', { state: { record: record } })
     };
 
