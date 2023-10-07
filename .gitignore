@@ -3,9 +3,11 @@
 *.cmd
 Start.zip
 
+
 #ignore all files in any directory names temp
 temp/
 database/
+uploads/
 
 #ignore all files in node modules?
 BE/node_modules
