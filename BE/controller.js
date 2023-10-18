@@ -20,7 +20,7 @@ const storage = multer.diskStorage({
         cb(null, '../uploads/')
     },
     filename: function (req, file, cb) {
-        const uniqueSuffix = Date.now() + '-' + file.originalname + path.extname(file.originalname)
+        const uniqueSuffix = Date.now() + '-' + file.originalname
         cb(null, file.fieldname + '-' + uniqueSuffix)
     }
 })
@@ -581,6 +581,8 @@ app.post('/loadLineItems', (req, res) => {
 app.post('/newAttachment', upload.single('attachment'), (req, res) => {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any
-    //connection.end()
+    //connection.end()]
+    console.log("This is here")
+    console.log(req.file.path)
     res.json({message: "success"})
 });

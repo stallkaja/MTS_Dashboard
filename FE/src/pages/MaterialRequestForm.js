@@ -101,8 +101,6 @@ export default function MaterialRequestForm() {
                 adminCom: location.state.record.AdminComments,
                 attachment: location.state.record.AttachFile
             })
-            console.log('attachment is')
-            console.log(attachment)
         };
     }, []) // <-- empty dependency array make useEffect fire only once
 
@@ -496,9 +494,9 @@ export default function MaterialRequestForm() {
                             <Upload {...props}
                                     //fileList={attachment}
                             onChange={(response) => {
-                                console.log('in chnage')
+                                console.log('in change')
                                 if (response.file.status !== 'uploading') {
-                                console.log(response.file, response.fileList);
+                                console.log(response.file, response.fileList, response.file.url);
                                 }
                                 if (response.file.status === 'done') {
                                 message.success(`${response.file.name} 
