@@ -38,7 +38,7 @@ export const navData = [
         id: 3,
         icon: <RepairIcon/>,
         text: "KitBase",
-        link: "KitBase"
+        link: "KitBasePage"
     },
     {
         id: 4,
