@@ -67,13 +67,13 @@ const TicketDashboard: React.FC = () => {
                 <OpenTicketATable
                     hideArray={hiddenArray} />
             </div>
-
+            {/*
             <div id='ClosedTicketCard'>
                 <div id='CloseTicketTitle'>Closed and Under Review</div>
             </div>
-
+            
             <ClosedTicketATable
-                hideArray={hiddenArray}  />
+                hideArray={hiddenArray}  />*/}
         </ConfigProvider>
     );
 };

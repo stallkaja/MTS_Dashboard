@@ -33,16 +33,16 @@ const TicketDashboard: React.FC = () => {
         <ConfigProvider
             theme={{
                 token: {
-                    colorPrimary: '#ffffff',
+                    colorPrimary: '#000000',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#6ce3c6'
                 },
             }}>
             
             <div>
                 <div id='TicketDashCard'>
-                    <h1 id='TicketTitle'>Ticket Dashboard</h1>
+                    <h1 id='TicketTitle'>Help Tickets</h1>
                  
                     <h1 id='TicketSearch'>
                         <ColumnChange
@@ -59,7 +59,7 @@ const TicketDashboard: React.FC = () => {
                 
                     <div id="CreateTicketButton">
                         <Button 
-                            type="primary" 
+                            //type="primary" 
                             size="large"
                             onClick={() => OpenTicket()}
                         >
