@@ -577,7 +577,6 @@ app.post('/loadLineItems', (req, res) => {
 
 })
 
-
 app.post('/newAttachment', upload.single('attachment'), (req, res) => {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any
@@ -586,3 +585,37 @@ app.post('/newAttachment', upload.single('attachment'), (req, res) => {
     console.log(req.file.path)
     res.json({message: "success"})
 });
+
+app.post('/searchTable', (req, res) => {
+    console.log(req.body.tName)
+    console.log(req.body.value)
+    const args = [[
+        req.body.searchNVL,
+    ]]
+    const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ? order by CurDate DESC"
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+
+})
+
+app.post('/searchMultiTables', (req, res) => {
+    console.log(req.body.tName)
+    console.log(req.body.value)
+    const args = [[
+        req.body.tName,
+    ]]
+    const stmt = "SELECT * FROM tName WHERE NVL = ? order by CurDate DESC"
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+
+})
