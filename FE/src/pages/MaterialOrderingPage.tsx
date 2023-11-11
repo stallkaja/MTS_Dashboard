@@ -4,6 +4,7 @@ import OpenOrderATable from '../components/OpenOrderATable';
 import SubmittedOrdersATable from '../components/SubmittedOrdersATable';
 import ClosedOrderATable from '../components/ClosedOrderATable';
 import ColumnChange from '../components/ColumnChange';
+import GlobalSearch from '../components/GlobalSearchBar';
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
 import './MaterialOrderingPage.css';
@@ -56,6 +57,10 @@ const TicketDashboard = () => {
                         tName='materialorderstable'
                         parentPass={parent}
                         hideList={hideList} />
+                    <GlobalSearch
+                        tName={["materialorderstable", "orderlineitemstable"]}
+                        //tName2="orderlineitemstable"
+                        />
             </div>
             <div id='AwaitingCard'>
                     <div id='AwaitingText'>Awaiting Approval</div>
