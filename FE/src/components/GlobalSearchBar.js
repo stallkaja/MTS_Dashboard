@@ -5,18 +5,9 @@ const { Search } = Input;
 
 
 const GlobalSearch = ({ tName , searchCallBack}) => {
-    const [route, setRoute] = useState('');
-    useEffect(() => {
-        if (tName.length === 1) {
-            setRoute('/searchTable')
-        } else {
-            setRoute('/searchMultiTables')
-        }
-        
-    }, [])
 
     const onSearch = async (value, _e, info) => {
-        const response = await fetch(route, {
+        const response = await fetch('/searchTable', {
             method: 'POST',
             body: JSON.stringify({ tName , value }),
             headers: {

@@ -62,7 +62,7 @@ const TicketDashboard = () => {
                         columnChangeCallBack={columnChangeCallBack}
                         hideList={hideList} />
                     <GlobalSearch
-                        tName={["materialorderstable" /*, "orderlineitemstable"*/]}
+                        tName={["materialorderstable" , "orderlineitemstable"]}
                         searchCallBack={searchCallBack}
                         //tName2="orderlineitemstable"
                         />

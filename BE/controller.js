@@ -589,9 +589,22 @@ app.post('/newAttachment', upload.single('attachment'), (req, res) => {
 app.post('/searchTable', (req, res) => {
     console.log(req.body.tName)
     console.log(req.body.value)
-    const args = [[
+    console.log(req.body.tName.length)
+    var args = [];
+    if(req.body.tName.length==1){
+      args = [[
         req.body.tName,
-    ]]
+      ]]
+    }
+    else if(req.body.tName.length==2){
+      args = [[
+        req.body.tName[0],
+      ]]
+    }
+    else{
+      console.log('error')
+    }
+
     const headers = [];
     var stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
     connection.query(stmt, [args], (err, rows, fields) => {
@@ -604,37 +617,69 @@ app.post('/searchTable', (req, res) => {
         headers.push(rows[i].COLUMN_NAME)
       }
       console.log(headers)
-      stmt = "SELECT * FROM " + req.body.tName + " WHERE " ;
+      if(req.body.tName.length==1){
+        stmt = "SELECT * FROM " + req.body.tName + " WHERE " ;
       
-      for(let i = 0; i < headers.length; i++){
-        stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
+        for(let i = 0; i < headers.length; i++){
+          stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
+        }
+        stmt = stmt.slice(0,-3)
+        //console.log(stmt)
+        connection.query(stmt, [args], (err, rows, fields) => {
+          if (err) {
+              throw err
+              connection.end();
+          }
+          console.log(rows)
+          res.json(rows)
+        })
       }
-      stmt = stmt.slice(0,-3)
-      //console.log(stmt)
-      connection.query(stmt, [args], (err, rows, fields) => {
-        if (err) {
-            throw err
-            connection.end();
-        }
-        console.log(rows)
-        res.json(rows)
-      })
-    })
-})
+      else if(req.body.tName.length==2){
+        args = [[
+          req.body.tName[1],
+        ]]
+        var stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
+        connection.query(stmt, [args], (err, rows, fields) => {
+          for(let i =0; i<rows.length;i++){
+            console.log(headers)
+            console.log(rows[i].COLUMN_NAME)
+            console.log(rows[i].COLUMN_NAME in headers)
+            console.log(headers.includes('Status'))
+            if(headers.includes(rows[i].COLUMN_NAME)){
+              console.log('found duplicate header')
+              for(let j=0;j<headers.length;j++){
+                if(rows[i].COLUMN_NAME === headers[j]){
+                  headers[j] = req.body.tName[0] + '.' + headers[j]
+                }
+              }
+              headers.push(req.body.tName[1]+'.'+rows[i].COLUMN_NAME)
+            }
+            else{
+              headers.push(rows[i].COLUMN_NAME)
+            }
+          }
+          stmt = "SELECT * FROM " + req.body.tName[0] + " CROSS JOIN " + req.body.tName[1] +" WHERE " ;
+      
+          for(let i = 0; i < headers.length; i++){
+            stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
+          }
+          stmt = stmt.slice(0,-3)
+          console.log(stmt)
+          connection.query(stmt, [args], (err, rows, fields) => {
+            if (err) {
+                throw err
+                connection.end();
+            }
+            console.log(rows)
+            res.json(rows)
+          })
 
-app.post('/searchMultiTables', (req, res) => {
-    console.log(req.body.tName)
-    console.log(req.body.value)
-    const args = [[
-        req.body.tName,
-    ]]
-    const stmt = "SELECT * FROM tName WHERE NVL = ? order by CurDate DESC"
-    connection.query(stmt, [args], (err, rows, fields) => {
-        if (err) {
-            throw err
-            connection.end();
-        }
-        res.json(rows)
-    })
+        })
+      }
+      else{
+        console.log('error')
+      }
+      
 
+    })
 })
