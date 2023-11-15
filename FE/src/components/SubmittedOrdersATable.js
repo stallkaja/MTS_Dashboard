@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function SubmittedOrderATable(hideArray) {
+function SubmittedOrderATable(hideArray,searchResults) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -267,6 +267,15 @@ function SubmittedOrderATable(hideArray) {
         columnHide(hideArray, headers)
     }, [hideArray])
 
+
+    const setSearchResults =(searchResults,headers)=>{
+        console.log('setting search results in table')
+        console.log(searchResults)
+    }
+    useEffect(() => {
+        console.log("in useEfect in table")
+        setSearchResults(searchResults, headers)
+    }, [searchResults])
     useEffect(() => {
         let filt = []
         filt = (

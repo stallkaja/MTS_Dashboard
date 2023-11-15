@@ -11,6 +11,7 @@ import './MaterialOrderingPage.css';
 
 const TicketDashboard = () => {
     const navigate = useNavigate();
+    const [searchResults, setSearchResults] = useState();
     const [hiddenArray, setHiddenArray] = useState({
         key: 1,
         keey: 2,
@@ -31,14 +32,17 @@ const TicketDashboard = () => {
     }
 
     //Data being returned from columnChange component, to be passed to child tables
-    const parent = (childData) => {
+    const columnChangeCallBack = (colChangeCallBackData) => {
         return (
-            setHiddenArray(childData)
-           
-            
+            setHiddenArray(colChangeCallBackData)
         )
     }
-    
+    const searchCallBack = (searchCallBackData) => {
+        console.log("setting search results on page")
+        return (
+            setSearchResults(searchCallBackData)
+        )
+    }
   
     return (
         <ConfigProvider
@@ -55,10 +59,11 @@ const TicketDashboard = () => {
                     <h1 id='TitleText'>Material Ordering</h1>
                     <ColumnChange
                         tName='materialorderstable'
-                        parentPass={parent}
+                        columnChangeCallBack={columnChangeCallBack}
                         hideList={hideList} />
                     <GlobalSearch
-                        tName={["materialorderstable", "orderlineitemstable"]}
+                        tName={["materialorderstable" /*, "orderlineitemstable"*/]}
+                        searchCallBack={searchCallBack}
                         //tName2="orderlineitemstable"
                         />
             </div>
@@ -72,24 +77,21 @@ const TicketDashboard = () => {
             </div>
             <main>
                 <OpenOrderATable 
-                        hideArray={hiddenArray} />
-            
+                        hideArray={hiddenArray} searchResults={searchResults} />
                 <div id='SubmittedCard'>
                     <div id='SubmittedText'>
                         Submitted
                     </div>
                 </div>
                 <SubmittedOrdersATable
-                        hideArray={hiddenArray} />
-
+                        hideArray={hiddenArray} searchResults={searchResults}/>
                 <div id='ArrivedCard'>
                     <div id='ArrivedText'>
                         Arrived
                     </div>
                 </div>
                 <ClosedOrderATable
-                        hideArray={hiddenArray} />
-
+                        hideArray={hiddenArray} searchResults={searchResults}/>
             </main>
 
 

@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function ClosedOrderATable(hideArray) {
+function ClosedOrderATable(hideArray,searchResults) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 const { Search } = Input;
 
 
-const GlobalSearch = ({ tName }) => {
+const GlobalSearch = ({ tName , searchCallBack}) => {
     const [route, setRoute] = useState('');
     useEffect(() => {
         if (tName.length === 1) {
@@ -26,6 +26,8 @@ const GlobalSearch = ({ tName }) => {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
+                    console.log(responseData)
+                    searchCallBack(responseData);
                     //let tempItemInputs = responseData.map((item) => {
                     //    return {
                             

@@ -590,17 +590,36 @@ app.post('/searchTable', (req, res) => {
     console.log(req.body.tName)
     console.log(req.body.value)
     const args = [[
-        req.body.searchNVL,
+        req.body.tName,
     ]]
-    const stmt = "SELECT * FROM toolhistorytable WHERE NVL = ? order by CurDate DESC"
+    const headers = [];
+    var stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
     connection.query(stmt, [args], (err, rows, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+      }
+      console.log(rows.length)
+      for(let i = 0; i < rows.length; i++){
+        headers.push(rows[i].COLUMN_NAME)
+      }
+      console.log(headers)
+      stmt = "SELECT * FROM " + req.body.tName + " WHERE " ;
+      
+      for(let i = 0; i < headers.length; i++){
+        stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
+      }
+      stmt = stmt.slice(0,-3)
+      //console.log(stmt)
+      connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();
         }
+        console.log(rows)
         res.json(rows)
+      })
     })
-
 })
 
 app.post('/searchMultiTables', (req, res) => {
