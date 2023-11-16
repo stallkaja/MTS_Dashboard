@@ -378,7 +378,7 @@ app.post('/deactivate', (req, res) => {
 });
 app.post('/newRequest', function (req, res)  {
     console.log('in new request')
-    console.log(req.body.attachment.substr(12))
+    //console.log(req.body.attachment.substr(12))
     var stmt = ""
     var args = []
     var ID =0;

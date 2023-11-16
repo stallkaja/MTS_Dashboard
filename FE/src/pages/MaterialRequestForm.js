@@ -59,9 +59,9 @@ export default function MaterialRequestForm() {
         if (location.state == null) {
             console.log('record is null')
             form.setFieldsValue({
-                reqNum: 'new ticket',
-                requestStatus: 'awaitingApproval',
-                openDate: dayjs().format('YYYY-MM-DD')
+                RequestNumber: 'new ticket',
+                Status: 'awaitingApproval',
+                OpenDate: dayjs().format('YYYY-MM-DD')
             })
         }
         else {
