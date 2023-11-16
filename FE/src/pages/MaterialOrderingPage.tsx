@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import OpenOrderATable from '../components/OpenOrderATable';
 import SubmittedOrdersATable from '../components/SubmittedOrdersATable';
 import ClosedOrderATable from '../components/ClosedOrderATable';
@@ -11,7 +11,7 @@ import './MaterialOrderingPage.css';
 
 const TicketDashboard = () => {
     const navigate = useNavigate();
-    const [searchResults, setSearchResults] = useState();
+    const [searchResults, setSearchResults] = useState([]);
     const [hiddenArray, setHiddenArray] = useState({
         key: 1,
         keey: 2,
@@ -38,11 +38,14 @@ const TicketDashboard = () => {
         )
     }
     const searchCallBack = (searchCallBackData) => {
-        console.log("setting search results on page")
+        console.log(searchCallBackData)
         return (
             setSearchResults(searchCallBackData)
         )
     }
+    useEffect(() => {
+        console.log(searchResults)
+    },[searchResults])
   
     return (
         <ConfigProvider
@@ -64,7 +67,6 @@ const TicketDashboard = () => {
                     <GlobalSearch
                         tName={["materialorderstable" , "orderlineitemstable"]}
                         searchCallBack={searchCallBack}
-                        //tName2="orderlineitemstable"
                         />
             </div>
             <div id='AwaitingCard'>

@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function OpenOrderATable(hideArray,searchResults) {
+function OpenOrderATable({ hideArray, searchResults }) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -22,7 +22,6 @@ function OpenOrderATable(hideArray,searchResults) {
     ])
 
     const [filtHead, setFiltHead] = useState([]);
-
     const EditRecord = (record) => {
         console.log(record)
         navigate('/MaterialRequestform', { state: { record: record } })
@@ -230,46 +229,50 @@ function OpenOrderATable(hideArray,searchResults) {
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
-        for (let i = 0; i < hideArray.hideArray.length; i++) {
-            localHideList.push(hideArray.hideArray[i])
-        }
-        let addHeader = []
-        for (let i = 0; i < headers.length; i++) {
-            let payload = {}
-            if (localHideList.includes(headers[i].title)) {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    hidden: true
-                }
-            } else if (headers[i].title === "Edit Record") {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    render: (text, record) => (
-                        <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
-                            {"Edit"}
-                        </Button>
-                    )
-                }
-            } else {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    hidden: false,
-                    ...getColumnSearchProps(headers[i].title),
-                    sorter: {
-                        compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
-                    },
-                    sortDirections: ['descend', 'ascend'],
-                }
+        if (hideArray !== undefined) {
+            for (let i = 0; i < hideArray.length; i++) {
+                localHideList.push(hideArray[i])
             }
-            addHeader.push(payload)
+
+            //const localHideList = JSON.parse(hideArray.hideArray)
+            let addHeader = []
+            for (let i = 0; i < headers.length; i++) {
+                let payload = {}
+                if (localHideList.includes(headers[i].title)) {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        hidden: true
+                    }
+                } else if (headers[i].title === "Edit Record") {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        render: (text, record) => (
+                            <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+                                {"Edit"}
+                            </Button>
+                        )
+                    }
+                } else {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        hidden: false,
+                        ...getColumnSearchProps(headers[i].title),
+                        sorter: {
+                            compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
+                        },
+                        sortDirections: ['descend', 'ascend'],
+                    }
+                }
+                addHeader.push(payload)
+            }
+            setHeaders(addHeader)
         }
-        setHeaders(addHeader)
     }
     useEffect(() => {
         columnHide(hideArray, headers)
@@ -282,6 +285,46 @@ function OpenOrderATable(hideArray,searchResults) {
         )
         setFiltHead([...filt])
     },[headers])
+
+    const dispResults = (searchResults, items) => {
+        console.log("hello there")
+        console.log(searchResults)
+        if (searchResults !== undefined) {
+
+            let searchTable = []
+            for (let i = 0; i < searchResults.length; i++) {
+                searchTable.push(searchResults[i])
+            }
+
+            for (let i = 0; i < searchTable.length; i++) {
+                if (searchTable[i].NeedBy !== null) {
+                    let cleanDate = (searchTable[i].NeedBy.split('T')[0])
+                    searchTable[i].NeedBy = cleanDate
+                }
+                if (searchTable[i].OpenDate !== null) {
+                    let cleanDate = (searchTable[i].OpenDate.split('T')[0])
+                    searchTable[i].OpenDate = cleanDate
+                }
+                if (searchTable[i].SubmitDate !== null) {
+                    let cleanDate = (searchTable[i].SubmitDate.split('T')[0])
+                    searchTable[i].SubmitDate = cleanDate
+                }
+                if (searchTable[i].ClosedDate !== null) {
+                    let cleanDate = (searchTable[i].ClosedDate.split('T')[0])
+                    searchTable[i].ClosedDate = cleanDate
+                }
+            }
+
+
+
+            setItems([...searchTable])
+        }
+        
+    }
+
+    useEffect(() => {
+        dispResults(searchResults, items)
+    },[searchResults])
 
     return (
         <div>
