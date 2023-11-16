@@ -12,22 +12,22 @@ export default function MaterialRequestForm() {
 
     const history = useNavigate();
     const location = useLocation();
-    const [requestStatus, setRequestStatus] = useState('awaitingApproval');
-    const [requestNum, setRequestNum] = useState('new ticket');
-    const [needDate, setNeedDate] = useState(dayjs().format('YYYY-MM-DD'));
-    const [openDate, setOpenDate] = useState('');
-    const [subDate, setSubDate] = useState('');
-    const [closeDate, setCloseDate] = useState('');
-    const [adminCom, setAdminCom] = useState('');
-    const [costCenter, setCostCenter] = useState('');
-    const [email, setEmail] = useState('');
-    const [orderMethod, setOrderMethod] = useState('');
-    const [purchNum, setPurchNum] = useState('');
-    const [vendor, setVendor] = useState('');
-    const [priority, setPriority] = useState('');
-    const [requestor, setRequestor] = useState('');
-    const [attachment, setAttachment] = useState('');
-    const [reqCom, setReqCom] = useState('');
+    const [Status, setStatus] = useState('awaitingApproval');
+    const [RequestNumber, setRequestNumber] = useState('new ticket');
+    const [NeedBy, setNeedBy] = useState(dayjs().format('YYYY-MM-DD'));
+    const [OpenDate, setOpenDate] = useState('');
+    const [SubmitDate, setSubmitDate] = useState('');
+    const [ClosedDate, setClosedDate] = useState('');
+    const [AdminComments, setAdminComments] = useState('');
+    const [CostCenter, setCostCenter] = useState('');
+    const [Email, setEmail] = useState('');
+    const [OrderMethod, setOrderMethod] = useState('');
+    const [PurchNumber, setPurchNumber] = useState('');
+    const [PrefferedVendor, setPrefferedVendor] = useState('');
+    const [Priority, setPriority] = useState('');
+    const [Requestor, setRequestor] = useState('');
+    const [AttachFile, setAttachFile] = useState('');
+    const [RequestorComments, setRequestorComments] = useState('');
     const [lineArray, setLineArray] = useState([]);
     const [itemInputs, setItemInputs] = useState([]);
     const cost = [
@@ -66,40 +66,40 @@ export default function MaterialRequestForm() {
         }
         else {
             console.log(location.state.record.AttachFile)
-            setRequestStatus(location.state.record.Status);
-            setRequestNum(location.state.record.RequestNumber);
-            setNeedDate(dayjs(location.state.record.NeedBy));
+            setStatus(location.state.record.Status);
+            setRequestNumber(location.state.record.RequestNumber);
+            setNeedBy(dayjs(location.state.record.NeedBy));
             setOpenDate(dayjs(location.state.record.OpenDate));
-            setSubDate(location.state.record.SubmitDate);
-            setCloseDate(location.state.record.ClosedDate);
-            setAdminCom(location.state.record.AdminComments);
+            setSubmitDate(location.state.record.SubmitDate);
+            setClosedDate(location.state.record.ClosedDate);
+            setAdminComments(location.state.record.AdminComments);
             setCostCenter(location.state.record.CostCenter);
             setEmail(location.state.record.Email);
             setOrderMethod(location.state.record.OrderMethod);
-            setPurchNum(location.state.record.PurchNumber);
-            setVendor(location.state.record.PreferredVendor);
+            setPurchNumber(location.state.record.PurchNumber);
+            setPrefferedVendor(location.state.record.PreferredVendor);
             setPriority(location.state.record.Priority);
             setRequestor(location.state.record.Requestor);
-            setReqCom(location.state.record.RequestorComments);
+            setRequestorComments(location.state.record.RequestorComments);
             loadLineItems(location.state.record.RequestNumber)
-            setAttachment(location.state.record.AttachFile)
+            setAttachFile(location.state.record.AttachFile)
             form.setFieldsValue({
-                reqNum: location.state.record.RequestNumber,
-                requestStatus: location.state.record.Status,
-                orderMethod: location.state.record.OrderMethod,
-                requestor: location.state.record.Requestor,
-                requestorEmail: location.state.record.Email,
-                costCenter: location.state.record.CostCenter,
-                priority: location.state.record.Priority,
-                preferredVendor: location.state.record.PreferredVendor,
-                needDate: dayjs(location.state.record.NeedBy).format('YYYY-MM-DD'),
-                comments: location.state.record.RequestorComments,
-                purchNum: location.state.record.PurchNumber,
-                openDate: dayjs(location.state.record.OpenDate).format('YYYY-MM-DD'),
-                subDate: dayjs(location.state.record.SubmitDate).format('YYYY-MM-DD'),
-                closeDate: dayjs(location.state.record.ClosedDate).format('YYYY-MM-DD'),
-                adminCom: location.state.record.AdminComments,
-                attachment: location.state.record.AttachFile
+                RequestNumber: location.state.record.RequestNumber,
+                Status: location.state.record.Status,
+                OrderMethod: location.state.record.OrderMethod,
+                Requestor: location.state.record.Requestor,
+                Email: location.state.record.Email,
+                CostCenter: location.state.record.CostCenter,
+                Priority: location.state.record.Priority,
+                PreferredVendor: location.state.record.PreferredVendor,
+                NeedBy: dayjs(location.state.record.NeedBy).format('YYYY-MM-DD'),
+                RequestorComments: location.state.record.RequestorComments,
+                PurchNumber: location.state.record.PurchNumber,
+                OpenDate: dayjs(location.state.record.OpenDate).format('YYYY-MM-DD'),
+                SubmitDate: dayjs(location.state.record.SubmitDate).format('YYYY-MM-DD'),
+                ClosedDate: dayjs(location.state.record.ClosedDate).format('YYYY-MM-DD'),
+                AdminComments: location.state.record.AdminComments,
+                AttachFile: location.state.record.AttachFile
             })
         };
     }, []) // <-- empty dependency array make useEffect fire only once
@@ -124,12 +124,12 @@ export default function MaterialRequestForm() {
                 response.json().then((responseData) => {
                     let tempItemInputs = responseData.map((item) => {
                         return {
-                            partName: item.PartName,
-                            partNumber: item.PartNumber,
-                            price: item.PricePer.toString(),
-                            quantity: item.Quantity.toString(),
-                            lineStatus: item.Status,
-                            pk: item.PK,
+                            PartName: item.PartName,
+                            PartNumber: item.PartNumber,
+                            PricePer: item.PricePer.toString(),
+                            Quantity: item.Quantity.toString(),
+                            Status: item.Status,
+                            PK: item.PK,
                         };
                       });
                     setItemInputs(tempItemInputs)
@@ -192,7 +192,7 @@ export default function MaterialRequestForm() {
         form.setFieldsValue({
             requestStatus: value
         })
-        setRequestStatus(value)
+        setStatus(value)
     }
     const handleMethod = (value) => {
         form.setFieldsValue({
@@ -216,13 +216,13 @@ export default function MaterialRequestForm() {
         form.setFieldsValue({
             preferredVendor: value
         })
-        setVendor(value)
+        setPrefferedVendor(value)
     }
     const handleNeedDate = (date, dateString) => {
         form.setFieldsValue({
             needDate: dateString
         })
-        setNeedDate(dateString)
+        setNeedBy(dateString)
     }
     const handleOpenDate = (date, dateString) => {
         form.setFieldsValue({
@@ -234,13 +234,13 @@ export default function MaterialRequestForm() {
         form.setFieldsValue({
             subDate: dateString
         })
-        setSubDate(dateString)
+        setSubmitDate(dateString)
     }
     const handleCloseDate = (date, dateString) => {
         form.setFieldsValue({
             closeDate: dateString
         })
-        setCloseDate(dateString)
+        setClosedDate(dateString)
     }
 
     const { TextArea } = Input;
@@ -296,7 +296,7 @@ export default function MaterialRequestForm() {
                     <div id="reqFormCard">
                         <div id="reqInputBox">
                             <Form.Item
-                                name="requestStatus"
+                                name="Status"
                                 label="Request Status"
                                 rules={[
                                     {
@@ -306,7 +306,7 @@ export default function MaterialRequestForm() {
                             >
                             <Select
                                 initialValue="awaitingApproval"
-                                value={requestStatus}
+                                value={Status}
                                 onChange={handleStatus}
                                 options={[
                                     { value: 'awaitingApproval', label: 'Awaiting Approval', },
@@ -318,7 +318,7 @@ export default function MaterialRequestForm() {
                         </div>
                         
                         <Form.Item
-                            name="reqNum"
+                            name="RequestNumber"
                             label="Request Number"
                             rules={[
                                 {
@@ -330,15 +330,15 @@ export default function MaterialRequestForm() {
                                 <Input 
                                     readonly={1} 
                                     placeholder="Request Number" 
-                                    value={requestNum} 
-                                    onChange={e => setRequestNum(e.target.value)} 
+                                    value={RequestNumber} 
+                                    onChange={e => setRequestNumber(e.target.value)} 
                                 />
                             </div>
                         </Form.Item>
 
                         <div id="reqInputBox">
                             <Form.Item
-                                name="orderMethod"
+                                name="OrderMethod"
                                 label="Order Method"
                                 rules={[
                                     {
@@ -348,7 +348,7 @@ export default function MaterialRequestForm() {
                                 ]}
                             >
                                 <Select
-                                    value={orderMethod}
+                                    value={OrderMethod}
                                     onChange={handleMethod}
                                     options={[
                                         { value: 'ariba', label: 'ARIBA', },
@@ -360,7 +360,7 @@ export default function MaterialRequestForm() {
                         </div>
                         
                         <Form.Item
-                            name="requestor"
+                            name="Requestor"
                             label="Requestor"
                             rules={[
                                 {
@@ -372,14 +372,14 @@ export default function MaterialRequestForm() {
                             <div id="reqInputBox">
                                 <Input 
                                     placeholder="Requestor" 
-                                    value={requestor} 
+                                    value={Requestor} 
                                     onChange={e => setRequestor(e.target.value)} 
                                 />
                             </div>
                         </Form.Item>
                         
                         <Form.Item
-                            name="requestorEmail"
+                            name="Email"
                             label="Requestor's Email"
                             rules={[
                                 {
@@ -391,7 +391,7 @@ export default function MaterialRequestForm() {
                         <div id="reqInputBox">
                             <Input
                                 placeholder="Requestor Email"
-                                value={email}
+                                value={Email}
                                 onChange={e => setEmail(e.target.value)}
                             />
                         </div>
@@ -400,7 +400,7 @@ export default function MaterialRequestForm() {
                     
                     <div id="reqFormCard">
                         <Form.Item
-                            name="costCenter"
+                            name="CostCenter"
                             label="Cost Center"
                             rules={[
                                 {
@@ -411,7 +411,7 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <Select
-                                    value={costCenter}
+                                    value={CostCenter}
                                     onChange={handleCostCenter}
                                     options={cost}
                                 />
@@ -419,7 +419,7 @@ export default function MaterialRequestForm() {
                         </Form.Item>
                         
                         <Form.Item
-                            name="priority"
+                            name="Priority"
                             label="Priority"
                             rules={[
                                 {
@@ -430,7 +430,7 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <Select
-                                    value={priority}
+                                    value={Priority}
                                     onChange={handlePriority}
                                     options={[
                                         { value: '1', label: '1-Low', },
@@ -444,7 +444,7 @@ export default function MaterialRequestForm() {
                         </Form.Item>
 
                         <Form.Item
-                            name="preferredVendor"
+                            name="PrefferedVendor"
                             label="Preferred Vendor"
                             rules={[
                                 {
@@ -454,7 +454,7 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <Select
-                                    value={vendor}
+                                    value={PrefferedVendor}
                                     onChange={handleVendor}
                                     options={[
                                         { value: 'amazon', label: 'Amazon', },
@@ -466,7 +466,7 @@ export default function MaterialRequestForm() {
                         </Form.Item>
 
                         <Form.Item
-                            name="needDate"
+                            name="NeedBy"
                             label="Need by Date (At least 2 weeks)"
                             rules={[
                                 {
@@ -477,7 +477,7 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                                 <DatePicker
-                                    value={dayjs(needDate)}
+                                    value={dayjs(NeedBy)}
                                     format={dateFormat}
                                     onChange={handleNeedDate}
                                     allowClear={false}
@@ -486,13 +486,13 @@ export default function MaterialRequestForm() {
                         </Form.Item>
 
                         <Form.Item
-                            name="attachment"
+                            name="AttachFile"
                             label="Attach a File"
-                            //defaultFileList={attachment}
+                            //defaultFileList={AttachFile}
                         >
                             <div id="reqInputBox">
                             <Upload {...props}
-                                    //fileList={attachment}
+                                    //fileList={AttachFile}
                             onChange={(response) => {
                                 console.log('in change')
                                 if (response.file.status !== 'uploading') {
@@ -514,15 +514,15 @@ export default function MaterialRequestForm() {
                     </div>
                     
                     <Form.Item
-                        name="comments"
+                        name="RequestorComments"
                         label="Requestor Comments"
                     >
                         <div id="reqTextBox">
                             <TextArea 
                                 rows={6} 
-                                value={reqCom} 
+                                value={RequestorComments} 
                                 placeholder="Commments" 
-                                onChange={e => setReqCom(e.target.value)} 
+                                onChange={e => setRequestorComments(e.target.value)} 
                             />
                         </div>
                     </Form.Item>
@@ -536,8 +536,8 @@ export default function MaterialRequestForm() {
                                             <Form.Item
                                                 {...field}
                                                 label="Part Name"
-                                                name={[field.name, 'partName']}
-                                                fieldKey={[field.fieldKey, "partName"] }
+                                                name={[field.name, 'PartName']}
+                                                fieldKey={[field.fieldKey, "PartName"] }
                                                 rules={[
                                                     {
                                                         required: true,
@@ -554,8 +554,8 @@ export default function MaterialRequestForm() {
                                             <Form.Item
                                                 {...field}
                                                 label="Part Number"
-                                                name={[field.name, 'partNumber']}
-                                                fieldKey={[field.fieldKey, "partNumber"]}
+                                                name={[field.name, 'PartNumber']}
+                                                fieldKey={[field.fieldKey, "PartNumber"]}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -569,8 +569,8 @@ export default function MaterialRequestForm() {
                                             <Form.Item
                                                 {...field}
                                                 label="Price"
-                                                name={[field.name, 'price']}
-                                                fieldKey={[field.fieldKey, "price"]}
+                                                name={[field.name, 'PricePer']}
+                                                fieldKey={[field.fieldKey, "PricePer"]}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -584,8 +584,8 @@ export default function MaterialRequestForm() {
                                             <Form.Item
                                                 {...field}
                                                 label="Quantity"
-                                                name={[field.name, 'quantity']}
-                                                fieldKey={[field.fieldKey, "quantity"]}
+                                                name={[field.name, 'Quantity']}
+                                                fieldKey={[field.fieldKey, "Quantity"]}
                                                 rules={[
                                                     {
                                                         required: true,
@@ -598,8 +598,8 @@ export default function MaterialRequestForm() {
                                             <Form.Item
                                                 {...field}
                                                 label="Status"
-                                                name={[field.name, 'lineStatus']}
-                                                fieldKey={[field.fieldKey, "lineStatus"]}
+                                                name={[field.name, 'Status']}
+                                                fieldKey={[field.fieldKey, "Status"]}
                                                 rules={[
                                                     {
                                                         required: false
@@ -618,8 +618,8 @@ export default function MaterialRequestForm() {
                                             <Form.Item
                                                 {...field}
                                                 label="PK"
-                                                name={[field.name, 'pk']}
-                                                fieldKey={[field.fieldkey, "pk"]}
+                                                name={[field.name, 'PK']}
+                                                fieldKey={[field.fieldkey, "PK"]}
                                                 hidden="true">
                                                 <Input />
                                             </Form.Item>
@@ -641,25 +641,25 @@ export default function MaterialRequestForm() {
 
                     <div id="reqFormCard">
                         <Form.Item
-                            name="purchNum"
+                            name="PurchNumber"
                             label="Purchase Order Number"
                         >
                             <div id="reqInputBox">
                                 <Input
                                     placeholder="Purchase Order Number"
-                                    value={purchNum}
-                                    onChange={e => setPurchNum(e.target.value)}
+                                    value={PurchNumber}
+                                    onChange={e => setPurchNumber(e.target.value)}
                                 />
                             </div>
                         </Form.Item>
 
                         <Form.Item
-                            name="openDate"
+                            name="OpenDate"
                             label="Opened Date"
                         >
                             <div id="reqInputBox">
                                 <DatePicker
-                                    value={dayjs(openDate)}
+                                    value={dayjs(OpenDate)}
                                     format={dateFormat}
                                     onChange={handleOpenDate}
                                     allowClear={false}
@@ -669,12 +669,12 @@ export default function MaterialRequestForm() {
                         </Form.Item>
 
                         <Form.Item
-                            name="subDate"
+                            name="SubmitDate"
                             label="Submitted Date"
                         >
                             <div id="reqInputBox">
                                 <DatePicker
-                                    value={dayjs(subDate)}
+                                    value={dayjs(SubmitDate)}
                                     format={dateFormat}
                                     onChange={handleSubDate}
                                     allowClear={false}
@@ -684,12 +684,12 @@ export default function MaterialRequestForm() {
                         </Form.Item>
 
                         <Form.Item
-                            name="closeDate"
+                            name="ClosedDate"
                             label="Closed Date"
                         >
                         <div id="reqInputBox">
                             <DatePicker
-                                value={dayjs(closeDate)}
+                                value={dayjs(ClosedDate)}
                                     format={dateFormat}
                                 onChange={handleCloseDate}
                                 allowClear={false}
@@ -700,15 +700,15 @@ export default function MaterialRequestForm() {
                     </div>
               
                     <Form.Item
-                        name="adminCom"
+                        name="AdminComments"
                         label="Admin Comments"
                     >
                         <div id="reqTextBox">
                             <TextArea
                                 rows={6}
-                                value={adminCom}
+                                value={AdminComments}
                                 placeholder="Administrator Commments"
-                                onChange={e => setAdminCom(e.target.value)}
+                                onChange={e => setAdminComments(e.target.value)}
                             />
                         </div>
                     </Form.Item>
