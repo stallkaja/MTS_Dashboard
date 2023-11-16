@@ -190,55 +190,55 @@ export default function MaterialRequestForm() {
     //handling changes in the form
     const handleStatus = (value) => {
         form.setFieldsValue({
-            requestStatus: value
+            Status: value
         })
         setStatus(value)
     }
     const handleMethod = (value) => {
         form.setFieldsValue({
-            orderMethod: value
+            OrderMethod: value
         })
         setOrderMethod(value)
     }
     const handleCostCenter = (value) => {
         form.setFieldsValue({
-            costCenter: value
+            CostCenter: value
         })
         setCostCenter(value)
     }
     const handlePriority = (value) => {
         form.setFieldsValue({
-            priority: value
+            Priority: value
         })
         setPriority(value)
     }
     const handleVendor = (value) => {
         form.setFieldsValue({
-            preferredVendor: value
+            PreferredVendor: value
         })
         setPrefferedVendor(value)
     }
     const handleNeedDate = (date, dateString) => {
         form.setFieldsValue({
-            needDate: dateString
+            NeedBy: dateString
         })
         setNeedBy(dateString)
     }
     const handleOpenDate = (date, dateString) => {
         form.setFieldsValue({
-            openDate: dateString
+            OpenDate: dateString
         })
         setOpenDate(dateString)
     }
     const handleSubDate = (date, dateString) => {
         form.setFieldsValue({
-            subDate: dateString
+            SubmitDate: dateString
         })
         setSubmitDate(dateString)
     }
     const handleCloseDate = (date, dateString) => {
         form.setFieldsValue({
-            closeDate: dateString
+            ClosedDate: dateString
         })
         setClosedDate(dateString)
     }
