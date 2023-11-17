@@ -285,7 +285,8 @@ function ClosedOrderATable({ hideArray, searchResults }) {
     const dispResults = (searchResults, items) => {
 
         if (searchResults !== undefined) {
-
+            console.log("hello there")
+            console.log(searchResults)
             let searchTable = []
             for (let i = 0; i < searchResults.length; i++) {
                 searchTable.push(searchResults[i])

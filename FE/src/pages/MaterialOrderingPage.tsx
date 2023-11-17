@@ -52,19 +52,19 @@ const TicketDashboard = () => {
         var submitted=[]
         var closed = []
         console.log(searchResults.length)
-        for(let i =0;i<searchResults.length,i++;){
-            console.log(searchResults[i])
+        for (let i = 0; i < searchResults.length; i++) {
+
             if(searchResults[i].Status == 'awaitingApproval'){
                 open.push(searchResults[i])
             }
             else if(searchResults[i].Status == 'submitted'){
                 submitted.push(searchResults[i])
             }
-            else if(searchResults[i].Status == 'closed'){
+            else if(searchResults[i].Status == 'arrived'){
                 closed.push(searchResults[i])
             }
             else{
-                console.log('error')
+                console.log('error ',searchResults[i])
             }
         
         }

@@ -308,6 +308,7 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
     useEffect(() => {
         dispResults(searchResults, items)
     }, [searchResults])
+
     useEffect(() => {
         let filt = []
         filt = (
