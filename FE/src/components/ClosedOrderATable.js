@@ -283,8 +283,7 @@ function ClosedOrderATable({ hideArray, searchResults }) {
     }, [headers])
 
     const dispResults = (searchResults, items) => {
-        console.log("hello there")
-        console.log(searchResults)
+
         if (searchResults !== undefined) {
 
             let searchTable = []

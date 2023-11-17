@@ -377,110 +377,96 @@ app.post('/deactivate', (req, res) => {
     })
 });
 app.post('/newRequest', function (req, res)  {
-    console.log('in new request')
-    //console.log(req.body.attachment.substr(12))
-    var stmt = ""
-    var args = []
-    var ID =0;
-    if (req.body.openDate == 'Invalid Date') {
-        req.body.openDate = dayjs().format('YYYY-MM-DD')
+  console.log('in new request')
+  console.log(req.body)
+  var stmt1stHalf ="INSERT INTO materialOrdersTable ("
+  var stmt2ndHalf =") VALUES(?) ON DUPLICATE KEY UPDATE "
+  var stmt = ""
+  var args = []
+  var ID =0;
+  if (req.body.OpenDate == 'Invalid Date') {
+      req.body.OpenDate = dayjs().format('YYYY-MM-DD')
+  }
+  else if (!req.body.OpenDate) {
+      req.body.OpenDate = dayjs().format('YYYY-MM-DD')
+  }
+  if (req.body.SubmitDate == 'Invalid Date') {
+      req.body.SubmitDate = null
+  }
+  if (req.body.Status == 'submitted') {
+      req.body.SubmitDate = dayjs().format('YYYY-MM-DD')
+  }
+  if (req.body.ClosedDate == 'Invalid Date') {
+      req.body.ClosedDate = null
+  }
+  if (req.body.Status == 'arrived') {
+      req.body.ClosedDate = dayjs().format('YYYY-MM-DD')
+  }
+  
+  for(var attr in req.body){
+    console.log(attr)
+    if(attr == 'RequestNumber' & req.body[attr] == 'new ticket'){
+      Function.prototype(); //no op
     }
-    else if (!req.body.openDate) {
-        req.body.openDate = dayjs().format('YYYY-MM-DD')
+    else if(attr == 'AttachFile' & req.body[attr] == 'undefined'){
+      Function.prototype(); // no op
     }
-    if (req.body.subDate == 'Invalid Date') {
-        req.body.subDate = null
+    else if(attr == 'lineItems'){
+      Function.prototype(); // no op
     }
-    if (req.body.requestStatus == 'submitted') {
-        req.body.subDate = dayjs().format('YYYY-MM-DD')
+    else{
+      args.push(req.body[attr]);
+      stmt1stHalf = stmt1stHalf + attr + ", "
+      stmt2ndHalf = stmt2ndHalf + attr + "=VALUES(" +attr+"), "
     }
-    if (req.body.closeDate == 'Invalid Date') {
-        req.body.closeDate = null
-    }
-    if (req.body.requestStatus == 'arrived') {
-        req.body.closeDate = dayjs().format('YYYY-MM-DD')
-    }
-    if (req.body.reqNum == 'new ticket') {
-        args = [
-            req.body.requestStatus,
-            req.body.needDate,
-            req.body.openDate,
-            req.body.subDate,
-            req.body.closeDate,
-            req.body.adminCom,
-            req.body.costCenter,
-            req.body.requestorEmail,
-            req.body.orderMethod,
-            req.body.purchNum,
-            req.body.preferredVendor,
-            req.body.priority,
-            req.body.requestor,
-            req.body.comments,
-            req.body.attachment.substr(12)
-        ]
-        stmt = "INSERT INTO materialOrdersTable (Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments, AttachFile) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments), AttachFile=VALUES(AttachFile)"
-    }
-    else {
-        console.log('file name is ' + req.file)
-        args = [
-            req.body.reqNum,
-            req.body.requestStatus,
-            req.body.needDate,
-            req.body.openDate,
-            req.body.subDate,
-            req.body.closeDate,
-            req.body.adminCom,
-            req.body.costCenter,
-            req.body.requestorEmail,
-            req.body.orderMethod,
-            req.body.purchNum,
-            req.body.preferredVendor,
-            req.body.priority,
-            req.body.requestor,
-            req.body.comments,
-            req.body.attachment.substr(12)
-        ]
-        stmt = "INSERT INTO materialOrdersTable (RequestNumber, Status, NeedBy, OpenDate, SubmitDate, ClosedDate, AdminComments, CostCenter, Email, OrderMethod, PurchNumber, PreferredVendor, Priority, Requestor, RequestorComments, AttachFile) VALUES(?) ON DUPLICATE KEY UPDATE Status=VALUES(Status), NeedBy=VALUES(NeedBy), OpenDate=VALUES(OpenDate), SubmitDate=VALUES(SubmitDate), ClosedDate=VALUES(ClosedDate), AdminComments=VALUES(AdminComments), CostCenter=VALUES(CostCenter), Email=VALUES(Email), OrderMethod=VALUES(OrderMethod), PurchNumber=Values(PurchNumber), PreferredVendor=VALUES(PreferredVendor), Priority=VALUES(Priority), Requestor=VALUES(Requestor), RequestorComments=VALUES(RequestorComments), AttachFile=VALUES(AttachFile)"
-    }
+  }
+  stmt1stHalf = stmt1stHalf.slice(0,-2)
+  stmt2ndHalf = stmt2ndHalf.slice(0,-2)
+  stmt = stmt1stHalf + stmt2ndHalf
 
-    connection.query(stmt, [args], (err, results, fields) => {
-        if (err) {
-            throw err
-            connection.end();
-            queryPassed = 0;
-        }
-        else if (results.insertId === undefined) {
-            ID = req.body.reqNum
-        }
-        else if (results.insertId === 0) {
-            ID = req.body.reqNum
-        }
-        else {
-            ID = results.insertId;
-        }
-        handleLineInserts(ID,req,res)
-        
-    })
+  connection.query(stmt, [args], (err, results, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+          queryPassed = 0;
+      }
+      else if (results.insertId === undefined) {
+          ID = req.body.RequestNumber
+      }
+      else if (results.insertId === 0) {
+          ID = req.body.RequestNumber
+      }
+      else {
+          ID = results.insertId;
+      }
+      handleLineInserts(ID,req,res)
+      
+  })
 
-    
+  
 });
 
 function handleLineInserts(ID,req,res){
   args =[]
   var payload =[]
+  console.log(req.body)
+  console.log(req.body.lineItems)
   for(let i =0;i<req.body.lineItems.length;i++){
     payload = [
       ID,
-      req.body.lineItems[i].partName,
-      req.body.lineItems[i].partNumber,
-      req.body.lineItems[i].price,
-      req.body.lineItems[i].quantity,
-      req.body.lineItems[i].lineStatus,
+      req.body.lineItems[i].PartName,
+      req.body.lineItems[i].PartNumber,
+      req.body.lineItems[i].PricePer,
+      req.body.lineItems[i].Quantity,
+      req.body.lineItems[i].Status,
       req.body.lineItems[i].pk,
     ]
     args.push(payload)
   }
   stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status, PK) VALUES ? ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
+  console.log("find me")
+  console.log(stmt)
+  console.log(args)
   connection.query(stmt, [args], (err, results, fields) => {
     if (err) {
         throw err
@@ -602,7 +588,7 @@ app.post('/searchTable', (req, res) => {
       ]]
     }
     else{
-      console.log('error')
+      console.log('too many tables provided')
     }
 
     const headers = [];
@@ -641,10 +627,6 @@ app.post('/searchTable', (req, res) => {
         var stmt = "Select COLUMN_NAME,DATA_TYPE from INFORMATION_SCHEMA.COLUMNS where TABLE_NAME= ? order by ordinal_position"
         connection.query(stmt, [args], (err, rows, fields) => {
           for(let i =0; i<rows.length;i++){
-            console.log(headers)
-            console.log(rows[i].COLUMN_NAME)
-            console.log(rows[i].COLUMN_NAME in headers)
-            console.log(headers.includes('Status'))
             if(headers.includes(rows[i].COLUMN_NAME)){
               console.log('found duplicate header')
               for(let j=0;j<headers.length;j++){
@@ -658,7 +640,7 @@ app.post('/searchTable', (req, res) => {
               headers.push(rows[i].COLUMN_NAME)
             }
           }
-          stmt = "SELECT * FROM " + req.body.tName[0] + " CROSS JOIN " + req.body.tName[1] +" WHERE " ;
+          stmt = "SELECT * FROM " + req.body.tName[0] + " INNER JOIN " + req.body.tName[1] +" WHERE " ;
       
           for(let i = 0; i < headers.length; i++){
             stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
@@ -677,9 +659,7 @@ app.post('/searchTable', (req, res) => {
         })
       }
       else{
-        console.log('error')
+        console.log('too many tables provided')
       }
-      
-
     })
 })
