@@ -127,7 +127,6 @@ app.post('/newTicket', (req, res) => {
     stmt = "INSERT INTO ticketsTable (TicketStatus, BEN, TicketDescription, Department, ToolBay, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
   else{
-      console.log(req.body)
     args = [
       req.body.ticketStatus,
       req.body.ticketNum,
@@ -377,8 +376,6 @@ app.post('/deactivate', (req, res) => {
     })
 });
 app.post('/newRequest', function (req, res)  {
-  console.log('in new request')
-  console.log(req.body)
   var stmt1stHalf ="INSERT INTO materialOrdersTable ("
   var stmt2ndHalf =") VALUES(?) ON DUPLICATE KEY UPDATE "
   var stmt = ""
@@ -404,7 +401,6 @@ app.post('/newRequest', function (req, res)  {
   }
   
   for(var attr in req.body){
-    console.log(attr)
     if(attr == 'RequestNumber' & req.body[attr] == 'new ticket'){
       Function.prototype(); //no op
     }
@@ -449,8 +445,7 @@ app.post('/newRequest', function (req, res)  {
 function handleLineInserts(ID,req,res){
   args =[]
   var payload =[]
-  console.log(req.body)
-  console.log(req.body.lineItems)
+
   for(let i =0;i<req.body.lineItems.length;i++){
     payload = [
       ID,
@@ -464,9 +459,6 @@ function handleLineInserts(ID,req,res){
     args.push(payload)
   }
   stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status, PK) VALUES ? ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
-  console.log("find me")
-  console.log(stmt)
-  console.log(args)
   connection.query(stmt, [args], (err, results, fields) => {
     if (err) {
         throw err
@@ -558,7 +550,6 @@ app.post('/loadLineItems', (req, res) => {
             connection.end();
         }
         res.json(rows)
-        console.log(rows)
     })
 
 })
@@ -567,15 +558,11 @@ app.post('/newAttachment', upload.single('attachment'), (req, res) => {
     // req.file is the name of your file in the form above, here 'uploaded_file'
     // req.body will hold the text fields, if there were any
     //connection.end()]
-    console.log("This is here")
-    console.log(req.file.path)
     res.json({message: "success"})
 });
 
 app.post('/searchTable', (req, res) => {
-    console.log(req.body.tName)
-    console.log(req.body.value)
-    console.log(req.body.tName.length)
+
     var args = [];
     if(req.body.tName.length==1){
       args = [[
@@ -598,11 +585,9 @@ app.post('/searchTable', (req, res) => {
           throw err
           connection.end();
       }
-      console.log(rows.length)
       for(let i = 0; i < rows.length; i++){
         headers.push(rows[i].COLUMN_NAME)
       }
-      console.log(headers)
       if(req.body.tName.length==1){
         stmt = "SELECT * FROM " + req.body.tName + " WHERE " ;
       
@@ -610,13 +595,11 @@ app.post('/searchTable', (req, res) => {
           stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
         }
         stmt = stmt.slice(0,-3)
-        //console.log(stmt)
         connection.query(stmt, [args], (err, rows, fields) => {
           if (err) {
               throw err
               connection.end();
           }
-          console.log(rows)
           res.json(rows)
         })
       }
@@ -640,7 +623,7 @@ app.post('/searchTable', (req, res) => {
               headers.push(rows[i].COLUMN_NAME)
             }
           }
-          stmt = "SELECT * FROM " + req.body.tName[0] + " INNER JOIN " + req.body.tName[1] +" WHERE " ;
+          stmt = "SELECT * FROM " + req.body.tName[0] + " INNER JOIN " + req.body.tName[1] + " ON materialorderstable.RequestNumber = orderlineitemstable.RequestNumber" +" WHERE " ;
       
           for(let i = 0; i < headers.length; i++){
             stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "
@@ -652,7 +635,6 @@ app.post('/searchTable', (req, res) => {
                 throw err
                 connection.end();
             }
-            console.log(rows)
             res.json(rows)
           })
 

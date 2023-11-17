@@ -11,7 +11,10 @@ import './MaterialOrderingPage.css';
 
 const TicketDashboard = () => {
     const navigate = useNavigate();
-    const [searchResults, setSearchResults] = useState([]);
+    const [searchResults, setSearchResults] = useState<any[]>([]);
+    const [openSearchResults, setOpenSearchResults] = useState([]);
+    const [submittedSearchResults, setSubmittedSearchResults] = useState([]);
+    const [closedSearchResults, setClosedSearchResults] = useState([]);
     const [hiddenArray, setHiddenArray] = useState({
         key: 1,
         keey: 2,
@@ -45,6 +48,32 @@ const TicketDashboard = () => {
     }
     useEffect(() => {
         console.log(searchResults)
+        var open =[];
+        var submitted=[]
+        var closed = []
+        console.log(searchResults.length)
+        for(let i =0;i<searchResults.length,i++;){
+            console.log(searchResults[i])
+            if(searchResults[i].Status == 'awaitingApproval'){
+                open.push(searchResults[i])
+            }
+            else if(searchResults[i].Status == 'submitted'){
+                submitted.push(searchResults[i])
+            }
+            else if(searchResults[i].Status == 'closed'){
+                closed.push(searchResults[i])
+            }
+            else{
+                console.log('error')
+            }
+        
+        }
+        console.log(open)
+        console.log(submitted)
+        console.log(closed)
+        setOpenSearchResults(open)
+        setSubmittedSearchResults(submitted)
+        setClosedSearchResults(closed)
     },[searchResults])
   
     return (
@@ -79,21 +108,21 @@ const TicketDashboard = () => {
             </div>
             <main>
                 <OpenOrderATable 
-                        hideArray={hiddenArray} searchResults={searchResults} />
+                        hideArray={hiddenArray} searchResults={openSearchResults} />
                 <div id='SubmittedCard'>
                     <div id='SubmittedText'>
                         Submitted
                     </div>
                 </div>
                 <SubmittedOrdersATable
-                        hideArray={hiddenArray} searchResults={searchResults}/>
+                        hideArray={hiddenArray} searchResults={submittedSearchResults}/>
                 <div id='ArrivedCard'>
                     <div id='ArrivedText'>
                         Arrived
                     </div>
                 </div>
                 <ClosedOrderATable
-                        hideArray={hiddenArray} searchResults={searchResults}/>
+                        hideArray={hiddenArray} searchResults={closedSearchResults}/>
             </main>
 
 
