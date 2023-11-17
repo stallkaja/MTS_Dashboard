@@ -384,46 +384,45 @@ app.post('/newRequest', function (req, res)  {
   var stmt = ""
   var args = []
   var ID =0;
-  if (req.body.openDate == 'Invalid Date') {
-      req.body.openDate = dayjs().format('YYYY-MM-DD')
+  if (req.body.OpenDate == 'Invalid Date') {
+      req.body.OpenDate = dayjs().format('YYYY-MM-DD')
   }
-  else if (!req.body.openDate) {
-      req.body.openDate = dayjs().format('YYYY-MM-DD')
+  else if (!req.body.OpenDate) {
+      req.body.OpenDate = dayjs().format('YYYY-MM-DD')
   }
-  if (req.body.subDate == 'Invalid Date') {
-      req.body.subDate = null
+  if (req.body.SubmitDate == 'Invalid Date') {
+      req.body.SubmitDate = null
   }
-  if (req.body.requestStatus == 'submitted') {
-      req.body.subDate = dayjs().format('YYYY-MM-DD')
+  if (req.body.Status == 'submitted') {
+      req.body.SubmitDate = dayjs().format('YYYY-MM-DD')
   }
-  if (req.body.closeDate == 'Invalid Date') {
-      req.body.closeDate = null
+  if (req.body.ClosedDate == 'Invalid Date') {
+      req.body.ClosedDate = null
   }
-  if (req.body.requestStatus == 'arrived') {
-      req.body.closeDate = dayjs().format('YYYY-MM-DD')
+  if (req.body.Status == 'arrived') {
+      req.body.ClosedDate = dayjs().format('YYYY-MM-DD')
   }
   
   for(var attr in req.body){
-    if(attr == 'reqNum' & req.body[attr] == 'new ticket'){
+    console.log(attr)
+    if(attr == 'RequestNumber' & req.body[attr] == 'new ticket'){
       Function.prototype(); //no op
     }
-    else if(attr == 'attachment' & req.body[attr] == 'undefined'){
+    else if(attr == 'AttachFile' & req.body[attr] == 'undefined'){
       Function.prototype(); // no op
     }
-    else if(attr == 'lineitems'){
+    else if(attr == 'lineItems'){
       Function.prototype(); // no op
     }
     else{
-      args.push[req.body[attr]];
+      args.push(req.body[attr]);
       stmt1stHalf = stmt1stHalf + attr + ", "
       stmt2ndHalf = stmt2ndHalf + attr + "=VALUES(" +attr+"), "
     }
   }
-  stmt1stHalf = stmt1stHalf.slice(0,-1)
-  stmt2ndHalf = stmt2ndHalf.slice(0,-1)
+  stmt1stHalf = stmt1stHalf.slice(0,-2)
+  stmt2ndHalf = stmt2ndHalf.slice(0,-2)
   stmt = stmt1stHalf + stmt2ndHalf
-  console.log("find me")
-  console.log(stmt)
 
   connection.query(stmt, [args], (err, results, fields) => {
       if (err) {
@@ -432,10 +431,10 @@ app.post('/newRequest', function (req, res)  {
           queryPassed = 0;
       }
       else if (results.insertId === undefined) {
-          ID = req.body.reqNum
+          ID = req.body.RequestNumber
       }
       else if (results.insertId === 0) {
-          ID = req.body.reqNum
+          ID = req.body.RequestNumber
       }
       else {
           ID = results.insertId;
@@ -450,19 +449,24 @@ app.post('/newRequest', function (req, res)  {
 function handleLineInserts(ID,req,res){
   args =[]
   var payload =[]
+  console.log(req.body)
+  console.log(req.body.lineItems)
   for(let i =0;i<req.body.lineItems.length;i++){
     payload = [
       ID,
-      req.body.lineItems[i].partName,
-      req.body.lineItems[i].partNumber,
-      req.body.lineItems[i].price,
-      req.body.lineItems[i].quantity,
-      req.body.lineItems[i].lineStatus,
+      req.body.lineItems[i].PartName,
+      req.body.lineItems[i].PartNumber,
+      req.body.lineItems[i].PricePer,
+      req.body.lineItems[i].Quantity,
+      req.body.lineItems[i].Status,
       req.body.lineItems[i].pk,
     ]
     args.push(payload)
   }
   stmt ="INSERT INTO orderlineitemstable (RequestNumber, PartName, PartNumber, PricePer, Quantity, Status, PK) VALUES ? ON DUPLICATE KEY UPDATE RequestNumber=VALUES(RequestNumber), PartName=VALUES(PartName), PartNumber=VALUES(PartNumber), PricePer=VALUES(PricePer), Quantity=VALUES(Quantity), Status=VALUES(Status)"
+  console.log("find me")
+  console.log(stmt)
+  console.log(args)
   connection.query(stmt, [args], (err, results, fields) => {
     if (err) {
         throw err

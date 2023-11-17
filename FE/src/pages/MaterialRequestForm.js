@@ -164,21 +164,23 @@ export default function MaterialRequestForm() {
     }
     const addAttachment = async (payload) => {
         // Create new object with the variables set in the form
-        console.log(payload)
-        const formie = new FormData()
-        formie.append("attachment", payload.attachment.file)
-        console.log('attemping attachment post req')
-        const response = await fetch('/newAttachment', {
-            method: 'POST',
-            body: formie
-        }).then(response => {
-            if (response.status === 200) {
-                alert("Request has been added!");
-                history('/MaterialOrderingPage');
-            } else {
-                alert(`Failed to add Request, status code = ${response.status}`);
-            }
-        });
+        console.log(payload.AttachFile)
+        if(payload.AttachFile !=undefined){
+            const formie = new FormData()
+            formie.append("attachment", payload.AttachFile)
+            console.log('attemping attachment post req')
+            const response = await fetch('/newAttachment', {
+                method: 'POST',
+                body: formie
+            }).then(response => {
+                if (response.status === 200) {
+                    alert("Request has been added!");
+                    history('/MaterialOrderingPage');
+                } else {
+                    alert(`Failed to add Request, status code = ${response.status}`);
+             }
+            });
+        }
 
     }
     const navigate = useNavigate();
