@@ -253,7 +253,7 @@ export default function MaterialRequestForm() {
           authorization: 'authorization-text',
         },
         action: '/newAttachment',
-        name: 'attachment',
+        name: 'AttachFile',
       };
 
 
