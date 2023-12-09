@@ -3,7 +3,9 @@ import React from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate} from 'react-router';
 import './toolPullList.css';
-import { Button, ConfigProvider } from 'antd';
+import { Button, ConfigProvider, DatePicker } from 'antd';
+import dayjs from 'dayjs';
+import { useState, useEffect } from 'react';
 
 
   
@@ -13,6 +15,7 @@ const ToolHistoryPage = () => {
         let path = '/ToolInfoForm';
         navigate (path);
     }
+    const [today, setToday] = useState(dayjs());
 
     return (
         <ConfigProvider
@@ -39,6 +42,13 @@ const ToolHistoryPage = () => {
                 </div>
                 {/*<ToolInfoATable />*/}
                 Under construction
+                <br />
+                Today:
+                <DatePicker 
+                    value={dayjs(today)}
+                />
+                    
+                    
             </div>
         </ConfigProvider>
     );
