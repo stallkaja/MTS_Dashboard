@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
-function ColumnChange({ tName , columnChangeCallBack, hideList }) { 
+function ColumnChange({ tName , parentPass, hideList }) { 
     /*const [hideList, setHideList] = useState([
         'Email',
         'PreferredVendor',
@@ -52,7 +52,7 @@ function ColumnChange({ tName , columnChangeCallBack, hideList }) {
     //passing selections back to parent component
     const passData = (value) => {
         //console.log(value)
-        columnChangeCallBack(value)
+        parentPass(value)
     }
     
 

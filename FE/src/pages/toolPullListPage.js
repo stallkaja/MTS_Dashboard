@@ -11,11 +11,13 @@ import { useState, useEffect } from 'react';
   
 const ToolHistoryPage = () => {
     const navigate = useNavigate();
-    const OpenForm = () => {
-        let path = '/ToolInfoForm';
-        navigate (path);
+    const GenList = () => {
+        alert('James!!!!')
     }
     const [today, setToday] = useState(dayjs());
+    const handleDate = (date, dateString) => {
+        setToday(dateString)
+    }
 
     return (
         <ConfigProvider
@@ -35,18 +37,34 @@ const ToolHistoryPage = () => {
 
                 <div id='ToolHeader'>
                     <div id='ToolButton'>
-                        <Button onClick={() => OpenForm()}>
+
+                    </div>
+                </div>
+                <div id='DatePickerBox'>
+                <h1>Under construction</h1>
+                </div>
+                <div id='DatePickerBox'>
+                    <h1>Today:</h1>
+                    <DatePicker 
+                        value={dayjs(today)}
+                        onChange={handleDate}
+                        allowClear={false}
+                    />
+                </div>
+                <div id='PullCard'>
+                    <div id='PullText'>Pull List</div>
+                    <div id='GenerateButton'>
+                        <Button onClick={() => GenList()}>
                             {"Generate List"}
                         </Button>
                     </div>
                 </div>
-                {/*<ToolInfoATable />*/}
-                Under construction
-                <br />
-                Today:
-                <DatePicker 
-                    value={dayjs(today)}
-                />
+                <div id='OverdueCard'>
+                    <div id='OverdueText'>Overdue Tools</div>
+                </div>
+                <div id='LostCard'>
+                    <div id='LostText'>Lost Tools</div>
+                </div>
                     
                     
             </div>

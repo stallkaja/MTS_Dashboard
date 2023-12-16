@@ -1,4 +1,4 @@
-import { Button, Space, Input, Table, Switch, Tag, configProvider, Select, message } from 'antd';
+import { Button, Space, Input, Table, Switch, Tag, ConfigProvider, Select, message } from 'antd';
 import { green } from '@mui/material/colors';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -326,16 +326,103 @@ function OpenOrderATable({ hideArray, searchResults }) {
         dispResults(searchResults, items)
     },[searchResults])
 
+    const expRowRender = () => {
+        const columns = [
+            {
+                title: 'Part Name',
+                dataIndex: 'PartName',
+                key: 'PartName',
+                ...getColumnSearchProps('PartName'),
+                sorter: {
+                    compare: (a, b) => defaultSort(a['PartName'], b['PartName']),
+                },
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Part Number',
+                dataIndex: 'PartNumber',
+                key: 'PartNumber',
+                ...getColumnSearchProps('PartNumber'),
+                sorter: {
+                    compare: (a, b) => defaultSort(a['PartNumber'], b['PartNumber']),
+                },
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Price',
+                dataIndex: 'PricePer',
+                key: 'PricePer',
+                ...getColumnSearchProps('PricePer'),
+                sorter: {
+                    compare: (a, b) => defaultSort(a['PricePer'], b['PricePer']),
+                },
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Quantity',
+                dataIndex: 'Quantity',
+                key: 'Quantity',
+                ...getColumnSearchProps('Quantity'),
+                sorter: {
+                    compare: (a, b) => defaultSort(a['Quantity'], b['Quantity']),
+                },
+                sortDirections: ['descend', 'ascend'],
+            },
+            {
+                title: 'Status',
+                dataIndex: 'Status',
+                key: 'Status',
+                ...getColumnSearchProps('Status'),
+                sorter: {
+                    compare: (a, b) => defaultSort(a['Status'], b['Status']),
+                },
+                sortDirections: ['descend', 'ascend'],
+            },
+        ]
+        const data = [];
+        for (let i = 0; i < 36; i++) {
+            data.push({
+                key: i.toString(),
+                PartName: 'Cheese' + i,
+                PartNumber: i + '23-123',
+                PricePer: i * 2,
+                Quantity: '1',
+                Status: 'Awaiting Arrival',
+            })
+        }
+        return <Table
+            columns={columns}
+            dataSource={data}
+            bordered={false}
+            showSorterTooltip={false}
+                />;
+    }
+
     return (
-        <div>
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: '#000000',
+                    }
+                },
+                token: {
+                    //colorBgContainer: '#E6E3DC',
+                }
+            } }  
+        >
             <Table
                 className="OpenTicketTable"
                 columns={filtHead}
+                expandedRowRender={expRowRender}
                 dataSource={items}
                 bordered
                 showSorterTooltip={false}
+                style={{
+                    
+                }}
             />
-        </div>
+        </ConfigProvider>
     );
 }
 

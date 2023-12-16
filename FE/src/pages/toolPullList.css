@@ -28,3 +28,74 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+#OverdueCard {
+    background: linear-gradient(red, #242437 60%);
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
+    justify-content: space-between;
+}
+#PullCard {
+    background: linear-gradient(#20a742, #242437 60%);
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+#LostCard {
+    background: linear-gradient(#e89945, #242437 60%);
+    border-radius: 15px;
+    height: 50px;
+    display: flex;
+}
+#PullText {
+    color: white;
+    font-size: 30px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: flex-start;
+}
+#OverdueText {
+    color: white;
+    font-size: 30px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: flex-start;
+}
+#LostText {
+    color: white;
+    font-size: 30px;
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    align-items: flex-start;
+}
+#GenerateButton {
+    padding-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: center;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#DatePickerBox {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}

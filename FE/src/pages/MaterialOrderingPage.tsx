@@ -35,7 +35,7 @@ const TicketDashboard = () => {
     }
 
     //Data being returned from columnChange component, to be passed to child tables
-    const columnChangeCallBack = (colChangeCallBackData) => {
+    const parentPass = (colChangeCallBackData) => {
         return (
             setHiddenArray(colChangeCallBackData)
         )
@@ -88,23 +88,23 @@ const TicketDashboard = () => {
             }}>
         <div>
             <div id='MatTitleCard'>
-                    <h1 id='TitleText'>Material Ordering</h1>
-                    <ColumnChange
-                        tName='materialorderstable'
-                        columnChangeCallBack={columnChangeCallBack}
-                        hideList={hideList} />
-                    <GlobalSearch
-                        tName={["materialorderstable" , "orderlineitemstable"]}
-                        searchCallBack={searchCallBack}
-                        />
+                <h1 id='TitleText'>Material Ordering</h1>
+                <ColumnChange
+                    tName='materialorderstable'
+                    parentPass={parentPass}
+                    hideList={hideList} />
+                <GlobalSearch
+                    tName={["materialorderstable" , "orderlineitemstable"]}
+                    searchCallBack={searchCallBack}
+                    />
             </div>
             <div id='AwaitingCard'>
-                    <div id='AwaitingText'>Awaiting Approval</div>
-                    <div id='CreateButton'>
-                        <Button onClick={() => OpenTicket()}>
-                        {"Create New Order"}
-                        </Button>
-                    </div>
+                <div id='AwaitingText'>Awaiting Approval</div>
+                <div id='CreateButton'>
+                    <Button onClick={() => OpenTicket()}>
+                    {"Create New Order"}
+                    </Button>
+                </div>
             </div>
             <main>
                 <OpenOrderATable 

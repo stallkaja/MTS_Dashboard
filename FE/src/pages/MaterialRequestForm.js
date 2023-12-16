@@ -494,22 +494,22 @@ export default function MaterialRequestForm() {
                         >
                             <div id="reqInputBox">
                             <Upload {...props}
-                                    //fileList={AttachFile}
-                            onChange={(response) => {
-                                console.log('in change')
-                                if (response.file.status !== 'uploading') {
-                                console.log(response.file, response.fileList, response.file.url);
-                                }
-                                if (response.file.status === 'done') {
-                                message.success(`${response.file.name} 
-                                                file uploaded successfully`);
-                                } else if (response.file.status === 'error') {
-                                message.error(`${response.file.name} 
-                                                file upload failed.`);
-                                }
-                            }}
-                            >
-                            <Button>Upload File</Button>
+                                        //fileList={AttachFile}
+                                onChange={(response) => {
+                                    console.log('in change')
+                                    if (response.file.status !== 'uploading') {
+                                    console.log(response.file, response.fileList, response.file.url);
+                                    }
+                                    if (response.file.status === 'done') {
+                                    message.success(`${response.file.name} 
+                                                    file uploaded successfully`);
+                                    } else if (response.file.status === 'error') {
+                                    message.error(`${response.file.name} 
+                                                    file upload failed.`);
+                                    }
+                                }}
+                                >
+                                <Button>Upload File</Button>
                             </Upload>                                   
                             </div>
                         </Form.Item>
