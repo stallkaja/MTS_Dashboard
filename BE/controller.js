@@ -167,7 +167,7 @@ app.post('/newTool', (req, res) => {
         req.body.area,
         req.body.loc,
         req.body.caldue,
-        req.body.key
+        req.body.PK
 
     ]
     const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, Location, CalibrationDue, PK) VALUES(?) ON DUPLICATE KEY UPDATE NVL = VALUES(NVL), ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), Location = VALUES(Location), CalibrationDue = VALUES(CalibrationDue)"
