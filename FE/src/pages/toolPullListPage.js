@@ -67,10 +67,7 @@ const ToolPullListPage = () => {
                     </div>
                 </div>
                 <div id='DatePickerBox'>
-                <h1>Under construction</h1>
-                </div>
-                <div id='DatePickerBox'>
-                    <h1>Today:</h1>
+                    <h1>Today: </h1>
                     <DatePicker 
                         value={dayjs(today)}
                         onChange={handleDate}

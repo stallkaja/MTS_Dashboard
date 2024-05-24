@@ -3,7 +3,8 @@
     transition: width 0.3s ease-in-out;
     height: auto;
     /*background-image: linear-gradient(to right, #242437 50%, #243742);*/
-    background-image: linear-gradient(0deg, #242437 20%, #20a875);
+    /*background-image: linear-gradient(0deg, #242437 20%, #20a875);*/
+    background: #242437;
     padding-top: 28px;
     /*#2e3042 for slate gradient*/
     border-right: 2px solid white;
