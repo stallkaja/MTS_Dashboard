@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, typography, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, DatePicker, Typpography, Popconfirm, message } from 'antd';
 import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
+import dayjs from 'dayjs';
 
 function StaggerPullListTable(hideArray) {
     const [items, setItems] = useState([]);
@@ -14,6 +15,14 @@ function StaggerPullListTable(hideArray) {
     const [hideList, setHideList] = useState(['PK'])
     const [pk, setPk] = useState(0);
     const [filtHead, setFiltHead] = useState([]);
+    
+    const GenList = () => {
+        alert('James!!!!')
+    }
+    const [today, setToday] = useState(dayjs());
+    const handleDate = (date, dateString) => {
+        setToday(dateString)
+    }
     //const [recPk, setRecPk] = useState('');
     //const [recStat, setRecStat] = useState('');
 
@@ -23,7 +32,7 @@ function StaggerPullListTable(hideArray) {
         if (b < a) return 1;
         return 0;
     };
-    const cancel = (e) => {
+    /*const cancel = (e) => {
         message.error('click on no');
     };
     const EditRecord = (record) => {
@@ -55,7 +64,7 @@ function StaggerPullListTable(hideArray) {
                 alert(`Failed to deactivate, status code = ${response.status}`);
             }
         });
-    };
+    };*/
 
 
 
@@ -335,15 +344,150 @@ function StaggerPullListTable(hideArray) {
     }, [headers])
 
     return (
-        <Table
-            className='OpenTicketTable'
-            columns={filtHead}
-            dataSource={items}
-            style={{
-                paddingTop: '10px'
-            }}
-            showSorterTooltip={false}
-        />
+        <div>
+            <div style={{ textAlign: "Center"} } >
+                <h1>Pull Date</h1>
+                <DatePicker 
+                    value={dayjs(today)}
+                    onChange={handleDate}
+                    allowClear={false}
+                />
+
+                <Button onClick={() => GenList()}>
+                    {"Generate List"}
+                </Button>
+            </div>
+
+            <Table
+                className='OpenTicketTable'
+                columns={filtHead}
+                dataSource={items}
+                style={{
+                    paddingTop: '10px'
+                }}
+                showSorterTooltip={false}
+            />
+        </div>
+
+
     );
 }
+
 export default StaggerPullListTable;
+
+/*
+const fs = require('fs');
+const path = require('path');
+const xlsx = require('xlsx');
+const moment = require('moment');
+
+function main() {
+    const datax = xlsx.readFile('C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm', { sheet: 'All Tools' });
+    const stag_data = xlsx.readFile('C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm', { sheet: 'Staggering List', range: 'A:A' });
+
+    let data = datax.Sheets['All Tools'];
+    let stag = stag_data.Sheets['Staggering List'];
+
+    // Clean up data
+    data = data.filter(row => !Object.values(row).every(val => val === null));
+    delete data['Legend:'];
+
+    // Convert Calibration Due to date
+    data['Calibration Due'] = data['Calibration Due'].map(val => moment(val, 'YYYY-MM-DD HH:mm:ss'));
+
+    // Handle staggering list
+    if (stag['Dates:'][1] === undefined) {
+        stag['Dates:'][1] = moment().format('YYYY-MM-DD');
+    }
+    let pull = moment(stag['Dates:'][1]);
+    let send = pull.clone().add(42, 'days');
+    while (send.weekday() !== 2) {
+        send.add(1, 'day');
+    }
+    stag['Dates:'][3] = send.format('YYYY-MM-DD');
+
+    // Sort data by Calibration Due
+    data.sort((a, b) => a['Calibration Due'] - b['Calibration Due']);
+
+    const stagger = [];
+    const list = ['SENT', 'STAHLWILLE/REPAIR', 'BCP/QUARANTINED'];
+    const outList = [...list, 'OUTGOING'];
+    const red_list = [];
+    const yel_list = [];
+    const lost_list = [];
+
+    const toolCounts = {};
+    for (const tool of data['Description']) {
+        toolCounts[tool] = (toolCounts[tool] || 0) + 1;
+    }
+    for (const [key, value] of Object.entries(toolCounts)) {
+        toolCounts[key] = Math.ceil(value / 52);
+    }
+    const toolsCounted = Object.fromEntries(Object.entries(toolCounts).map(([k, v]) => [k, 0]));
+
+    const late = pull.clone().add(7, 'days');
+    const lowBound = pull.clone().add(35, 'days');
+    const upBound = pull.clone().add(49, 'days');
+
+    for (let n = 0; n < data['NVL #'].length; n++) {
+        if (data['Calibration Due'][n] <= late) {
+            if (!list.includes(data['Location'][n])) {
+                stagger.push(n);
+                red_list.push(n);
+            }
+        } else if (data['Calibration Due'][n] >= late && data['Calibration Due'][n] <= lowBound) {
+            if (!list.includes(data['Location'][n])) {
+                stagger.push(n);
+                yel_list.push(n);
+            }
+        } else if (data['Location'][n] === 'LOST') {
+            lost_list.push(n);
+        } else if (data['Calibration Due'][n] > lowBound && data['Calibration Due'][n] < upBound) {
+            if (!outList.includes(data['Location'][n])) {
+                if (toolsCounted[data['Description'][n]] < toolCounts[data['Description'][n]]) {
+                    stagger.push(n);
+                    toolsCounted[data['Description'][n]]++;
+                }
+            }
+        }
+    }
+
+    stagger.sort((a, b) => a - b);
+    const dataz = data.filter((row, index) => stagger.includes(index));
+
+    const book = xlsx.readFile('C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm');
+    const sheet = book.Sheets['Staggering List'];
+    sheet['A1'].v = stag;
+    sheet['B1'].v = dataz;
+
+    if (lost_list.length > 0) {
+        const losted = `B2:M${lost_list.length + 2}`;
+        sheet[losted].s.fill = { fgColor: { rgb: 'FFA500' } };
+    }
+
+    if (red_list.length > 0) {
+        const reded = `B${lost_list.length + 2}:M${lost_list.length + red_list.length + 2}`;
+        sheet[reded].s.fill = { fgColor: { rgb: 'Ff0000' } };
+    }
+
+    if (yel_list.length > 0) {
+        const yeled = `B${lost_list.length + (red_list.length || 1) + 2}:M${lost_list.length + red_list.length + yel_list.length + 2}`;
+        sheet[yeled].s.fill = { fgColor: { rgb: 'FFFF00' } };
+    }
+
+    const borded = `B1:M${stagger.length + 1}`;
+    sheet[borded].s.border = {
+        top: { style: 'thick' },
+        bottom: { style: 'thick' },
+        left: { style: 'thick' },
+        right: { style: 'thick' }
+    };
+
+    xlsx.writeFile(book, 'C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm');
+}
+
+if (require.main === module) {
+    main();
+}
+
+*/

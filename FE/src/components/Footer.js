@@ -6,6 +6,15 @@ function Footer() {
     const emailMTS = () => {
 
     }
+    const emailSWIF = () => {
+
+    }
+    const emailSWIQ = () => {
+
+    }
+    const emailCTU = () => {
+
+    }
 
     return(
         <ConfigProvider
@@ -34,6 +43,30 @@ function Footer() {
                         onClick={emailMTS}
                         >
                             MTS
+                    </Button>
+
+                    <Button
+                        type="link"
+                        size="large"
+                        onClick={emailSWIF}
+                    >
+                        SWIC F
+                    </Button>
+
+                    <Button
+                        type="link"
+                        size="large"
+                        onClick={emailSWIQ}
+                    >
+                        SWIC Q
+                    </Button>
+
+                    <Button
+                        type="link"
+                        size="large"
+                        onClick={emailCTU}
+                    >
+                        CTU
                     </Button>
 
                 </Footer>

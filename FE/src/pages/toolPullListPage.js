@@ -61,30 +61,30 @@ const ToolPullListPage = () => {
                     </h1>
                 </div>
 
-                <div id='ToolHeader'>
+                {/*<div id='ToolHeader'>
                     <div id='ToolButton'>
 
                     </div>
-                </div>
-                <div id='DatePickerBox'>
+                </div>*/}
+                {/*<div id='DatePickerBox'>
                     <h1>Today: </h1>
                     <DatePicker 
                         value={dayjs(today)}
                         onChange={handleDate}
                         allowClear={false}
                     />
-                </div>
-                <div id='PullCard'>
-                    <div id='PullText'>Pull List</div>
-                    <div id='GenerateButton'>
-                        <Button onClick={() => GenList()}>
+                    //</div>
+                        //<div id='PullCard'>
+                        //<div id='PullText'>Pull List</div>
+                        //<div id='GenerateButton'>
+                     <Button onClick={() => GenList()}>
                             {"Generate List"}
                         </Button>
-                    </div>
-                </div>
-                <StaggerPullListTable
+                        {//</div>
+                        */}
+                        <StaggerPullListTable
                     hideArray={hiddenArray} />
-                <div id='OverdueCard'>
+                {/*<div id='OverdueCard'>
                     <div id='OverdueText'>Overdue Tools</div>
                 </div>
                 <OverdueListTable
@@ -93,7 +93,7 @@ const ToolPullListPage = () => {
                     <div id='LostText'>Lost Tools</div>
                 </div>
                 <LostListTable
-                    hideArray={hiddenArray} />    
+                    hideArray={hiddenArray} /> */}  
                     
             </div>
         </ConfigProvider>
