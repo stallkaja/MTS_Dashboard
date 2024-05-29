@@ -273,6 +273,7 @@ app.get('/loadOpenTickets', (_, res) => {
   })
   //connection.end()
   });
+
   app.get('/loadClosedTickets', (_, res) => {
     connection.query('Select * from ticketstable WHERE TicketStatus = "Closed"', (err, rows, fields) => {
       if (err) {
@@ -283,6 +284,7 @@ app.get('/loadOpenTickets', (_, res) => {
     })
     //connection.end()
   });
+
 //retrieve calibrated tools information
 app.get('/calTools', (_, res) => {
     connection.query('Select * from caltoolstable WHERE Status = "Active"', (err, rows, fields) => {
@@ -645,3 +647,15 @@ app.post('/searchTable', (req, res) => {
       }
     })
 })
+
+//retrieve calibrated tools information
+app.get('/stagTools', (_, res) => {
+    connection.query('Select * from caltoolstable WHERE Status = "Active"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});

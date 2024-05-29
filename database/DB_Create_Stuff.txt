@@ -8,3 +8,18 @@ SHOW CREATE TABLe materiallisttable;
 
 select * from toolhistorytable
 -- INSERT INTO toolhistorytable (NVL, employeeID, newLoc) VALUES ('test', 'test', 'test');
+
+CREATE TABLE `caltoolstable` (
+  `PK` int NOT NULL,
+  `NVL` varchar(255) DEFAULT NULL,
+  `ManufacturerName` text,
+  `ModelName` text,
+  `Description` text,
+  `SerialNumber` varchar(255) DEFAULT NULL,
+  `Area` varchar(255) DEFAULT NULL,
+  `PermLoc` text,
+  `CalibrationDue` datetime DEFAULT NULL,
+  `CurLoc` text,
+  `Status` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`PK`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;

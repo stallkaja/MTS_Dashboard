@@ -244,7 +244,7 @@ function StaggerPullListTable(hideArray) {
 
     //retreiving items from DB
     const loadItems = async () => {
-        const response = await fetch('/calTools', {
+        const response = await fetch('/stagTools', {
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -347,15 +347,22 @@ function StaggerPullListTable(hideArray) {
         <div>
             <div style={{ textAlign: "Center"} } >
                 <h1>Pull Date</h1>
-                <DatePicker 
-                    value={dayjs(today)}
-                    onChange={handleDate}
-                    allowClear={false}
-                />
-
-                <Button onClick={() => GenList()}>
-                    {"Generate List"}
-                </Button>
+                <div style={{
+                    display: "flex",
+                    textAlign: "center",
+                    paddingLeft:"575px",
+                    paddingRight: "618px",
+                    justifyContent: "Space-Evenly"
+                } }>
+                    <DatePicker 
+                        value={dayjs(today)}
+                        onChange={handleDate}
+                        allowClear={false}
+                    />
+                    <Button onClick={() => GenList()}>
+                        {"Generate List"}
+                    </Button>
+                </div>
             </div>
 
             <Table

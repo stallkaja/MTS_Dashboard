@@ -26,7 +26,7 @@
     flex-direction: column;
     align-content: space-between;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 #OverdueCard {
     background: linear-gradient(red, #242437 60%);
