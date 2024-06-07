@@ -120,24 +120,6 @@ const ScanToolPage = ({ setItemToEdit }) => {
                     <h1 className={ScanToolStyles.headtext2}>Calibrated Tool History</h1>
                 </div>
 
-                <div className={ScanToolStyles.header}>
-                    <div className={ScanToolStyles.headtext }>Movement Log</div>
-
-                    <div className={ScanToolStyles.searchbar }>
-                        <input id="searchnvl"
-                            type="text"
-                            value={searchNVL}
-                            onInput={e => setSearchNVL(e.target.value)}
-                            placeholder="Search an NVL"
-                            size="25"
-                        />
-
-                        <div className={ScanToolStyles.searchbutton }>
-                            <Button type="default" onClick={fetchNVLs}>Search</Button></div>
-                        </div>
-                    <br />
-                </div>
-
                 <fieldbox>
                     <fieldset>
                         <legend>
@@ -164,6 +146,26 @@ const ScanToolPage = ({ setItemToEdit }) => {
                         </div>
                    </fieldset>
                 </fieldbox> 
+                <div style={{ paddingBottom: '10px'} } />
+
+
+                <div className={ScanToolStyles.header}>
+                    <div className={ScanToolStyles.headtext}>Movement Log</div>
+
+                    <div className={ScanToolStyles.searchbar}>
+                        <input id="searchnvl"
+                            type="text"
+                            value={searchNVL}
+                            onInput={e => setSearchNVL(e.target.value)}
+                            placeholder="Search an NVL"
+                            size="25"
+                        />
+
+                        <div className={ScanToolStyles.searchbutton}>
+                            <Button type="default" onClick={fetchNVLs}>Search</Button></div>
+                    </div>
+                    <br />
+                </div>
           
                 <div className={ScanToolStyles.row}>
                     <div className={ScanToolStyles.column}>

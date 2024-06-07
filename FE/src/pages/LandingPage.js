@@ -87,7 +87,8 @@ const LandingPage = () => {
                     colorPrimary: '#6ce3c6',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#6ce3c6'
+                    colorPrimaryHover: '#6ce3c6',
+                    colorLink: '#000000'
                 },
             }}>
 
@@ -145,10 +146,18 @@ const LandingPage = () => {
                     <div id='LandingLinksBox'>
                         <div id='LandingLinksTitle'>Helpful Links</div>
                         <div id='LandingLinks'>
-                            <Button type="link" size="Large" href="https://lamresearch.sharepoint.com/sites/WetOpsMfgTeam-SWATInternalComms/SitePages/S.W.A.T.-Home-Page.aspx?xsdata=MDV8MDF8fDQxZDE1YTM3NTZmZjQ2NTBkYWQzMDhkYjhmZGZiZDA1fDkxODA3OWRiYzkwMjRlMjliMjJjOTc2NDQxMGQwMzc1fDB8MHw2MzgyNjE5NjMzMTQ4MTM2NTF8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxMMk5vWVhSekx6RTVPakV6TVRFM01XSmtMV0ZrWmpBdE5ESmhZaTA1TkdObUxXUmtPRGN3WldNNU5EZ3paRjg1TVRWaU1UTTVNUzAzWkRoa0xUUmxNV010T0RjMll5MDJNbUkyTVdJd1lqazBaRGxBZFc1eExtZGliQzV6Y0dGalpYTXZiV1Z6YzJGblpYTXZNVFk1TURVNU9UVXpNRGMwTnc9PXw2MzM5NWUzMjRmMGE0NzkxNzg4YzA4ZGI4ZmRmYmQwM3xkMjQ0ZDJjMWYwMDI0ODRiOGJiY2E5YjkzMWZiOGRjYg%3D%3D&sdata=ek92bVRCdnRiYzJ3NjR1bjkxY3h3c21QZEo5QXpLRGxUYlFaRTRpZmROaz0%3D&ovuser=918079db-c902-4e29-b22c-9764410d0375%2CJordan.Oster%40lamresearch.com&OR=Teams-HL&CT=1690599544079&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzA3MDMwNzMzMCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D" target="_blank">SWAT SharePoint</Button>
-                            <Button type="link" size="Large" href="https://lamresearch.sharepoint.com/sites/DMO/DOSupport/SitePages/Home.aspx?RootFolder=%2Fsites%2FDMO%2FDOSupport%2FDry%20Operations%20Support%20Library%2FCalibration%20Program&FolderCTID=0x0120006C8A25AE9D2CB04AAD8754DAA86291AB&View=%7BC96FDBD5-BF14-497B-ABE0-5282532C53DB%7D" target="_blank">DOS SharePoint</Button>
-                            <Button type="link" size="Large" href="https://lamresearch.sharepoint.com/sites/SIP-eDMSTeam" target="_blank">eDMS</Button>
-                            <Button type="link" size="Large" href="https://vfd.fremont.lamrc.net/login" target="_blank">VFD</Button>
+                            <div style={{ paddingTop: '7px' }}>
+                                <Button size="Large" href="https://lamresearch.sharepoint.com/sites/WetOpsMfgTeam-SWATInternalComms/SitePages/S.W.A.T.-Home-Page.aspx?xsdata=MDV8MDF8fDQxZDE1YTM3NTZmZjQ2NTBkYWQzMDhkYjhmZGZiZDA1fDkxODA3OWRiYzkwMjRlMjliMjJjOTc2NDQxMGQwMzc1fDB8MHw2MzgyNjE5NjMzMTQ4MTM2NTF8VW5rbm93bnxWR1ZoYlhOVFpXTjFjbWwwZVZObGNuWnBZMlY4ZXlKV0lqb2lNQzR3TGpBd01EQWlMQ0pRSWpvaVYybHVNeklpTENKQlRpSTZJazkwYUdWeUlpd2lWMVFpT2pFeGZRPT18MXxMMk5vWVhSekx6RTVPakV6TVRFM01XSmtMV0ZrWmpBdE5ESmhZaTA1TkdObUxXUmtPRGN3WldNNU5EZ3paRjg1TVRWaU1UTTVNUzAzWkRoa0xUUmxNV010T0RjMll5MDJNbUkyTVdJd1lqazBaRGxBZFc1eExtZGliQzV6Y0dGalpYTXZiV1Z6YzJGblpYTXZNVFk1TURVNU9UVXpNRGMwTnc9PXw2MzM5NWUzMjRmMGE0NzkxNzg4YzA4ZGI4ZmRmYmQwM3xkMjQ0ZDJjMWYwMDI0ODRiOGJiY2E5YjkzMWZiOGRjYg%3D%3D&sdata=ek92bVRCdnRiYzJ3NjR1bjkxY3h3c21QZEo5QXpLRGxUYlFaRTRpZmROaz0%3D&ovuser=918079db-c902-4e29-b22c-9764410d0375%2CJordan.Oster%40lamresearch.com&OR=Teams-HL&CT=1690599544079&clickparams=eyJBcHBOYW1lIjoiVGVhbXMtRGVza3RvcCIsIkFwcFZlcnNpb24iOiIyNy8yMzA3MDMwNzMzMCIsIkhhc0ZlZGVyYXRlZFVzZXIiOmZhbHNlfQ%3D%3D" target="_blank">MTS Wet SharePoint</Button>
+                            </div>
+                            <div style={{ paddingTop: '7px' }}>
+                                <Button size="Large" href="https://lamresearch.sharepoint.com/sites/DMO/DOSupport/SitePages/Home.aspx?RootFolder=%2Fsites%2FDMO%2FDOSupport%2FDry%20Operations%20Support%20Library%2FCalibration%20Program&FolderCTID=0x0120006C8A25AE9D2CB04AAD8754DAA86291AB&View=%7BC96FDBD5-BF14-497B-ABE0-5282532C53DB%7D" target="_blank">MTS Dry SharePoint</Button>
+                            </div>
+                            <div style={{ paddingTop: '7px' }}>
+                                <Button size="Large" href="https://lamresearch.sharepoint.com/sites/SIP-eDMSTeam" target="_blank">eDMS</Button>
+                            </div>
+                            <div style={{ paddingTop: '7px', paddingBottom: '7px' }}>
+                                <Button size="Large" href="https://vfd.fremont.lamrc.net/login" target="_blank">VFD</Button>
+                            </div>
                         </div>
                     </div>
                 </div>

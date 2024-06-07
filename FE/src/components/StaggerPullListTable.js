@@ -12,17 +12,64 @@ function StaggerPullListTable(hideArray) {
     const searchInput = useRef(null);
     const navigate = useNavigate();
     const [stat, setStat] = useState('Inactive');
-    const [hideList, setHideList] = useState(['PK'])
+    const [hideList, setHideList] = useState(['PK','Status'])
     const [pk, setPk] = useState(0);
     const [filtHead, setFiltHead] = useState([]);
+    const toolCounts = {};
+    const toolsCounted = {};
+    const [stagList, setStagList] = useState([]);
     
     const GenList = () => {
-        alert('James!!!!')
+        let list=[]
+        console.log('James!!!!')
+        let pull = dayjs(today);
+        let send = pull.add(42, 'days');
+        do {
+            send=send.add(1, 'day');
+        }
+        while (send.day() !== 3)
+
+        // Sort data by Calibration Due
+        items.sort((a, b) => a['CalibrationDue'] - b['CalibrationDue']);
+        console.log(items)
+        console.log(pull)
+        console.log(send)
+        console.log(today.add(7, 'days'))
+        for (let i = 0; i < items.length; i++) {
+            if (dayjs(items[i]['CalibrationDue']) < dayjs(today)) {
+                list.push(items[i])
+            }
+            else if (dayjs(today) < dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) < dayjs(today.add(7, 'days'))) {
+                list.push(items[i])
+            }
+        }
+        setStagList(list)
+        console.log(list)
+
     }
+
+    const toolMap = () => {
+
+        for (let i = 0; i < items.length; i++) {
+            if (items[i]['Description'] in toolCounts) {
+                toolCounts[items[i]['Description']] = toolCounts[items[i]['Description']] + 1
+            }
+            else {
+                toolCounts[items[i]['Description']] = 1
+            }
+        }
+        for (const [key, value] of Object.entries(toolCounts)) {
+            toolCounts[key] = Math.ceil(value / 52);
+        }
+        const toolsCounted = Object.fromEntries(Object.entries(toolCounts).map(([k, v]) => [k, 0]));
+
+    }
+
     const [today, setToday] = useState(dayjs());
     const handleDate = (date, dateString) => {
         setToday(dateString)
     }
+
     //const [recPk, setRecPk] = useState('');
     //const [recStat, setRecStat] = useState('');
 
@@ -266,6 +313,8 @@ function StaggerPullListTable(hideArray) {
         });
     }
     useEffect(() => loadItems(), []);
+    useEffect(() => toolMap(), [items])
+    
 
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
@@ -368,7 +417,7 @@ function StaggerPullListTable(hideArray) {
             <Table
                 className='OpenTicketTable'
                 columns={filtHead}
-                dataSource={items}
+                dataSource={stagList}
                 style={{
                     paddingTop: '10px'
                 }}
@@ -394,10 +443,6 @@ function main() {
 
     let data = datax.Sheets['All Tools'];
     let stag = stag_data.Sheets['Staggering List'];
-
-    // Clean up data
-    data = data.filter(row => !Object.values(row).every(val => val === null));
-    delete data['Legend:'];
 
     // Convert Calibration Due to date
     data['Calibration Due'] = data['Calibration Due'].map(val => moment(val, 'YYYY-MM-DD HH:mm:ss'));
