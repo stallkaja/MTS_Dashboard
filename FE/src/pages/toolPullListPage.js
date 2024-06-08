@@ -15,9 +15,6 @@ import LostListTable from '../components/LostListTable';
   
 const ToolPullListPage = () => {
     const navigate = useNavigate();
-    const GenList = () => {
-        alert('James!!!!')
-    }
     const [today, setToday] = useState(dayjs());
     const handleDate = (date, dateString) => {
         setToday(dateString)
@@ -28,10 +25,6 @@ const ToolPullListPage = () => {
         keeey: 3
     });
     const [hideList, setHideList] = useState([]);
-    const OpenTicket = () => {
-        let path = '/TicketPage';
-        navigate(path);
-    }
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (
@@ -60,41 +53,8 @@ const ToolPullListPage = () => {
                             hideList={hideList} />
                     </h1>
                 </div>
-
-                {/*<div id='ToolHeader'>
-                    <div id='ToolButton'>
-
-                    </div>
-                </div>*/}
-                {/*<div id='DatePickerBox'>
-                    <h1>Today: </h1>
-                    <DatePicker 
-                        value={dayjs(today)}
-                        onChange={handleDate}
-                        allowClear={false}
-                    />
-                    //</div>
-                        //<div id='PullCard'>
-                        //<div id='PullText'>Pull List</div>
-                        //<div id='GenerateButton'>
-                     <Button onClick={() => GenList()}>
-                            {"Generate List"}
-                        </Button>
-                        {//</div>
-                        */}
-                        <StaggerPullListTable
-                    hideArray={hiddenArray} />
-                {/*<div id='OverdueCard'>
-                    <div id='OverdueText'>Overdue Tools</div>
-                </div>
-                <OverdueListTable
-                    hideArray={hiddenArray} />
-                <div id='LostCard'>
-                    <div id='LostText'>Lost Tools</div>
-                </div>
-                <LostListTable
-                    hideArray={hiddenArray} /> */}  
-                    
+                <StaggerPullListTable
+                    hideArray={hiddenArray} />                   
             </div>
         </ConfigProvider>
     );
