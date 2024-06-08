@@ -4,14 +4,25 @@ import ClosedTicketATable from '../components/ClosedTicketATable';
 import "./TicketDashboard.css";
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
+import ColumnChange from '../components/ColumnChange';
+import { useState } from 'react';
 
-const TicketDashboard: React.FC = () => {
+const KitDashboard: React.FC = () => {
     const navigate = useNavigate();
     const OpenForm = () => {
-        let path = '/KitFormPage';
+        let path = '/TicketPage';
         navigate(path);
     }
-
+    const [hideList, setHideList] = useState([]);
+    const [hiddenArray, setHiddenArray] = useState({
+        key: 1,
+        keey: 2,
+        keeey: 3
+    });
+    //Data being returned from columnChange component, to be passed to child tables
+    const parent = (childData) => {
+        return (setHiddenArray(childData))
+    }
   
     return (
         <ConfigProvider
@@ -23,7 +34,10 @@ const TicketDashboard: React.FC = () => {
                     colorPrimaryHover: '#e0ded6'
                 },
             }}>
-            
+            <ColumnChange
+                tName='ticketstable'
+                parentPass={parent}
+                hideList={hideList} />
             <div>
                 <div id='TicketDashCard'>
                     <h1 id='TicketTitle'>Ticket Dashboard</h1>
@@ -42,17 +56,17 @@ const TicketDashboard: React.FC = () => {
                         </Button>
                     </div>
                 </div>
-                <OpenTicketATable />
+                <OpenTicketATable hideArray={hiddenArray}/>
 
             
                 <div id='ClosedTicketCard'>
-                    <div id='CloseTicketTitle'>Closed and Under Review</div>
+                    <div id='CloseTicketTitle'>Completed Kits</div>
                 </div>
 
-                <ClosedTicketATable/>
+                <ClosedTicketATable hideArray={hiddenArray}/>
             </div>
         </ConfigProvider>
     );
 };
 
-export default TicketDashboard
+export default KitDashboard
