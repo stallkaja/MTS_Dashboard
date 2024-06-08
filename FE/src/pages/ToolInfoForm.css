@@ -3,6 +3,10 @@
     width: 50%;
     
 }
+#CommentsBox {
+    padding-bottom: 5px;
+    width: 100%;
+}
 
 #InfoHeader {
     background: linear-gradient(#20a785, #242437 60%);

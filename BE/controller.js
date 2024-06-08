@@ -167,10 +167,12 @@ app.post('/newTool', (req, res) => {
         req.body.area,
         req.body.loc,
         req.body.caldue,
-        req.body.PK
+        req.body.key,
+        req.body.curLoc,
+        req.body.com
 
     ]
-    const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, Location, CalibrationDue, PK) VALUES(?) ON DUPLICATE KEY UPDATE NVL = VALUES(NVL), ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), Location = VALUES(Location), CalibrationDue = VALUES(CalibrationDue)"
+    const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, PermLoc, CalibrationDue, PK, CurLoc, Comments) VALUES(?) ON DUPLICATE KEY UPDATE NVL = VALUES(NVL), ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), PermLoc = VALUES(PermLoc), CalibrationDue = VALUES(CalibrationDue), CurLoc = VALUES(CurLoc), Comments = VALUES(Comments)"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {

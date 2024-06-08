@@ -13,6 +13,7 @@ function ToolInfoATable(hideArray) {
     const [stat, setStat] = useState('Inactive');
     const [hideList, setHideList] = useState(['PK'])
     const [pk, setPk] = useState(0);
+    const [com, setCom] = useState('');
     const [filtHead, setFiltHead] = useState([]);
     //const [recPk, setRecPk] = useState('');
     //const [recStat, setRecStat] = useState('');

@@ -1,14 +1,5 @@
 CREATE SCHEMA `dos_db` ;
 
-
-use dos_db;
-select * from materiallisttable;
-SHOW CREATE TABLe materiallisttable;
-'materiallisttable', 'CREATE TABLE `materiallisttable` (\n  `MaterialName` text,\n  `Category` text,\n  `AdditionalNotes` text,\n  `Quantity` int DEFAULT NULL,\n  `NVL` text,\n  `BEN` text,\n  `PercentComplete` text,\n  `Fixture` int DEFAULT NULL,\n  `AssetNumber` text,\n  `BEN4LPR` text,\n  `CurrentState` text,\n  `IndividuallyAssigned` int DEFAULT NULL,\n  `LamPartNumber` text,\n  `LaptopAssignedBEDShift` text,\n  `LaptopAssignedBENShift` text,\n  `LaptopAssignedFEDShift` text,\n  `LaptopAssignedFENShift` text,\n  `LaptopAssignedMF` text,\n  `LaptopDepartment` text,\n  `RecordIDNumber` int DEFAULT NULL,\n  `SerialNumber` text,\n  `materialPK` int DEFAULT NULL\n) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci'
-
-select * from toolhistorytable
--- INSERT INTO toolhistorytable (NVL, employeeID, newLoc) VALUES ('test', 'test', 'test');
-
 CREATE TABLE `caltoolstable` (
   `PK` int NOT NULL,
   `NVL` varchar(255) DEFAULT NULL,
@@ -21,5 +12,108 @@ CREATE TABLE `caltoolstable` (
   `CalibrationDue` datetime DEFAULT NULL,
   `CurLoc` text,
   `Status` varchar(255) DEFAULT NULL,
+  `Comments` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`PK`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `materiallisttable` (
+  `MaterialName` text,
+  `Category` text,
+  `AdditionalNotes` text,
+  `Quantity` int DEFAULT NULL,
+  `NVL` text,
+  `BEN` text,
+  `AssetNumber` text,
+  `CurrentState` text,
+  `LamPartNumber` text,
+  `LaptopAssignedMF` text,
+  `LaptopDepartment` text,
+  `Location` text,
+  `SerialNumber` text,
+  `PK` int NOT NULL AUTO_INCREMENT,
+  `LaptopAssignedFEDShift` text,
+  `LaptopAssignedFENShift` text,
+  `LaptopAssignedBEDShift` text,
+  `LaptopAssignedBENShift` text,
+  PRIMARY KEY (`PK`)
+) ENGINE=InnoDB AUTO_INCREMENT=3901 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `materialorderstable` (
+  `RequestNumber` int NOT NULL AUTO_INCREMENT,
+  `Requestor` varchar(255) DEFAULT NULL,
+  `Email` text,
+  `CostCenter` int DEFAULT NULL,
+  `OrderMethod` varchar(45) DEFAULT NULL,
+  `PreferredVendor` varchar(255) DEFAULT NULL,
+  `Priority` int DEFAULT NULL,
+  `RequestorComments` text,
+  `NeedBy` datetime DEFAULT NULL,
+  `OpenDate` datetime DEFAULT NULL,
+  `SubmitDate` datetime DEFAULT NULL,
+  `ClosedDate` datetime DEFAULT NULL,
+  `AdminComments` text,
+  `PurchNumber` varchar(45) DEFAULT NULL,
+  `Status` varchar(45) DEFAULT NULL,
+  `AttachFile` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`RequestNumber`)
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
+CREATE TABLE `orderlineitemstable` (
+  `PK` int NOT NULL AUTO_INCREMENT,
+  `RequestNumber` int DEFAULT NULL,
+  `PartName` text,
+  `PartNumber` text,
+  `PricePer` float DEFAULT NULL,
+  `Quantity` int DEFAULT NULL,
+  `Status` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`PK`)
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `passdowntable` (
+  `Date` datetime DEFAULT NULL,
+  `Shift` text,
+  `Technician` text,
+  `Department` text,
+  `Passdown` text,
+  `PK` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PK`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `ptotable` (
+  `PK` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `date` datetime DEFAULT NULL,
+  PRIMARY KEY (`PK`),
+  UNIQUE KEY `PK_UNIQUE` (`PK`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `ticketstable` (
+  `TicketStatus` text,
+  `TicketNum` int NOT NULL AUTO_INCREMENT,
+  `BEN` text,
+  `TicketDescription` text,
+  `Department` text,
+  `ToolBay` int DEFAULT NULL,
+  `OpenDate` datetime DEFAULT NULL,
+  `ProgDate` datetime DEFAULT NULL,
+  `CloseDate` datetime DEFAULT NULL,
+  PRIMARY KEY (`TicketNum`)
+) ENGINE=InnoDB AUTO_INCREMENT=135 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `toolhistorytable` (
+  `NVL` varchar(255) DEFAULT NULL,
+  `employeeID` int DEFAULT NULL,
+  `newLoc` varchar(255) DEFAULT NULL,
+  `curDate` datetime DEFAULT NULL,
+  `PK` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PK`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+CREATE TABLE `userstable` (
+  `username` varchar(255) NOT NULL,
+  `pword` int DEFAULT NULL,
+  PRIMARY KEY (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+

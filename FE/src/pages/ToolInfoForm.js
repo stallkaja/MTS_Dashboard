@@ -1,6 +1,6 @@
 import { useState,useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Button, DatePicker, Space, Input, ConfigProvider } from 'antd';
+import { Button, DatePicker, Space, Input, ConfigProvider, Select } from 'antd';
 import "./ToolInfoForm.css";
 import dayjs from 'dayjs';
 
@@ -20,6 +20,11 @@ export default function CreateToolPage() {
 	const [loc, setLoc] = useState('');
 	const [caldue, setCaldue] = useState('');
 	const [key, setKey] = useState('');
+    const [curLoc, setCurLoc] = useState('');
+    const [com, setCom] = useState('');
+    const { TextArea } = Input;
+
+
 	
 	useEffect(() => {
 		if (location.state == null) {
@@ -33,9 +38,11 @@ export default function CreateToolPage() {
 			setDesc(location.state.record.Description);
 			setSerial(location.state.record.SerialNumber);
 			setArea(location.state.record.Area);
-			setLoc(location.state.record.Location);
+			setLoc(location.state.record.PermLoc);
 			setCaldue(location.state.record.CalibrationDue);
 			setKey(location.state.record.PK);
+            setCurLoc(location.state.record.CurLoc)
+            setCom(location.state.record.Comments)
 		};
 	}, []) // <-- empty dependency array
 
@@ -49,7 +56,7 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTool = async () => {
 		// Create new object with the variables set in the form
-		const newTool = { manu, model, desc, serial, area, id, loc, caldue, key};
+		const newTool = { manu, model, desc, serial, area, id, loc, caldue, key, curLoc, com};
 		const response = await fetch('/newTool', {
 			method: 'POST',
 			body: JSON.stringify(newTool),
@@ -76,6 +83,10 @@ export default function CreateToolPage() {
 		let path = '/ToolHistory';
 		navigate(path);
 	}
+    const locChange = (value) => {
+        setCurLoc(value)
+        console.log(curLoc)
+    }
 
 
 
@@ -168,6 +179,9 @@ export default function CreateToolPage() {
 				            <div id="Label">Calibration Due Date</div>
 				            <Space direction="vertical">
 						        <DatePicker
+                                    style={{
+                                        width: '275px'
+                                    } }
                                     value={dayjs(caldue)}
                                     onChange={onPick}
                                     allowClear={false}
@@ -175,8 +189,216 @@ export default function CreateToolPage() {
 				            </Space>
 				
 					    </div>
-						
+
+                        <div id="InputBox">
+                            <div id="Label">Current Location</div>
+                            <Select
+                                showSearch
+                                style={{
+                                    width: '275px'
+                                } }
+                                value={curLoc}
+                                onChange={locChange}
+                                placeholder="Current Location"
+                                optionFilterProp="children"
+                                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                filterSort={(optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={[
+                                    {
+                                        value: 'SENT',
+                                        label: 'SENT',
+                                    },
+                                    {
+                                        value: 'STAHLWILLE/REPAIR',
+                                        label: 'STAHLWILLE/REPAIR',
+                                    },
+                                    {
+                                        value: 'OUTGOING',
+                                        label: 'OUTGOING',
+                                    },
+                                    {
+                                        value: 'CTU CAL CAB',
+                                        label: 'CTU CAL CAB',
+                                    },
+                                    {
+                                        value: 'SPFT',
+                                        albel: 'SPFT',
+                                    },
+                                    {
+                                        value: 'SPA',
+                                        label: 'SPA',
+                                    },
+                                    {
+                                        value: 'SPAF',
+                                        label: 'SPAF',
+                                    },
+                                    {
+                                        value: 'UPGRADES',
+                                        label: 'UPGRADES',
+                                    },
+                                    {
+                                        value: 'PRESHIP',
+                                        label: 'PRESHIP',
+                                    },
+                                    {
+                                        value: 'SUBFAB',
+                                        label: 'SUBFAB',
+                                    },
+                                    {
+                                        value: 'SPL',
+                                        label: 'SPL',
+                                    },
+                                    {
+                                        value: 'SPLD',
+                                        label: 'SPLD',
+                                    },
+                                    {
+                                        value: 'BCP/QUARANTINED',
+                                        label: 'BCP/QUARANTINED',
+                                    },
+                                    {
+                                        value: 'MFE',
+                                        label: 'MFE',
+                                    },
+                                    {
+                                        value: 'TWK #',
+                                        label: 'TWK #',
+                                    },
+                                    {
+                                        value: 'PHF1/SPAF',
+                                        label: 'PHF1/SPAF',
+                                    },
+                                    {
+                                        value: 'PAF6/SPAF',
+                                        label: 'PAF6/SPAF',
+                                    },
+                                    {
+                                        value: 'LPDG1/CTU',
+                                        label: 'LPDG1/CTU',
+                                    },
+                                    {
+                                        value: 'LPDG2',
+                                        label: 'LPDG2',
+                                    },
+                                    {
+                                        value: 'LPDG3',
+                                        label: 'LPDG3',
+                                    },
+                                    {
+                                        value: 'LPDG5',
+                                        label: 'LPDG5',
+                                    },
+                                    {
+                                        value: 'LRLK1/CTU',
+                                        label: 'LRLK1/CTU',
+                                    },
+                                    {
+                                        value: 'LRLK2/CTU',
+                                        label: 'LRLK2/CTU',
+                                    },
+                                    {
+                                        value: 'PLF1/SPAF',
+                                        label: 'PLF1/SPAF',
+                                    },
+                                    {
+                                        value: 'PLF2/SPAF',
+                                        label: 'PLF2/SPAF',
+                                    },
+                                    {
+                                        value: 'TPL1/CTU',
+                                        label: 'TPL1/CTU',
+                                    },
+                                    {
+                                        value: 'DOS TICKET',
+                                        label: 'DOS TICKET',
+                                    },
+                                    {
+                                        value: 'LOST',
+                                        label: 'LOST',
+                                    },
+                                    {
+                                        value: 'PAF1',
+                                        label: 'PAF1',
+                                    },
+                                    {
+                                        value: 'LRLK VPM',
+                                        label: 'LRLK VPM',
+                                    },
+                                    {
+                                        value: 'PHF3/SPAF',
+                                        label: 'PHF3/SPAF',
+                                    },
+                                    {
+                                        value: 'CAL CART 2',
+                                        label: 'CAL CART 2',
+                                    },
+                                    {
+                                        value: 'CAL CART 3',
+                                        label: 'CAL CART 3',
+                                    },
+                                    {
+                                        value: 'OTHER',
+                                        label: 'OTHER',
+                                    },
+                                    {
+                                        value: 'HOIST FIXTURE',
+                                        label: 'HOIST FIXTURE',
+                                    },
+                                    {
+                                        value: 'PAF7/SPAF',
+                                        label: 'PAF7/SPAF',
+                                    },
+                                    {
+                                        value: 'SFC LOANER',
+                                        label: 'SFC LOANER',
+                                    },
+                                    {
+                                        value: 'DUMMY LOAD 1',
+                                        label: 'DUMMY LOAD 1',
+                                    },
+                                    {
+                                        value: 'DUMMY LOAD 2',
+                                        label: 'DUMMY LOAD 2',
+                                    },
+                                    {
+                                        value: 'DUMMY LOAD 3',
+                                        label: 'DUMMY LOAD 3',
+                                    },
+                                    {
+                                        value: 'DUMMY LOAD 4',
+                                        label: 'DUMMY LOAD 4',
+                                    },
+                                    {
+                                        value: 'FIXTURES',
+                                        label: 'FIXTURES',
+                                    },
+                                    {
+                                        value: '@TRAINING TEAM',
+                                        label: '@TRAINING TEAM',
+                                    },
+                                    {
+                                        value: 'PILOT LOANER',
+                                        label: 'PILOT LOANER',
+                                    },
+                                    {
+                                        value: 'LOANER TOOL',
+                                        label: 'LOANER TOOL',
+                                    }
+                                ]}
+                             />
+                        </div>
 			        </div>
+                </div>
+                <div id="CommentsBox">
+                    <div id="Label">Comments</div>
+                    <TextArea
+                        rows={6}
+                        value={com}
+                        placeholder="Comments"
+                        onChange={e => setCom(e.target.value)}
+                    />
                 </div>
 			    <br />
 

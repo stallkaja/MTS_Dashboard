@@ -13,65 +13,98 @@ function StaggerPullListTable(hideArray) {
     const navigate = useNavigate();
     const [stat, setStat] = useState('Inactive');
     const [hideList, setHideList] = useState(['PK','Status'])
-    const [pk, setPk] = useState(0);
     const [filtHead, setFiltHead] = useState([]);
-    const toolCounts = {};
-    const toolsCounted = {};
+    const [toolCounts,setToolCounts] = useState({});
+    const [toolsCounted,setToolsCounted] = useState({});
     const [stagList, setStagList] = useState([]);
-    
-    const GenList = () => {
-        let list=[]
-        console.log('James!!!!')
-        let pull = dayjs(today);
-        let send = pull.add(42, 'days');
+    const [sendDate, setSendDate] = useState();
+    const [send, setSend] = useState();
+    const [theDay, setTheDay] = useState(dayjs());
+
+    //handling changes from the date picker
+    const handleDate = (date, dateString) => {
+        setTheDay(dateString)
+    }
+    //calulates and sets page level variable of send date
+    useEffect(() => {
+        //calculating send date
+        let tempS = dayjs(theDay).add(42, 'day')
+        //moving send date to the first wednesday after calculated date
         do {
-            send=send.add(1, 'day');
+            tempS = dayjs(tempS).add(1, 'day');
         }
-        while (send.day() !== 3)
+        while (dayjs(tempS).day() !== 3)
+        //setting page level variable
+        setSend(tempS)
+    },[theDay])
+
+    //generates the staggering list for calibrated tools
+    const GenList = () => {
+        //setting up constants needed to make staggering list
+        let list=[]
+        const sent = ['SENT', 'STAHLWILLE/REPAIR', 'BCP/QUARANTINED'];
+        const outList = [...sent, 'OUTGOING'];
+        let soon = dayjs(theDay).add(7, 'day');
+        let lowBound = dayjs(theDay).add(35, 'day')
+        let highBound = dayjs(theDay).add(49, 'day')
+
+        //display date of items to be sent
+        document.getElementById("23").innerHTML = "Date to be Sent: " + sendDate;
 
         // Sort data by Calibration Due
         items.sort((a, b) => a['CalibrationDue'] - b['CalibrationDue']);
-        console.log(items)
-        console.log(pull)
-        console.log(send)
-        console.log(today.add(7, 'days'))
+        //populating the staggering list
         for (let i = 0; i < items.length; i++) {
-            if (dayjs(items[i]['CalibrationDue']) < dayjs(today)) {
+            //grabbing all items that are past due and not sent out
+            if (dayjs(items[i]['CalibrationDue']) <= dayjs(theDay) && !sent.includes(items[i]['CurLoc'])) {
                 list.push(items[i])
             }
-            else if (dayjs(today) < dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) < dayjs(today.add(7, 'days'))) {
+            //grabbing all items due in a week and not sent out
+            else if (dayjs(theDay) < dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) <= dayjs(soon) && !sent.includes(items[i]['CurLoc'])) {
                 list.push(items[i])
+            }
+            //grabbing all lost items
+            else if (items[i]['CurLoc'] === 'LOST') {
+                list.push(items[i])
+            }
+            //grabbing all items that are between 35-49 days from being due and not sent/staged up to the limit of tools needed per week
+            else if (dayjs(lowBound) <= dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) <= dayjs(highBound) && !outList.includes(items[i]['CurLoc']) && toolsCounted[items[i]['Description']] < toolCounts[items[i]['Description']] ) {
+                list.push(items[i])
+                toolsCounted[items[i]['Description']] = toolsCounted[items[i]['Description']] + 1
             }
         }
+        //sending list to page level variable
         setStagList(list)
-        console.log(list)
 
     }
+    //triggering re-render to make send date visible on page
+    useEffect(() => setSendDate(dayjs(send).format('MM-DD-YYYY')), [send])
 
+    //creates dictionary of all tools and dictionary of  tools populated in staggering list 
     const toolMap = () => {
-
+        let tools = {}
+        //parsing items data
         for (let i = 0; i < items.length; i++) {
-            if (items[i]['Description'] in toolCounts) {
-                toolCounts[items[i]['Description']] = toolCounts[items[i]['Description']] + 1
+            //checking for tools description existence in dictionary
+            if (items[i]['Description'] in tools) {
+                //adds one to the count of tool description if it exists
+                tools[items[i]['Description']] = tools[items[i]['Description']] + 1
             }
             else {
-                toolCounts[items[i]['Description']] = 1
+                //adds tool to the dictionary if it doesn't exist
+                tools[items[i]['Description']] = 1
             }
         }
-        for (const [key, value] of Object.entries(toolCounts)) {
-            toolCounts[key] = Math.ceil(value / 52);
+        //parses through dictionary and divides up all values by 52 and rounds up to determine number of tools to be sent each week
+        for (const [key, value] of Object.entries(tools)) {
+            tools[key] = Math.ceil(value / 52);
         }
-        const toolsCounted = Object.fromEntries(Object.entries(toolCounts).map(([k, v]) => [k, 0]));
+        //sets page leve variable to dicitonary created
+        setToolCounts(tools)
+        //creates clone dictionary with zero values and sets to page level variable, used to count tools placed on staggering list
+        setToolsCounted(Object.fromEntries(Object.entries(tools).map(([k, v]) => [k, 0])));
 
     }
-
-    const [today, setToday] = useState(dayjs());
-    const handleDate = (date, dateString) => {
-        setToday(dateString)
-    }
-
-    //const [recPk, setRecPk] = useState('');
-    //const [recStat, setRecStat] = useState('');
 
     //Sort method to sort numbers and strings without having to determine type in column
     const defaultSort = (a, b) => {
@@ -79,47 +112,14 @@ function StaggerPullListTable(hideArray) {
         if (b < a) return 1;
         return 0;
     };
-    /*const cancel = (e) => {
-        message.error('click on no');
-    };
-    const EditRecord = (record) => {
-        console.log(record);
-        navigate('/ToolInfoForm', { state: { record: record } });
-    };
-    const PassRecord = (record) => {
 
-    }
-
-    //handler for record deactivate button
-    const confirm = async (e, record) => {
-        console.log(record)
-        let recPk = (record.PK);
-        let recStat = (record.Status);
-        const deact = { recPk, recStat };
-        console.log(deact);
-        const response = await fetch('/deactivate', {
-            method: 'POST',
-            body: JSON.stringify(deact),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }).then(response => {
-            if (response.status === 200) {
-                alert("Tool has been deactivated");
-
-            } else {
-                alert(`Failed to deactivate, status code = ${response.status}`);
-            }
-        });
-    };*/
-
-
-
+    //handles search for column search in table
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
         setSearchedColumn(dataIndex);
     };
+    //handles reseting the colum search filter
     const handleReset = (clearFilters) => {
         clearFilters();
         setSearchText('');
@@ -209,7 +209,6 @@ function StaggerPullListTable(hideArray) {
 
     //retreiving headers from DB
     const loadHeaders = async () => {
-        //const tName = 'caltoolstable'
         const tableName = { tName: 'caltoolstable' }
         const response = await fetch('/headers', {
             method: 'POST',
@@ -249,39 +248,7 @@ function StaggerPullListTable(hideArray) {
                         headerArray.push(payload)
 
 
-                    }/*
-                    const buttonPayload = {
-                        title: 'Edit Tool',
-                        key: 'key',
-                        dataIndex: 'key',
-                        render: (text, record) => (
-                            <Button onClick={() => EditRecord(record)}>
-                                {"Edit"}
-                            </Button>
-                        ),
                     }
-                    headerArray.push(buttonPayload)
-                    const button2Payload = {
-                        title: 'Deactivate Tool',
-                        key: 'key',
-                        dataIndex: 'key',
-                        render: (text, record) => (
-                            <Popconfirm
-                                title="Deactivate Record"
-                                description="Are you sure you want to deactivate this record?"
-                                onConfirm={confirm}
-                                onCancel={cancel}
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                <Button onClick={() => PassRecord(record)}>
-                                    Deactivate
-                                </Button>
-                            </Popconfirm>
-
-                        ),
-                    }
-                    headerArray.push(button2Payload)*/
                     setHeaders(headerArray)
                 })
             }
@@ -332,38 +299,7 @@ function StaggerPullListTable(hideArray) {
                     key: headers[i].key,
                     hidden: true
                 }
-            } /*else if (headers[i].title === "Edit Tool") {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    render: (text, record) => (
-                        <Button onClick={() => EditRecord(record)}>
-                            {"Edit"}
-                        </Button >
-                    )
-                }
-            } else if (headers[i].title === "Deactivate Tool") {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    render: (text, record) => (
-                        <Popconfirm
-                            title="Deactivate Record"
-                            description="Are you sure you want to deactivate this record?"
-                            onConfirm={confirm}
-                            onCancel={cancel}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                            <Button>
-                                {"Deactivate"}
-                            </Button>
-                        </Popconfirm>
-                    )
-                }
-            } */else {
+            } else {
                 payload = {
                     title: headers[i].title,
                     dataIndex: headers[i].dataIndex,
@@ -399,15 +335,19 @@ function StaggerPullListTable(hideArray) {
                 <div style={{
                     display: "flex",
                     textAlign: "center",
-                    paddingLeft:"575px",
-                    paddingRight: "618px",
-                    justifyContent: "Space-Evenly"
+                    paddingLeft:"500px",
+                    paddingRight: "550px",
+                    justifyContent: "Space-Evenly",
+                    alignItems: "Center"
                 } }>
                     <DatePicker 
-                        value={dayjs(today)}
+                        value={dayjs(theDay)}
                         onChange={handleDate}
                         allowClear={false}
                     />
+
+                    <h3 id="23">Date to be sent:</h3>
+
                     <Button onClick={() => GenList()}>
                         {"Generate List"}
                     </Button>
@@ -430,116 +370,3 @@ function StaggerPullListTable(hideArray) {
 }
 
 export default StaggerPullListTable;
-
-/*
-const fs = require('fs');
-const path = require('path');
-const xlsx = require('xlsx');
-const moment = require('moment');
-
-function main() {
-    const datax = xlsx.readFile('C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm', { sheet: 'All Tools' });
-    const stag_data = xlsx.readFile('C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm', { sheet: 'Staggering List', range: 'A:A' });
-
-    let data = datax.Sheets['All Tools'];
-    let stag = stag_data.Sheets['Staggering List'];
-
-    // Convert Calibration Due to date
-    data['Calibration Due'] = data['Calibration Due'].map(val => moment(val, 'YYYY-MM-DD HH:mm:ss'));
-
-    // Handle staggering list
-    if (stag['Dates:'][1] === undefined) {
-        stag['Dates:'][1] = moment().format('YYYY-MM-DD');
-    }
-    let pull = moment(stag['Dates:'][1]);
-    let send = pull.clone().add(42, 'days');
-    while (send.weekday() !== 2) {
-        send.add(1, 'day');
-    }
-    stag['Dates:'][3] = send.format('YYYY-MM-DD');
-
-    // Sort data by Calibration Due
-    data.sort((a, b) => a['Calibration Due'] - b['Calibration Due']);
-
-    const stagger = [];
-    const list = ['SENT', 'STAHLWILLE/REPAIR', 'BCP/QUARANTINED'];
-    const outList = [...list, 'OUTGOING'];
-    const red_list = [];
-    const yel_list = [];
-    const lost_list = [];
-
-    const toolCounts = {};
-    for (const tool of data['Description']) {
-        toolCounts[tool] = (toolCounts[tool] || 0) + 1;
-    }
-    for (const [key, value] of Object.entries(toolCounts)) {
-        toolCounts[key] = Math.ceil(value / 52);
-    }
-    const toolsCounted = Object.fromEntries(Object.entries(toolCounts).map(([k, v]) => [k, 0]));
-
-    const late = pull.clone().add(7, 'days');
-    const lowBound = pull.clone().add(35, 'days');
-    const upBound = pull.clone().add(49, 'days');
-
-    for (let n = 0; n < data['NVL #'].length; n++) {
-        if (data['Calibration Due'][n] <= late) {
-            if (!list.includes(data['Location'][n])) {
-                stagger.push(n);
-                red_list.push(n);
-            }
-        } else if (data['Calibration Due'][n] >= late && data['Calibration Due'][n] <= lowBound) {
-            if (!list.includes(data['Location'][n])) {
-                stagger.push(n);
-                yel_list.push(n);
-            }
-        } else if (data['Location'][n] === 'LOST') {
-            lost_list.push(n);
-        } else if (data['Calibration Due'][n] > lowBound && data['Calibration Due'][n] < upBound) {
-            if (!outList.includes(data['Location'][n])) {
-                if (toolsCounted[data['Description'][n]] < toolCounts[data['Description'][n]]) {
-                    stagger.push(n);
-                    toolsCounted[data['Description'][n]]++;
-                }
-            }
-        }
-    }
-
-    stagger.sort((a, b) => a - b);
-    const dataz = data.filter((row, index) => stagger.includes(index));
-
-    const book = xlsx.readFile('C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm');
-    const sheet = book.Sheets['Staggering List'];
-    sheet['A1'].v = stag;
-    sheet['B1'].v = dataz;
-
-    if (lost_list.length > 0) {
-        const losted = `B2:M${lost_list.length + 2}`;
-        sheet[losted].s.fill = { fgColor: { rgb: 'FFA500' } };
-    }
-
-    if (red_list.length > 0) {
-        const reded = `B${lost_list.length + 2}:M${lost_list.length + red_list.length + 2}`;
-        sheet[reded].s.fill = { fgColor: { rgb: 'Ff0000' } };
-    }
-
-    if (yel_list.length > 0) {
-        const yeled = `B${lost_list.length + (red_list.length || 1) + 2}:M${lost_list.length + red_list.length + yel_list.length + 2}`;
-        sheet[yeled].s.fill = { fgColor: { rgb: 'FFFF00' } };
-    }
-
-    const borded = `B1:M${stagger.length + 1}`;
-    sheet[borded].s.border = {
-        top: { style: 'thick' },
-        bottom: { style: 'thick' },
-        left: { style: 'thick' },
-        right: { style: 'thick' }
-    };
-
-    xlsx.writeFile(book, 'C:/Users/osterjo/OneDrive - Lam Research/Documents/CTU and DOS/Tool Tracker/Tool Tracking v2.xlsm');
-}
-
-if (require.main === module) {
-    main();
-}
-
-*/
