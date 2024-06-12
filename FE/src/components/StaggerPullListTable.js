@@ -45,8 +45,10 @@ function StaggerPullListTable(hideArray) {
         const sent = ['SENT', 'STAHLWILLE/REPAIR', 'BCP/QUARANTINED'];
         const outList = [...sent, 'OUTGOING'];
         let soon = dayjs(theDay).add(7, 'day');
-        let lowBound = dayjs(theDay).add(35, 'day')
-        let highBound = dayjs(theDay).add(49, 'day')
+        let lowBound = dayjs(send).subtract(7, 'day')
+        let highBound = dayjs(send).add(7, 'day')
+        console.log(lowBound)
+        console.log(highBound)
 
         //display date of items to be sent
         document.getElementById("23").innerHTML = "Date to be Sent: " + sendDate;
@@ -105,6 +107,7 @@ function StaggerPullListTable(hideArray) {
         setToolsCounted(Object.fromEntries(Object.entries(tools).map(([k, v]) => [k, 0])));
 
     }
+    //the following code is cloned from Ant Design, so less comments will be utilized.  If more information is needed, please go to Ant Design Documentation
 
     //Sort method to sort numbers and strings without having to determine type in column
     const defaultSort = (a, b) => {
@@ -125,7 +128,7 @@ function StaggerPullListTable(hideArray) {
         setSearchText('');
     };
 
-
+    //handles searching of the table columns
     const getColumnSearchProps = (dataIndex) => ({
         filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
             <div
@@ -209,6 +212,7 @@ function StaggerPullListTable(hideArray) {
 
     //retreiving headers from DB
     const loadHeaders = async () => {
+        //utilizing a post request to get info from the DB
         const tableName = { tName: 'caltoolstable' }
         const response = await fetch('/headers', {
             method: 'POST',
@@ -218,10 +222,10 @@ function StaggerPullListTable(hideArray) {
             }
 
         }).then((response) => {
-            if (response.ok) {
+            if (response.ok) { //checking for errors
                 response.json().then((responseData) => {
-                    const headerArray = [];
-                    for (let i = 0; i < responseData.length; i++) {
+                    const headerArray = []; //putting response data into an array
+                    for (let i = 0; i < responseData.length; i++) { //checking for headers that are on the list of hidden columnns
                         let payload = {};
                         if (hideList.includes(responseData[i].COLUMN_NAME)) {
                             payload = {
@@ -232,7 +236,7 @@ function StaggerPullListTable(hideArray) {
                             }
                         }
                         else {
-                            payload = {
+                            payload = { //applying search props to columns
                                 title: responseData[i].COLUMN_NAME,
                                 dataIndex: responseData[i].COLUMN_NAME,
                                 key: responseData[i].COLUMN_NAME,
@@ -254,10 +258,11 @@ function StaggerPullListTable(hideArray) {
             }
         });
     }
-    useEffect(() => loadHeaders(), []);
+    useEffect(() => loadHeaders(), []); //forces header retrieval to run on page initialization
 
     //retreiving items from DB
     const loadItems = async () => {
+        //utilizing a fetch request to retrieve data from DB
         const response = await fetch('/stagTools', {
             headers: {
                 'Content-Type': 'application/json'
@@ -266,8 +271,7 @@ function StaggerPullListTable(hideArray) {
         }).then((response) => {
             if (response.ok) {
                 response.json().then((responseData) => {
-                    for (let i = 0; i < responseData.length; i++) {
-                        //console.log(responseData[i])
+                    for (let i = 0; i < responseData.length; i++) { //sets format of the date displayed
                         if (responseData[i].CalibrationDue !== null) {
                             let cleanDate = (responseData[i].CalibrationDue.split('T')[0])
                             responseData[i].CalibrationDue = cleanDate
@@ -279,11 +283,11 @@ function StaggerPullListTable(hideArray) {
             }
         });
     }
-    useEffect(() => loadItems(), []);
-    useEffect(() => toolMap(), [items])
+    useEffect(() => loadItems(), []); //forces item retrieval to run on page initialization
+    useEffect(() => toolMap(), [items]) //forces dictionary creation whenever items from DB changes
     
 
-    //assigning hidden columns
+    //changes visible columns when a choice is made
     const columnHide = (hideArray, headers) => {
         let localHideList = []
         for (let i = 0; i < hideArray.hideArray.length; i++) {
@@ -316,11 +320,11 @@ function StaggerPullListTable(hideArray) {
         }
         setHeaders(addHeader)
     }
-    useEffect(() => {
+    useEffect(() => { //causes subcomponent to run when a new column hide choice is made
         columnHide(hideArray, headers)
     }, [hideArray])
 
-    useEffect(() => {
+    useEffect(() => { //applies the hidden attribute whenever headers changes
         let filt = []
         filt = (
             headers.filter(item => !item.hidden)

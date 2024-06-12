@@ -4,11 +4,11 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
-import {Table, ConfigProvider} from 'antd'
-import { Button, Input} from 'antd';
+import { Table, ConfigProvider, Button, Input, Select } from 'antd'
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import locations from '../components/LocationList.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
@@ -25,6 +25,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
         {NVL: '',
         tool: 'ad'}
     ]);
+    const locChange = (value) => {
+        setLoc(value)
+    }
 
 
     //useEffect(() => searchNVL(), []);
@@ -133,12 +136,22 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
                         <div className={ScanToolStyles.formColumn}>
                             <label for="employeeID">Employee ID #</label>
-                            <Input placeholder="Empoloyee ID" onChange={e => setEmployeeID(e.target.value)} />
+                            <Input placeholder="Employee ID" onChange={e => setEmployeeID(e.target.value)} />
                         </div>
 
                         <div className={ScanToolStyles.formColumn}>
                             <label for="newLoc">New Location</label>
-                            <Input placeholder="New Location" onChange={e => setLoc(e.target.value)} />
+                            <Select placeholder="New Location"
+                                optionFilterProp="children"
+                                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                filterSort={(optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={locations} 
+                                onChange={locChange}
+                                style={{
+                                    width: '200px'
+                                }}/>
                         </div>
 
                         <div className={ScanToolStyles.buttonmove}>
