@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
 import './MaterialOrderingPage.css';
 
-const TicketDashboard = () => {
+const OrderingDashboard = () => {
     const navigate = useNavigate();
     const [searchResults, setSearchResults] = useState<any[]>([]);
     const [openSearchResults, setOpenSearchResults] = useState([]);
@@ -132,4 +132,4 @@ const TicketDashboard = () => {
     );
 };
 
-export default TicketDashboard
+export default OrderingDashboard
