@@ -194,16 +194,32 @@ app.post('/newScan', (req, res) => {
         req.body.newLoc,
         req.body.dateTime,
     ]]
-    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, curDate) VALUES ? "
+    const args2 = [[
+        req.body.newLoc,
+    ]]
+    const args3 = [[
+        req.body.nvl,
+    ]]
+    const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, curDate) VALUES ?"
+    const stmt2 = "UPDATE caltoolstable SET CurLoc = ? WHERE NVL = ?"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
             throw err
             connection.end();
         }
-        else{
-          res.status(200).json({ Error: 'Success' })
+        else {
+            connection.query(stmt2, [args2, args3], (err, rows, fields) => {
+                if (err) {
+                    throw err
+                    connection.end();
+                }
+                else {
+                    res.status(200).json({ Error: 'Success' })
+                }
+            })
         }
+    
     })
   
   });

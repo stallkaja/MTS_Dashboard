@@ -85,6 +85,7 @@ export default function CreateToolPage() {
 		let path = '/ToolHistory';
 		navigate(path);
 	}
+
     const locChange = (value) => {
         setCurLoc(value)
     }

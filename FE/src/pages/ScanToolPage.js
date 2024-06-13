@@ -141,7 +141,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
                         <div className={ScanToolStyles.formColumn}>
                             <label for="newLoc">New Location</label>
-                            <Select placeholder="New Location"
+                            <Select 
+                                showSearch
+                                placeholder="New Location"
                                 optionFilterProp="children"
                                 filterOption={(input, option) => (option?.label ?? '').includes(input)}
                                 filterSort={(optionA, optionB) =>

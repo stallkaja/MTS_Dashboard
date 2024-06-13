@@ -23,7 +23,7 @@
     flex-direction: column;
     align-content: space-between;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: flex-start;
 }
 #ToolSearch {
     padding-right: 10px;
