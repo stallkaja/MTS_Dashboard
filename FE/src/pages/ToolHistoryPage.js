@@ -20,7 +20,7 @@ const ToolHistoryPage = () => {
         keey: 2,
         keeey: 3
     });
-    const [hideList, setHideList] = useState([]);
+    const [hideList, setHideList] = useState(['PK', 'Status']);
     const OpenTicket = () => {
         let path = '/TicketPage';
         navigate(path);

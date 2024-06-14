@@ -185,7 +185,7 @@ app.post('/newTool', (req, res) => {
     })
 });
 
-// Create a new scan using a post request
+// Create a new scan using a post request; scan also updates location in cal tools table 
 app.post('/newScan', (req, res) => {
 
     const args = [[

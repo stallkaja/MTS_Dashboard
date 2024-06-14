@@ -24,7 +24,7 @@ const ToolPullListPage = () => {
         keey: 2,
         keeey: 3
     });
-    const [hideList, setHideList] = useState([]);
+    const [hideList, setHideList] = useState(['PK','Status']);
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (

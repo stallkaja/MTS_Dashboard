@@ -11,7 +11,7 @@ function ToolInfoATable(hideArray) {
     const searchInput = useRef(null);
     const navigate = useNavigate();
     const [stat, setStat] = useState('Inactive');
-    const [hideList, setHideList] = useState(['PK'])
+    const [hideList, setHideList] = useState(['PK', 'Status'])
     const [pk, setPk] = useState(0);
     const [com, setCom] = useState('');
     const [filtHead, setFiltHead] = useState([]);
