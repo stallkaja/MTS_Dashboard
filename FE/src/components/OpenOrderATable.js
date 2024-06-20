@@ -288,7 +288,7 @@ function OpenOrderATable({ hideArray, searchResults }) {
     useEffect(() => loadItems(), []);
 
     const loadLineItems = async() => {
-        const response = await fetch('/loadLineItems', {
+        const response = await fetch('/loadLineData', {
             headers: {
                 'Content-Type': 'application/json'
             }

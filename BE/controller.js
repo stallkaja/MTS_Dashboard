@@ -559,7 +559,22 @@ app.get('/loadClosedOrders', (_, res) => {
     //connection.end()
 });
 
-app.get('/loadLineItems', (req, res) => {
+app.post('/loadLineItems', (req, res) => {
+    const args = [[
+        req.body.localRequestNum,
+    ]]
+    const stmt = "SELECT * FROM orderlineitemstable WHERE RequestNumber= ?"
+    connection.query(stmt, [args], (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+
+})
+
+app.get('/loadLineData', (req, res) => {
     const args = [[
         req.body.localRequestNum,
     ]]
