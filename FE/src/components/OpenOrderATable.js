@@ -20,6 +20,12 @@ function OpenOrderATable({ hideArray, searchResults }) {
         'AdminComments',
         'AttachFile'
     ])
+    const [lines, setLines] = useState([]);
+    const [lineHeads, setLineHeads] = useState([]);
+    const [lineHide, setLineHide] = useState([
+        'PK',
+        'RequestNumber'
+    ])
 
     const [filtHead, setFiltHead] = useState([]);
     const EditRecord = (record) => {
@@ -187,8 +193,60 @@ function OpenOrderATable({ hideArray, searchResults }) {
                 })
             }
         });
+
+
     }
     useEffect(() => loadHeaders(), []);
+
+    const loadLineHeaders = async () => {
+        const tName = 'orderlineitemstable'
+        const tableName = { tName }
+        const response = await fetch('/headers', {
+            method: 'POST',
+            body: JSON.stringify(tableName),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    const headerArray2 = [];
+                    for (let i = 0; i < responseData.length; i++) {
+                        let payload2 = {};
+                        if (lineHide.includes(responseData[i].COLUMN_NAME)) {
+                            payload2 = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                hidden: true
+                            }
+                        }
+                        else {
+                            payload2 = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                                sorter: {
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
+                                },
+                                sortDirections: ['descend', 'ascend'],
+                            }
+                        }
+
+                        headerArray2.push(payload2)
+                    }
+
+                    setLineHeads(headerArray2)
+
+                })
+            }
+        });
+    }
+    useEffect(() => loadLineHeaders(), []);
+    console.log(lineHeads)
+
 
     //requesting items from DB
     const loadItems = async () => {
@@ -217,14 +275,39 @@ function OpenOrderATable({ hideArray, searchResults }) {
                             let cleanDate = (responseData[i].ClosedDate.split('T')[0])
                             responseData[i].ClosedDate = cleanDate
                         }
+                        responseData[i].key = (i+1).toString()
 
                     }
                     setItems(responseData)
                 })
             }
         });
+
+
     }
     useEffect(() => loadItems(), []);
+
+    const loadLineItems = async() => {
+        const response = await fetch('/loadLineItems', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    for (let i = 0; i < responseData.length; i++) {
+
+                    }
+                    setLines(responseData)
+                })
+            }
+        });
+    }
+    useEffect(() => loadLineItems(), []);
+
+    console.log(lines)
+    console.log(items)
 
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
@@ -287,8 +370,8 @@ function OpenOrderATable({ hideArray, searchResults }) {
     },[headers])
 
     const dispResults = (searchResults, items) => {
-        console.log("hello there")
-        console.log(searchResults)
+        //console.log("hello there")
+        //console.log(searchResults)
         if (searchResults !== undefined) {
 
             let searchTable = []
@@ -326,72 +409,27 @@ function OpenOrderATable({ hideArray, searchResults }) {
         dispResults(searchResults, items)
     },[searchResults])
 
-    const expRowRender = () => {
-        const columns = [
-            {
-                title: 'Part Name',
-                dataIndex: 'PartName',
-                key: 'PartName',
-                ...getColumnSearchProps('PartName'),
-                sorter: {
-                    compare: (a, b) => defaultSort(a['PartName'], b['PartName']),
-                },
-                sortDirections: ['descend', 'ascend'],
-            },
-            {
-                title: 'Part Number',
-                dataIndex: 'PartNumber',
-                key: 'PartNumber',
-                ...getColumnSearchProps('PartNumber'),
-                sorter: {
-                    compare: (a, b) => defaultSort(a['PartNumber'], b['PartNumber']),
-                },
-                sortDirections: ['descend', 'ascend'],
-            },
-            {
-                title: 'Price',
-                dataIndex: 'PricePer',
-                key: 'PricePer',
-                ...getColumnSearchProps('PricePer'),
-                sorter: {
-                    compare: (a, b) => defaultSort(a['PricePer'], b['PricePer']),
-                },
-                sortDirections: ['descend', 'ascend'],
-            },
-            {
-                title: 'Quantity',
-                dataIndex: 'Quantity',
-                key: 'Quantity',
-                ...getColumnSearchProps('Quantity'),
-                sorter: {
-                    compare: (a, b) => defaultSort(a['Quantity'], b['Quantity']),
-                },
-                sortDirections: ['descend', 'ascend'],
-            },
-            {
-                title: 'Status',
-                dataIndex: 'Status',
-                key: 'Status',
-                ...getColumnSearchProps('Status'),
-                sorter: {
-                    compare: (a, b) => defaultSort(a['Status'], b['Status']),
-                },
-                sortDirections: ['descend', 'ascend'],
-            },
-        ]
+    const expandedRowRender = (record) => {
         const data = [];
-        for (let i = 0; i < 36; i++) {
-            data.push({
-                key: i.toString(),
-                PartName: 'Cheese' + i,
-                PartNumber: i + '23-123',
-                PricePer: i * 2,
-                Quantity: '1',
-                Status: 'Awaiting Arrival',
-            })
+        let localCols = [];
+        for (let i = 0; i < lineHeads.length; i ++){
+            if((lineHeads[i].title !== "RequestNumber") && (lineHeads[i].title !== "PK")){
+                localCols.push(lineHeads[i])
+                console.log("I pushed" + lineHeads[i].title)
+            }
         }
+        //lines
+        console.log("record here")
+        console.log(record)
+        for (let i = 0; i < lines.length; i ++) {
+            if(record.RequestNumber == lines[i].RequestNumber){
+                data.push(lines[i])
+            }
+        }
+        console.log("localCols line heads here")
+        console.log(localCols)
         return <Table
-            columns={columns}
+            columns={localCols}
             dataSource={data}
             bordered={false}
             showSorterTooltip={false}
@@ -414,7 +452,10 @@ function OpenOrderATable({ hideArray, searchResults }) {
             <Table
                 className="OpenTicketTable"
                 columns={filtHead}
-                expandedRowRender={expRowRender}
+                expandable={{
+                    expandedRowRender,
+                    defaultExpandedRowKeys: ['0'],
+                  }}
                 dataSource={items}
                 bordered
                 showSorterTooltip={false}
