@@ -26,6 +26,7 @@ function OpenOrderATable({ hideArray, searchResults }) {
         'PK',
         'RequestNumber'
     ])
+    const [linesDict, setLinesDict] = useState({});
 
     const [filtHead, setFiltHead] = useState([]);
     const EditRecord = (record) => {
@@ -304,6 +305,31 @@ function OpenOrderATable({ hideArray, searchResults }) {
     }
     useEffect(() => loadLineItems(), []);
 
+    const createLinesDict = () => {
+        let dict = {}
+        let itemsDict = {}
+
+        for (let i = 0; i < lines.length; i++) {
+            //console.log(lines[i]['RequestNumber'])
+            if (lines[i]['RequestNumber'] in dict) {
+                //console.log("found it")
+                //console.log(dict[lines[i]['RequestNumber']])
+                //dict[lines[i]['RequestNumber']] = 
+                dict[lines[i]['RequestNumber']].push(lines[i])
+                //console.log(dict)
+            }
+            else {
+                //console.log("not in it")
+                dict[lines[i]['RequestNumber']] = [lines[i]]
+                //console.log(dict)
+                }
+        }
+
+        //console.log(dict)
+        setLinesDict(dict)
+    }
+    useEffect(() => createLinesDict(), [lines])
+
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
@@ -412,14 +438,9 @@ function OpenOrderATable({ hideArray, searchResults }) {
                 localCols.push(lineHeads[i])
             }
         }
-        for (let i = 0; i < lines.length; i ++) {
-            if(record.RequestNumber == lines[i].RequestNumber){
-                data.push(lines[i])
-            }
-        }
         return <Table
             columns={localCols}
-            dataSource={data}
+            dataSource={linesDict[record.RequestNumber]}
             bordered={false}
             showSorterTooltip={false}
                 />;

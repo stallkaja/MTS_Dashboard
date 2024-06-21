@@ -15,11 +15,11 @@ function ColumnChange({ tName , parentPass, hideList }) {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
-            console.log("got a response")
-            console.log(response)
-            console.log(response.ok)
+            //console.log("got a response")
+            //console.log(response)
+            //console.log(response.ok)
             if (response.ok) {
-                console.log("got an ok response")
+                //console.log("got an ok response")
                 response.json().then((responseData) => {
                     let opto = [];
                     let hideo = [];
@@ -34,8 +34,8 @@ function ColumnChange({ tName , parentPass, hideList }) {
                             hideo.push(responseData[i].COLUMN_NAME)
                         }
                     }
-                    console.log("options be here")
-                    console.log(opto)
+                    //console.log("options be here")
+                    //console.log(opto)
                     setOptionsArray(opto);
                     setHideArray(hideo);
 

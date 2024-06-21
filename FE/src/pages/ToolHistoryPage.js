@@ -30,6 +30,7 @@ const ToolHistoryPage = () => {
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (
+            console.log(childData),
             setHiddenArray(childData)
         )
     }
@@ -41,7 +42,7 @@ const ToolHistoryPage = () => {
         )
     }
 
-    console.log(hiddenArray)
+    //console.log(hiddenArray)
 
 
     return (

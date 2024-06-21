@@ -68,9 +68,9 @@ const OrderingDashboard = () => {
             }
         
         }
-        console.log(open)
-        console.log(submitted)
-        console.log(closed)
+        //console.log(open)
+        //console.log(submitted)
+        //console.log(closed)
         setOpenSearchResults(open)
         setSubmittedSearchResults(submitted)
         setClosedSearchResults(closed)

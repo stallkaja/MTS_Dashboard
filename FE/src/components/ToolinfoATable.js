@@ -34,7 +34,7 @@ function ToolInfoATable({ hideArray, tableDataCallBack }) {
     const PassRecord = (record) => {
         
     }
-    console.log(hideArray)
+    //console.log(hideArray)
     //handler for record deactivate button
     const confirm = async (e, record) => {
         console.log(record)
@@ -265,7 +265,7 @@ function ToolInfoATable({ hideArray, tableDataCallBack }) {
         let localHideList = []
         if (hideArray !== undefined) {
             for (let i = 0; i < hideArray.length; i++) {
-                localHideList.push(hideArray.hideArray[i])
+                localHideList.push(hideArray[i])
             }
             let addHeader = []
             for (let i = 0; i < headers.length; i++) {

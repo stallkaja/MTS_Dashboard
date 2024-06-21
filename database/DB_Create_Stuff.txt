@@ -117,3 +117,15 @@ CREATE TABLE `userstable` (
   PRIMARY KEY (`username`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+CREATE TABLE `swiclogtable` (
+  `LogStatus` varchar(255),
+  `PortLocation` varchar(255),
+  `BEN` varchar(255),
+  `SystemNotes` text,
+  `CustomerFab` varchar(255),
+  `OpenDate` datetime DEFAULT NULL,
+  `ProgDate` datetime DEFAULT NULL,
+  `CloseDate` datetime DEFAULT NULL,
+  `PK` int NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`PK`)
+) ENGINE=InnoDB AUTO_INCREMENT=137 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci

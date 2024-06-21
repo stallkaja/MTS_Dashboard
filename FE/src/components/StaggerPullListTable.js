@@ -47,8 +47,8 @@ function StaggerPullListTable(hideArray) {
         let soon = dayjs(theDay).add(7, 'day');
         let lowBound = dayjs(send).subtract(7, 'day')
         let highBound = dayjs(send).add(7, 'day')
-        console.log(lowBound)
-        console.log(highBound)
+        //console.log(lowBound)
+        //console.log(highBound)
 
         //display date of items to be sent
         document.getElementById("23").innerHTML = "Date to be Sent: " + sendDate;
@@ -101,7 +101,7 @@ function StaggerPullListTable(hideArray) {
         for (const [key, value] of Object.entries(tools)) {
             tools[key] = Math.ceil(value / 52);
         }
-        //sets page leve variable to dicitonary created
+        //sets page leve variable to dictionary created
         setToolCounts(tools)
         //creates clone dictionary with zero values and sets to page level variable, used to count tools placed on staggering list
         setToolsCounted(Object.fromEntries(Object.entries(tools).map(([k, v]) => [k, 0])));
