@@ -41,11 +41,11 @@ export default function CreateToolPage() {
 	const addTicket = async () => {
 		// Create new object with the variables set in the form
 		console.log('log status is: ' + logStatus)
-		const newTicket = { logStatus, ben, systemNotes, customerFab };
+		const newLog = { logStatus, ben, systemNotes, customerFab, portLocation };
 		console.log(newTicket)
-		const response = await fetch('/newTicket', {
+		const response = await fetch('/newSwicLog', {
 			method: 'POST',
-			body: JSON.stringify(newTicket),
+			body: JSON.stringify(newLog),
 			headers: {
 				'Content-Type': 'application/json'
 			}

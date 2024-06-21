@@ -155,6 +155,70 @@ app.post('/newTicket', (req, res) => {
   })
 });
 
+//Create a new SWIC log.
+app.post('/newSwicLog', (req, res) => {
+  var stmt = ""
+  var args = []
+    if (req.body.logStatus == 'inProgress') {
+        req.body.progDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+    if (req.body.progDate == 'Invalid Date') {
+        req.body.progDate = null
+    }
+    if (req.body.closeDate == 'Invalid Date') {
+        req.body.closeDate = null
+    }
+    if (req.body.logStatus == 'Closed') {
+        req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+  if(req.body.logStatus =='New Release'){
+      if (!req.body.openDate) {
+          req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+      }
+      else if (req.body.openDate == 'Invalid Date') {
+          req.body.openDate = dayjs()
+      } 
+    args = [
+      req.body.logStatus,
+      req.body.ben,
+      req.body.systemNotes,
+      req.body.portLocation,
+      req.body.customerFab,
+      req.body.openDate,
+      req.body.progDate,
+      req.body.closeDate
+
+    ]
+    stmt = "INSERT INTO ticketsTable (LogStatus, BEN, SystemNotes, PortLocation, CustomerFab, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), CustomerFab = VALUES(CustomerFab), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+  }
+  else{
+    args = [
+      req.body.logStatus,
+      req.body.customerFab,
+      req.body.ben,
+      req.body.systemNotes,
+      req.body.portLocation,
+      req.body.openDate,
+      req.body.progDate,
+      req.body.closeDate
+
+    ]
+    stmt = "INSERT INTO ticketsTable (TicketStatus, customerFab, BEN, systemNotes, portLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+  }
+
+  
+  //WIP
+    connection.query(stmt, [args], (err, rows, fields) => {
+      if (err) {
+          throw err
+          connection.end();
+      }
+      else {
+        res.status(200).json({ Error: 'Success' })
+      }
+  })
+});
+
 // Create a new Tool using a post request
 app.post('/newTool', (req, res) => {
 
