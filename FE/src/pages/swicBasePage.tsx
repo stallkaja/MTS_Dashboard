@@ -10,7 +10,7 @@ import ColumnChange from '../components/ColumnChange';
 const SWICDashboard: React.FC = () => {
     const navigate = useNavigate();
     const OpenTicket = () => {
-        let path = '/TicketPage';
+        let path = '/SwicForm';
         navigate(path);
     }
     const [hideList, setHideList] = useState([]);
