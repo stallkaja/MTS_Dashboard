@@ -17,7 +17,7 @@ const locations = [
     },
     {
         value: 'SPFT',
-        albel: 'SPFT',
+        label: 'SPFT',
     },
     {
         value: 'SPA',

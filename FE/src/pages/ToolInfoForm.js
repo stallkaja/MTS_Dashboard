@@ -21,10 +21,11 @@ export default function CreateToolPage() {
 	const [id, setId] = useState('');
 	const [loc, setLoc] = useState('');
 	const [caldue, setCaldue] = useState('');
-	const [key, setKey] = useState('');
+	const [key, setKey] = useState();
     const [curLoc, setCurLoc] = useState('');
     const [com, setCom] = useState('');
     const { TextArea } = Input;
+    const [stat, setStat] = useState('Active');
 
 
 	
@@ -43,8 +44,9 @@ export default function CreateToolPage() {
 			setLoc(location.state.record.PermLoc);
 			setCaldue(location.state.record.CalibrationDue);
 			setKey(location.state.record.PK);
-            setCurLoc(location.state.record.CurLoc)
-            setCom(location.state.record.Comments)
+            setCurLoc(location.state.record.CurLoc);
+            setCom(location.state.record.Comments);
+            setStat(location.state.record.Status)
 		};
 	}, []) // <-- empty dependency array
 
@@ -58,7 +60,7 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTool = async () => {
 		// Create new object with the variables set in the form
-		const newTool = { manu, model, desc, serial, area, id, loc, caldue, key, curLoc, com};
+		const newTool = { manu, model, desc, serial, area, id, loc, caldue, key, curLoc, com, stat};
 		const response = await fetch('/newTool', {
 			method: 'POST',
 			body: JSON.stringify(newTool),
@@ -89,6 +91,9 @@ export default function CreateToolPage() {
     const locChange = (value) => {
         setCurLoc(value)
     }
+    const statChange = (value) => {
+        setStat(value)
+    }
 
 
 
@@ -115,6 +120,11 @@ export default function CreateToolPage() {
 					        <Input 
                                 placeholder="ID"
                                 value={id}
+                                style={{
+                                    width: '275px'
+                                }}
+                                showCount='true'
+                                maxLength='100'
                                 onChange={e => setId(e.target.value)}
                             />
 				        </div>
@@ -124,7 +134,12 @@ export default function CreateToolPage() {
 					        <Input
                                 placeholder="Manufacturer Name"
                                 value={manu}
+                                style={{
+                                    width: '275px'
+                                }}
                                 onChange={e => setManu(e.target.value) }
+                                showCount='true'
+                                maxLength='100'
                             />
 					    </div>
 
@@ -133,9 +148,15 @@ export default function CreateToolPage() {
 						    <Input
                                 placeholder="Model Name"
                                 value={model}
+                                style={{
+                                    width: '275px'
+                                }}
                                 onChange={e => setModel(e.target.value) }
+                                showCount='true'
+                                maxLength='100'
                             />
 				        </div>
+
                     </div>
 
 				    <div id="column">
@@ -144,7 +165,12 @@ export default function CreateToolPage() {
 						    <Input 
                                 placeholder="Description"
                                 value={desc}
+                                style={{
+                                    width: '275px'
+                                }}
                                 onChange={e => setDesc(e.target.value) }
+                                showCount='true'
+                                maxLength='100'
                             />
 					    </div>
 
@@ -153,7 +179,12 @@ export default function CreateToolPage() {
 						    <Input
                                 placeholder="Serial Number"
                                 value={serial}
-                                onChange={e => setSerial(e.target.value) }
+                                style={{
+                                    width: '275px'
+                                }}
+                                onChange={e => setSerial(e.target.value)}
+                                showCount='true'
+                                maxLength='100'
                             />
 					    </div>
 
@@ -162,7 +193,12 @@ export default function CreateToolPage() {
 						    <Input
                                 placeholder="Area"
                                 value={area}
+                                style={{
+                                    width: '275px'
+                                }}
                                 onChange={e => setArea(e.target.value) }
+                                showCount='true'
+                                maxLength='100'
                             />
 					    </div>
                     </div>
@@ -173,7 +209,12 @@ export default function CreateToolPage() {
 						    <Input
                                 placeholder="Location"
                                 value={loc}
+                                style={{
+                                    width: '275px'
+                                } }
                                 onChange={e => setLoc(e.target.value) }
+                                showCount='true'
+                                maxLength='100'
                             />
 				        </div>
 
@@ -191,7 +232,9 @@ export default function CreateToolPage() {
 				            </Space>
 				
 					    </div>
+                    </div>
 
+                    <div id="column">
                         <div id="InputBox">
                             <div id="Label">Current Location</div>
                             <Select
@@ -209,6 +252,34 @@ export default function CreateToolPage() {
                                 }
                                 options={locations}
                              />
+                        </div>
+
+                        <div id="InputBox">
+                            <div id="Label">Tool Status</div>
+                            <Select
+                                showSearch
+                                style={{
+                                    width: '275px'
+                                }}
+                                value={stat}
+                                onChange={statChange}
+                                placeholder="Tool Status"
+                                optionFilterProp="children"
+                                filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                filterSort={(optionA, optionB) =>
+                                    (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                }
+                                options={[
+                                    {
+                                        value: 'Active',
+                                        label: 'Active',
+                                    },
+                                    {
+                                        value: 'Inactive',
+                                        label: 'Inactive',
+                                    }]
+                                }
+                            />
                         </div>
 			        </div>
                 </div>

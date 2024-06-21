@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router';
 import './ToolHistoryPage.css';
 import { Button, ConfigProvider } from 'antd';
 import ColumnChange from '../components/ColumnChange';
+import ExcelExport from '../components/ExcelExport';
 
 
   
@@ -20,6 +21,7 @@ const ToolHistoryPage = () => {
         keey: 2,
         keeey: 3
     });
+    const [excelData, setExcelData] = useState({});
     const [hideList, setHideList] = useState(['PK', 'Status']);
     const OpenTicket = () => {
         let path = '/TicketPage';
@@ -32,7 +34,14 @@ const ToolHistoryPage = () => {
         )
     }
 
+    const toExcel = (childData) => {
+        console.log(childData)
+        return (
+            setExcelData(childData)
+        )
+    }
 
+    console.log(hiddenArray)
 
 
     return (
@@ -63,11 +72,19 @@ const ToolHistoryPage = () => {
                         {"Create New Tool"}
                         </Button>
                     </div>
+
+                    <div id='ToolButton2'>
+                        <ExcelExport
+                            tabledData={excelData} />
+                    </div>
                 </div>
                 
                 <ToolInfoATable
-                    hideArray={hiddenArray} />
+                    hideArray={hiddenArray}
+                    tableDataCallBack={toExcel} 
+                    />
             </div>
+
         </ConfigProvider>
     );
 };

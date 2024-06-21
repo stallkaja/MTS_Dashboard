@@ -3,7 +3,7 @@ import { Button, Input, Space, Table, typography, Popconfirm, message } from 'an
 import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
 
-function ToolInfoATable(hideArray) {
+function ToolInfoATable({ hideArray, tableDataCallBack }) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -34,7 +34,7 @@ function ToolInfoATable(hideArray) {
     const PassRecord = (record) => {
         
     }
-
+    console.log(hideArray)
     //handler for record deactivate button
     const confirm = async (e, record) => {
         console.log(record)
@@ -253,6 +253,7 @@ function ToolInfoATable(hideArray) {
 
                     }
                     setItems(responseData)
+                    tableDataCallBack(responseData)
                 })
             }
         });
@@ -260,68 +261,70 @@ function ToolInfoATable(hideArray) {
     useEffect(() => loadItems(), []);
 
     //assigning hidden columns
-    const columnHide = (hideArray, headers) => {
+    const columnHide = ( hideArray , headers) => {
         let localHideList = []
-        for (let i = 0; i < hideArray.hideArray.length; i++) {
-            localHideList.push(hideArray.hideArray[i])
-        }
-        let addHeader = []
-        for (let i = 0; i < headers.length; i++) {
-            let payload = {}
-            if (localHideList.includes(headers[i].title)) {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    hidden: true
-                }
-            } else if (headers[i].title === "Edit Tool") {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    render: (text, record) => (
-                        <Button onClick={() => EditRecord(record)}>
-                            {"Edit"}
-                        </Button >
-                    )
-                }
-            } else if (headers[i].title === "Deactivate Tool") {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    render: (text, record) => (
-                        <Popconfirm
-                            title="Deactivate Record"
-                            description="Are you sure you want to deactivate this record?"
-                            onConfirm={confirm}
-                            onCancel={cancel}
-                            okText="Yes"
-                            cancelText="No"
-                        >
-                            <Button>
-                                {"Deactivate"}
-                            </Button>
-                        </Popconfirm>
-                    )
-                }
-            } else {
-                payload = {
-                    title: headers[i].title,
-                    dataIndex: headers[i].dataIndex,
-                    key: headers[i].key,
-                    hidden: false,
-                    ...getColumnSearchProps(headers[i].title),
-                    sorter: {
-                        compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
-                    },
-                    sortDirections: ['descend', 'ascend'],
-                }
+        if (hideArray !== undefined) {
+            for (let i = 0; i < hideArray.length; i++) {
+                localHideList.push(hideArray.hideArray[i])
             }
-            addHeader.push(payload)
+            let addHeader = []
+            for (let i = 0; i < headers.length; i++) {
+                let payload = {}
+                if (localHideList.includes(headers[i].title)) {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        hidden: true
+                    }
+                } else if (headers[i].title === "Edit Tool") {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        render: (text, record) => (
+                            <Button onClick={() => EditRecord(record)}>
+                                {"Edit"}
+                            </Button >
+                        )
+                    }
+                } else if (headers[i].title === "Deactivate Tool") {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        render: (text, record) => (
+                            <Popconfirm
+                                title="Deactivate Record"
+                                description="Are you sure you want to deactivate this record?"
+                                onConfirm={confirm}
+                                onCancel={cancel}
+                                okText="Yes"
+                                cancelText="No"
+                            >
+                                <Button>
+                                    {"Deactivate"}
+                                </Button>
+                            </Popconfirm>
+                        )
+                    }
+                } else {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        hidden: false,
+                        ...getColumnSearchProps(headers[i].title),
+                        sorter: {
+                            compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
+                        },
+                        sortDirections: ['descend', 'ascend'],
+                    }
+                }
+                addHeader.push(payload)
+            }
+            setHeaders(addHeader)
         }
-        setHeaders(addHeader)
     }
     useEffect(() => {
         columnHide(hideArray, headers)

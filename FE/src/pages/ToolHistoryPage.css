@@ -6,6 +6,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-content: space-between;
+    flex-wrap: wrap;
 }
 #ToolTitle {
     padding-left: 10px;
@@ -15,6 +17,12 @@
     justify-content: flex-start;
     float: right;
     padding-left: 10px;
+}
+#ToolButton2 {
+    display: flex;
+    justify-content: flex-start;
+    float: right;
+    padding-right: 10px;
 }
 #ToolTitleCard {
     height: 60px;

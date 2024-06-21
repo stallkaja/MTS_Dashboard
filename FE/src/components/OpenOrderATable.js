@@ -245,8 +245,6 @@ function OpenOrderATable({ hideArray, searchResults }) {
         });
     }
     useEffect(() => loadLineHeaders(), []);
-    console.log(lineHeads)
-
 
     //requesting items from DB
     const loadItems = async () => {
@@ -305,9 +303,6 @@ function OpenOrderATable({ hideArray, searchResults }) {
         });
     }
     useEffect(() => loadLineItems(), []);
-
-    console.log(lines)
-    console.log(items)
 
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
@@ -415,19 +410,13 @@ function OpenOrderATable({ hideArray, searchResults }) {
         for (let i = 0; i < lineHeads.length; i ++){
             if((lineHeads[i].title !== "RequestNumber") && (lineHeads[i].title !== "PK")){
                 localCols.push(lineHeads[i])
-                console.log("I pushed" + lineHeads[i].title)
             }
         }
-        //lines
-        console.log("record here")
-        console.log(record)
         for (let i = 0; i < lines.length; i ++) {
             if(record.RequestNumber == lines[i].RequestNumber){
                 data.push(lines[i])
             }
         }
-        console.log("localCols line heads here")
-        console.log(localCols)
         return <Table
             columns={localCols}
             dataSource={data}

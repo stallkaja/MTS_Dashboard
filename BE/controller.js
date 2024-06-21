@@ -169,10 +169,11 @@ app.post('/newTool', (req, res) => {
         req.body.caldue,
         req.body.key,
         req.body.curLoc,
-        req.body.com
+        req.body.com,
+        req.body.stat
 
     ]
-    const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, PermLoc, CalibrationDue, PK, CurLoc, Comments) VALUES(?) ON DUPLICATE KEY UPDATE NVL = VALUES(NVL), ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), PermLoc = VALUES(PermLoc), CalibrationDue = VALUES(CalibrationDue), CurLoc = VALUES(CurLoc), Comments = VALUES(Comments)"
+    const stmt = "INSERT INTO caltoolstable (NVL, ManufacturerName, ModelName, Description, SerialNumber, Area, PermLoc, CalibrationDue, PK, CurLoc, Comments, Status) VALUES(?) ON DUPLICATE KEY UPDATE NVL = VALUES(NVL), ManufacturerName = VALUES(ManufacturerName), ModelName = VALUES(ModelName), Description = VALUES(Description), SerialNumber = VALUES(SerialNumber), Area = VALUES(Area), PermLoc = VALUES(PermLoc), CalibrationDue = VALUES(CalibrationDue), CurLoc = VALUES(CurLoc), Comments = VALUES(Comments), Status = VALUES(Status)"
     //WIP
     connection.query(stmt, [args], (err, rows, fields) => {
         if (err) {
@@ -226,6 +227,8 @@ app.post('/newScan', (req, res) => {
 
 // read headers using a get request
 app.post('/headers', (req, res) => {
+  console.log("Table name in headers")
+  console.log(req.body.tName)
   const args=[[
     req.body.tName
   ]]
@@ -235,6 +238,7 @@ app.post('/headers', (req, res) => {
       throw err
       connection.end();
     }
+    console.log(rows)
     res.json(rows)
   })
   //connection.end()

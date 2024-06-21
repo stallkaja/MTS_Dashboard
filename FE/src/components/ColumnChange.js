@@ -2,13 +2,6 @@ import { useEffect, useState } from 'react';
 import { Select } from 'antd';
 
 function ColumnChange({ tName , parentPass, hideList }) { 
-    /*const [hideList, setHideList] = useState([
-        'Email',
-        'PreferredVendor',
-        'PurchNumber',
-        'AdminComments',
-        'AttachFile'
-    ])*/
     const [optionsArray, setOptionsArray] = useState([]);
     const [hideArray, setHideArray] = useState([])
 
@@ -17,12 +10,16 @@ function ColumnChange({ tName , parentPass, hideList }) {
     const loadHeaders = async () => {
         const response = await fetch('/headers', {
             method: 'POST',
-            body: JSON.stringify({ tName }),
+            body: JSON.stringify({ tName }), //DO NOT REMOVE CURLIES, BREAKS FE
             headers: {
                 'Content-Type': 'application/json'
             }
         }).then((response) => {
+            console.log("got a response")
+            console.log(response)
+            console.log(response.ok)
             if (response.ok) {
+                console.log("got an ok response")
                 response.json().then((responseData) => {
                     let opto = [];
                     let hideo = [];
@@ -37,6 +34,8 @@ function ColumnChange({ tName , parentPass, hideList }) {
                             hideo.push(responseData[i].COLUMN_NAME)
                         }
                     }
+                    console.log("options be here")
+                    console.log(opto)
                     setOptionsArray(opto);
                     setHideArray(hideo);
 
