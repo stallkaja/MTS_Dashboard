@@ -42,7 +42,7 @@ export default function CreateToolPage() {
 		// Create new object with the variables set in the form
 		console.log('log status is: ' + logStatus)
 		const newLog = { logStatus, ben, systemNotes, customerFab, portLocation };
-		console.log(newTicket)
+		//console.log(newTicket)
 		const response = await fetch('/newSwicLog', {
 			method: 'POST',
 			body: JSON.stringify(newLog),
