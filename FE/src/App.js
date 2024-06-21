@@ -21,6 +21,7 @@ import TicketsListPage from './pages/ticketsListPage.tsx'
 import KitBasePage from './pages/kitBasePage.tsx'
 import KitFormPage from './pages/KitFormPage.js'
 import SwicBasePage from './pages/swicBasePage.tsx'
+import SwicBaseForm from './pages/swicBaseForm.js'
 import ToolPullListPage from './pages/toolPullListPage.js'
 import PassDownPage from './pages/passDownPage.js';
 import PassdownForm from './pages/PassdownForm.js';
@@ -76,6 +77,7 @@ function App() {
                             <Route path='/KitBasePage' element={<KitBasePage />} />
                             <Route path='/KitFormPage' element={<KitFormPage />} />
                             <Route path='/SwicBase' element={<SwicBasePage />} />
+                            <Route path='/SwicForm' element={<SwicBaseForm />} />
                             <Route path='/ToolPullList' element={<ToolPullListPage />} />
                             <Route path='/PassDownPage' element={<PassDownPage />} />
                             <Route path='/PassdownForm' element={<PassdownForm />} />

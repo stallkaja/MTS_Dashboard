@@ -1,0 +1,87 @@
+﻿#SWICHeader {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#TickTitle {
+    padding-left: 10px;
+}
+
+#TickButton {
+    display: flex;
+    justify-content: flex-start;
+    float: right;
+    padding-left: 10px;
+}
+
+#TickTitleCard {
+    background: #e6e3dc;
+    border-radius: 15px;
+    height: 60px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+#TickFormCard {
+    /*border-radius: 15px;*/
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 70%;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+#TickInputBox {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 225px;
+}
+
+#TickLabel {
+    display: flex;
+    align-items: flex-start;
+}
+
+#TickButtonBox {
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+}
+
+#TickBackButton {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#TickSubmitButton {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#TickTextBox {
+    padding-bottom: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    width: 70%;
+}
