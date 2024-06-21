@@ -7,18 +7,18 @@
     justify-content: center;
 }
 
-#TickTitle {
+#SwicTitle {
     padding-left: 10px;
 }
 
-#TickButton {
+#SwicButton {
     display: flex;
     justify-content: flex-start;
     float: right;
     padding-left: 10px;
 }
 
-#TickTitleCard {
+#SwicTitleCard {
     background: #e6e3dc;
     border-radius: 15px;
     height: 60px;
@@ -30,7 +30,7 @@
     justify-content: center;
 }
 
-#TickFormCard {
+#SwicFormCard {
     /*border-radius: 15px;*/
     height: auto;
     width: auto;
@@ -43,7 +43,7 @@
     padding-right: 5px;
 }
 
-#TickInputBox {
+#SwicInputBox {
     display: flex;
     flex-direction: column;
     padding-bottom: 10px;
@@ -51,18 +51,18 @@
     width: 225px;
 }
 
-#TickLabel {
+#SwicLabel {
     display: flex;
     align-items: flex-start;
 }
 
-#TickButtonBox {
+#SwicButtonBox {
     display: flex;
     justify-content: space-between;
     width: 70%;
 }
 
-#TickBackButton {
+#SwicBackButton {
     padding-left: 10px;
     display: flex;
     flex-direction: column;
@@ -71,7 +71,7 @@
     justify-content: center;
 }
 
-#TickSubmitButton {
+#SwicSubmitButton {
     padding-right: 10px;
     display: flex;
     flex-direction: column;
@@ -79,9 +79,9 @@
     align-items: flex-end;
 }
 
-#TickTextBox {
+#SwicTextBox {
     padding-bottom: 10px;
     padding-right: 5px;
     padding-left: 5px;
-    width: 70%;
+    width: 28%;
 }

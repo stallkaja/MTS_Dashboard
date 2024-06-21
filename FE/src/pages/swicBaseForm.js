@@ -9,12 +9,11 @@ export default function CreateToolPage() {
 
 	const history = useNavigate();
 	const location = useLocation();
-	const [ticketStatus, setTicketStatus] = useState('Open');
-	const [ticketNum, setTicketNum] = useState('new ticket');
+	const [logStatus, setLogStatus] = useState('New Release');
+	const [portLocation, setPortLocation] = useState(' ');
 	const [ben, setBen] = useState('')
-	const [ticketDescription, setTicketDescription] = useState('')
-	const [department, setDepartment] = useState('');
-	const [toolBay, setToolBay] = useState('');
+	const [systemNotes, setSystemNotes] = useState('')
+	const [customerFab, setCustomerFab] = useState('');
 
 	useEffect(() => {
 		console.log(location)
@@ -23,12 +22,11 @@ export default function CreateToolPage() {
 			console.log('record is null')
 		}
 		else {
-			setTicketStatus(location.state.record.TicketStatus);
-			setTicketNum(location.state.record.TicketNum);
+			setLogStatus(location.state.record.LogStatus);
+			setPortLocation(location.state.record.PortLocation);
 			setBen(location.state.record.BEN);
-			setTicketDescription(location.state.record.TicketDescription);
-			setDepartment(location.state.record.Department);
-			setToolBay(location.state.record.ToolBay);
+			setSystemNotes(location.state.record.SystemNotes);
+			setCustomerFab(location.state.record.CustomerFab);
 		};
 	}, []) // <-- empty dependency array
 
@@ -42,8 +40,8 @@ export default function CreateToolPage() {
 	//----------------------------------------------------------------------------
 	const addTicket = async () => {
 		// Create new object with the variables set in the form
-		console.log('ticket status is: ' + ticketStatus)
-		const newTicket = { ticketStatus, ticketNum, ben, ticketDescription, department, toolBay };
+		console.log('log status is: ' + logStatus)
+		const newTicket = { logStatus, ben, systemNotes, customerFab };
 		console.log(newTicket)
 		const response = await fetch('/newTicket', {
 			method: 'POST',
@@ -53,21 +51,24 @@ export default function CreateToolPage() {
 			}
 		}).then(response => {
 			if (response.status === 200) {
-				alert("Ticket has been added!");
-				history('/TicketDashboard');
+				alert("Log has been added!");
+				history('/SwicBase');
 			} else {
-				alert(`Failed to add Ticket, status code = ${response.status}`);
+				alert(`Failed to add Log, status code = ${response.status}`);
 			}
 		});
 
 	}
 	const navigate = useNavigate();
 	const backButton = () => {
-		let path = '/TicketDashboard';
+		let path = '/SwicBase';
 		navigate(path);
 	}
 	const handleChange = (value) => {
-		setTicketStatus(value)
+		setLogStatus(value)
+	}
+	const handleChanges = (value) => {
+		setPortLocation(value)
 	}
 
 	const { TextArea } = Input;
@@ -88,55 +89,69 @@ export default function CreateToolPage() {
 				<h1>SWIC Base Form</h1>
 				<div id="SWICHeader" />
 
-				<div id="TickFormCard">
-					<div id="TickInputBox">
-						<div id="TickLabel">Ticket Status</div>
+				<div id="SwicFormCard">
+					<div id="SwicInputBox">
+						<div id="SwicLabel">BEN</div>
+						<Input placeholder="BEN" value={ben} onChange={e => setBen(e.target.value)} />
+
+						<div id="SwicInputBox">
+						<div id="SwicLabel">Customer & Fab</div>
+						<Input placeholder=" " value={customerFab} onChange={e => setCustomerFab(e.target.value)} />
+					</div>
+					</div>
+					
+					<div id="SwicInputBox">
+					<div id="SwicLabel">Status</div>
 
 						<Select
-							defaultValue="Open"
-							value={ticketStatus}
+							defaultValue="New Release"
+							value={logStatus}
 							onChange={handleChange}
 							options={[
-								{ value: 'Open', label: 'Open', },
+								{ value: 'New Release', label: 'New Release', },
 								//{ value: 'inProgress', label: 'In Progress', },
-								{ value: 'Closed', label: 'Closed', },
+								{ value: 'Work In Progress', label: 'Work In Progress', },
+								{ value: 'Complete', label: 'Complete', },
+								{ value: 'Archived', label: 'Archived', },
+							]}
+						/>
+
+                        <div id="SwicInputBox">
+						<div id="SwicLabel">Port Location</div>
+						<Select
+							defaultValue=" "
+							value={portLocation}
+							onChange={handleChanges}
+							options={[
+								{ value: 'Port 1', label: 'Port 1', },
+								{ value: 'Port 2', label: 'Port 2', },
+								{ value: 'Port 3', label: 'Port 3', },
+								{ value: 'Port 4', label: 'Port 4', },
+								{ value: 'Sabre 3D PM A', label: 'Sabre 3D PM A', },
+								{ value: 'Sabre 3D PM B', label: 'Sabre 3D PM B', },
+								{ value: 'Sabre 3D PPT', label: 'Sabre 3D PPT', },
+								{ value: 'Sabre Anneal', label: 'Sabre Anneal', },
+								{ value: 'Sabre VPM', label: 'Sabre VPM', },
+								{ value: 'Standalone/Handler', label: 'Standalone/Handler', },
 							]}
 						/>
 					</div>
-
-					<div id="TickInputBox">
-						<div id="TickLabel">Ticket Number</div>
-						<Input readonly={1} placeholder="Ticket Number" value={ticketNum} onChange={e => setTicketNum(e.target.value)} />
 					</div>
-
-					<div id="TickInputBox">
-						<div id="TickLabel">BEN</div>
-						<Input placeholder="BEN" value={ben} onChange={e => setBen(e.target.value)} />
-					</div>
-
-					<div id="TickInputBox">
-						<div id="TickLabel">Department</div>
-						<Input placeholder="Department" value={department} onChange={e => setDepartment(e.target.value)} />
-					</div>
-
-					<div id="TickInputBox">
-						<div id="TickLabel">Tool Bay</div>
-						<Input placeholder="Tool Bay" value={toolBay} onChange={e => setToolBay(e.target.value)} />
-					</div>
+					
 				</div>
 
-				<div id="TickLabel">Ticket Description</div>
-				<div id="TickTextBox">
-					<TextArea rows={6} value={ticketDescription} placeholder="Description" onChange={e => setTicketDescription(e.target.value)} />
+				<div id="SwicLabel">System Notes</div>
+				<div id="SwicTextBox">
+					<TextArea rows={4} value={systemNotes} placeholder=" " onChange={e => setSystemNotes(e.target.value)} />
 				</div>
 
 
-				<div id="TickButtonBox">
-					<div id="TickBackButton">
+				<div id="SwicButtonBox">
+					<div id="SwicBackButton">
 						<Button onClick={backButton}>Back</Button>
 					</div>
 
-					<div id="TickSubmitButton">
+					<div id="SwicSubmitButton">
 						<Button onClick={addTicket}> Save </Button>
 					</div>
 				</div>

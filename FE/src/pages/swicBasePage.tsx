@@ -66,7 +66,8 @@ const SWICDashboard: React.FC = () => {
             <div id='ClosedSLCard'>
                 <div id='CloseSLTitle'>Completed</div>
             </div>
-
+           
+            <ClosedTicketATable hideArray={hiddenArray}/>
 
         </ConfigProvider>
     );
