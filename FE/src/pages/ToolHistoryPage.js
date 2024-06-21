@@ -37,6 +37,13 @@ const ToolHistoryPage = () => {
 
     const toExcel = (childData) => {
         console.log(childData)
+        for (let i = 0; i < childData.length; i++) {
+            if (hiddenArray == null) {
+                //if (hideList.includes(childData[i]){
+
+                //}
+            }
+        }
         return (
             setExcelData(childData)
         )
