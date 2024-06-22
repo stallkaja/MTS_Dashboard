@@ -22,7 +22,7 @@ function SwicNRTable(hideArray){
     const [filtHead, setFiltHead] = useState([]);
 
     const EditRecord=(record)=>{
-      navigate('/SwicBase',{state:{record:record}});
+      navigate('/SwicForm',{state:{record:record}});
     };
 
     //handling search and sort, copied from Ant Design

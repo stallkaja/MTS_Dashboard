@@ -157,6 +157,7 @@ app.post('/newTicket', (req, res) => {
 
 //Create a new SWIC log.
 app.post('/newSwicLog', (req, res) => {
+  console.log(req)
   var stmt = ""
   var args = []
     if (req.body.logStatus == 'inProgress') {
@@ -172,6 +173,7 @@ app.post('/newSwicLog', (req, res) => {
         req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
     }
   if(req.body.logStatus =='New Log'){
+    console.log('newlog')
       if (!req.body.openDate) {
           req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
       }
@@ -189,10 +191,12 @@ app.post('/newSwicLog', (req, res) => {
       req.body.closeDate
 
     ]
-    stmt = "INSERT INTO swiclogtable (LogStatus, BEN, SystemNotes, PortLocation, CustomerFab, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), CustomerFab = VALUES(CustomerFab), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    stmt = "INSERT INTO swiclogtable (LogStatus, BEN, CustomerFab, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), CustomerFab = VALUES(CustomerFab), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
   else{
+    console.log("updating log")
     args = [
+      req.body.PK,
       req.body.logStatus,
       req.body.customerFab,
       req.body.ben,
@@ -203,7 +207,7 @@ app.post('/newSwicLog', (req, res) => {
       req.body.closeDate
 
     ]
-    stmt = "INSERT INTO swiclogtable (LogStatus, CustomerFab, BEN, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    stmt = "INSERT INTO swiclogtable (PK, LogStatus, BEN, CustomerFab, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE PK = VALUES(PK), LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), CustomerFab = VALUES(CustomerFab), SystemNotes = VALUES(SystemNotes), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
 
   
@@ -291,8 +295,6 @@ app.post('/newScan', (req, res) => {
 
 // read headers using a get request
 app.post('/headers', (req, res) => {
-  console.log("Table name in headers")
-  console.log(req.body.tName)
   const args=[[
     req.body.tName
   ]]
@@ -302,7 +304,6 @@ app.post('/headers', (req, res) => {
       throw err
       connection.end();
     }
-    console.log(rows)
     res.json(rows)
   })
   //connection.end()
@@ -374,6 +375,17 @@ app.get('/loadOpenTickets', (_, res) => {
   // loading swic logs
 app.get('/loadSwicNR', (_, res) => {
   connection.query('Select * from swiclogtable WHERE LogStatus IN ("New Release")', (err, rows, fields) => {
+    if (err) {
+      throw err
+      connection.end();
+    }
+    res.json(rows)
+  })
+   
+});
+
+app.get('/loadSwicCompleted', (_, res) => {
+  connection.query('Select * from swiclogtable WHERE LogStatus IN ("Complete")', (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();

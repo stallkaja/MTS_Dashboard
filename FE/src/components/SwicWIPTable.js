@@ -20,7 +20,8 @@ function SwicWIPTable(hideArray){
     const [filtHead, setFiltHead] = useState([]);
 
   const EditRecord=(record)=>{
-    navigate('/ticketPage',{state:{record:record}});
+    console.log("into button on click")
+    navigate('/SwicForm',{state:{record:record}});
   };
     //Search and Sort Handlers, copied from Ant Design
     const defaultSort = (a, b) => {
@@ -171,9 +172,12 @@ function SwicWIPTable(hideArray){
                     key: 'key',
                     dataIndex: 'key',
                     render: (text, record) => (
-                        <Button style={{ backgroundColor: '#00a800', color: '#000000', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
+
+                        <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+
                             {"Open"}
                         </Button>
+
                     ),
                 }
           

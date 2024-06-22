@@ -14,6 +14,7 @@ export default function CreateToolPage() {
 	const [ben, setBen] = useState('')
 	const [systemNotes, setSystemNotes] = useState('')
 	const [customerFab, setCustomerFab] = useState('');
+	const [PK, setPK] = useState('');
 
 	useEffect(() => {
 		console.log(location)
@@ -27,6 +28,7 @@ export default function CreateToolPage() {
 			setBen(location.state.record.BEN);
 			setSystemNotes(location.state.record.SystemNotes);
 			setCustomerFab(location.state.record.CustomerFab);
+			setPK(location.state.record.PK)
 		};
 	}, []) // <-- empty dependency array
 
@@ -41,7 +43,7 @@ export default function CreateToolPage() {
 	const addSwicLog = async () => {
 		// Create new object with the variables set in the form
 		console.log('log status is: ' + logStatus)
-		const newLog = { logStatus, ben, systemNotes, customerFab, portLocation };
+		const newLog = {PK, logStatus, ben, systemNotes, customerFab, portLocation };
 		//console.log(newLog)
 		const response = await fetch('/newSwicLog', {
 			method: 'POST',

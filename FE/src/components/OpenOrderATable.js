@@ -30,7 +30,7 @@ function OpenOrderATable({ hideArray, searchResults }) {
 
     const [filtHead, setFiltHead] = useState([]);
     const EditRecord = (record) => {
-        console.log(record)
+        console.log("into button on click")
         navigate('/MaterialRequestform', { state: { record: record } })
     };
 
