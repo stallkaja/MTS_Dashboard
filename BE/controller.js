@@ -371,6 +371,52 @@ app.get('/loadOpenTickets', (_, res) => {
     //connection.end()
   });
 
+  // loading swic logs
+app.get('/loadSwicNR', (_, res) => {
+  connection.query('Select * from swiclogtable WHERE LogStatus IN ("New Release")', (err, rows, fields) => {
+    if (err) {
+      throw err
+      connection.end();
+    }
+    res.json(rows)
+  })
+   
+});
+ 
+app.get('/loadSwicWIP', (_, res) => {
+  connection.query('Select * from swiclogtable WHERE LogStatus IN ("Work In Progress")', (err, rows, fields) => {
+    if (err) {
+      throw err
+      connection.end();
+    }
+    res.json(rows)
+  })
+  
+  });  
+
+  app.get('/loadSwicCompleted', (_, res) => {
+    connection.query('Select * from swiclogtable WHERE LogStatus IN ("Completed")', (err, rows, fields) => {
+      if (err) {
+        throw err
+        connection.end();
+      }
+      res.json(rows)
+    })
+  
+    }); 
+    
+    app.get('/loadSwicArch', (_, res) => {
+      connection.query('Select * from swiclogtable WHERE LogStatus IN ("Archived")', (err, rows, fields) => {
+        if (err) {
+          throw err
+          connection.end();
+        }
+        res.json(rows)
+      })
+      
+      });  
+ 
+
 //retrieve calibrated tools information
 app.get('/calTools', (_, res) => {
     connection.query('Select * from caltoolstable WHERE Status = "Active"', (err, rows, fields) => {
