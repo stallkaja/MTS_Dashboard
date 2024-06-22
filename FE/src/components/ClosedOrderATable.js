@@ -1,4 +1,4 @@
-import { Button, Space, Table, Input, Tag, configProvider, Select, message } from 'antd';
+import { Button, Space, Input, Table, Switch, Tag, ConfigProvider, Select, message } from 'antd';
 import { green } from '@mui/material/colors';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -20,19 +20,26 @@ function ClosedOrderATable({ hideArray, searchResults }) {
         'AdminComments',
         'AttachFile'
     ])
-    const [filtHead, setFiltHead] = useState([]);
+    const [lines, setLines] = useState([]);
+    const [lineHeads, setLineHeads] = useState([]);
+    const [lineHide, setLineHide] = useState([
+        'PK',
+        'RequestNumber'
+    ])
+    const [linesDict, setLinesDict] = useState({});
 
+    const [filtHead, setFiltHead] = useState([]);
     const EditRecord = (record) => {
-        navigate('/MaterialRequestform', { state: { record: record } });
+        console.log("into button on click")
+        navigate('/MaterialRequestform', { state: { record: record } })
     };
 
-    //Search and sort handlers, copied from Ant Design
+    //search and sort handlers, copied from Ant Design
     const defaultSort = (a, b) => {
         if (a < b) return -1;
         if (b < a) return 1;
         return 0;
     };
-
     const handleSearch = (selectedKeys, confirm, dataIndex) => {
         confirm();
         setSearchText(selectedKeys[0]);
@@ -84,6 +91,7 @@ function ClosedOrderATable({ hideArray, searchResults }) {
                     >
                         Reset
                     </Button>
+
                     <Button
                         type="link"
                         size="small"
@@ -97,6 +105,7 @@ function ClosedOrderATable({ hideArray, searchResults }) {
                     >
                         Filter
                     </Button>
+
                     <Button
                         type="link"
                         size="small"
@@ -125,7 +134,7 @@ function ClosedOrderATable({ hideArray, searchResults }) {
         },
     });
 
-    //request headers from DB
+    //requesting headers from DB
     const loadHeaders = async () => {
         const tName = 'materialorderstable'
         const tableName = { tName }
@@ -157,36 +166,86 @@ function ClosedOrderATable({ hideArray, searchResults }) {
                                 key: responseData[i].COLUMN_NAME,
                                 ...getColumnSearchProps(responseData[i].COLUMN_NAME),
                                 sorter: {
-                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
                                 },
                                 sortDirections: ['descend', 'ascend'],
                             }
                         }
 
-                        headerArray.push(payload)
+                            headerArray.push(payload)                        
                     }
 
-                    const buttonPayload = {
-                        title: 'Edit Record',
-                        key: 'key',
-                        dataIndex: 'key',
-                        render: (text, record) => (
+                        const buttonPayload = {
+                            title: 'Edit Record',
+                            key: 'key',
+                            dataIndex: 'key',
+                            render: (text, record) => (
 
-                            <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
-                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
-                                {"Edit"}
-                            </Button>
+                                <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
 
-                        ),
-                    }
-                    headerArray.push(buttonPayload)
+                                    {"Edit"}
+                                </Button>
+
+                            ),
+                        }
+                        headerArray.push(buttonPayload)
                     setHeaders(headerArray)
 
                 })
             }
         });
+
+
     }
     useEffect(() => loadHeaders(), []);
+
+    const loadLineHeaders = async () => {
+        const tName = 'orderlineitemstable'
+        const tableName = { tName }
+        const response = await fetch('/headers', {
+            method: 'POST',
+            body: JSON.stringify(tableName),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    const headerArray2 = [];
+                    for (let i = 0; i < responseData.length; i++) {
+                        let payload2 = {};
+                        if (lineHide.includes(responseData[i].COLUMN_NAME)) {
+                            payload2 = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                hidden: true
+                            }
+                        }
+                        else {
+                            payload2 = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                                sorter: {
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
+                                },
+                                sortDirections: ['descend', 'ascend'],
+                            }
+                        }
+
+                        headerArray2.push(payload2)
+                    }
+
+                    setLineHeads(headerArray2)
+
+                })
+            }
+        });
+    }
+    useEffect(() => loadLineHeaders(), []);
 
     //requesting items from DB
     const loadItems = async () => {
@@ -215,22 +274,71 @@ function ClosedOrderATable({ hideArray, searchResults }) {
                             let cleanDate = (responseData[i].ClosedDate.split('T')[0])
                             responseData[i].ClosedDate = cleanDate
                         }
+                        responseData[i].key = (i+1).toString()
 
                     }
                     setItems(responseData)
                 })
             }
         });
+
+
     }
     useEffect(() => loadItems(), []);
 
-    //Setting hidden columns
+    const loadLineItems = async() => {
+        const response = await fetch('/loadLineData', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    for (let i = 0; i < responseData.length; i++) {
+
+                    }
+                    setLines(responseData)
+                })
+            }
+        });
+    }
+    useEffect(() => loadLineItems(), []);
+
+    const createLinesDict = () => {
+        let dict = {}
+        let itemsDict = {}
+
+        for (let i = 0; i < lines.length; i++) {
+            //console.log(lines[i]['RequestNumber'])
+            if (lines[i]['RequestNumber'] in dict) {
+                //console.log("found it")
+                //console.log(dict[lines[i]['RequestNumber']])
+                //dict[lines[i]['RequestNumber']] = 
+                dict[lines[i]['RequestNumber']].push(lines[i])
+                //console.log(dict)
+            }
+            else {
+                //console.log("not in it")
+                dict[lines[i]['RequestNumber']] = [lines[i]]
+                //console.log(dict)
+                }
+        }
+
+        //console.log(dict)
+        setLinesDict(dict)
+    }
+    useEffect(() => createLinesDict(), [lines])
+
+    //assigning hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
         if (hideArray !== undefined) {
             for (let i = 0; i < hideArray.length; i++) {
                 localHideList.push(hideArray[i])
             }
+
+            //const localHideList = JSON.parse(hideArray.hideArray)
             let addHeader = []
             for (let i = 0; i < headers.length; i++) {
                 let payload = {}
@@ -272,7 +380,7 @@ function ClosedOrderATable({ hideArray, searchResults }) {
     }
     useEffect(() => {
         columnHide(hideArray, headers)
-    }, [hideArray])
+    },[hideArray])
 
     useEffect(() => {
         let filt = []
@@ -280,13 +388,13 @@ function ClosedOrderATable({ hideArray, searchResults }) {
             headers.filter(item => !item.hidden)
         )
         setFiltHead([...filt])
-    }, [headers])
+    },[headers])
 
     const dispResults = (searchResults, items) => {
-
+        //console.log("hello there")
+        //console.log(searchResults)
         if (searchResults !== undefined) {
-            console.log("hello there")
-            console.log(searchResults)
+
             let searchTable = []
             for (let i = 0; i < searchResults.length; i++) {
                 searchTable.push(searchResults[i])
@@ -315,23 +423,57 @@ function ClosedOrderATable({ hideArray, searchResults }) {
 
             setItems([...searchTable])
         }
-
+        
     }
 
     useEffect(() => {
         dispResults(searchResults, items)
-    }, [searchResults])
+    },[searchResults])
+
+    const expandedRowRender = (record) => {
+        const data = [];
+        let localCols = [];
+        for (let i = 0; i < lineHeads.length; i ++){
+            if((lineHeads[i].title !== "RequestNumber") && (lineHeads[i].title !== "PK")){
+                localCols.push(lineHeads[i])
+            }
+        }
+        return <Table
+            columns={localCols}
+            dataSource={linesDict[record.RequestNumber]}
+            bordered={false}
+            showSorterTooltip={false}
+                />;
+    }
 
     return (
-        <div>
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: '#000000',
+                    }
+                },
+                token: {
+                    //colorBgContainer: '#E6E3DC',
+                }
+            } }  
+        >
             <Table
-                className="OpenTicketTable"
+                className="ClosedTicketTable"
                 columns={filtHead}
+                expandable={{
+                    expandedRowRender,
+                    defaultExpandedRowKeys: ['0'],
+                  }}
                 dataSource={items}
                 bordered
                 showSorterTooltip={false}
+                style={{
+                    
+                }}
             />
-        </div>
+        </ConfigProvider>
     );
 }
 

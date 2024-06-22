@@ -784,7 +784,7 @@ app.post('/searchTable', (req, res) => {
               headers.push(rows[i].COLUMN_NAME)
             }
           }
-          stmt = "SELECT * FROM " + req.body.tName[0] + " INNER JOIN " + req.body.tName[1] + " ON materialorderstable.RequestNumber = orderlineitemstable.RequestNumber" +" WHERE " ;
+          stmt = "SELECT * FROM " + req.body.tName[0] + " LEFT JOIN " + req.body.tName[1] + " ON materialorderstable.RequestNumber = orderlineitemstable.RequestNumber" +" WHERE " ;
       
           for(let i = 0; i < headers.length; i++){
             stmt = stmt + headers[i]+" LIKE " + "'%" + req.body.value + "%'" + " OR "

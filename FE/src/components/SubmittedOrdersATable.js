@@ -1,4 +1,4 @@
-import { Button, Input, Space, Table, Tag, configProvider, Switch, Select, message } from 'antd';
+import { Button, Space, Input, Table, Switch, Tag, ConfigProvider, Select, message } from 'antd';
 import { green } from '@mui/material/colors';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
@@ -20,10 +20,18 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
         'AdminComments',
         'AttachFile'
     ])
-    const [filtHead, setFiltHead] = useState([]);
+    const [lines, setLines] = useState([]);
+    const [lineHeads, setLineHeads] = useState([]);
+    const [lineHide, setLineHide] = useState([
+        'PK',
+        'RequestNumber'
+    ])
+    const [linesDict, setLinesDict] = useState({});
 
+    const [filtHead, setFiltHead] = useState([]);
     const EditRecord = (record) => {
-        navigate('/MaterialRequestform', { state: { record: record } });
+        console.log("into button on click")
+        navigate('/MaterialRequestform', { state: { record: record } })
     };
 
     //search and sort handlers, copied from Ant Design
@@ -83,6 +91,7 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
                     >
                         Reset
                     </Button>
+
                     <Button
                         type="link"
                         size="small"
@@ -96,6 +105,7 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
                     >
                         Filter
                     </Button>
+
                     <Button
                         type="link"
                         size="small"
@@ -124,7 +134,7 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
         },
     });
 
-    //request headers from DB
+    //requesting headers from DB
     const loadHeaders = async () => {
         const tName = 'materialorderstable'
         const tableName = { tName }
@@ -156,38 +166,88 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
                                 key: responseData[i].COLUMN_NAME,
                                 ...getColumnSearchProps(responseData[i].COLUMN_NAME),
                                 sorter: {
-                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
                                 },
                                 sortDirections: ['descend', 'ascend'],
                             }
                         }
 
-                        headerArray.push(payload)
+                            headerArray.push(payload)                        
                     }
 
-                    const buttonPayload = {
-                        title: 'Edit Record',
-                        key: 'key',
-                        dataIndex: 'key',
-                        render: (text, record) => (
+                        const buttonPayload = {
+                            title: 'Edit Record',
+                            key: 'key',
+                            dataIndex: 'key',
+                            render: (text, record) => (
 
-                            <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
-                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
-                                {"Edit"}
-                            </Button>
+                                <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
 
-                        ),
-                    }
-                    headerArray.push(buttonPayload)
+                                    {"Edit"}
+                                </Button>
+
+                            ),
+                        }
+                        headerArray.push(buttonPayload)
                     setHeaders(headerArray)
 
                 })
             }
         });
+
+
     }
     useEffect(() => loadHeaders(), []);
 
-    //request items from DB
+    const loadLineHeaders = async () => {
+        const tName = 'orderlineitemstable'
+        const tableName = { tName }
+        const response = await fetch('/headers', {
+            method: 'POST',
+            body: JSON.stringify(tableName),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    const headerArray2 = [];
+                    for (let i = 0; i < responseData.length; i++) {
+                        let payload2 = {};
+                        if (lineHide.includes(responseData[i].COLUMN_NAME)) {
+                            payload2 = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                hidden: true
+                            }
+                        }
+                        else {
+                            payload2 = {
+                                title: responseData[i].COLUMN_NAME,
+                                dataIndex: responseData[i].COLUMN_NAME,
+                                key: responseData[i].COLUMN_NAME,
+                                ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                                sorter: {
+                                    compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME]),
+                                },
+                                sortDirections: ['descend', 'ascend'],
+                            }
+                        }
+
+                        headerArray2.push(payload2)
+                    }
+
+                    setLineHeads(headerArray2)
+
+                })
+            }
+        });
+    }
+    useEffect(() => loadLineHeaders(), []);
+
+    //requesting items from DB
     const loadItems = async () => {
         const response = await fetch('/loadSubOrders', {
             headers: {
@@ -210,14 +270,67 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
                             let cleanDate = (responseData[i].SubmitDate.split('T')[0])
                             responseData[i].SubmitDate = cleanDate
                         }
+                        if (responseData[i].ClosedDate !== null) {
+                            let cleanDate = (responseData[i].ClosedDate.split('T')[0])
+                            responseData[i].ClosedDate = cleanDate
+                        }
+                        responseData[i].key = (i+1).toString()
 
                     }
+                    console.log("loaded submitted orders")
                     setItems(responseData)
                 })
             }
         });
+
+
     }
     useEffect(() => loadItems(), []);
+
+    const loadLineItems = async() => {
+        const response = await fetch('/loadLineData', {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+
+        }).then((response) => {
+            if (response.ok) {
+                response.json().then((responseData) => {
+                    for (let i = 0; i < responseData.length; i++) {
+
+                    }
+                    console.log("submitted lines loaded")
+                    setLines(responseData)
+                })
+            }
+        });
+    }
+    useEffect(() => loadLineItems(), []);
+
+    const createLinesDict = () => {
+        let dict = {}
+        let itemsDict = {}
+
+        for (let i = 0; i < lines.length; i++) {
+            //console.log(lines[i]['RequestNumber'])
+            if (lines[i]['RequestNumber'] in dict) {
+                //console.log("found it")
+                //console.log(dict[lines[i]['RequestNumber']])
+                //dict[lines[i]['RequestNumber']] = 
+                dict[lines[i]['RequestNumber']].push(lines[i])
+                //console.log(dict)
+            }
+            else {
+                //console.log("not in it")
+                dict[lines[i]['RequestNumber']] = [lines[i]]
+                //console.log(dict)
+                }
+        }
+
+        //console.log(dict)
+        setLinesDict(dict)
+    }
+    useEffect(() => createLinesDict(), [lines])
 
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
@@ -226,6 +339,8 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
             for (let i = 0; i < hideArray.length; i++) {
                 localHideList.push(hideArray[i])
             }
+
+            //const localHideList = JSON.parse(hideArray.hideArray)
             let addHeader = []
             for (let i = 0; i < headers.length; i++) {
                 let payload = {}
@@ -267,11 +382,19 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
     }
     useEffect(() => {
         columnHide(hideArray, headers)
-    }, [hideArray])
+    },[hideArray])
+
+    useEffect(() => {
+        let filt = []
+        filt = (
+            headers.filter(item => !item.hidden)
+        )
+        setFiltHead([...filt])
+    },[headers])
 
     const dispResults = (searchResults, items) => {
-        console.log("hello there")
-        console.log(searchResults)
+        //console.log("hello there")
+        //console.log(searchResults)
         if (searchResults !== undefined) {
 
             let searchTable = []
@@ -302,31 +425,58 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
 
             setItems([...searchTable])
         }
-
+        
     }
 
     useEffect(() => {
         dispResults(searchResults, items)
-    }, [searchResults])
+    },[searchResults])
 
-    useEffect(() => {
-        let filt = []
-        filt = (
-            headers.filter(item => !item.hidden)
-        )
-        setFiltHead([...filt])
-    }, [headers])
+    const expandedRowRender = (record) => {
+        const data = [];
+        let localCols = [];
+        for (let i = 0; i < lineHeads.length; i ++){
+            if((lineHeads[i].title !== "RequestNumber") && (lineHeads[i].title !== "PK")){
+                localCols.push(lineHeads[i])
+            }
+        }
+        return <Table
+            columns={localCols}
+            dataSource={linesDict[record.RequestNumber]}
+            bordered={false}
+            showSorterTooltip={false}
+                />;
+    }
 
     return (
-        <div>
+        <ConfigProvider
+            theme={{
+                components: {
+                    Table: {
+                        headerBg: '#000000',
+                    }
+                },
+                token: {
+                    //colorBgContainer: '#E6E3DC',
+                }
+            } }  
+        >
             <Table
-                className="OpenTicketTable"
+                className="SubmittedTicketTable"
                 columns={filtHead}
+                expandable={{
+                    expandedRowRender,
+                    defaultExpandedRowKeys: ['0'],
+                  }}
                 dataSource={items}
                 bordered
                 showSorterTooltip={false}
+                style={{
+                    
+                }}
             />
-        </div>
+        </ConfigProvider>
     );
 }
+
 export default SubmittedOrderATable;
