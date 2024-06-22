@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate, Link } from 'react-router';
 import './ToolHistoryPage.css';
@@ -17,12 +17,11 @@ const ToolHistoryPage = () => {
         navigate (path);
     }
     const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
+        key: 1
     });
     const [excelData, setExcelData] = useState({});
     const [hideList, setHideList] = useState(['PK', 'Status']);
+    const [exData, setExData] = useState({ key: 1 });
     const OpenTicket = () => {
         let path = '/TicketPage';
         navigate(path);
@@ -34,23 +33,9 @@ const ToolHistoryPage = () => {
             setHiddenArray(childData)
         )
     }
-
-    const toExcel = (childData) => {
-        console.log(childData)
-        for (let i = 0; i < childData.length; i++) {
-            if (hiddenArray == null) {
-                //if (hideList.includes(childData[i]){
-
-                //}
-            }
-        }
-        return (
-            setExcelData(childData)
-        )
+    const excel = (childData) => {
+        setExcelData((childData))
     }
-
-    //console.log(hiddenArray)
-
 
     return (
         <ConfigProvider
@@ -83,13 +68,15 @@ const ToolHistoryPage = () => {
 
                     <div id='ToolButton2'>
                         <ExcelExport
-                            tabledData={excelData} />
+                            tabledData={excelData}
+                            hidingArray={hiddenArray}
+                            ogList={hideList} />
                     </div>
                 </div>
                 
                 <ToolInfoATable
                     hideArray={hiddenArray}
-                    tableDataCallBack={toExcel} 
+                    tableDataCallBack={excel} 
                     />
             </div>
 

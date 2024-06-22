@@ -270,7 +270,7 @@ function ClosedTicketATable(hideArray){
 
     return (
         <Table
-            className="OpenTicketTable"
+            //className="OpenTicketTable"
             columns={filtHead}
             dataSource={items}
             bordered
