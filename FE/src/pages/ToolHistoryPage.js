@@ -21,10 +21,6 @@ const ToolHistoryPage = () => {
     });
     const [excelData, setExcelData] = useState({});
     const [hideList, setHideList] = useState(['PK', 'Status']);
-    const OpenTicket = () => {
-        let path = '/TicketPage';
-        navigate(path);
-    }
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (

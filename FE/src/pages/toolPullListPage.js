@@ -1,24 +1,15 @@
 
 import React from 'react';
-import { useNavigate} from 'react-router';
 import './toolPullList.css';
 import { Button, ConfigProvider, DatePicker } from 'antd';
-import dayjs from 'dayjs';
 import { useState, useEffect } from 'react';
 import ColumnChange from '../components/ColumnChange';
 import StaggerPullListTable from '../components/StaggerPullListTable';
-import OverdueListTable from '../components/OverdueListTable';
-import LostListTable from '../components/LostListTable';
 import ExcelExport from '../components/ExcelExport';
 
 
   
 const ToolPullListPage = () => {
-    const navigate = useNavigate();
-    const [today, setToday] = useState(dayjs());
-    const handleDate = (date, dateString) => {
-        setToday(dateString)
-    }
     const [hiddenArray, setHiddenArray] = useState({
         key: 1
     });

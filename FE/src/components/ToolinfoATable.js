@@ -10,13 +10,10 @@ function ToolInfoATable({ hideArray, tableDataCallBack }) {
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const navigate = useNavigate();
-    const [stat, setStat] = useState('Inactive');
     const [hideList, setHideList] = useState(['PK', 'Status'])
-    const [pk, setPk] = useState(0);
-    const [com, setCom] = useState('');
     const [filtHead, setFiltHead] = useState([]);
-    //const [recPk, setRecPk] = useState('');
-    //const [recStat, setRecStat] = useState('');
+    const [recPk, setRecPk] = useState('');
+    const [recStat, setRecStat] = useState('');
 
     //Sort method to sort numbers and strings without having to determine type in column
     const defaultSort = (a, b) => {
@@ -32,14 +29,16 @@ function ToolInfoATable({ hideArray, tableDataCallBack }) {
         navigate('/ToolInfoForm', { state: { record: record } });
     };
     const PassRecord = (record) => {
-        
+        console.log(record.PK)
+        setRecPk(record.PK)
+        setRecStat(record.Status)
     }
     //console.log(hideArray)
     //handler for record deactivate button
     const confirm = async (e, record) => {
-        console.log(record)
-        let recPk = (record.PK);
-        let recStat = (record.Status);
+        console.log(recPk)
+        //let recPk = (record.PK);
+        //let recStat = (record.Status);
         const deact = { recPk, recStat };
         console.log(deact);
         const response = await fetch('/deactivate', {
