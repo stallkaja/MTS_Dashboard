@@ -1,15 +1,16 @@
 import React from 'react';
 import { useState } from 'react';
-import OpenTicketATable from '../components/OpenTicketATable';
-import ClosedTicketATable from '../components/ClosedTicketATable';
 import "./swicBasePage.css";
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
 import ColumnChange from '../components/ColumnChange';
+import SwicWIPTable from '../components/SwicWIPTable';
+import SwicNRTable from '../components/SwicNRTable';
+import SwicCompletedTable from '../components/SwicCompletedTable';
 
 const SWICDashboard: React.FC = () => {
     const navigate = useNavigate();
-    const OpenTicket = () => {
+    const OpenLog = () => {
         let path = '/SwicForm';
         navigate(path);
     }
@@ -35,7 +36,7 @@ const SWICDashboard: React.FC = () => {
                 },
             }}>
             <ColumnChange
-                tName='ticketstable'
+                tName='swiclogtable'
                 parentPass={parent}
                 hideList={hideList} />
             <div id='SWICBaseCard'>
@@ -49,25 +50,25 @@ const SWICDashboard: React.FC = () => {
                 <div id='NRTitle'>New Release</div>
 
                 <div id="CreateSLButton">
-                    <Button size="large" onClick={() => OpenTicket()}>
+                    <Button size="large" onClick={() => OpenLog()}>
                         {"New SWIC Log"}
                     </Button>
                 </div>
             </div>
-            <OpenTicketATable hideArray={hiddenArray}/>
+            <SwicNRTable hideArray={hiddenArray}/>
 
             
             <div id='WIPCard'>
                 <div id='WIPText'>Work In Progress</div>
             </div>
 
-            <ClosedTicketATable hideArray={hiddenArray}/>
+            <SwicWIPTable hideArray={hiddenArray}/>
 
             <div id='ClosedSLCard'>
                 <div id='CloseSLTitle'>Completed</div>
             </div>
            
-            <ClosedTicketATable hideArray={hiddenArray}/>
+            <SwicCompletedTable hideArray={hiddenArray}/>
 
         </ConfigProvider>
     );

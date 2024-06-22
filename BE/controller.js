@@ -171,7 +171,7 @@ app.post('/newSwicLog', (req, res) => {
     if (req.body.logStatus == 'Closed') {
         req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
     }
-  if(req.body.logStatus =='New Release'){
+  if(req.body.logStatus =='New Log'){
       if (!req.body.openDate) {
           req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
       }
@@ -189,7 +189,7 @@ app.post('/newSwicLog', (req, res) => {
       req.body.closeDate
 
     ]
-    stmt = "INSERT INTO ticketsTable (LogStatus, BEN, SystemNotes, PortLocation, CustomerFab, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), CustomerFab = VALUES(CustomerFab), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    stmt = "INSERT INTO swiclogtable (LogStatus, BEN, SystemNotes, PortLocation, CustomerFab, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), CustomerFab = VALUES(CustomerFab), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
   else{
     args = [
@@ -203,7 +203,7 @@ app.post('/newSwicLog', (req, res) => {
       req.body.closeDate
 
     ]
-    stmt = "INSERT INTO ticketsTable (TicketStatus, customerFab, BEN, systemNotes, portLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    stmt = "INSERT INTO swiclogtable (LogStatus, CustomerFab, BEN, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
 
   

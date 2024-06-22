@@ -36,13 +36,13 @@ export default function CreateToolPage() {
 
 
 	//----------------------------------------------------------------------------
-	// Make a POST request to create a new material
+	// Make a POST request to create a new swic log
 	//----------------------------------------------------------------------------
-	const addTicket = async () => {
+	const addSwicLog = async () => {
 		// Create new object with the variables set in the form
 		console.log('log status is: ' + logStatus)
 		const newLog = { logStatus, ben, systemNotes, customerFab, portLocation };
-		//console.log(newTicket)
+		//console.log(newLog)
 		const response = await fetch('/newSwicLog', {
 			method: 'POST',
 			body: JSON.stringify(newLog),
@@ -152,7 +152,7 @@ export default function CreateToolPage() {
 					</div>
 
 					<div id="SwicSubmitButton">
-						<Button onClick={addTicket}> Save </Button>
+						<Button onClick={addSwicLog}> Save </Button>
 					</div>
 				</div>
 
