@@ -4,7 +4,7 @@ import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
 
-function StaggerPullListTable(hideArray) {
+function StaggerPullListTable({ hideArray, tableDataCallBack }) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -47,8 +47,6 @@ function StaggerPullListTable(hideArray) {
         let soon = dayjs(theDay).add(7, 'day');
         let lowBound = dayjs(send).subtract(7, 'day')
         let highBound = dayjs(send).add(7, 'day')
-        //console.log(lowBound)
-        //console.log(highBound)
 
         //display date of items to be sent
         document.getElementById("23").innerHTML = "Date to be Sent: " + sendDate;
@@ -77,6 +75,8 @@ function StaggerPullListTable(hideArray) {
         }
         //sending list to page level variable
         setStagList(list)
+        //sending list to export function
+        tableDataCallBack(list)
 
     }
     //triggering re-render to make send date visible on page
@@ -279,6 +279,7 @@ function StaggerPullListTable(hideArray) {
 
                     }
                     setItems(responseData)
+
                 })
             }
         });
@@ -290,8 +291,8 @@ function StaggerPullListTable(hideArray) {
     //changes visible columns when a choice is made
     const columnHide = (hideArray, headers) => {
         let localHideList = []
-        for (let i = 0; i < hideArray.hideArray.length; i++) {
-            localHideList.push(hideArray.hideArray[i])
+        for (let i = 0; i < hideArray.length; i++) {
+            localHideList.push(hideArray[i])
         }
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
@@ -335,7 +336,7 @@ function StaggerPullListTable(hideArray) {
     return (
         <div>
             <div style={{ textAlign: "Center"} } >
-                <h1>Pull Date</h1>
+
                 <div style={{
                     display: "flex",
                     textAlign: "center",
@@ -344,13 +345,14 @@ function StaggerPullListTable(hideArray) {
                     justifyContent: "Space-Evenly",
                     alignItems: "Center"
                 } }>
+                    <h2>Pull Date</h2>
                     <DatePicker 
                         value={dayjs(theDay)}
                         onChange={handleDate}
                         allowClear={false}
                     />
 
-                    <h3 id="23">Date to be sent:</h3>
+                    <h2 id="23">Date to be sent:</h2>
 
                     <Button onClick={() => GenList()}>
                         {"Generate List"}

@@ -1,6 +1,5 @@
 
 import React from 'react';
-import ToolInfoATable from '../components/ToolinfoATable';
 import { useNavigate} from 'react-router';
 import './toolPullList.css';
 import { Button, ConfigProvider, DatePicker } from 'antd';
@@ -10,6 +9,7 @@ import ColumnChange from '../components/ColumnChange';
 import StaggerPullListTable from '../components/StaggerPullListTable';
 import OverdueListTable from '../components/OverdueListTable';
 import LostListTable from '../components/LostListTable';
+import ExcelExport from '../components/ExcelExport';
 
 
   
@@ -20,16 +20,18 @@ const ToolPullListPage = () => {
         setToday(dateString)
     }
     const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
+        key: 1
     });
+    const [excelData, setExcelData] = useState({ key: 1 });
     const [hideList, setHideList] = useState(['PK','Status']);
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (
             setHiddenArray(childData)
         )
+    }
+    const excel = (childData) => {
+        setExcelData((childData))
     }
 
     return (
@@ -44,6 +46,7 @@ const ToolPullListPage = () => {
             }}>
         
             <div>
+
                 <div id='PullTitleCard'>
                     <h1 id='ToolTitle'>Staggering List</h1>
                     <h1 id='ToolSearch'>
@@ -53,8 +56,18 @@ const ToolPullListPage = () => {
                             hideList={hideList} />
                     </h1>
                 </div>
+                <div id='PullHeader'>
+                <div id='PullButton'></div>
+                    <div id='PullButton2'>
+                        <ExcelExport
+                            tabledData={excelData}
+                            hidingArray={hiddenArray}
+                            ogList={hideList} />
+                    </div>
+                </div>
                 <StaggerPullListTable
-                    hideArray={hiddenArray} />                   
+                    hideArray={hiddenArray}
+                    tableDataCallBack={excel} />                   
             </div>
         </ConfigProvider>
     );

@@ -1,4 +1,4 @@
-﻿#ToolHeader {
+﻿#PullHeader {
     background: linear-gradient(#20a785, #242437 60%);
     border-radius: 15px;
     height: 60px;
@@ -11,7 +11,7 @@
  padding-left: 10px;
 }
 
-#ToolButton {
+#PullButton {
     display: flex;
     justify-content: flex-start;
     float: right;
@@ -98,4 +98,13 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+}
+#ToolSearch {
+    padding-right: 10px;
+}
+#PullButton2 {
+    display: flex;
+    justify-content: flex-end;
+    float: right;
+    padding-right: 10px;
 }
