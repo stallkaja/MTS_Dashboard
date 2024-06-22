@@ -10,7 +10,7 @@ import { useState } from 'react';
 const KitDashboard: React.FC = () => {
     const navigate = useNavigate();
     const OpenForm = () => {
-        let path = '/TicketPage';
+        let path = '/KitFormPage';
         navigate(path);
     }
     const [hideList, setHideList] = useState([]);
