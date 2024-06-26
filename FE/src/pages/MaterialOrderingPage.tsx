@@ -20,10 +20,11 @@ const OrderingDashboard = () => {
         key: 1
     });
     //var excelData = {};
-    const [excelData1, setExcelData1] = useState({});
-    const [excelData2, setExcelData2] = useState({});
-    const [excelData3, setExcelData3] = useState({});
-    const [excelMain, setExcelMain] = useState({});
+    const [excelData1, setExcelData1] = useState([]);
+    const [excelData2, setExcelData2] = useState([]);
+    const [excelData3, setExcelData3] = useState([]);
+    const [excelMain, setExcelMain] = useState([]);
+    const [excelSend, setExcelSend] = useState([]);
     const [hideList, setHideList] = useState([
         'Email',
         'PreferredVendor',
@@ -31,7 +32,7 @@ const OrderingDashboard = () => {
         'AdminComments',
         'AttachFile'
     ])
-    const [linesData, setLinesData] = useState({});
+    const [linesData, setLinesData] = useState([]);
 
     //Button navigation to Material Request Form
     const OpenTicket = () => {
@@ -87,50 +88,56 @@ const OrderingDashboard = () => {
 
     const excel1 = (childData) => {
         console.log(childData)
-        setExcelData1(childData)    
+        return(
+            setExcelData1(childData)   
+        )
     }
     const excel2 = (childData) => {
         console.log(childData)
-        setExcelData2(childData)
+        return(
+            setExcelData2(childData)
+        )
     }
     const excel3 = (childData) => {
         console.log(childData)
-        setExcelData3(childData)
+        return(
+            setExcelData3(childData)
+        )
     }
+    useEffect(() => {
+        let excelTemp = excelData1.concat(excelData2, excelData3)
+        //setExcelMain({ ...excelData1, ...excelData2, ...excelData3 })
+        setExcelMain(excelTemp)
+    }, [excelData1, excelData2, excelData3])
 
     const buildTable = () => {
-        let excelMain2 = { ...excelData1, ...excelData2, ...excelData3 }
-        console.log(excelMain2)
+        console.log(excelMain)
         console.log(linesData)
-        /*const excelDataCreate = () => {
-            if ((JSON.stringify(orderData) !== JSON.stringify({ key: 1 })) && (JSON.stringify(linesDict) !== JSON.stringify({ key: 1 }))) {
-                let lineKeys = Object.keys(linesDict)
-
-                for (let i = 0; i < orderData.length; i++) {
-                    delete orderData[i]['key']
-                    if (lineKeys.includes(orderData[i].RequestNumber.toString())) {
-
-                        for (let j = 0; j < linesDict[orderData[i].RequestNumber].length; j++) {
-                            delete linesDict[orderData[i].RequestNumber][j]['PK']
-                            delete linesDict[orderData[i].RequestNumber][j]['RequestNumber']
-                            linesDict[orderData[i].RequestNumber][j]['PartName' + j] = linesDict[orderData[i].RequestNumber][j]['PartName']
-                            delete linesDict[orderData[i].RequestNumber][j]['PartName']
-                            linesDict[orderData[i].RequestNumber][j]['PartNumber' + j] = linesDict[orderData[i].RequestNumber][j]['PartNumber']
-                            delete linesDict[orderData[i].RequestNumber][j]['PartNumber']
-                            linesDict[orderData[i].RequestNumber][j]['PricePer' + j] = linesDict[orderData[i].RequestNumber][j]['PricePer']
-                            delete linesDict[orderData[i].RequestNumber][j]['PricePer']
-                            linesDict[orderData[i].RequestNumber][j]['Quantity' + j] = linesDict[orderData[i].RequestNumber][j]['Quantity']
-                            delete linesDict[orderData[i].RequestNumber][j]['Quantity']
-                            linesDict[orderData[i].RequestNumber][j]['Status' + j] = linesDict[orderData[i].RequestNumber][j]['Status']
-                            delete linesDict[orderData[i].RequestNumber][j]['Status']
-                            orderData[i] = { ...orderData[i], ...linesDict[orderData[i].RequestNumber][j] }
-                        }
-                    }
+        let lineKeys = Object.keys(linesData)
+        for (let i = 0; i < excelMain.length; i++) {
+            delete excelMain[i]['key']
+            if (lineKeys.includes(excelMain[i].RequestNumber.toString())) {
+                for (let j = 0; j < linesData[excelMain[i].RequestNumber].length; j++) {
+                    delete linesData[excelMain[i].RequestNumber][j]['PK']
+                    delete linesData[excelMain[i].RequestNumber][j]['RequestNumber']
+                    linesData[excelMain[i].RequestNumber][j]['PartName' + j] = linesData[excelMain[i].RequestNumber][j]['PartName']
+                    delete linesData[excelMain[i].RequestNumber][j]['PartName']
+                    linesData[excelMain[i].RequestNumber][j]['PartNumber' + j] = linesData[excelMain[i].RequestNumber][j]['PartNumber']
+                    delete linesData[excelMain[i].RequestNumber][j]['PartNumber']
+                    linesData[excelMain[i].RequestNumber][j]['PricePer' + j] = linesData[excelMain[i].RequestNumber][j]['PricePer']
+                    delete linesData[excelMain[i].RequestNumber][j]['PricePer']
+                    linesData[excelMain[i].RequestNumber][j]['Quantity' + j] = linesData[excelMain[i].RequestNumber][j]['Quantity']
+                    delete linesData[excelMain[i].RequestNumber][j]['Quantity']
+                    linesData[excelMain[i].RequestNumber][j]['Status' + j] = linesData[excelMain[i].RequestNumber][j]['Status']
+                    delete linesData[excelMain[i].RequestNumber][j]['Status']
+                    excelMain[i] = { ...excelMain[i], ...linesData[excelMain[i].RequestNumber][j] }
                 }
-                tableDataCallBack(orderData)
             }
         }
-        useEffect(() => excelDataCreate(), [linesDict, orderData])*/
+        console.log(excelMain)
+                //setExcelSend(excelMain)
+            
+        
     }
   
     return (
