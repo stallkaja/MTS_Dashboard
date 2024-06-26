@@ -3,9 +3,9 @@
     border-radius: 15px;
     height: 60px;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 #PassTitle {
@@ -30,4 +30,9 @@
     align-content: space-between;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+#ExportButton {
+    display: flex;
+    padding-right: 10px;
 }

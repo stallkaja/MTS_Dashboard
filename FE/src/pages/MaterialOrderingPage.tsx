@@ -24,7 +24,6 @@ const OrderingDashboard = () => {
     const [excelData2, setExcelData2] = useState([]);
     const [excelData3, setExcelData3] = useState([]);
     const [excelMain, setExcelMain] = useState([]);
-    const [excelSend, setExcelSend] = useState([]);
     const [hideList, setHideList] = useState([
         'Email',
         'PreferredVendor',
@@ -134,9 +133,6 @@ const OrderingDashboard = () => {
             }
         }
         console.log(excelMain)
-                //setExcelSend(excelMain)
-            
-        
     }
   
     return (

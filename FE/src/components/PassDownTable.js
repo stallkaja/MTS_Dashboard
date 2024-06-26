@@ -3,12 +3,13 @@ import { Button, Input, Space, Table, Tag, Typography } from 'antd';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
 
-function PassDownTable() {
+function PassDownTable({ hideArray, tableDataCallBack }) {
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const [hideList, setHideList] = useState(['PK'])
     const navigate = useNavigate();
+    const [filtHead, setFiltHead] = useState([]);
 
     //navigation to passdown form and pulling record from table to populate form
     const EditRecord = (record) => {
@@ -183,7 +184,6 @@ function PassDownTable() {
                         dataIndex: 'key',
                         render: (text, record) => (
                             <Button onClick={() => EditRecord(record)}>
-                                {/* <div> <a onClick={()=>{toComponentB()}}>Component B<a/></div> */}
                                 {"Open"}
                             </Button>
                         ),
@@ -212,16 +212,82 @@ function PassDownTable() {
                         responseData[i].Date = cleanDate
                     }
                     setItems(responseData)
+                    tableDataCallBack(responseData)
                 })
             }
         });
     }
     useEffect(() => loadItems(), []);
+    //assigning hidden columns
+    const columnHide = (hideArray, headers) => {
+        let localHideList = []
+        if (hideArray !== undefined) {
+            for (let i = 0; i < hideArray.length; i++) {
+                localHideList.push(hideArray[i])
+            }
+            let addHeader = []
+            for (let i = 0; i < headers.length; i++) {
+                let payload = {}
+                if (localHideList.includes(headers[i].title)) {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        hidden: true
+                    }
+                } else if (headers[i].title === "Open") {
+                    payload = {
+                        title: 'Open',
+                        key: 'key',
+                        dataIndex: 'key',
+                        render: (text, record) => (
+                            <Button onClick={() => EditRecord(record)}>
+                                {"Open"}
+                            </Button>
+                        )
+                    }
+                } else {
+                    payload = {
+                        title: headers[i].title,
+                        dataIndex: headers[i].dataIndex,
+                        key: headers[i].key,
+                        hidden: false,
+                        ...getColumnSearchProps(headers[i].title),
+                        sorter: {
+                            compare: (a, b) => defaultSort(a[headers[i].title], b[headers[i].title])
+                        },
+                        sortDirections: ['descend', 'ascend'],
+                        onCell: () => {
+                            return {
+                                style: {
+                                    maxWidth: 900,
+                                }
+                            }
+                        }
+                    }
+                }
+                addHeader.push(payload)
+            }
+            setHeaders(addHeader)
+        }
+    }
+    useEffect(() => {
+        columnHide(hideArray, headers)
+    }, [hideArray])
+
+    useEffect(() => {
+        let filt = []
+        filt = (
+            headers.filter(item => !item.hidden)
+        )
+        setFiltHead([...filt])
+    }, [headers])
 
     return (
+
         <Table 
             className='OpenTicketTable'
-            columns={headers.filter(item => !item.hidden)}
+            columns={filtHead}
             dataSource={items}
             style={{
                 paddingTop: '10px',
