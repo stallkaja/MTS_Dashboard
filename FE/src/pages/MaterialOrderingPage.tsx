@@ -106,7 +106,6 @@ const OrderingDashboard = () => {
     }
     useEffect(() => {
         let excelTemp = excelData1.concat(excelData2, excelData3)
-        //setExcelMain({ ...excelData1, ...excelData2, ...excelData3 })
         setExcelMain(excelTemp)
     }, [excelData1, excelData2, excelData3])
 
@@ -165,15 +164,18 @@ const OrderingDashboard = () => {
             <div id='AwaitingCard'>
                 <div id='AwaitingText'>Awaiting Approval</div>
                 <div id='CreateButton'>
+                <div id='Button'>
                     <Button onClick={() => OpenTicket()}>
                     {"Create New Order"}
                     </Button>
-
+                        </div>
+                        <div id='Button'>
                         <ExcelExport
                             tabledData={excelMain}
                             hidingArray={hiddenArray}
                             ogList={hideList}
                             tableRun={buildTable}  />
+                        </div>
                 </div>
             </div>
             <main>

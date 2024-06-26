@@ -4,8 +4,9 @@
     height: 50px;
     display: flex;
     flex-wrap: wrap;
-    align-content: space-between;
+
     justify-content: space-between;
+    align-items: center;
 }
 #AwaitingText {
     color: white;
@@ -24,7 +25,7 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     align-content: center;
-    flex-direction: column;
+    flex-direction: row;
     align-items: flex-end;
 }
 #SubmittedCard {
@@ -64,4 +65,7 @@
 }
 #TitleText {
     padding-left: 10px;
+}
+#Button {
+    padding-right: 10px;
 }
