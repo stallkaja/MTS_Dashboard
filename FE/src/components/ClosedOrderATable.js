@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function ClosedOrderATable({ hideArray, searchResults }) {
+function ClosedOrderATable({ hideArray, searchResults, tableDataCallBack }) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -278,6 +278,7 @@ function ClosedOrderATable({ hideArray, searchResults }) {
 
                     }
                     setItems(responseData)
+                    tableDataCallBack(responseData)
                 })
             }
         });

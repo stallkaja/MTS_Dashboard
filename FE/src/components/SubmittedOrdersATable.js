@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function SubmittedOrderATable({ hideArray, searchResults }) {
+function SubmittedOrderATable({ hideArray, searchResults, tableDataCallBack }) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -279,6 +279,7 @@ function SubmittedOrderATable({ hideArray, searchResults }) {
                     }
                     console.log("loaded submitted orders")
                     setItems(responseData)
+                    tableDataCallBack(responseData)
                 })
             }
         });

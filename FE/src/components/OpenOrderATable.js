@@ -6,7 +6,7 @@ import { SearchOutlined } from '@ant-design/icons';
 
 
 
-function OpenOrderATable({ hideArray, searchResults }) {
+function OpenOrderATable({ hideArray, searchResults, tableDataCallBack, linesCallBack }) {
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const [searchText, setSearchText] = useState('');
@@ -26,11 +26,12 @@ function OpenOrderATable({ hideArray, searchResults }) {
         'PK',
         'RequestNumber'
     ])
-    const [linesDict, setLinesDict] = useState({});
+    const [linesDict, setLinesDict] = useState({ key: 1 });
 
     const [filtHead, setFiltHead] = useState([]);
+    const [orderData, setOrderData] = useState({ key: 1 });
     const EditRecord = (record) => {
-        console.log("into button on click")
+        //console.log("into button on click")
         navigate('/MaterialRequestform', { state: { record: record } })
     };
 
@@ -172,23 +173,23 @@ function OpenOrderATable({ hideArray, searchResults }) {
                             }
                         }
 
-                            headerArray.push(payload)                        
+                        headerArray.push(payload)
                     }
 
-                        const buttonPayload = {
-                            title: 'Edit Record',
-                            key: 'key',
-                            dataIndex: 'key',
-                            render: (text, record) => (
+                    const buttonPayload = {
+                        title: 'Edit Record',
+                        key: 'key',
+                        dataIndex: 'key',
+                        render: (text, record) => (
 
-                                <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+                            <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
 
-                                    {"Edit"}
-                                </Button>
+                                {"Edit"}
+                            </Button>
 
-                            ),
-                        }
-                        headerArray.push(buttonPayload)
+                        ),
+                    }
+                    headerArray.push(buttonPayload)
                     setHeaders(headerArray)
 
                 })
@@ -274,10 +275,11 @@ function OpenOrderATable({ hideArray, searchResults }) {
                             let cleanDate = (responseData[i].ClosedDate.split('T')[0])
                             responseData[i].ClosedDate = cleanDate
                         }
-                        responseData[i].key = (i+1).toString()
+                        responseData[i].key = (i + 1).toString()
 
                     }
                     setItems(responseData)
+                    tableDataCallBack(responseData)
                 })
             }
         });
@@ -286,7 +288,7 @@ function OpenOrderATable({ hideArray, searchResults }) {
     }
     useEffect(() => loadItems(), []);
 
-    const loadLineItems = async() => {
+    const loadLineItems = async () => {
         const response = await fetch('/loadLineData', {
             headers: {
                 'Content-Type': 'application/json'
@@ -322,13 +324,16 @@ function OpenOrderATable({ hideArray, searchResults }) {
                 //console.log("not in it")
                 dict[lines[i]['RequestNumber']] = [lines[i]]
                 //console.log(dict)
-                }
+            }
         }
 
         //console.log(dict)
         setLinesDict(dict)
+        linesCallBack(dict)
     }
     useEffect(() => createLinesDict(), [lines])
+
+
 
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {

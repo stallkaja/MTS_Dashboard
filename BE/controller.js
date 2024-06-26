@@ -591,7 +591,6 @@ app.post('/newRequest', function (req, res)  {
 function handleLineInserts(ID,req,res){
   args =[]
   var payload =[]
-
   for(let i =0;i<req.body.lineItems.length;i++){
     payload = [
       ID,
@@ -600,7 +599,7 @@ function handleLineInserts(ID,req,res){
       req.body.lineItems[i].PricePer,
       req.body.lineItems[i].Quantity,
       req.body.lineItems[i].Status,
-      req.body.lineItems[i].pk,
+      req.body.lineItems[i].PK,
     ]
     args.push(payload)
   }

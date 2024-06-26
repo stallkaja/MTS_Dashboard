@@ -25,18 +25,18 @@ function ToolInfoATable({ hideArray, tableDataCallBack }) {
         message.error('click on no');
     };
     const EditRecord = (record) => {
-        console.log(record);
+        //console.log(record);
         navigate('/ToolInfoForm', { state: { record: record } });
     };
     const PassRecord = (record) => {
-        console.log(record.PK)
+        //console.log(record.PK)
         setRecPk(record.PK)
         setRecStat(record.Status)
     }
     //console.log(hideArray)
     //handler for record deactivate button
     const confirm = async (e, record) => {
-        console.log(recPk)
+        //console.log(recPk)
         //let recPk = (record.PK);
         //let recStat = (record.Status);
         const deact = { recPk, recStat };

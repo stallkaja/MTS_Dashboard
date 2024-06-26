@@ -2,9 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { read, utils, writeFileXLSX } from 'xlsx';
 import { Button } from 'antd';
 
-function ExcelExport({ tabledData, hidingArray, ogList }) {
+function ExcelExport({ tabledData, hidingArray, ogList, tableRun }) {
     /* get state data and export to XLSX */
     const exportFile = useCallback(() => {
+        tableRun();
         let newExData = []
         if (JSON.stringify(tabledData) !== JSON.stringify({ key: 1 })) { //checking to see if data exists
             let dataKeys = Object.keys(tabledData[0]) //creating array of keys from data
@@ -37,7 +38,7 @@ function ExcelExport({ tabledData, hidingArray, ogList }) {
 
     return (
         <div>
-                <Button onClick={exportFile}>Export to XLSX</Button> {/*button to make things go*/}
+            <Button onClick={exportFile}>Export to XLSX</Button> {/*button to make things go*/}
         </div>
     );
 }
