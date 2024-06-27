@@ -5,29 +5,12 @@ import InventoryATable from '../components/InventoryATable';
 import { Button, Space, ConfigProvider } from 'antd';
 import './MaterialListPage.css';
 import ColumnChange from '../components/ColumnChange';
+import ExcelExport from '../components/ExcelExport';
 
 const HomePage = ({ setItemToEdit }) =>{
-const navigate = useNavigate();
-const [items, setItems] = useState([]);
-const [headers, setHeaders] = useState([]);
-const OpenForm = () => {
-  let path = '/createMaterial';
-  navigate (path);
-}
-
-    const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
-    });
-
-    const parent = (childData) => {
-        return (
-            setHiddenArray(childData)
-
-
-        )
-    }
+    const navigate = useNavigate();
+    const [items, setItems] = useState([]);
+    const [headers, setHeaders] = useState([]);
     const [hideList, setHideList] = useState([
         'PK',
         'LaptopAssignedMF',
@@ -38,6 +21,27 @@ const OpenForm = () => {
         'LaptopAssignedBENShift',
         'AdditionalNotes',
         'AssetNumber'])
+    const OpenForm = () => {
+      let path = '/createMaterial';
+      navigate (path);
+    }
+
+    const [hiddenArray, setHiddenArray] = useState({ key: 1 });
+    const [excelData, setExcelData] = useState({});
+    const parent = (childData) => {
+        return (
+            setHiddenArray(childData)
+
+
+        )
+    }
+    const excel = (childData) => {
+        setExcelData(childData)
+    }
+    const tableNone = () => {
+        //This space left intentionally blank
+    }
+
 
 
 
@@ -66,9 +70,19 @@ const OpenForm = () => {
                             {"Create Item"}
                         </Button>
                     </div>
+
+                    <div id="Button">
+                        <ExcelExport
+                            tabledData={excelData}
+                            hidingArray={hiddenArray}
+                            ogList={hideList}
+                            tableRun={tableNone} />
+                    </div>
+
                 </div>
                 <InventoryATable
-                    hideArray={hiddenArray} />
+                    hideArray={hiddenArray}
+                    tableDataCallBack={excel} />
 
             </ConfigProvider>
         </>

@@ -28,7 +28,7 @@ const ToolHistoryPage = () => {
         )
     }
     const excel = (childData) => {
-        setExcelData((childData))
+        setExcelData(childData)
     }
     const tableNone = () => {
         //This space left intentionally blank

@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useNavigate, Link } from 'react-router';
 
 
-function InventoryATable(hideArray){
+function InventoryATable({ hideArray, tableDataCallBack }){
     const [searchText, setSearchText] = useState('');
     const [searchedColumn, setSearchedColumn] = useState('');
     const [items, setItems] = useState([]);
@@ -242,6 +242,7 @@ function InventoryATable(hideArray){
             if (response.ok) {
                 response.json().then((responseData) => {
                 setItems(responseData)
+                tableDataCallBack(responseData)
                 })
             }
         });
@@ -251,8 +252,8 @@ function InventoryATable(hideArray){
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
-        for (let i = 0; i < hideArray.hideArray.length; i++) {
-            localHideList.push(hideArray.hideArray[i])
+        for (let i = 0; i < hideArray.length; i++) {
+            localHideList.push(hideArray[i])
         }
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
