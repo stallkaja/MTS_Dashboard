@@ -374,7 +374,7 @@ app.get('/loadOpenTickets', (_, res) => {
 
   // loading swic logs
 app.get('/loadSwicNR', (_, res) => {
-  connection.query('Select * from swiclogtable WHERE LogStatus IN ("New Release")', (err, rows, fields) => {
+  connection.query('Select * from swiclogtable WHERE LogStatus IN ("New Log")', (err, rows, fields) => {
     if (err) {
       throw err
       connection.end();

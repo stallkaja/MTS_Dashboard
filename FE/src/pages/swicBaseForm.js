@@ -9,7 +9,7 @@ export default function CreateToolPage() {
 
 	const history = useNavigate();
 	const location = useLocation();
-	const [logStatus, setLogStatus] = useState('New Release');
+	const [logStatus, setLogStatus] = useState('New Log');
 	const [portLocation, setPortLocation] = useState(' ');
 	const [ben, setBen] = useState('')
 	const [systemNotes, setSystemNotes] = useState('')
@@ -110,7 +110,7 @@ export default function CreateToolPage() {
 							value={logStatus}
 							onChange={handleChange}
 							options={[
-								{ value: 'New Release', label: 'New Release', },
+								{ value: 'New Log', label: 'New Log', },
 								//{ value: 'inProgress', label: 'In Progress', },
 								{ value: 'Work In Progress', label: 'Work In Progress', },
 								{ value: 'Complete', label: 'Complete', },

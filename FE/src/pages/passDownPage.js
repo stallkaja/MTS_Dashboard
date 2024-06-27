@@ -34,7 +34,7 @@ const PassdownPage = () => {
         )
     }
     const tableNone = () => {
-
+        //This space left intentionally blank
     }
 
 

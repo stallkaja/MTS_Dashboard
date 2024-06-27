@@ -173,7 +173,7 @@ function SwicWIPTable(hideArray){
                     dataIndex: 'key',
                     render: (text, record) => (
 
-                        <Button style={{ color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+                        <Button style={{ backgroundColor: 'green', color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
 
                             {"Open"}
                         </Button>
