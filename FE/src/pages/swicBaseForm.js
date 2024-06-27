@@ -15,6 +15,7 @@ export default function CreateSwicLog() {
 	const [systemNotes, setSystemNotes] = useState('')
 	const [customerFab, setCustomerFab] = useState('');
 	const [PK, setPK] = useState('');
+	const [openDate, setOpenDate] = useState('');
 	const [progDate, setProgDate] = useState(null);
     const [closeDate, setCloseDate] = useState(null)
 	
@@ -32,6 +33,7 @@ export default function CreateSwicLog() {
 			setSystemNotes(location.state.record.SystemNotes);
 			setCustomerFab(location.state.record.CustomerFab);
 			setPK(location.state.record.PK)
+			setOpenDate(location.state.record.OpenDate);
 			setProgDate(location.state.record.ProgDate);
 			setCloseDate(location.state.record.CloseDate);
 		};
