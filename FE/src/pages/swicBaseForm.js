@@ -5,7 +5,7 @@ import "./swicBaseForm.css";
 
 
 
-export default function CreateToolPage() {
+export default function CreateSwicLog() {
 
 	const history = useNavigate();
 	const location = useLocation();
@@ -15,10 +15,13 @@ export default function CreateToolPage() {
 	const [systemNotes, setSystemNotes] = useState('')
 	const [customerFab, setCustomerFab] = useState('');
 	const [PK, setPK] = useState('');
-
+	const [progDate, setProgDate] = useState(null);
+    const [closeDate, setCloseDate] = useState(null)
+	
 	useEffect(() => {
 		console.log(location)
 		console.log(location.state)
+		setPK('New')
 		if (location.state == null) {
 			console.log('record is null')
 		}
@@ -29,6 +32,8 @@ export default function CreateToolPage() {
 			setSystemNotes(location.state.record.SystemNotes);
 			setCustomerFab(location.state.record.CustomerFab);
 			setPK(location.state.record.PK)
+			setProgDate(location.state.record.ProgDate);
+			setCloseDate(location.state.record.CloseDate);
 		};
 	}, []) // <-- empty dependency array
 
@@ -43,7 +48,7 @@ export default function CreateToolPage() {
 	const addSwicLog = async () => {
 		// Create new object with the variables set in the form
 		console.log('log status is: ' + logStatus)
-		const newLog = {PK, logStatus, ben, systemNotes, customerFab, portLocation };
+		const newLog = {PK, logStatus, ben, systemNotes, customerFab, portLocation, progDate, closeDate};
 		//console.log(newLog)
 		const response = await fetch('/newSwicLog', {
 			method: 'POST',

@@ -160,8 +160,10 @@ app.post('/newSwicLog', (req, res) => {
   console.log(req)
   var stmt = ""
   var args = []
-    if (req.body.logStatus == 'inProgress') {
+    if (req.body.logStatus == 'Work In Progress') {
+      if (req.body.progDate == null) {
         req.body.progDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
     }
     if (req.body.progDate == 'Invalid Date') {
         req.body.progDate = null
@@ -169,10 +171,10 @@ app.post('/newSwicLog', (req, res) => {
     if (req.body.closeDate == 'Invalid Date') {
         req.body.closeDate = null
     }
-    if (req.body.logStatus == 'Closed') {
+    if (req.body.logStatus == 'Complete') {
         req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
     }
-  if(req.body.logStatus =='New Log', 'Work In Progress', 'Archived', 'Completed'){
+  if(req.body.PK =='New'){
     console.log('newLog')
       if (!req.body.openDate) {
           req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
@@ -191,7 +193,7 @@ app.post('/newSwicLog', (req, res) => {
       req.body.closeDate
 
     ]
-    stmt = "INSERT INTO swiclogtable (LogStatus, BEN, CustomerFab, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), CustomerFab = VALUES(CustomerFab), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    stmt = "INSERT INTO swiclogtable (LogStatus, BEN, SystemNotes, PortLocation, CustomerFab, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), PortLocation = VALUES(PortLocation), CustomerFab = VALUES(CustomerFab), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
   else{
     console.log("updating log")
@@ -207,7 +209,7 @@ app.post('/newSwicLog', (req, res) => {
       req.body.closeDate
 
     ]
-    stmt = "INSERT INTO swiclogtable (PK, LogStatus, BEN, CustomerFab, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE PK = VALUES(PK), LogStatus = VALUES(LogStatus), BEN = VALUES(BEN), CustomerFab = VALUES(CustomerFab), SystemNotes = VALUES(SystemNotes), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    stmt = "INSERT INTO swiclogtable (PK, LogStatus, CustomerFab, BEN, SystemNotes, PortLocation, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE PK = VALUES(PK), LogStatus = VALUES(LogStatus), CustomerFab = VALUES(CustomerFab), BEN = VALUES(BEN), SystemNotes = VALUES(SystemNotes), PortLocation = VALUES(PortLocation), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
   }
 
   
