@@ -151,6 +151,14 @@ function SwicWIPTable(hideArray){
                             sortDirections: ['descend', 'ascend'],
                         } 
                     }
+                    else if (hideList.includes(responseData[i].COLUMN_NAME)) {
+                        payload = {
+                            title: responseData[i].COLUMN_NAME,
+                            dataIndex: responseData[i].COLUMN_NAME,
+                            key: responseData[i].COLUMN_NAME,
+                            hidden: true
+                        }
+                    }
             
                     else{
                         var payload = {

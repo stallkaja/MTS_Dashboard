@@ -30,6 +30,9 @@ const ToolHistoryPage = () => {
     const excel = (childData) => {
         setExcelData((childData))
     }
+    const tableNone = () => {
+        //This space left intentionally blank
+    }
 
     return (
         <ConfigProvider
@@ -64,7 +67,8 @@ const ToolHistoryPage = () => {
                         <ExcelExport
                             tabledData={excelData}
                             hidingArray={hiddenArray}
-                            ogList={hideList} />
+                            ogList={hideList}
+                            tableRun={tableNone} />
                     </div>
                 </div>
                 

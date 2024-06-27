@@ -160,18 +160,18 @@ const OrderingDashboard = () => {
             <div id='AwaitingCard'>
                 <div id='AwaitingText'>Awaiting Approval</div>
                 <div id='CreateButton'>
-                <div id='Button'>
-                    <Button onClick={() => OpenTicket()}>
-                    {"Create New Order"}
-                    </Button>
-                        </div>
-                        <div id='Button'>
+                    <div id='Button'>
+                        <Button onClick={() => OpenTicket()}>
+                        {"Create New Order"}
+                        </Button>
+                    </div>
+                    <div id='Button'>
                         <ExcelExport
                             tabledData={excelMain}
                             hidingArray={hiddenArray}
                             ogList={hideList}
                             tableRun={buildTable}  />
-                        </div>
+                    </div>
                 </div>
             </div>
             <main>

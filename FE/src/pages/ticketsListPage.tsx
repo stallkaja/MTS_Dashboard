@@ -1,20 +1,20 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import OpenTicketATable from '../components/OpenTicketATable';
 import ClosedTicketATable from '../components/ClosedTicketATable';
-import "./TicketDashboard.css";
+import "./TicketListPage.css";
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
 import ColumnChange from '../components/ColumnChange';
+import ExcelExport from '../components/ExcelExport';
 
 const TicketDashboard: React.FC = () => {
     const navigate = useNavigate();
-    const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
-    });
+    const [hiddenArray, setHiddenArray] = useState({ key: 1 });
     const [hideList, setHideList] = useState([]);
+    const [excelData1, setExcelData1] = useState([]);
+    const [excelData2, setExcelData2] = useState([]);
+    const [excelMain, setExcelMain] = useState([]);
     const OpenTicket = () => {
         let path = '/TicketPage';
         navigate(path);
@@ -27,6 +27,25 @@ const TicketDashboard: React.FC = () => {
 
         )
     }
+    const excel1 = (childData) => {
+        console.log(childData)
+        return (
+            setExcelData1(childData)
+        )
+    }
+    const excel2 = (childData) => {
+        console.log(childData)
+        return (
+            setExcelData2(childData)
+        )
+    }
+    const tableNone = () => {
+        //This space left intentionally blank
+    }
+    useEffect(() => {
+        let excelTemp = excelData1.concat(excelData2)
+        setExcelMain(excelTemp)
+    }, [excelData1, excelData2])
 
   
     return (
@@ -53,29 +72,36 @@ const TicketDashboard: React.FC = () => {
                 </div>
                 
                 <div id='OpenTicketCard'>
-                    <div>
-                        <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
-                    </div>
+                    <div id='OpenTicketTitle'>Open and In Progress Tickets</div>
                 
                     <div id="CreateTicketButton">
-                        <Button 
-                            //type="primary" 
-                            size="large"
-                            onClick={() => OpenTicket()}
-                        >
-                            {"Create Ticket"}
-                        </Button>
+                        <div id="Button">
+                            <Button 
+                                onClick={() => OpenTicket()} >
+                                {"Create Ticket"}
+                            </Button>
+                        </div>
+                        <div id="Button">
+                            <ExcelExport
+                                tabledData={excelMain}
+                                hidingArray={hiddenArray}
+                                ogList={hideList}
+                                tableRun={tableNone} />
+                        </div>
+
                     </div>
                 </div>
                 <OpenTicketATable
-                    hideArray={hiddenArray} />
+                    hideArray={hiddenArray}
+                    tableDataCallBack={excel1} />
        
                 <div id='ClosedTicketCard'>
                     <div id='CloseTicketTitle'>Closed and Under Review</div>
                 </div>
 
                 <ClosedTicketATable
-                    hideArray={hiddenArray} />
+                    hideArray={hiddenArray}
+                    tableDataCallBack={excel2} />
             </div>
         </ConfigProvider>
     );

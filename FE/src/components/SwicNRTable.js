@@ -20,6 +20,9 @@ function SwicNRTable(hideArray){
     const [searchedColumn, setSearchedColumn] = useState('');
     const searchInput = useRef(null);
     const [filtHead, setFiltHead] = useState([]);
+    const [hideList, setHideList] = useState([
+        'PK'
+    ])
 
     const EditRecord=(record)=>{
       navigate('/SwicForm',{state:{record:record}});
@@ -138,7 +141,7 @@ function SwicNRTable(hideArray){
         if (response.ok) {
             response.json().then((responseData) => {
             const headerArray=[];
-            for(let i =0;i<responseData.length;i++){
+            for(let i =0;i<responseData.length;i++) {
 
                 if(responseData[i].COLUMN_NAME == "LogStatus"){
                     var payload = {
@@ -151,38 +154,46 @@ function SwicNRTable(hideArray){
                         },
                         sortDirections: ['descend', 'ascend'],
                         onCell: () => {
-                        return {
-                            style: {
+                            return {
+                                style: {
 
-                                maxWidth: 700,
-                           }
-                        }
-                        },
-                }
-            }
-            else{
-                var payload = {
-                    title: responseData[i].COLUMN_NAME,
-                    dataIndex: responseData[i].COLUMN_NAME,
-                    key: responseData[i].COLUMN_NAME,
-                    ...getColumnSearchProps(responseData[i].COLUMN_NAME),
-                    sorter: {
-                        compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
-                    },
-                    sortDirections: ['descend', 'ascend'],
-                    onCell: () => {
-                        return {
-                            style: {
-
-                                maxWidth: 700,
+                                    maxWidth: 700,
+                               }
                             }
-                        }
-                    },              
+                        },
                     }
                 }
+                else if (hideList.includes(responseData[i].COLUMN_NAME)) {
+                    payload = {
+                        title: responseData[i].COLUMN_NAME,
+                        dataIndex: responseData[i].COLUMN_NAME,
+                        key: responseData[i].COLUMN_NAME,
+                        hidden: true
+                    }
+                }
+                else {
+                    var payload = {
+                        title: responseData[i].COLUMN_NAME,
+                        dataIndex: responseData[i].COLUMN_NAME,
+                        key: responseData[i].COLUMN_NAME,
+                        ...getColumnSearchProps(responseData[i].COLUMN_NAME),
+                        sorter: {
+                            compare: (a, b) => defaultSort(a[responseData[i].COLUMN_NAME], b[responseData[i].COLUMN_NAME])
+                        },
+                        sortDirections: ['descend', 'ascend'],
+                        onCell: () => {
+                            return {
+                                style: {
 
-                headerArray.push(payload)
-            }
+                                    maxWidth: 700,
+                                }
+                            }
+                        },              
+                        }
+                    }
+
+                    headerArray.push(payload)
+                }
             const buttonPayload = {
                 title: 'Open Log',
                 key: 'key',

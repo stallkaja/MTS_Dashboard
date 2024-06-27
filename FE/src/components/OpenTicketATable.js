@@ -12,7 +12,7 @@ dayjs.extend(timezone);
 
 
 
-function OpenTicketATable(hideArray){
+function OpenTicketATable({ hideArray, tableDataCallBack }){
     const [items, setItems] = useState([]);
     const [headers, setHeaders] = useState([]);
     const navigate = useNavigate();
@@ -225,6 +225,7 @@ function OpenTicketATable(hideArray){
                         responseData[i].CloseDate = cleanDate3
                     }
                 setItems(responseData)
+                tableDataCallBack(responseData)
                 })
             }
         });
@@ -234,8 +235,8 @@ function OpenTicketATable(hideArray){
     //assigning hidden columns
     const columnHide = (hideArray, headers) => {
         let localHideList = []
-        for (let i = 0; i < hideArray.hideArray.length; i++) {
-            localHideList.push(hideArray.hideArray[i])
+        for (let i = 0; i < hideArray.length; i++) {
+            localHideList.push(hideArray[i])
         }
         let addHeader = []
         for (let i = 0; i < headers.length; i++) {
