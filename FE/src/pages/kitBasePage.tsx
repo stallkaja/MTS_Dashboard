@@ -23,6 +23,13 @@ const KitDashboard: React.FC = () => {
     const parent = (childData) => {
         return (setHiddenArray(childData))
     }
+    const excel1 = () => {
+        //This space left intentionally blank
+    }
+
+    const excel2 = () => {
+        //This space left intentionally blank
+    }
   
     return (
         <ConfigProvider
@@ -56,14 +63,18 @@ const KitDashboard: React.FC = () => {
                         </Button>
                     </div>
                 </div>
-                <OpenTicketATable hideArray={hiddenArray}/>
+                <OpenTicketATable
+                    hideArray={hiddenArray}
+                    tableDataCallBacl={excel1} />
 
             
                 <div id='ClosedTicketCard'>
                     <div id='CloseTicketTitle'>Completed Kits</div>
                 </div>
 
-                <ClosedTicketATable hideArray={hiddenArray}/>
+                <ClosedTicketATable
+                    hideArray={hiddenArray}
+                    tableDataCallBacl={excel1}/>
             </div>
         </ConfigProvider>
     );

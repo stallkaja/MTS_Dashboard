@@ -31,8 +31,6 @@ const HomePage = ({ setItemToEdit }) =>{
     const parent = (childData) => {
         return (
             setHiddenArray(childData)
-
-
         )
     }
     const excel = (childData) => {

@@ -9,16 +9,13 @@ import ColumnChange from '../components/ColumnChange';
 
 const TicketDashboard: React.FC = () => {
     const navigate = useNavigate();
-    const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
-    });
+    const [hiddenArray, setHiddenArray] = useState({ key: 1 });
     const [hideList, setHideList] = useState([]);
     const OpenTicket = () => {
         let path = '/TicketPage';
         navigate(path);
     }
+
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (
@@ -26,6 +23,9 @@ const TicketDashboard: React.FC = () => {
 
 
         )
+    }
+    const excel = () => {
+        //This space left intentionally blank
     }
     
 
@@ -65,7 +65,8 @@ const TicketDashboard: React.FC = () => {
 
             <div id="TicketTableOpen">
                 <OpenTicketATable
-                    hideArray={hiddenArray} />
+                    hideArray={hiddenArray}
+                    tableDataCallBack={excel} />
             </div>
             {/*
             <div id='ClosedTicketCard'>

@@ -4,13 +4,15 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
-import { Table, ConfigProvider, Button, Input, Select } from 'antd'
+import { Table, ConfigProvider, Button, Input, Select } from 'antd';
+import ExcelExport from '../components/ExcelExport';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
 import locations from '../components/LocationList.js';
 dayjs.extend(utc);
 dayjs.extend(timezone);
+
 
 const ScanToolPage = ({ setItemToEdit }) => {
     const [newLoc, setLoc] = useState('');
@@ -20,6 +22,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
     const history = useNavigate();
     const [headers, setHeaders] = useState([]);
     const [searchNVL, setSearchNVL] = useState('');
+    const [excelData, setExcelData] = useState({});
+    const [excelTemp, setExcelTemp] = useState({});
+    const [hideList, setHideList] = useState([]);
+    const [hiddenArray, setHiddenArray] = useState({ key: 1 });
     
     const [toolHistory, setToolHistory] = useState([
         {NVL: '',
@@ -27,6 +33,20 @@ const ScanToolPage = ({ setItemToEdit }) => {
     ]);
     const locChange = (value) => {
         setLoc(value)
+    }
+    const tableNone = () => {
+        //This space left intentionally blank
+    }
+    const tableBuild = (responseData) => {
+        console.log(responseData)
+        let work = responseData
+        if (work !== undefined) {
+            for (let i = 0; i < work.length; i++) {
+                delete work[i]['PK']
+            }
+        }
+        setExcelData(work)
+
     }
 
 
@@ -101,6 +121,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
                         responseData[i].curDate = cleanDate
                     }
                     setToolHistory(responseData)
+                    tableBuild(responseData)
                 })
             }
         });
@@ -165,7 +186,9 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
 
                 <div className={ScanToolStyles.header}>
-                    <div className={ScanToolStyles.headtext}>Movement Log</div>
+                    <div className={ScanToolStyles.headtext}>
+                        Movement Log
+                    </div>
 
                     <div className={ScanToolStyles.searchbar}>
                         <input id="searchnvl"
@@ -177,9 +200,23 @@ const ScanToolPage = ({ setItemToEdit }) => {
                         />
 
                         <div className={ScanToolStyles.searchbutton}>
-                            <Button type="default" onClick={fetchNVLs}>Search</Button></div>
+                            <Button type="default" onClick={fetchNVLs}>
+                                Search
+                            </Button>
+                        </div>
+
+                        <div className={ScanToolStyles.searchbutton}>
+                            <ExcelExport
+                                tabledData={excelData}
+                                hidingArray={hiddenArray}
+                                ogList={hideList}
+                                tableRun={tableNone} />
+                        </div>
+
                     </div>
+
                     <br />
+
                 </div>
           
                 <div className={ScanToolStyles.row}>
