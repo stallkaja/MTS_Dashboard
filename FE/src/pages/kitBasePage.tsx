@@ -65,7 +65,7 @@ const KitDashboard: React.FC = () => {
                 </div>
                 <OpenTicketATable
                     hideArray={hiddenArray}
-                    tableDataCallBacl={excel1} />
+                    tableDataCallBack={excel1} />
 
             
                 <div id='ClosedTicketCard'>
@@ -74,7 +74,7 @@ const KitDashboard: React.FC = () => {
 
                 <ClosedTicketATable
                     hideArray={hiddenArray}
-                    tableDataCallBacl={excel1}/>
+                    tableDataCallBack={excel1}/>
             </div>
         </ConfigProvider>
     );
