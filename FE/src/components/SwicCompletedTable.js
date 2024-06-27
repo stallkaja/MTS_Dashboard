@@ -171,7 +171,7 @@ function SwicCompletedTable(hideArray){
                     key: 'key',
                     dataIndex: 'key',
                     render: (text, record) => (
-                        <Button style={{ backgroundColor: '#00a800', color: '#000000', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
+                        <Button style={{ backgroundColor: 'red', color: '#000000', borderColor: '#ffffff' }} onClick={() => EditRecord(record)}>
                             {"Open"}
                         </Button>
                     ),

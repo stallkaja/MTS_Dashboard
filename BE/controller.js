@@ -172,8 +172,8 @@ app.post('/newSwicLog', (req, res) => {
     if (req.body.logStatus == 'Closed') {
         req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
     }
-  if(req.body.logStatus =='New Log'){
-    console.log('newlog')
+  if(req.body.logStatus =='New Log', 'Work In Progress', 'Archived', 'Completed'){
+    console.log('newLog')
       if (!req.body.openDate) {
           req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
       }

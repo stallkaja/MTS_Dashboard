@@ -18,6 +18,7 @@ function SwicWIPTable(hideArray){
     const searchInput = useRef(null);
     const navigate = useNavigate();
     const [filtHead, setFiltHead] = useState([]);
+    const [hideList, setHideList] = useState(['PK'])
 
   const EditRecord=(record)=>{
     console.log("into button on click")
@@ -173,7 +174,7 @@ function SwicWIPTable(hideArray){
                     dataIndex: 'key',
                     render: (text, record) => (
 
-                        <Button style={{ backgroundColor: 'green', color: '#000000', borderColor: '#000000' }} onClick={() => EditRecord(record)}>
+                        <Button style={{ backgroundColor: 'green', color: '#000000', borderColor: '#000000' }} onClick={()=>EditRecord(record)}>
 
                             {"Open"}
                         </Button>

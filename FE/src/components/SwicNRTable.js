@@ -253,7 +253,7 @@ function SwicNRTable(hideArray){
                     dataIndex: headers[i].dataIndex,
                     key: headers[i].key,
                     render: (text, record) => (
-                        <Button style={{ backgroundColor: 'red', color: '#ffffff', borderColor: '#ffffff' }} onClick={() => EditRecord(record)}>
+                        <Button style={{ backgroundColor: 'green', color: '#000000', borderColor: '#ffffff' }} onClick={()=>EditRecord(record)}>
                             {"Open"}
                         </Button>
                     )

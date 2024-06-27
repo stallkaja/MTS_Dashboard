@@ -14,12 +14,8 @@ const SWICDashboard: React.FC = () => {
         let path = '/SwicForm';
         navigate(path);
     }
-    const [hideList, setHideList] = useState([]);
-    const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
-    });
+    const [hideList, setHideList] = useState(['PK']);
+    const [hiddenArray, setHiddenArray] = useState({ key: 1 });
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (setHiddenArray(childData))
