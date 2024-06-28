@@ -819,3 +819,89 @@ app.get('/stagTools', (_, res) => {
     })
     //connection.end()
 });
+
+app.get('/loadKitnumbers', (_, res) => {
+    connection.query('Select * from materiallisttable WHERE CurrentState = "Available To Loan" AND Category = "Facilities Kit/Cage"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.get('/loadNewFacKits', (_, res) => {
+    connection.query('Select * from fackitstable WHERE Status = "New"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.get('/loadCompFacKits', (_, res) => {
+    connection.query('Select * from fackitstable WHERE Status = "Completed"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.post('/newFacKit', (req, res) => {
+    var stmt = ""
+    var args = []
+    if (req.body.stat == 'inProgress') {
+        req.body.progDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+    if (req.body.progDate == 'Invalid Date') {
+        req.body.progDate = null
+    }
+    if (req.body.closeDate == 'Invalid Date') {
+        req.body.closeDate = null
+    }
+    if (req.body.ticketStatus == 'Closed') {
+        req.body.closeDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    }
+
+    if (req.body.ticketNum == 'new ticket') {
+        if (!req.body.openDate) {
+            req.body.openDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+        }
+        else if (req.body.openDate == 'Invalid Date') {
+            req.body.openDate = dayjs()
+        }
+        args = [
+            req.body.ticketStatus,
+            req.body.ben,
+            req.body.ticketDescription,
+            req.body.department,
+            req.body.toolBay,
+            req.body.openDate,
+            req.body.progDate,
+            req.body.closeDate
+
+        ]
+        stmt = "INSERT INTO ticketsTable (TicketStatus, BEN, TicketDescription, Department, ToolBay, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    }
+    else {
+        args = [
+            req.body.ticketStatus,
+            req.body.ticketNum,
+            req.body.ben,
+            req.body.ticketDescription,
+            req.body.department,
+            req.body.toolBay,
+            req.body.openDate,
+            req.body.progDate,
+            req.body.closeDate
+
+        ]
+        stmt = "INSERT INTO ticketsTable (TicketStatus, TicketNum, BEN, TicketDescription, Department, ToolBay, OpenDate, ProgDate, CloseDate) VALUES(?) ON DUPLICATE KEY UPDATE TicketStatus = VALUES(TicketStatus), TicketNum = VALUES(TicketNum), BEN = VALUES(BEN), TicketDescription = VALUES(TicketDescription), Department = VALUES(Department), ToolBay = VALUES(ToolBay), OpenDate = VALUES(OpenDate), ProgDate  = VALUES(ProgDate), CloseDate = VALUES(CloseDate)"
+    }
+});

@@ -1,0 +1,68 @@
+﻿#InputBox {
+    padding-bottom: 5px;
+    width: 50%;
+}
+
+#CommentsBox {
+    padding-bottom: 5px;
+    width: 100%;
+}
+
+#InfoHeader {
+    background: linear-gradient(#20a785, #242437 60%);
+    border-radius: 15px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: space-between;
+    flex-wrap: wrap;
+}
+
+#FormCard {
+    /*border-radius: 15px;*/
+    height: auto;
+    width: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#SubmitButton {
+    padding-right: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+}
+
+#FormBody {
+    display: flex;
+}
+
+#Label {
+    align-items: flex-start;
+    font-size: 15px;
+    font-weight: bold; 
+}
+
+#BackButton {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+#column {
+    flex: 50%;
+    width: 100%;
+}
+
+#ToolButtonBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between
+}

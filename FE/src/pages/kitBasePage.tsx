@@ -1,6 +1,6 @@
 import React from 'react';
-import OpenTicketATable from '../components/OpenTicketATable';
-import ClosedTicketATable from '../components/ClosedTicketATable';
+import NewFacKitATable from '../components/NewFacKitATable';
+import CompFacKitATable from '../components/CompFacKitATable';
 import "./TicketDashboard.css";
 import { useNavigate } from 'react-router';
 import { Button, ConfigProvider } from 'antd';
@@ -13,12 +13,21 @@ const KitDashboard: React.FC = () => {
         let path = '/KitFormPage';
         navigate(path);
     }
-    const [hideList, setHideList] = useState([]);
-    const [hiddenArray, setHiddenArray] = useState({
-        key: 1,
-        keey: 2,
-        keeey: 3
-    });
+    const [hideList, setHideList] = useState([
+        'PK',
+        'BuiltID',
+        'BuiltDate',
+        'InspectID',
+        'InspectDate',
+        'IssueID',
+        'IssueDate',
+        'ReturnID',
+        'ReturnDate',
+        'VerID',
+        'VerDate',
+        'CompID',
+        'CompDate']);
+    const [hiddenArray, setHiddenArray] = useState({ key: 1 });
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
         return (setHiddenArray(childData))
@@ -42,7 +51,7 @@ const KitDashboard: React.FC = () => {
                 },
             }}>
             <ColumnChange
-                tName='ticketstable'
+                tName='fackitstable'
                 parentPass={parent}
                 hideList={hideList} />
             <div>
@@ -63,7 +72,7 @@ const KitDashboard: React.FC = () => {
                         </Button>
                     </div>
                 </div>
-                <OpenTicketATable
+                <NewFacKitATable
                     hideArray={hiddenArray}
                     tableDataCallBack={excel1} />
 
@@ -72,7 +81,7 @@ const KitDashboard: React.FC = () => {
                     <div id='CloseTicketTitle'>Completed Kits</div>
                 </div>
 
-                <ClosedTicketATable
+                <CompFacKitATable
                     hideArray={hiddenArray}
                     tableDataCallBack={excel1}/>
             </div>
