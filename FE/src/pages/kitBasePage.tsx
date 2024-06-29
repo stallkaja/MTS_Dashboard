@@ -1,9 +1,13 @@
 import React from 'react';
 import NewFacKitATable from '../components/NewFacKitATable';
+import BuiltFacKitATable from '../components/BuiltFacKitATable';
+import InsFacKitATable from '../components/InsFacKitATable';
+import IssFacKitATable from '../components/IssFacKitATable';
+import RetFacKitATable from '../components/RetFacKitATable';
 import CompFacKitATable from '../components/CompFacKitATable';
-import "./TicketDashboard.css";
+import "./KitBasePage.css";
 import { useNavigate } from 'react-router';
-import { Button, ConfigProvider } from 'antd';
+import { Button, ConfigProvider, Collapse } from 'antd';
 import ColumnChange from '../components/ColumnChange';
 import { useState } from 'react';
 
@@ -27,6 +31,7 @@ const KitDashboard: React.FC = () => {
         'VerDate',
         'CompID',
         'CompDate']);
+
     const [hiddenArray, setHiddenArray] = useState({ key: 1 });
     //Data being returned from columnChange component, to be passed to child tables
     const parent = (childData) => {
@@ -39,52 +44,92 @@ const KitDashboard: React.FC = () => {
     const excel2 = () => {
         //This space left intentionally blank
     }
+    const onChange = (key) => {
+        console.log(key)
+    }
+    const items = [
+        {
+            key: '1',
+            label: 'New Kits',
+            children: <NewFacKitATable
+                hideArray={hiddenArray}
+                tableDataCallBack={excel1} />
+        },
+        {
+            key: '2',
+            label: 'Built Kits',
+            children: <BuiltFacKitATable
+                hideArray={hiddenArray}
+                tableDataCallBack={excel1} />
+        },
+        {
+            key: '3',
+            label: 'Inspected Kits',
+            children: <InsFacKitATable
+                hideArray={hiddenArray}
+                tableDataCallBack={excel1} />
+        },
+        {
+            key: '4',
+            label: 'Issued Kits',
+            children: <IssFacKitATable
+                hideArray={hiddenArray}
+                tableDataCallBack={excel1} />
+        },
+        {
+            key: '5',
+            label: 'Returned Kits',
+            children: <RetFacKitATable
+                hideArray={hiddenArray}
+                tableDataCallBack={excel1} />
+        },
+        {
+            key: '6',
+            label: 'Completed Kits',
+            children: <CompFacKitATable
+                hideArray={hiddenArray}
+                tableDataCallBack={excel1} />
+        }
+    ]
   
     return (
         <ConfigProvider
             theme={{
+                components: {
+                    Collapse: { headerBG:'#000000'}
+                },
                 token: {
                     colorPrimary: '#ffffff',
                     colorTextLightSolid: '#000000',
                     colorBorder: '#242437',
-                    colorPrimaryHover: '#e0ded6'
+                    colorPrimaryHover: '#e0ded6',
+
                 },
             }}>
-            <ColumnChange
-                tName='fackitstable'
-                parentPass={parent}
-                hideList={hideList} />
-            <div>
+
                 <div id='TicketDashCard'>
-                    <h1 id='TicketTitle'>Ticket Dashboard</h1>
-                 
+                    <h1 id='TicketTitle'>KitBase</h1>
+                    <ColumnChange
+                        tName='fackitstable'
+                        parentPass={parent}
+                        hideList={hideList} />                 
                     <h1 id='TicketSearch'> Search Bar Place Holder</h1>
                 </div>
-                
-                <div id='OpenTicketCard'>
-                    <div>
-                        <div id='OpenTicketTitle'>New Kits</div>
-                    </div>
-                
-                    <div id="CreateTicketButton">
+                <div id='OpenTicketCardKits'>
+                    <div id="CreateTicketButtonKits">
                         <Button type="primary" size="large" onClick={() => OpenForm()}>
                             {"New Facility Kit Entry"}
                         </Button>
                     </div>
                 </div>
-                <NewFacKitATable
-                    hideArray={hiddenArray}
-                    tableDataCallBack={excel1} />
-
-            
-                <div id='ClosedTicketCard'>
-                    <div id='CloseTicketTitle'>Completed Kits</div>
+                <div id="Collapse">
+                <Collapse
+                    items={items}
+                    onChange={onChange}
+                    style={{
+                        fontColor: '#000000'
+                    }} />
                 </div>
-
-                <CompFacKitATable
-                    hideArray={hiddenArray}
-                    tableDataCallBack={excel1}/>
-            </div>
         </ConfigProvider>
     );
 };

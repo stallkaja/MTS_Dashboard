@@ -49,6 +49,9 @@ function App() {
                         colorLink: 'white',
                         colorLinkHover: '#6ce3c6',
                         colorLinkActive: '#20A785'
+                    },
+                    Collapse: {
+                        headerBG: '#000000'
                     }
                 },
             }}>

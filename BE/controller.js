@@ -842,6 +842,49 @@ app.get('/loadNewFacKits', (_, res) => {
     //connection.end()
 });
 
+app.get('/loadBuiltFacKits', (_, res) => {
+    connection.query('Select * from fackitstable WHERE Status = "Built"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.get('/loadInsFacKits', (_, res) => {
+    connection.query('Select * from fackitstable WHERE Status = "Inspected"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+app.get('/loadIssFacKits', (_, res) => {
+    connection.query('Select * from fackitstable WHERE Status = "Issued"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
+app.get('/loadRetFacKits', (_, res) => {
+    connection.query('Select * from fackitstable WHERE Status = "Returned"', (err, rows, fields) => {
+        if (err) {
+            throw err
+            connection.end();
+        }
+        res.json(rows)
+    })
+    //connection.end()
+});
+
 app.get('/loadCompFacKits', (_, res) => {
     connection.query('Select * from fackitstable WHERE Status = "Completed"', (err, rows, fields) => {
         if (err) {
@@ -856,8 +899,8 @@ app.get('/loadCompFacKits', (_, res) => {
 app.post('/newFacKit', (req, res) => {
     var stmt = ""
     var args = []
-    if (req.body.stat == 'inProgress') {
-        req.body.progDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
+    if (req.body.stat == 'Built') {
+        req.body.builtDate = dayjs().format('YYYY-MM-DD HH:mm:ss')
     }
     if (req.body.progDate == 'Invalid Date') {
         req.body.progDate = null
