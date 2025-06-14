@@ -7,11 +7,11 @@ const multer = require('multer')
 const path = require('path')
 
 //My SQL Connection  and config
-const mysql = require('mysql')
+const mysql = require('mysql2')
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root',
+  password: 'password',
   database: 'dos_db'
 })
 

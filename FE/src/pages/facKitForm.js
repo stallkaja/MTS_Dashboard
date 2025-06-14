@@ -306,11 +306,11 @@ export default function FacKitForm() {
                     </div>*/}
                 </div>
                 <div id="CommentsBox">
-                    <div id="Label">Comments</div>
+                    <div id="Label">Notes</div>
                     <TextArea
                         rows={6}
                         value={com}
-                        placeholder="Comments"
+                        placeholder="Notes"
                         onChange={e => setCom(e.target.value)}
                     />
                 </div>

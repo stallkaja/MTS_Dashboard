@@ -65,10 +65,10 @@ function App() {
                     <main>
                         <Routes>
                             <Route path='/' element={<LandingPage />} />
-                            <Route path='/TicketDashboard' element={<TicketDashboard />} />
+                            /*<Route path='/TicketDashboard' element={<TicketDashboard />} />
                             <Route path='/MaterialListPage' exact element={<MaterialListPage setItemToEdit={setItemToEdit} />} />
                             <Route path='/MaterialOrderingPage' element={<MaterialOrderingPage />} />
-                            <Route path='/map' element={<MapPage />} />
+                            <Route path='/map' element={<MapPage />} />*/
                             <Route path='/ScanTool' element={<ScanToolPage />} setItemToEdit={setItemToEdit} />
                             <Route path='/ToolHistory' element={<ToolHistoryPage />} />
                             <Route path='/toolRequest' element={<ToolRequestPage />} />

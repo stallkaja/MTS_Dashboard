@@ -22,7 +22,7 @@ export const navData = [
         text: "Home",
         link: "/"
     },
-    {
+    /*{
         id: 1,
         icon: <SupportIcon/>,
         text: "Ticket  Dashboard",
@@ -63,7 +63,7 @@ export const navData = [
         icon: <MapIcon/>,
         text: "Inventory Map",
         link: "Map"
-    },
+    },*/
     {
         id: 8,
         icon: <HistoryIcon/>,
@@ -82,7 +82,7 @@ export const navData = [
         text: "Cal Tool Info",
         link: "ToolHistory"
     },
-    {
+    /*{
         id: 11,
         icon: <HandyIcon/>,
         text: "Tool Requests",
@@ -93,5 +93,5 @@ export const navData = [
         icon: <PasteIcon/>,
         text: "Pass Down",
         link: "PassDownPage"
-    },
+    },*/
 ]

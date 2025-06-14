@@ -127,7 +127,8 @@ const KitDashboard: React.FC = () => {
                     items={items}
                     onChange={onChange}
                     style={{
-                        fontColor: '#000000'
+                        fontColor: '#000000',
+                        headerBG: '#ffffff'
                     }} />
                 </div>
         </ConfigProvider>

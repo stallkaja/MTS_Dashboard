@@ -34,7 +34,7 @@ function RetFacKitATable({ hideArray, tableDataCallBack }){
     const [filtHead, setFiltHead] = useState([]);
 
     const EditRecord=(record)=>{
-      navigate('/ticketPage',{state:{record:record}});
+      navigate('/KitFormPage',{state:{record:record}});
     };
 
     //handling search and sort, copied from Ant Design

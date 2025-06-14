@@ -34,7 +34,7 @@ function NewFacKitATable({ hideArray, tableDataCallBack }){
     const [filtHead, setFiltHead] = useState([]);
 
     const EditRecord=(record)=>{
-      navigate('/ticketPage',{state:{record:record}});
+      navigate('/kitFormPage',{state:{record:record}});
     };
 
     //handling search and sort, copied from Ant Design
