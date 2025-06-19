@@ -55,8 +55,14 @@
     justify-content: flex-start;
 }
 .buttonmove{
+    display: flex;
+    justify-content: space-between;
+}
+.addbutton {
     padding-left: 10px;
     display: flex;
+    justify-content: center;
+    width: 80%;
 }
 fieldbox{
     padding-top: 0px;
@@ -71,7 +77,7 @@ fieldset {
     align-content: center;
     justify-content:space-around;
     align-items: center;
-    width: 95%;
+    width: 50%;
 }
 legend {
     background: linear-gradient(#adadad, #ffffff 40%);

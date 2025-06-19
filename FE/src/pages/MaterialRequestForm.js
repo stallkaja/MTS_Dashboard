@@ -262,6 +262,7 @@ export default function MaterialRequestForm() {
     //form submit function
     const onFinish = (values) => {
         console.log('onFinish')
+        console.log(values)
         addRequest(values)
         console.log('attachmentNext')
         addAttachment(values)

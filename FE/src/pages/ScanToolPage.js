@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../components/SearchBar';
 import ScanHistoryATable from '../components/ScanHistoryATable';
-import { Table, ConfigProvider, Button, Input, Select } from 'antd';
+import { Table, ConfigProvider, Button, Input, Select, Form, Space } from 'antd';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
 import ExcelExport from '../components/ExcelExport';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
@@ -54,8 +55,10 @@ const ScanToolPage = ({ setItemToEdit }) => {
     //----------------------------------------------------------------------------
     // Make a POST request to create a new scan record
     //----------------------------------------------------------------------------
-    const newScan = async () => {
+    const newScan = async (payload) => {
         // Create new object with the variables set in the form
+        //console.log(ID)
+        console.log(payload)
         let yourDate = new Date()
         const offset = yourDate.getTimezoneOffset()
         yourDate = new Date(yourDate.getTime() - (offset*60*1000))
@@ -63,11 +66,26 @@ const ScanToolPage = ({ setItemToEdit }) => {
         const date = yourDate.toISOString().split('T')[0]
         const time = (yourDate.toISOString().split('T')[1]).split('.')[0]
         const dateTime = date + ' ' + time;
-
-        const newScan = { nvl, employeeID, newLoc, dateTime };
+        //const newScan = { nvl, employeeID, newLoc, dateTime };
+        var newScan = {}
+        var args = []
+        var load = []
+        for (let i = 0; i < payload.scan.length; i++) {
+            /*load = [
+                payload.scan[i].nvl,
+                payload.scan[i].employeeID,
+                payload.scan[i].newLoc,
+                dateTime
+            ]
+            console.log(load)
+            newScan[i] = load*/
+            payload.scan[i].curDate = dateTime
+            payload.scan[i].employeeID = payload.employeeID
+        }
+        console.log(payload.scan)
         const response = await fetch('/newScan', {
             method: 'POST',
-            body: JSON.stringify(newScan),
+            body: JSON.stringify(payload),
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -81,6 +99,37 @@ const ScanToolPage = ({ setItemToEdit }) => {
 
         // Return to home page
         window.location.reload(true)
+    }
+
+    const [form] = Form.useForm();
+
+    const handleNvl = (value) => {
+        form.setFieldsValue({
+            nvl: value
+        })
+        setNvl(value)
+    }
+
+
+    const handleEID = (value) => {
+        form.setFieldsValue({
+            employeeID: value
+        })
+        setEmployeeID(value)
+    }
+
+
+    const handleLoc = (value) => {
+        form.setFieldsValue({
+            newLoc: value
+        })
+        setLoc(value)
+    }
+    
+    const onFinish = (values) => {
+        console.log('on finish')
+        console.log(values)
+        newScan(values)
     }
 
 
@@ -136,7 +185,8 @@ const ScanToolPage = ({ setItemToEdit }) => {
                     colorBorder: '#000000',
                     //lineType: 'default',
                     //lineWidth: '1',
-                    colorPrimaryHover: '#6ce3c6'
+                    colorPrimaryHover: '#6ce3c6',
+
                 },
             }}>
             <div>
@@ -149,7 +199,7 @@ const ScanToolPage = ({ setItemToEdit }) => {
                         <legend>
                             Tool Movement Form
                         </legend>
-
+                        {/*
                         <div className={ScanToolStyles.formColumn}>
                             <label for="nvl">NVL #</label>
                             <Input placeholder="NVL" onChange={e => setNvl(e.target.value)} />
@@ -176,9 +226,111 @@ const ScanToolPage = ({ setItemToEdit }) => {
                                     width: '200px'
                                 }}/>
                         </div>
+                        */}
+                        <div style={{ display: 'flex', width: '100%', justifyContent: 'Center', paddingLeft: '0px' }}>
+                        <Form
+                                form={form}
+                                name="ddynamic_form_nest_item"
+                                layout="horizontal"
+                                onFinish={onFinish}
+                                autoComplete="off"
+                                style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', } }
+                        >
 
-                        <div className={ScanToolStyles.buttonmove}>
-                            <Button type="default" onClick={newScan}> Save </Button>
+                            <Form.List name="scan">
+                                {(fields, { add, remove }) => (
+                                    <>
+                                        {fields.map((field) => (
+
+                                            <Space key={field.key} align="start">
+
+                                                <Form.Item
+                                                    {...field}
+                                                    label="NVL"
+                                                    name={[field.name, 'nvl']}
+                                                    fieldKey={[field.fieldkey, "nvl"]}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Missing NVL number"
+                                                        }
+                                                    ]}
+                                                    shouldUpdate={(prevValues, curValues) =>
+                                                        prevValues.nvl !== curValues.nvl
+                                                    }
+                                                >
+                                                    <Input placeholder="NVL" onChange={handleNvl} />
+                                                </Form.Item>
+
+
+
+                                                <Form.Item
+                                                    {...field}
+                                                    label="New Location"
+                                                    name={[field.name, 'newLoc']}
+                                                    fieldKey={[field.fieldkey, "newLoc"]}
+                                                    rules={[
+                                                        {
+                                                            required: true,
+                                                            message: "Missing New Location"
+                                                        }
+                                                    ]}
+                                                    shouldUpdate={(prevValues, curValues) =>
+                                                        prevValues.nvl !== curValues.nvl
+                                                    }
+                                                >
+                                                    <Select
+                                                        showSearch
+                                                        placeholder="New Location"
+                                                        optionFilterProp="children"
+                                                        filterOption={(input, option) => (option?.label ?? '').includes(input)}
+                                                        filterSort={(optionA, optionB) =>
+                                                            (optionA?.label ?? '').toLowerCase().localeCompare((optionB?.label ?? '').toLowerCase())
+                                                        }
+                                                        options={locations}
+                                                        onChange={handleLoc}
+                                                        style={{
+                                                            width: '200px'
+                                                        }} />
+                                                </Form.Item>
+
+                                                <MinusCircleOutlined onClick={() => remove(field.name)} />
+
+                                            </Space>
+                                        ))}
+                                        <Form.Item>
+                                                <Button type="dashed" style={{ width: '100%' }} onClick={() => add()} block icon={<PlusOutlined />}>
+                                                Add Line
+                                            </Button>
+                                        </Form.Item>
+                                    </>
+                                )}
+
+                            </Form.List>
+
+                            <div className={ScanToolStyles.buttonmove}>
+                                <div style={{ paddingRight: '220px'} }>
+                                    <Form.Item
+                                        label="Employee ID"
+                                        name="employeeID"
+                                        rules={[
+                                            {
+                                                required: true,
+                                                message: "Missing Employee ID Number"
+                                            }
+                                        ]}
+                                    >
+                                        <Input placeholder="Employee ID" onChange={ e => setEmployeeID(e.target.value)} />
+                                            </Form.Item>
+                                </div>
+
+                                <Form.Item>
+
+                                    <Button htmlType="submit"> Save </Button>
+
+                                </Form.Item>
+                            </div>
+                        </Form>
                         </div>
                    </fieldset>
                 </fieldbox> 

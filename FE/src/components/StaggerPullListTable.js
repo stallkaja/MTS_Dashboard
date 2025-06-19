@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Button, Input, Space, Table, DatePicker, Typpography, Popconfirm, message } from 'antd';
+import { Button, Input, Space, Table, DatePicker, Typpography, Popconfirm, message, Select } from 'antd';
 import { useNavigate, Link } from 'react-router';
 import { SearchOutlined } from '@ant-design/icons';
 import dayjs from 'dayjs';
@@ -20,11 +20,27 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
     const [sendDate, setSendDate] = useState();
     const [send, setSend] = useState();
     const [theDay, setTheDay] = useState(dayjs());
+    const [cc, setCC] = useState();
 
     //handling changes from the date picker
     const handleDate = (date, dateString) => {
         setTheDay(dateString)
     }
+
+    const changeCC = (value) => {
+        setCC(value)
+    }
+
+    const ccList = [
+        { value: '*', label: 'all' },
+        { value: '17020', label: '17020' },
+        { value: '17028', label: '17028' },
+        { value: '17029', label: '17029' },
+        { value: '17030', label: '17030' },
+        { value: '17031', label: '17031' },
+        { value: '27109', label: '27109' },
+
+    ]
     //calulates and sets page level variable of send date
     useEffect(() => {
         //calculating send date
@@ -68,7 +84,7 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
                 list.push(items[i])
             }
             //grabbing all items that are between 35-49 days from being due and not sent/staged up to the limit of tools needed per week
-            else if (dayjs(lowBound) <= dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) <= dayjs(highBound) && !outList.includes(items[i]['CurLoc']) && toolsCounted[items[i]['Description']] < toolCounts[items[i]['Description']] ) {
+            else if (dayjs(lowBound) <= dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) <= dayjs(highBound) && !outList.includes(items[i]['CurLoc']) && toolsCounted[items[i]['Description']] < toolCounts[items[i]['Description']] && items[i]['Area'] === cc ) {
                 list.push(items[i])
                 toolsCounted[items[i]['Description']] = toolsCounted[items[i]['Description']] + 1
             }
@@ -340,8 +356,8 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
                 <div style={{
                     display: "flex",
                     textAlign: "center",
-                    paddingLeft:"500px",
-                    paddingRight: "550px",
+                    paddingLeft:"300px",
+                    paddingRight: "350px",
                     justifyContent: "Space-Evenly",
                     alignItems: "Center"
                 } }>
@@ -350,6 +366,13 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
                         value={dayjs(theDay)}
                         onChange={handleDate}
                         allowClear={false}
+                    />
+                    <h2>Cost Center</h2>
+                    <Select
+                        showSearch
+                        placeholder="Cost Center"
+                        onChange={changeCC}
+                        options={ccList}
                     />
 
                     <h2 id="23">Date to be sent:</h2>

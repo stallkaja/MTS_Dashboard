@@ -258,19 +258,31 @@ app.post('/newTool', (req, res) => {
 
 // Create a new scan using a post request; scan also updates location in cal tools table 
 app.post('/newScan', (req, res) => {
+    console.log(req.body)
+    args = []
+    args2 = []
+    args3 = []
+    var payload = []
+    for (i = 0; i < req.body.scan.length; i++) {
+        console.log(req.body.scan[i].nvl)
+        payload = [
+            req.body.scan[i].nvl,
+            req.body.scan[i].employeeID,
+            req.body.scan[i].newLoc,
+            req.body.scan[i].curDate,
+        ]
+        args.push(payload)
+        console.log(args)
+        /*const args2 = [[
+            req.body.newLoc,
+        ]]*/
+        args2.push(req.body.scan[i].newLoc)
+        /*const args3 = [[
+            req.body.nvl,
+        ]]*/
+        args3.push(req.body.scan[i].nvl)
+    }
 
-    const args = [[
-        req.body.nvl,
-        req.body.employeeID,
-        req.body.newLoc,
-        req.body.dateTime,
-    ]]
-    const args2 = [[
-        req.body.newLoc,
-    ]]
-    const args3 = [[
-        req.body.nvl,
-    ]]
     const stmt = "INSERT INTO toolhistorytable (nvl, employeeID, newLoc, curDate) VALUES ?"
     const stmt2 = "UPDATE caltoolstable SET CurLoc = ? WHERE NVL = ?"
     //WIP
@@ -280,15 +292,18 @@ app.post('/newScan', (req, res) => {
             connection.end();
         }
         else {
-            connection.query(stmt2, [args2, args3], (err, rows, fields) => {
-                if (err) {
-                    throw err
-                    connection.end();
-                }
-                else {
-                    res.status(200).json({ Error: 'Success' })
-                }
-            })
+            for (let i = 0; i < args3.length; i++) {
+                connection.query(stmt2, [args2[i], args3[i]], (err, rows, fields) => {
+                    if (err) {
+                        throw err
+                        connection.end();
+                    }
+                    //else {
+                    //    res.status(200).json({ Error: 'Success' })
+                    //}
+                })
+            }
+            res.status(200).json({ Error: 'Success' })
         }
     
     })
@@ -523,6 +538,7 @@ app.post('/deactivate', (req, res) => {
         }
     })
 });
+
 app.post('/newRequest', function (req, res)  {
   var stmt1stHalf ="INSERT INTO materialOrdersTable ("
   var stmt2ndHalf =") VALUES(?) ON DUPLICATE KEY UPDATE "
