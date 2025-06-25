@@ -94,7 +94,7 @@ const LandingPage = () => {
 
             <div>
                 <div id='LandingTitleCard'>
-                    <h1 id='LandingTitle'>MTS App HomePage</h1>
+                    <h1 id='LandingTitle'>MTS Calibration HomePage</h1>
                 </div>
                 <div id='LandingHeader' />
                     <div id='LandingLeads'>

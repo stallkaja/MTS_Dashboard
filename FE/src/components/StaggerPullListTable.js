@@ -20,7 +20,7 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
     const [sendDate, setSendDate] = useState();
     const [send, setSend] = useState();
     const [theDay, setTheDay] = useState(dayjs());
-    const [cc, setCC] = useState();
+    const [cc, setCC] = useState('*');
 
     //handling changes from the date picker
     const handleDate = (date, dateString) => {
@@ -41,7 +41,7 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
         { value: '27109', label: '27109' },
 
     ]
-    //calulates and sets page level variable of send date
+    //calculates and sets page level variable of send date
     useEffect(() => {
         //calculating send date
         let tempS = dayjs(theDay).add(42, 'day')
@@ -69,6 +69,7 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
 
         // Sort data by Calibration Due
         items.sort((a, b) => a['CalibrationDue'] - b['CalibrationDue']);
+
         //populating the staggering list
         for (let i = 0; i < items.length; i++) {
             //grabbing all items that are past due and not sent out
@@ -80,19 +81,27 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
                 list.push(items[i])
             }
             //grabbing all lost items
-            else if (items[i]['CurLoc'] === 'LOST') {
+            else if (items[i]['CurLoc'] === 'MISSING/LOST') {
                 list.push(items[i])
             }
             //grabbing all items that are between 35-49 days from being due and not sent/staged up to the limit of tools needed per week
-            else if (dayjs(lowBound) <= dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) <= dayjs(highBound) && !outList.includes(items[i]['CurLoc']) && toolsCounted[items[i]['Description']] < toolCounts[items[i]['Description']] && items[i]['Area'] === cc ) {
-                list.push(items[i])
-                toolsCounted[items[i]['Description']] = toolsCounted[items[i]['Description']] + 1
+            else if (dayjs(lowBound) <= dayjs(items[i]['CalibrationDue']) && dayjs(items[i]['CalibrationDue']) <= dayjs(highBound) && !outList.includes(items[i]['CurLoc']) && toolsCounted[items[i]['Description']] < toolCounts[items[i]['Description']] ) {
+                //Checks area of item
+                if (cc.includes(items[i]['Area']) || cc.includes('*')) {
+                    list.push(items[i])
+                    //keeps track of how many of each variety has been added to the staggering list
+                    toolsCounted[items[i]['Description']] = toolsCounted[items[i]['Description']] + 1
+                }
             }
         }
         //sending list to page level variable
         setStagList(list)
         //sending list to export function
         tableDataCallBack(list)
+        //setting toolsCounted back to 0
+        Object.keys(toolsCounted).forEach(key => {
+            toolsCounted[key] = 0
+        })
 
     }
     //triggering re-render to make send date visible on page
@@ -361,18 +370,29 @@ function StaggerPullListTable({ hideArray, tableDataCallBack }) {
                     justifyContent: "Space-Evenly",
                     alignItems: "Center"
                 } }>
-                    <h2>Pull Date</h2>
+                    <h2>Pull Date:</h2>
                     <DatePicker 
                         value={dayjs(theDay)}
                         onChange={handleDate}
                         allowClear={false}
                     />
-                    <h2>Cost Center</h2>
+                    <h2>Cost Center:</h2>
                     <Select
+                        mode="multiple"
+                        defaultValue="*"
                         showSearch
                         placeholder="Cost Center"
                         onChange={changeCC}
                         options={ccList}
+                        rules={[
+                            {
+                                required: true,
+                                message: "Missing Cost Center"
+                            }
+                        ]}
+                        style={{
+                            minWidth: '150px',
+                        }}
                     />
 
                     <h2 id="23">Date to be sent:</h2>
